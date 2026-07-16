@@ -1,0 +1,119 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #faf8f5; /* Warm Sand light background */
+  --foreground: #0b1a2e; /* Deep twilight blue-black text */
+  --card-bg: #ffffff;
+  --border-color: rgba(11, 26, 46, 0.08);
+  
+  --primary: #0f2b48; /* Deep twilight blue from cover */
+  --primary-hover: #0a1f35;
+  --accent: #e5b453; /* Vibrant golden sunset from cover */
+  --accent-hover: #c9993b;
+  --muted-text: #5a6e85;
+  
+  --font-sans: var(--font-outfit);
+  --font-serif: var(--font-playfair);
+}
+
+.dark {
+  --background: #060c14; /* Luxurious obsidian twilight-blue dark background */
+  --foreground: #f4f6fa; /* Soft cloud-white text */
+  --card-bg: #0c1524; /* Deep blue-charcoal container background */
+  --border-color: rgba(244, 246, 250, 0.08);
+  
+  --primary: #e5b453; /* Gold accent becomes primary in dark mode */
+  --primary-hover: #c9993b;
+  --accent: #3182ce; /* Vibrant sky/twilight blue accent */
+  --accent-hover: #2b6cb0;
+  --muted-text: #8fa3b8;
+}
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card-bg);
+  --color-border-custom: var(--border-color);
+  
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-muted-text: var(--muted-text);
+  
+  --font-sans: var(--font-sans);
+  --font-serif: var(--font-serif);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), sans-serif;
+  transition-property: background-color, color, border-color;
+  transition-duration: 300ms;
+}
+
+h1, h2, h3, h4, h5, h6, .font-serif {
+  font-family: var(--font-serif), serif;
+}
+
+/* Custom Utilities for Premium Look */
+.glassmorphism {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.light .glassmorphism {
+  background: rgba(11, 26, 46, 0.02);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(11, 26, 46, 0.05);
+}
+
+/* Hide scrollbars for sliders */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Smooth Hover Underline for Navigation Links */
+.nav-link-hover {
+  position: relative;
+}
+.nav-link-hover::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 1.5px;
+  bottom: -4px;
+  left: 0;
+  background-color: var(--accent);
+  transform-origin: bottom right;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.nav-link-hover:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+/* Advanced Premium Card Tilt Hover Shadow Glows */
+.premium-card-hover {
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.premium-card-hover:hover {
+  transform: translateY(-6px);
+  border-color: rgba(229, 180, 83, 0.35);
+  box-shadow: 0 20px 40px rgba(15, 43, 72, 0.06);
+}
+.dark .premium-card-hover:hover {
+  box-shadow: 0 20px 40px rgba(229, 180, 83, 0.12);
+  border-color: rgba(229, 180, 83, 0.45);
+}
