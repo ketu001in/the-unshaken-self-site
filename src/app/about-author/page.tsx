@@ -55,11 +55,13 @@ export default function AboutAuthor() {
   const timelineEvents = content.timeline;
   const speakingTopics = content.speaking_topics;
 
+  // Each asset falls back to the original bundled file, but an admin can
+  // override any of them with a fresh upload from Site Editor -> General & Contact.
   const mediaKitAssets = [
-    { name: "High-Res Author Portrait", type: "ZIP (JPG)", size: "79 KB", file: "/media-kit/High-Res_Author_Portraits.zip" },
-    { name: "Book Cover Graphic Kit", type: "ZIP (JPG, 4 Files)", size: "3.0 MB", file: "/media-kit/Book_Cover_Graphic_Kit.zip" },
-    { name: "Official Launch Press Release", type: "PDF Document", size: "4 KB", file: "/media-kit/Official_Launch_Press_Release.pdf" },
-    { name: "Author Full & Short Biographies", type: "PDF Document", size: "6 KB", file: "/media-kit/Author_Full_and_Short_Biographies.pdf" }
+    { name: "High-Res Author Portrait", type: "ZIP (JPG)", size: "79 KB", file: settings.media_kit_portrait_url || "/media-kit/High-Res_Author_Portraits.zip" },
+    { name: "Book Cover Graphic Kit", type: "ZIP (JPG, 4 Files)", size: "3.0 MB", file: settings.media_kit_cover_kit_url || "/media-kit/Book_Cover_Graphic_Kit.zip" },
+    { name: "Official Launch Press Release", type: "PDF Document", size: "4 KB", file: settings.media_kit_press_release_url || "/media-kit/Official_Launch_Press_Release.pdf" },
+    { name: "Author Full & Short Biographies", type: "PDF Document", size: "6 KB", file: settings.media_kit_bio_url || "/media-kit/Author_Full_and_Short_Biographies.pdf" }
   ];
 
   return (

@@ -7,6 +7,7 @@ import AIChatbot from "@/components/AIChatbot";
 import {
   ArrowLeft, ArrowRight, Download, BookOpen, FileText
 } from "lucide-react";
+import { useSiteSettings } from "@/context/SiteSettingsContext";
 
 type PageContent = {
   header: string;
@@ -22,6 +23,8 @@ type BookPage = {
 };
 
 export default function Preview() {
+  const { settings } = useSiteSettings();
+
   // Flipbook State
   const [page, setPage] = useState(0);
 
@@ -214,7 +217,7 @@ export default function Preview() {
             </p>
           </div>
           <a
-            href="/downloads/Chapter1_Sample_The_Unshaken_Self.pdf"
+            href={settings.sample_pdf_url || "/downloads/Chapter1_Sample_The_Unshaken_Self.pdf"}
             download
             className="inline-flex items-center space-x-2 px-6 py-3 rounded-full bg-[#0f2b48] hover:opacity-90 dark:bg-[#dfb15b] dark:hover:bg-[#c49945] text-white dark:text-black text-xs uppercase tracking-widest font-bold shadow-md transition-all hover:scale-105 cursor-pointer"
           >

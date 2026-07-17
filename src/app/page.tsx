@@ -323,14 +323,24 @@ export default function Home() {
           <div className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl bg-black border border-border-custom group">
             {!videoPlaying ? (
               <div className="absolute inset-0 z-10 flex flex-col justify-center items-center p-6 bg-gradient-to-t from-black/85 via-black/45 to-black/30">
+                {settings.trailer_video_url && (
+                  <video
+                    src={settings.trailer_video_url}
+                    className="absolute inset-0 w-full h-full object-cover"
+                    muted
+                    loop
+                    autoPlay
+                    playsInline
+                  />
+                )}
                 {/* Visual Cover/Overlay */}
                 <div className="absolute inset-0 bg-stone-900/60 mix-blend-overlay group-hover:scale-105 transition-transform duration-700 pointer-events-none" />
-                
+
                 {/* Serene Nature Background Concept (Simulated) */}
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(30,63,32,0.4)_0%,transparent_70%)] pointer-events-none" />
 
                 {/* Big wise quotes */}
-                <div className="max-w-xl text-center space-y-3 mb-8 animate-pulse">
+                <div className="relative max-w-xl text-center space-y-3 mb-8 animate-pulse">
                   <Quote className="w-8 h-8 text-[#dfb15b] mx-auto opacity-75" />
                   <p className="font-serif italic text-base sm:text-xl text-stone-200">
                     "Perform your duty with absolute focus. The results will take care of themselves."
@@ -340,22 +350,38 @@ export default function Home() {
                 {/* Play Button Trigger */}
                 <button
                   onClick={() => setVideoPlaying(true)}
-                  className="w-16 h-16 rounded-full bg-white dark:bg-[#dfb15b] text-black dark:text-black flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer"
+                  className="relative w-16 h-16 rounded-full bg-white dark:bg-[#dfb15b] text-black dark:text-black flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer"
                   aria-label="Play Cinematic Book Trailer"
                 >
                   <svg className="w-6 h-6 ml-1 fill-current" viewBox="0 0 24 24">
                     <path d="M8 5v14l11-7z" />
                   </svg>
                 </button>
-                <span className="text-[10px] tracking-widest text-stone-400 mt-4 uppercase font-semibold">
+                <span className="relative text-[10px] tracking-widest text-stone-400 mt-4 uppercase font-semibold">
                   Click to play 1-minute intro preview
                 </span>
               </div>
+            ) : settings.trailer_video_url ? (
+              <div className="absolute inset-0 z-10 bg-black">
+                <video
+                  src={settings.trailer_video_url}
+                  className="w-full h-full"
+                  controls
+                  autoPlay
+                  playsInline
+                />
+                <button
+                  onClick={() => setVideoPlaying(false)}
+                  className="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-black/60 hover:bg-black text-white flex items-center justify-center transition-colors cursor-pointer"
+                  aria-label="Close Video Player"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
             ) : (
               <div className="absolute inset-0 z-10 bg-black flex flex-col items-center justify-center gap-4 text-center px-6">
-                {/* No trailer has been filmed yet — show an honest "coming soon" state
-                    instead of a placeholder video. Swap this block for a real <iframe>
-                    or <video> once a trailer exists. */}
+                {/* No trailer has been uploaded yet — show an honest "coming soon" state.
+                    The admin can upload a trailer from Site Editor -> General & Contact. */}
                 <Quote className="w-8 h-8 text-[#dfb15b] opacity-75" />
                 <p className="font-serif italic text-base sm:text-xl text-stone-200 max-w-md">
                   The cinematic trailer is still in production.

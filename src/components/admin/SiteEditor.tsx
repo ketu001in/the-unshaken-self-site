@@ -199,7 +199,70 @@ async function uploadMediaFile(file: File, pathPrefix: string): Promise<string |
 /* Main Site Editor                                                   */
 /* ------------------------------------------------------------------ */
 
-type SubTab = "general" | "theme" | "homepage" | "about-book" | "about-author";
+type SubTab = "general" | "media" | "theme" | "homepage" | "about-book" | "about-author";
+
+type UploadKey =
+  | "author_photo_url"
+  | "book_cover_front_url"
+  | "trailer_video_url"
+  | "media_kit_portrait_url"
+  | "media_kit_cover_kit_url"
+  | "media_kit_press_release_url"
+  | "media_kit_bio_url"
+  | "sample_pdf_url";
+
+function UploadField({
+  label,
+  currentUrl,
+  accept,
+  uploading,
+  onFile,
+  hint,
+}: {
+  label: string;
+  currentUrl: string | null;
+  accept: string;
+  uploading: boolean;
+  onFile: (file: File) => void;
+  hint?: string;
+}) {
+  const ref = useRef<HTMLInputElement>(null);
+  return (
+    <Field label={label}>
+      <div className="space-y-2">
+        {currentUrl && (
+          <a
+            href={currentUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block text-[10px] text-[#dfb15b] underline truncate max-w-xs"
+          >
+            {currentUrl.split("/").pop()}
+          </a>
+        )}
+        {hint && <p className="text-[9px] text-muted-text">{hint}</p>}
+        <input
+          ref={ref}
+          type="file"
+          accept={accept}
+          className="hidden"
+          onChange={(e) => {
+            const file = e.target.files?.[0];
+            if (file) onFile(file);
+            e.target.value = "";
+          }}
+        />
+        <button
+          onClick={() => ref.current?.click()}
+          className="px-3 py-2 rounded-lg border border-border-custom text-xs flex items-center gap-2 cursor-pointer hover:bg-black/5 dark:hover:bg-white/5"
+        >
+          <Upload className="w-3.5 h-3.5" />
+          {uploading ? "Uploading…" : currentUrl ? "Replace File" : "Upload File"}
+        </button>
+      </div>
+    </Field>
+  );
+}
 
 export default function SiteEditor() {
   const [subTab, setSubTab] = useState<SubTab>("general");
@@ -214,10 +277,7 @@ export default function SiteEditor() {
   const [aboutAuthor, setAboutAuthor] = useState<AboutAuthorContent>(DEFAULT_ABOUT_AUTHOR_CONTENT);
 
   const [savedFlag, setSavedFlag] = useState<SubTab | null>(null);
-  const [uploading, setUploading] = useState<"author" | "cover" | null>(null);
-
-  const authorPhotoInputRef = useRef<HTMLInputElement>(null);
-  const bookCoverInputRef = useRef<HTMLInputElement>(null);
+  const [uploading, setUploading] = useState<UploadKey | null>(null);
 
   // Keep the editable copy in sync with the shared context (on initial load,
   // and again after we trigger a refresh post-save).
@@ -271,23 +331,17 @@ export default function SiteEditor() {
     flashSaved("about-author");
   };
 
-  const handleImageUpload = async (
-    e: React.ChangeEvent<HTMLInputElement>,
-    kind: "author" | "cover"
-  ) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setUploading(kind);
-    const url = await uploadMediaFile(file, kind === "author" ? "author-photo" : "book-cover-front");
+  const handleFileUpload = async (key: UploadKey, pathPrefix: string, file: File) => {
+    setUploading(key);
+    const url = await uploadMediaFile(file, pathPrefix);
     setUploading(null);
     if (!url) {
-      alert("Upload failed — please try again.");
+      alert("Upload failed — please try again. (Videos are capped at 200MB on the free Supabase tier.)");
       return;
     }
-    const key = kind === "author" ? "author_photo_url" : "book_cover_front_url";
     await saveSiteSetting(key, url);
     await refreshSiteSettings();
-    flashSaved("general");
+    flashSaved("media");
   };
 
   const updateColor = (key: keyof ThemeColors, value: string) => {
@@ -300,6 +354,7 @@ export default function SiteEditor() {
 
   const subTabs: { id: SubTab; label: string }[] = [
     { id: "general", label: "General & Contact" },
+    { id: "media", label: "Media & Downloads" },
     { id: "theme", label: "Theme & Visibility" },
     { id: "homepage", label: "Homepage" },
     { id: "about-book", label: "About the Book" },
@@ -361,45 +416,96 @@ export default function SiteEditor() {
             />
           </Field>
 
-          <div className="pt-4 border-t border-border-custom/50 space-y-4">
+          <SaveButton onClick={saveGeneral} saved={savedFlag === "general"} />
+        </div>
+      )}
+
+      {/* MEDIA & DOWNLOADS */}
+      {subTab === "media" && (
+        <div className="space-y-8 max-w-2xl">
+          <div className="space-y-4">
             <h3 className="font-serif text-base text-foreground font-bold">Site Images</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <Field label="Author Photo">
-                <div className="space-y-2">
-                  {settings.author_photo_url && (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={settings.author_photo_url} alt="Author" className="w-24 h-24 object-cover rounded-lg border border-border-custom" />
-                  )}
-                  <input ref={authorPhotoInputRef} type="file" accept="image/*" className="hidden" onChange={(e) => handleImageUpload(e, "author")} />
-                  <button
-                    onClick={() => authorPhotoInputRef.current?.click()}
-                    className="px-3 py-2 rounded-lg border border-border-custom text-xs flex items-center gap-2 cursor-pointer hover:bg-black/5 dark:hover:bg-white/5"
-                  >
-                    <Upload className="w-3.5 h-3.5" />
-                    {uploading === "author" ? "Uploading…" : "Upload New Photo"}
-                  </button>
-                </div>
-              </Field>
-              <Field label="Book Cover (Front)">
-                <div className="space-y-2">
-                  {settings.book_cover_front_url && (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={settings.book_cover_front_url} alt="Book Cover" className="w-24 h-24 object-cover rounded-lg border border-border-custom" />
-                  )}
-                  <input ref={bookCoverInputRef} type="file" accept="image/*" className="hidden" onChange={(e) => handleImageUpload(e, "cover")} />
-                  <button
-                    onClick={() => bookCoverInputRef.current?.click()}
-                    className="px-3 py-2 rounded-lg border border-border-custom text-xs flex items-center gap-2 cursor-pointer hover:bg-black/5 dark:hover:bg-white/5"
-                  >
-                    <Upload className="w-3.5 h-3.5" />
-                    {uploading === "cover" ? "Uploading…" : "Upload New Cover"}
-                  </button>
-                </div>
-              </Field>
+              <UploadField
+                label="Author Photo"
+                currentUrl={settings.author_photo_url}
+                accept="image/*"
+                uploading={uploading === "author_photo_url"}
+                onFile={(file) => handleFileUpload("author_photo_url", "author-photo", file)}
+              />
+              <UploadField
+                label="Book Cover (Front)"
+                currentUrl={settings.book_cover_front_url}
+                accept="image/*"
+                uploading={uploading === "book_cover_front_url"}
+                onFile={(file) => handleFileUpload("book_cover_front_url", "book-cover-front", file)}
+              />
             </div>
           </div>
 
-          <SaveButton onClick={saveGeneral} saved={savedFlag === "general"} />
+          <div className="space-y-4 pt-4 border-t border-border-custom/50">
+            <h3 className="font-serif text-base text-foreground font-bold">Homepage Trailer Video</h3>
+            <UploadField
+              label="Cinematic Trailer"
+              currentUrl={settings.trailer_video_url}
+              accept="video/*"
+              uploading={uploading === "trailer_video_url"}
+              onFile={(file) => handleFileUpload("trailer_video_url", "trailer-video", file)}
+              hint="MP4/WebM recommended. 200MB max on the free tier — compress the file first if it's larger."
+            />
+          </div>
+
+          <div className="space-y-4 pt-4 border-t border-border-custom/50">
+            <h3 className="font-serif text-base text-foreground font-bold">Chapter 1 Sample PDF</h3>
+            <UploadField
+              label="Downloadable Sample PDF"
+              currentUrl={settings.sample_pdf_url}
+              accept="application/pdf"
+              uploading={uploading === "sample_pdf_url"}
+              onFile={(file) => handleFileUpload("sample_pdf_url", "sample-chapter", file)}
+              hint="Served from the Preview page's Download Sample PDF button."
+            />
+          </div>
+
+          <div className="space-y-4 pt-4 border-t border-border-custom/50">
+            <h3 className="font-serif text-base text-foreground font-bold">Press / Media Kit Files</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <UploadField
+                label="High-Res Author Portrait (ZIP)"
+                currentUrl={settings.media_kit_portrait_url}
+                accept=".zip,image/*"
+                uploading={uploading === "media_kit_portrait_url"}
+                onFile={(file) => handleFileUpload("media_kit_portrait_url", "media-kit-portrait", file)}
+              />
+              <UploadField
+                label="Book Cover Graphic Kit (ZIP)"
+                currentUrl={settings.media_kit_cover_kit_url}
+                accept=".zip,image/*"
+                uploading={uploading === "media_kit_cover_kit_url"}
+                onFile={(file) => handleFileUpload("media_kit_cover_kit_url", "media-kit-cover-kit", file)}
+              />
+              <UploadField
+                label="Official Press Release (PDF)"
+                currentUrl={settings.media_kit_press_release_url}
+                accept="application/pdf"
+                uploading={uploading === "media_kit_press_release_url"}
+                onFile={(file) => handleFileUpload("media_kit_press_release_url", "media-kit-press-release", file)}
+              />
+              <UploadField
+                label="Author Biographies (PDF)"
+                currentUrl={settings.media_kit_bio_url}
+                accept="application/pdf"
+                uploading={uploading === "media_kit_bio_url"}
+                onFile={(file) => handleFileUpload("media_kit_bio_url", "media-kit-bio", file)}
+              />
+            </div>
+          </div>
+
+          {savedFlag === "media" && (
+            <p className="text-xs text-green-600 dark:text-green-400 flex items-center gap-2">
+              <Check className="w-3.5 h-3.5" /> Saved — live on the site now.
+            </p>
+          )}
         </div>
       )}
 

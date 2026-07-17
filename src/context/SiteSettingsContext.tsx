@@ -22,6 +22,12 @@ export type SiteSettings = {
   footer_tagline: string;
   author_photo_url: string | null;
   book_cover_front_url: string | null;
+  trailer_video_url: string | null;
+  media_kit_portrait_url: string | null;
+  media_kit_cover_kit_url: string | null;
+  media_kit_press_release_url: string | null;
+  media_kit_bio_url: string | null;
+  sample_pdf_url: string | null;
   theme_colors: ThemeColors;
   section_visibility: SectionVisibility;
 };
@@ -34,6 +40,12 @@ export const DEFAULT_SITE_SETTINGS: SiteSettings = {
     "An upcoming literary launch translating the timeless 18 chapters of the Bhagavad Gita into practical mental models for navigating modern anxiety, pressure, and uncertainty.",
   author_photo_url: null,
   book_cover_front_url: null,
+  trailer_video_url: null,
+  media_kit_portrait_url: null,
+  media_kit_cover_kit_url: null,
+  media_kit_press_release_url: null,
+  media_kit_bio_url: null,
+  sample_pdf_url: null,
   theme_colors: {
     primary: "#0f2b48",
     accent: "#e5b453",
