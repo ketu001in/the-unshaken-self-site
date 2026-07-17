@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import AIChatbot from "@/components/AIChatbot";
 import { Calendar, Clock, Users, Check, ArrowRight } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import { fetchPageContent } from "@/lib/content";
 
 type EventItem = {
   id: string;
@@ -18,6 +19,24 @@ type EventItem = {
   capacity: string;
 };
 
+type EventsPageContent = {
+  header_badge: string;
+  header_title: string;
+  header_subtitle: string;
+  schedule_heading: string;
+  sidebar_heading: string;
+  sidebar_desc: string;
+};
+
+const DEFAULT_EVENTS_PAGE_CONTENT: EventsPageContent = {
+  header_badge: "Community & Tour",
+  header_title: "Events & Workshops",
+  header_subtitle: "Register for virtual launches, Q&A workshops, and local bookstore signings with KETUL SHAH.",
+  schedule_heading: "Upcoming Schedule",
+  sidebar_heading: "Reserve Your Spot",
+  sidebar_desc: "Choose an event below and submit your email. We will send you calendar credentials and connection details.",
+};
+
 export default function EventsPage() {
   const [selectedEvent, setSelectedEvent] = useState<string>("");
   const [name, setName] = useState("");
@@ -26,6 +45,11 @@ export default function EventsPage() {
   const [submitError, setSubmitError] = useState("");
   const [events, setEvents] = useState<EventItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [content, setContent] = useState<EventsPageContent>(DEFAULT_EVENTS_PAGE_CONTENT);
+
+  useEffect(() => {
+    fetchPageContent("events", DEFAULT_EVENTS_PAGE_CONTENT).then(setContent);
+  }, []);
 
   useEffect(() => {
     const supabase = createClient();
@@ -128,13 +152,13 @@ export default function EventsPage() {
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(223,177,91,0.03)_0%,transparent_70%)] pointer-events-none" />
         <div className="max-w-4xl mx-auto space-y-4 relative z-10">
           <span className="text-[10px] tracking-[0.3em] text-[#b5924b] dark:text-[#dfb15b] uppercase font-bold">
-            Community & Tour
+            {content.header_badge}
           </span>
           <h1 className="text-4xl sm:text-5xl font-serif text-foreground leading-tight">
-            Events & Workshops
+            {content.header_title}
           </h1>
           <p className="text-xs sm:text-sm font-light text-stone-500 dark:text-stone-400 max-w-xl mx-auto leading-relaxed">
-            Register for virtual launches, Q&A workshops, and local bookstore signings with KETUL SHAH.
+            {content.header_subtitle}
           </p>
         </div>
       </header>
@@ -145,7 +169,7 @@ export default function EventsPage() {
         {/* Left Column: Event Schedules */}
         <div className="lg:col-span-8 space-y-8">
           <div className="space-y-4">
-            <h2 className="font-serif text-2xl text-foreground">Upcoming Schedule</h2>
+            <h2 className="font-serif text-2xl text-foreground">{content.schedule_heading}</h2>
             <div className="w-12 h-[2px] bg-[#dfb15b]" />
           </div>
 
@@ -219,10 +243,10 @@ export default function EventsPage() {
             <div className="space-y-2">
               <h3 className="font-serif text-base text-foreground font-semibold flex items-center gap-2">
                 <Calendar className="w-5 h-5 text-[#dfb15b]" />
-                <span>Reserve Your Spot</span>
+                <span>{content.sidebar_heading}</span>
               </h3>
               <p className="text-[11px] font-light text-stone-500 leading-relaxed">
-                Choose an event below and submit your email. We will send you calendar credentials and connection details.
+                {content.sidebar_desc}
               </p>
             </div>
 

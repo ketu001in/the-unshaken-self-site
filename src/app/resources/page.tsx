@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import AIChatbot from "@/components/AIChatbot";
 import { Download, Lock, Unlock, FileText, CheckCircle, Info } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import { fetchPageContent } from "@/lib/content";
 
 type Resource = {
   id: string;
@@ -17,16 +18,36 @@ type Resource = {
   fileUrl: string;
 };
 
-const UNLOCK_STORAGE_KEY = "unshaken_unlocked_email";
+type ResourcesContent = {
+  header_badge: string;
+  header_title: string;
+  header_subtitle: string;
+  section_heading: string;
+  sidebar_heading: string;
+  sidebar_desc: string;
+  sidebar_info: string;
+  worksheets_badge: string;
+  worksheets_heading: string;
+  worksheets_subtitle: string;
+  worksheets_locked_title: string;
+  worksheets_locked_desc: string;
+  resources: Resource[];
+};
 
-export default function ResourcesPage() {
-  const [email, setEmail] = useState("");
-  const [orderId, setOrderId] = useState("");
-  const [isUnlocked, setIsUnlocked] = useState(false);
-  const [validationMsg, setValidationMsg] = useState("");
-  const [checking, setChecking] = useState(true);
-
-  const resources: Resource[] = [
+const DEFAULT_RESOURCES_CONTENT: ResourcesContent = {
+  header_badge: "Reader Downloads",
+  header_title: "Book Resources",
+  header_subtitle: "Access study companions, printable worksheets, and interactive trackers to apply *The Unshaken Self* in your daily routine.",
+  section_heading: "Available Guides",
+  sidebar_heading: "Pre-Order Bonuses",
+  sidebar_desc: "Enter your email to unlock the premium guides. If you've preordered, add your Order/Receipt ID too — it helps us verify pre-order bonuses later.",
+  sidebar_info: "Premium guides unlock with just your email for now — order IDs aren't verified against real purchases yet.",
+  worksheets_badge: "Interactive Tools",
+  worksheets_heading: "The Digital Worksheets Suite",
+  worksheets_subtitle: "Apply the exercises from *The Unshaken Self* directly in your browser. Record logs, build intentions, and track your practice.",
+  worksheets_locked_title: "Worksheets Locked",
+  worksheets_locked_desc: "These digital companion tools are reserved for pre-order supporters. Enter your receipt or order ID in the sidebar form above to instantly unlock the full suite.",
+  resources: [
     {
       id: "res-1",
       name: "The 18 Chapters Study Companion",
@@ -63,7 +84,24 @@ export default function ResourcesPage() {
       isPremium: true,
       fileUrl: "/downloads/Book_Club_Kit_Discussion_Questions.pdf"
     }
-  ];
+  ]
+};
+
+const UNLOCK_STORAGE_KEY = "unshaken_unlocked_email";
+
+export default function ResourcesPage() {
+  const [email, setEmail] = useState("");
+  const [orderId, setOrderId] = useState("");
+  const [isUnlocked, setIsUnlocked] = useState(false);
+  const [validationMsg, setValidationMsg] = useState("");
+  const [checking, setChecking] = useState(true);
+  const [content, setContent] = useState<ResourcesContent>(DEFAULT_RESOURCES_CONTENT);
+
+  useEffect(() => {
+    fetchPageContent("resources", DEFAULT_RESOURCES_CONTENT).then(setContent);
+  }, []);
+
+  const resources = content.resources;
 
   // Re-check unlock status against the real database (not just local state),
   // using the is_email_unlocked RPC so we never expose the full email list.
@@ -142,13 +180,13 @@ export default function ResourcesPage() {
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(223,177,91,0.03)_0%,transparent_70%)] pointer-events-none" />
         <div className="max-w-4xl mx-auto space-y-4 relative z-10">
           <span className="text-[10px] tracking-[0.3em] text-[#b5924b] dark:text-[#dfb15b] uppercase font-bold">
-            Reader Downloads
+            {content.header_badge}
           </span>
           <h1 className="text-4xl sm:text-5xl font-serif text-foreground leading-tight">
-            Book Resources
+            {content.header_title}
           </h1>
           <p className="text-xs sm:text-sm font-light text-stone-500 dark:text-stone-400 max-w-xl mx-auto leading-relaxed">
-            Access study companions, printable worksheets, and interactive trackers to apply *The Unshaken Self* in your daily routine.
+            {content.header_subtitle}
           </p>
         </div>
       </header>
@@ -159,7 +197,7 @@ export default function ResourcesPage() {
         {/* Left Column: Resources List */}
         <div className="lg:col-span-8 space-y-8">
           <div className="space-y-4">
-            <h2 className="font-serif text-2xl text-foreground">Available Guides</h2>
+            <h2 className="font-serif text-2xl text-foreground">{content.section_heading}</h2>
             <div className="w-12 h-[2px] bg-[#dfb15b]" />
           </div>
 
@@ -225,10 +263,10 @@ export default function ResourcesPage() {
             <div className="space-y-2">
               <h3 className="font-serif text-base text-foreground font-semibold flex items-center gap-2">
                 {isUnlocked ? <Unlock className="w-5 h-5 text-green-500" /> : <Lock className="w-5 h-5 text-[#dfb15b]" />}
-                <span>Pre-Order Bonuses</span>
+                <span>{content.sidebar_heading}</span>
               </h3>
               <p className="text-[11px] font-light text-stone-500 leading-relaxed">
-                Enter your email to unlock the premium guides. If you've preordered, add your Order/Receipt ID too — it helps us verify pre-order bonuses later.
+                {content.sidebar_desc}
               </p>
             </div>
 
@@ -300,7 +338,7 @@ export default function ResourcesPage() {
 
             <div className="p-4 border border-border-custom rounded-2xl text-[10px] text-muted-text flex items-start gap-2">
               <Info className="w-4 h-4 text-[#dfb15b] flex-shrink-0 mt-0.5" />
-              <span>Premium guides unlock with just your email for now — order IDs aren't verified against real purchases yet.</span>
+              <span>{content.sidebar_info}</span>
             </div>
 
           </div>
@@ -311,10 +349,10 @@ export default function ResourcesPage() {
       {/* INTERACTIVE WORKSHEETS SECTION */}
       <section className="max-w-7xl mx-auto w-full px-4 pb-24 space-y-12">
         <div className="text-center space-y-4">
-          <span className="text-[10px] tracking-[0.3em] text-[#dfb15b] uppercase font-bold">Interactive Tools</span>
-          <h2 className="text-2xl sm:text-3xl font-serif text-foreground">The Digital Worksheets Suite</h2>
+          <span className="text-[10px] tracking-[0.3em] text-[#dfb15b] uppercase font-bold">{content.worksheets_badge}</span>
+          <h2 className="text-2xl sm:text-3xl font-serif text-foreground">{content.worksheets_heading}</h2>
           <p className="text-xs font-light text-stone-500 dark:text-stone-400 max-w-md mx-auto">
-            Apply the exercises from *The Unshaken Self* directly in your browser. Record logs, build intentions, and track your practice.
+            {content.worksheets_subtitle}
           </p>
         </div>
 
@@ -323,9 +361,9 @@ export default function ResourcesPage() {
           <div className="max-w-3xl mx-auto border border-border-custom bg-white dark:bg-[#101614] rounded-3xl p-12 text-center space-y-6 shadow-md relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#dfb15b]/5 rounded-full blur-3xl pointer-events-none" />
             <Lock className="w-10 h-10 text-[#dfb15b] mx-auto animate-pulse" />
-            <h3 className="font-serif text-lg text-foreground font-semibold">Worksheets Locked</h3>
+            <h3 className="font-serif text-lg text-foreground font-semibold">{content.worksheets_locked_title}</h3>
             <p className="text-xs font-light text-stone-500 dark:text-stone-400 max-w-sm mx-auto leading-relaxed">
-              These digital companion tools are reserved for pre-order supporters. Enter your receipt or order ID in the sidebar form above to instantly unlock the full suite.
+              {content.worksheets_locked_desc}
             </p>
           </div>
         ) : (

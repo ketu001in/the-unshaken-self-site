@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AIChatbot from "@/components/AIChatbot";
@@ -8,6 +8,7 @@ import {
   ArrowLeft, ArrowRight, Download, BookOpen, FileText
 } from "lucide-react";
 import { useSiteSettings } from "@/context/SiteSettingsContext";
+import { fetchPageContent } from "@/lib/content";
 
 type PageContent = {
   header: string;
@@ -22,13 +23,28 @@ type BookPage = {
   right: PageContent;
 };
 
-export default function Preview() {
-  const { settings } = useSiteSettings();
+type PreviewContent = {
+  header_badge: string;
+  header_title: string;
+  header_subtitle: string;
+  section_badge: string;
+  section_title: string;
+  section_subtitle: string;
+  cta_title: string;
+  cta_subtitle: string;
+  pages: BookPage[];
+};
 
-  // Flipbook State
-  const [page, setPage] = useState(0);
-
-  const bookPages: BookPage[] = [
+const DEFAULT_PREVIEW_CONTENT: PreviewContent = {
+  header_badge: "Interactive Experience",
+  header_title: "Book Preview",
+  header_subtitle: "Flip through the draft text of Chapter 1 of *The Unshaken Self*.",
+  section_badge: "Text Reading Preview",
+  section_title: "Flip Through Chapter 1",
+  section_subtitle: "Read the details of Chapter 1 of *The Unshaken Self* below, presenting the ancient teachings in a contemporary light.",
+  cta_title: "Want the full Chapter 1 PDF?",
+  cta_subtitle: "Read comfortably offline. Get the printer-friendly PDF file including full notes, schemas, and morning reflection sheets.",
+  pages: [
     {
       left: {
         header: "THE UNSHAKEN SELF — CHAPTER 1 DRAFT",
@@ -73,7 +89,21 @@ export default function Preview() {
         footer: "Page 2 of 4"
       }
     }
-  ];
+  ]
+};
+
+export default function Preview() {
+  const { settings } = useSiteSettings();
+  const [content, setContent] = useState<PreviewContent>(DEFAULT_PREVIEW_CONTENT);
+
+  // Flipbook State
+  const [page, setPage] = useState(0);
+
+  useEffect(() => {
+    fetchPageContent("preview", DEFAULT_PREVIEW_CONTENT).then(setContent);
+  }, []);
+
+  const bookPages = content.pages;
 
   return (
     <div className="flex-1 flex flex-col pt-16 bg-[#faf8f5] dark:bg-[#070b09]">
@@ -84,13 +114,13 @@ export default function Preview() {
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(223,177,91,0.03)_0%,transparent_70%)] pointer-events-none" />
         <div className="max-w-4xl mx-auto space-y-4 relative z-10">
           <span className="text-[10px] tracking-[0.3em] text-[#b5924b] dark:text-[#dfb15b] uppercase font-bold">
-            Interactive Experience
+            {content.header_badge}
           </span>
           <h1 className="text-4xl sm:text-5xl font-serif text-foreground leading-tight">
-            Book Preview
+            {content.header_title}
           </h1>
           <p className="text-xs sm:text-sm font-light text-stone-500 dark:text-stone-400 max-w-xl mx-auto leading-relaxed">
-            Flip through the draft text of Chapter 1 of *The Unshaken Self*.
+            {content.header_subtitle}
           </p>
         </div>
       </header>
@@ -103,13 +133,13 @@ export default function Preview() {
           <div className="text-center space-y-3">
             <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-[#dfb15b]/10 border border-[#dfb15b]/20">
               <BookOpen className="w-3.5 h-3.5 text-[#dfb15b]" />
-              <span className="text-[9px] tracking-widest uppercase font-bold text-[#b5924b] dark:text-[#dfb15b]">Text Reading Preview</span>
+              <span className="text-[9px] tracking-widest uppercase font-bold text-[#b5924b] dark:text-[#dfb15b]">{content.section_badge}</span>
             </div>
             <h2 className="font-serif text-2xl md:text-3xl text-foreground">
-              Flip Through Chapter 1
+              {content.section_title}
             </h2>
             <p className="text-xs font-light text-stone-500 dark:text-stone-400 max-w-lg mx-auto">
-              Read the details of Chapter 1 of *The Unshaken Self* below, presenting the ancient teachings in a contemporary light.
+              {content.section_subtitle}
             </p>
           </div>
 
@@ -119,14 +149,14 @@ export default function Preview() {
 
             {/* Split Page Layout */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 flex-1 pb-8">
-              
+
               {/* Left Page */}
               <div className="space-y-6 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-border-custom pb-8 lg:pb-0 lg:pr-12">
                 <div className="space-y-4">
                   <span className="block font-mono text-[9px] text-[#b5924b] dark:text-[#dfb15b] uppercase tracking-widest font-semibold">
                     {bookPages[page].left.header}
                   </span>
-                  
+
                   {bookPages[page].left.title && (
                     <h3 className="font-serif text-xl text-foreground tracking-wide font-bold">
                       {bookPages[page].left.title}
@@ -137,7 +167,7 @@ export default function Preview() {
                       {bookPages[page].left.subtitle}
                     </p>
                   )}
-                  
+
                   <div className="space-y-4 text-xs sm:text-[13px] font-light text-stone-600 dark:text-stone-300 leading-relaxed text-justify">
                     {bookPages[page].left.content.map((pText, i) => (
                       <p key={i}>{pText}</p>
@@ -152,7 +182,7 @@ export default function Preview() {
                   <span className="block font-mono text-[9px] text-[#b5924b] dark:text-[#dfb15b] uppercase tracking-widest font-semibold">
                     {bookPages[page].right.header}
                   </span>
-                  
+
                   <div className="space-y-4 text-xs sm:text-[13px] font-light text-stone-600 dark:text-stone-300 leading-relaxed text-justify">
                     {bookPages[page].right.content.map((pText, i) => {
                       if (pText.startsWith("•")) {
@@ -166,7 +196,7 @@ export default function Preview() {
                     })}
                   </div>
                 </div>
-                
+
                 {/* Page Number footer */}
                 <div className="text-right text-[10px] font-mono text-muted-text tracking-widest uppercase">
                   {bookPages[page].right.footer}
@@ -187,7 +217,7 @@ export default function Preview() {
               </button>
 
               <div className="text-xs font-mono text-[#dfb15b]">
-                Page {page * 2 + 1} - {page * 2 + 2} of 4
+                Page {page * 2 + 1} - {page * 2 + 2} of {bookPages.length * 2}
               </div>
 
               <button
@@ -210,10 +240,10 @@ export default function Preview() {
           </div>
           <div className="space-y-2">
             <h3 className="font-serif text-lg sm:text-xl text-foreground font-semibold">
-              Want the full Chapter 1 PDF?
+              {content.cta_title}
             </h3>
             <p className="text-xs font-light text-stone-500 max-w-sm mx-auto leading-relaxed">
-              Read comfortably offline. Get the printer-friendly PDF file including full notes, schemas, and morning reflection sheets.
+              {content.cta_subtitle}
             </p>
           </div>
           <a

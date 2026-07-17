@@ -100,6 +100,169 @@ const DEFAULT_PREORDER_CONTENT: PreorderContent = {
   ]
 };
 
+type PreviewPageContent = {
+  header: string;
+  title?: string;
+  subtitle?: string;
+  content: string[];
+  footer?: string;
+};
+
+type PreviewBookPage = {
+  left: PreviewPageContent;
+  right: PreviewPageContent;
+};
+
+type PreviewContent = {
+  header_badge: string;
+  header_title: string;
+  header_subtitle: string;
+  section_badge: string;
+  section_title: string;
+  section_subtitle: string;
+  cta_title: string;
+  cta_subtitle: string;
+  pages: PreviewBookPage[];
+};
+
+const DEFAULT_PREVIEW_CONTENT: PreviewContent = {
+  header_badge: "Interactive Experience",
+  header_title: "Book Preview",
+  header_subtitle: "Flip through the draft text of Chapter 1 of *The Unshaken Self*.",
+  section_badge: "Text Reading Preview",
+  section_title: "Flip Through Chapter 1",
+  section_subtitle: "Read the details of Chapter 1 of *The Unshaken Self* below, presenting the ancient teachings in a contemporary light.",
+  cta_title: "Want the full Chapter 1 PDF?",
+  cta_subtitle: "Read comfortably offline. Get the printer-friendly PDF file including full notes, schemas, and morning reflection sheets.",
+  pages: [
+    {
+      left: {
+        header: "THE UNSHAKEN SELF — CHAPTER 1 DRAFT",
+        title: "When Life Freezes You",
+        subtitle: "Confusion is not your enemy — It is your invitation to grow",
+        content: [
+          "Imagine standing at a crossroads where every signpost has been washed blank by rain. You do not know which way leads home, which way leads forward, and which way leads to a dead end. Your feet feel heavy. Your mind races in circles. You want someone — anyone — to tell you what to do. This is utter confusion.",
+          "We are taught from childhood that confusion is a sign of weakness. If you do not know the answer, you are unprepared. If you hesitate, you are a coward. If you freeze, you are failing. But that is not true at all. The Bhagavad Gita opens with something radical — it opens with a hero who is completely, openly, unashamedly confused.",
+          "Arjuna, one of the greatest warriors the world had ever seen, does not stride into battle with a war cry. He asks his charioteer to stop. He looks at the armies on both sides and says, in essence, 'I cannot do this. I do not know what is right anymore.' This is not a moment of weakness. It is the most important moment of the entire Gita."
+        ]
+      },
+      right: {
+        header: "ARJUNA VISHADA YOGA",
+        content: [
+          "None of the wisdom, none of the life-changing teachings of the Gita would have happened if Arjuna had not first admitted that he was lost. His confusion was the door through which the light entered.",
+          "Think about your own life. When did you grow the most? Was it during the times when everything was smooth and comfortable? Or was it during the times when you did not know what to do next — when a relationship ended, a job disappeared, or a plan crumbled? If you are honest, you will notice that your deepest growth always came after your deepest confusion.",
+          "Confusion is not the opposite of clarity. It is the beginning of clarity. It is the soil cracking open before the seed can push through. When you feel confused, it means your old way of seeing the world is no longer big enough to hold the life you are living. Something inside you is outgrowing its container. That discomfort you feel is not a sign that something is wrong. It is a sign that something is ready to change."
+        ],
+        footer: "Page 1 of 4"
+      }
+    },
+    {
+      left: {
+        header: "THE UNSHAKEN SELF — CHAPTER 1 DRAFT",
+        title: "The Anatomy of a Frozen Moment",
+        subtitle: "Recognising your personal battlefields: Kitchen, Office, and Mirror",
+        content: [
+          "There is a particular kind of moment that almost every human being knows. It is the moment when you need to act — you know you need to act — but your body will not move, your mouth will not open, and your thoughts spin so fast that they cancel each other out. You are frozen. Not lazy, not careless — frozen.",
+          "What is happening is not a failure. Modern science calls it freezing. When the stakes feel impossibly high, your nervous system shuts down. Your breath becomes shallow. Your thinking brain goes offline, and something older takes over. Arjuna's bow, Gandiva, slipped from his hands. His skin burned, his mouth went dry, his limbs trembled.",
+          "The battlefield of Kurukshetra is not somewhere far away. It is wherever you are standing right now. It might be the kitchen at seven in the morning packing lunches under stress, the office at three in the afternoon facing a demanding boss, or the mirror at midnight looking at your own reflection. These are our Kurukshetras. The real war is between the parts of yourself pulling in different directions — duty and desire, courage and fear."
+        ]
+      },
+      right: {
+        header: "THE THREE-BREATH PAUSE PRACTICE",
+        content: [
+          "The first chapter of the Gita gives us no solutions. It gives us something better: permission to be human. Arjuna sits down in his chariot and lets the full weight of what he is feeling wash over him. He does not run to a distraction. In our digital age, we run from discomfort into scrolls, screens, and apps. But sitting with discomfort is the foundation of mending.",
+          "To navigate these frozen moments, KETUL SHAH introduces the daily practice: **The Three-Breath Pause**.",
+          "• **First Breath (Body):** Inhale slowly, notice where the tension is (jaw, shoulders). As you exhale, let your shoulders drop half an inch. Notice, don't fix.",
+          "• **Second Breath (Mind):** Inhale, notice the story your mind is telling you ('This is unfair', 'I can't handle this'). As you exhale, let the story loosen its grip by one degree.",
+          "• **Third Breath (Choice):** Inhale, ask yourself: 'What does the wisest part of me want here?' Not what my anger or fear wants. Exhale and let your next action come from that quiet space."
+        ],
+        footer: "Page 2 of 4"
+      }
+    }
+  ]
+};
+
+type ResourceItem = {
+  id: string;
+  name: string;
+  desc: string;
+  fileType: string;
+  fileSize: string;
+  isPremium: boolean;
+  fileUrl: string;
+};
+
+type ResourcesContent = {
+  header_badge: string;
+  header_title: string;
+  header_subtitle: string;
+  section_heading: string;
+  sidebar_heading: string;
+  sidebar_desc: string;
+  sidebar_info: string;
+  worksheets_badge: string;
+  worksheets_heading: string;
+  worksheets_subtitle: string;
+  worksheets_locked_title: string;
+  worksheets_locked_desc: string;
+  resources: ResourceItem[];
+};
+
+const DEFAULT_RESOURCES_CONTENT: ResourcesContent = {
+  header_badge: "Reader Downloads",
+  header_title: "Book Resources",
+  header_subtitle: "Access study companions, printable worksheets, and interactive trackers to apply *The Unshaken Self* in your daily routine.",
+  section_heading: "Available Guides",
+  sidebar_heading: "Pre-Order Bonuses",
+  sidebar_desc: "Enter your email to unlock the premium guides. If you've preordered, add your Order/Receipt ID too — it helps us verify pre-order bonuses later.",
+  sidebar_info: "Premium guides unlock with just your email for now — order IDs aren't verified against real purchases yet.",
+  worksheets_badge: "Interactive Tools",
+  worksheets_heading: "The Digital Worksheets Suite",
+  worksheets_subtitle: "Apply the exercises from *The Unshaken Self* directly in your browser. Record logs, build intentions, and track your practice.",
+  worksheets_locked_title: "Worksheets Locked",
+  worksheets_locked_desc: "These digital companion tools are reserved for pre-order supporters. Enter your receipt or order ID in the sidebar form above to instantly unlock the full suite.",
+  resources: [
+    { id: "res-1", name: "The 18 Chapters Study Companion", desc: "A workbook summarizing all 18 chapters of the Bhagavad Gita, containing reflections, Sanskrit vocab highlights, and modern mindfulness equivalents.", fileType: "PDF Document", fileSize: "~165 KB", isPremium: false, fileUrl: "/downloads/The_18_Chapters_Study_Companion.pdf" },
+    { id: "res-2", name: "Karma Yoga Worksheet: Decoupling Actions", desc: "A printable 3-column reflection sheet to map your weekly professional tasks, isolate your inputs, and consciously release attachment to outcomes.", fileType: "PDF Printable", fileSize: "~60 KB", isPremium: false, fileUrl: "/downloads/Karma_Yoga_Worksheet_Decoupling_Actions.pdf" },
+    { id: "res-3", name: "Sthitaprajna Daily Meditation Tracker", desc: "A 30-day habits ledger helping you monitor physical stillness, breath ratios, and daily reaction responses in real-time.", fileType: "Interactive Spreadsheet", fileSize: "~14 KB", isPremium: true, fileUrl: "/downloads/Sthitaprajna_Daily_Meditation_Tracker.xlsx" },
+    { id: "res-4", name: "Book Club Kit & Discussion Questions", desc: "A comprehensive guide with 20 discussion prompts, study notes, and scheduling structures tailored for book clubs and reading groups.", fileType: "PDF Kit", fileSize: "~110 KB", isPremium: true, fileUrl: "/downloads/Book_Club_Kit_Discussion_Questions.pdf" }
+  ]
+};
+
+type EventsPageContent = {
+  header_badge: string;
+  header_title: string;
+  header_subtitle: string;
+  schedule_heading: string;
+  sidebar_heading: string;
+  sidebar_desc: string;
+};
+
+const DEFAULT_EVENTS_PAGE_CONTENT: EventsPageContent = {
+  header_badge: "Community & Tour",
+  header_title: "Events & Workshops",
+  header_subtitle: "Register for virtual launches, Q&A workshops, and local bookstore signings with KETUL SHAH.",
+  schedule_heading: "Upcoming Schedule",
+  sidebar_heading: "Reserve Your Spot",
+  sidebar_desc: "Choose an event below and submit your email. We will send you calendar credentials and connection details.",
+};
+
+type ReviewsPageContent = {
+  header_badge: string;
+  header_title: string;
+  header_subtitle: string;
+  sidebar_heading: string;
+  sidebar_desc: string;
+};
+
+const DEFAULT_REVIEWS_PAGE_CONTENT: ReviewsPageContent = {
+  header_badge: "Reader Endorsements",
+  header_title: "Reviews & Endorsements",
+  header_subtitle: "Read professional assessments, scholar reviews, and feedback from early reader groups. Or share your own preview reflections.",
+  sidebar_heading: "Share Your Thoughts",
+  sidebar_desc: "If you have read Chapter 1 in the preview, write a short reflection. Submissions are reviewed before they appear publicly.",
+};
+
 type Spec = { label: string; value: string };
 
 type AboutBookContent = {
@@ -246,7 +409,7 @@ async function uploadMediaFile(file: File, pathPrefix: string): Promise<string |
 /* Main Site Editor                                                   */
 /* ------------------------------------------------------------------ */
 
-type SubTab = "general" | "media" | "theme" | "homepage" | "about-book" | "about-author" | "preorder";
+type SubTab = "general" | "media" | "theme" | "homepage" | "about-book" | "about-author" | "preorder" | "preview" | "resources" | "events" | "reviews";
 
 type UploadKey =
   | "author_photo_url"
@@ -323,6 +486,11 @@ export default function SiteEditor() {
   const [aboutBook, setAboutBook] = useState<AboutBookContent>(DEFAULT_ABOUT_BOOK_CONTENT);
   const [aboutAuthor, setAboutAuthor] = useState<AboutAuthorContent>(DEFAULT_ABOUT_AUTHOR_CONTENT);
   const [preorder, setPreorder] = useState<PreorderContent>(DEFAULT_PREORDER_CONTENT);
+  const [preview, setPreview] = useState<PreviewContent>(DEFAULT_PREVIEW_CONTENT);
+  const [resources, setResources] = useState<ResourcesContent>(DEFAULT_RESOURCES_CONTENT);
+  const [uploadingResource, setUploadingResource] = useState<number | null>(null);
+  const [eventsPage, setEventsPage] = useState<EventsPageContent>(DEFAULT_EVENTS_PAGE_CONTENT);
+  const [reviewsPage, setReviewsPage] = useState<ReviewsPageContent>(DEFAULT_REVIEWS_PAGE_CONTENT);
 
   const [savedFlag, setSavedFlag] = useState<SubTab | null>(null);
   const [uploading, setUploading] = useState<UploadKey | null>(null);
@@ -338,6 +506,10 @@ export default function SiteEditor() {
     fetchPageContent("about-book", DEFAULT_ABOUT_BOOK_CONTENT).then(setAboutBook);
     fetchPageContent("about-author", DEFAULT_ABOUT_AUTHOR_CONTENT).then(setAboutAuthor);
     fetchPageContent("preorder", DEFAULT_PREORDER_CONTENT).then(setPreorder);
+    fetchPageContent("preview", DEFAULT_PREVIEW_CONTENT).then(setPreview);
+    fetchPageContent("resources", DEFAULT_RESOURCES_CONTENT).then(setResources);
+    fetchPageContent("events", DEFAULT_EVENTS_PAGE_CONTENT).then(setEventsPage);
+    fetchPageContent("reviews", DEFAULT_REVIEWS_PAGE_CONTENT).then(setReviewsPage);
   }, []);
 
   const flashSaved = (tab: SubTab) => {
@@ -385,6 +557,41 @@ export default function SiteEditor() {
     flashSaved("preorder");
   };
 
+  const savePreview = async () => {
+    await savePageContent("preview", preview);
+    flashSaved("preview");
+  };
+
+  const saveResources = async () => {
+    await savePageContent("resources", resources);
+    flashSaved("resources");
+  };
+
+  const saveEventsPage = async () => {
+    await savePageContent("events", eventsPage);
+    flashSaved("events");
+  };
+
+  const saveReviewsPage = async () => {
+    await savePageContent("reviews", reviewsPage);
+    flashSaved("reviews");
+  };
+
+  const handleResourceFileUpload = async (idx: number, file: File) => {
+    setUploadingResource(idx);
+    const url = await uploadMediaFile(file, `resource-${resources.resources[idx]?.id || idx}`);
+    setUploadingResource(null);
+    if (!url) {
+      alert("Upload failed — please try again.");
+      return;
+    }
+    setResources((p) => {
+      const next = [...p.resources];
+      next[idx] = { ...next[idx], fileUrl: url };
+      return { ...p, resources: next };
+    });
+  };
+
   const handleFileUpload = async (key: UploadKey, pathPrefix: string, file: File) => {
     setUploading(key);
     const url = await uploadMediaFile(file, pathPrefix);
@@ -414,6 +621,10 @@ export default function SiteEditor() {
     { id: "about-book", label: "About the Book" },
     { id: "about-author", label: "About the Author" },
     { id: "preorder", label: "Pre-order Page" },
+    { id: "preview", label: "Book Preview" },
+    { id: "resources", label: "Resources" },
+    { id: "events", label: "Events Page" },
+    { id: "reviews", label: "Reviews Page" },
   ];
 
   return (
@@ -1086,6 +1297,291 @@ export default function SiteEditor() {
           </div>
 
           <SaveButton onClick={savePreorder} saved={savedFlag === "preorder"} />
+        </div>
+      )}
+
+      {/* BOOK PREVIEW (Chapter 1 flipbook) */}
+      {subTab === "preview" && (
+        <div className="space-y-6 max-w-2xl">
+          <h3 className="font-serif text-base text-foreground font-bold">Page Header</h3>
+          <Field label="Badge Text"><TextInput value={preview.header_badge} onChange={(e) => setPreview((p) => ({ ...p, header_badge: e.target.value }))} /></Field>
+          <Field label="Title"><TextInput value={preview.header_title} onChange={(e) => setPreview((p) => ({ ...p, header_title: e.target.value }))} /></Field>
+          <Field label="Subtitle"><TextArea rows={2} value={preview.header_subtitle} onChange={(e) => setPreview((p) => ({ ...p, header_subtitle: e.target.value }))} /></Field>
+
+          <h3 className="font-serif text-base text-foreground font-bold pt-4 border-t border-border-custom/50">Flipbook Section Intro</h3>
+          <Field label="Badge Text"><TextInput value={preview.section_badge} onChange={(e) => setPreview((p) => ({ ...p, section_badge: e.target.value }))} /></Field>
+          <Field label="Heading"><TextInput value={preview.section_title} onChange={(e) => setPreview((p) => ({ ...p, section_title: e.target.value }))} /></Field>
+          <Field label="Subtext"><TextArea rows={2} value={preview.section_subtitle} onChange={(e) => setPreview((p) => ({ ...p, section_subtitle: e.target.value }))} /></Field>
+
+          <h3 className="font-serif text-base text-foreground font-bold pt-4 border-t border-border-custom/50">Download PDF Callout</h3>
+          <Field label="Title"><TextInput value={preview.cta_title} onChange={(e) => setPreview((p) => ({ ...p, cta_title: e.target.value }))} /></Field>
+          <Field label="Subtext"><TextArea rows={2} value={preview.cta_subtitle} onChange={(e) => setPreview((p) => ({ ...p, cta_subtitle: e.target.value }))} /></Field>
+
+          <h3 className="font-serif text-base text-foreground font-bold pt-4 border-t border-border-custom/50">Flipbook Page Spreads</h3>
+          <p className="text-[10px] text-muted-text -mt-2">
+            Each spread has a left column (chapter draft text) and a right column (commentary / exercise text).
+            In the right column, start a line with "•" for a bullet-styled callout.
+          </p>
+          <div className="space-y-6">
+            {preview.pages.map((bp, idx) => (
+              <div key={idx} className="p-4 border border-border-custom rounded-xl space-y-4 relative">
+                <button
+                  onClick={() => setPreview((p) => ({ ...p, pages: p.pages.filter((_, i) => i !== idx) }))}
+                  className="absolute top-3 right-3 text-red-500 hover:text-red-600 cursor-pointer"
+                  aria-label="Remove page spread"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                </button>
+                <p className="text-[10px] font-mono uppercase text-[#dfb15b] font-bold">Spread {idx + 1}</p>
+
+                <div className="space-y-2 pb-3 border-b border-border-custom/50">
+                  <p className="text-[9px] font-mono uppercase text-stone-400 font-bold">Left Page</p>
+                  <Field label="Eyebrow Header">
+                    <TextInput
+                      value={bp.left.header}
+                      onChange={(e) => setPreview((p) => {
+                        const next = [...p.pages];
+                        next[idx] = { ...next[idx], left: { ...next[idx].left, header: e.target.value } };
+                        return { ...p, pages: next };
+                      })}
+                    />
+                  </Field>
+                  <Field label="Title (optional)">
+                    <TextInput
+                      value={bp.left.title || ""}
+                      onChange={(e) => setPreview((p) => {
+                        const next = [...p.pages];
+                        next[idx] = { ...next[idx], left: { ...next[idx].left, title: e.target.value } };
+                        return { ...p, pages: next };
+                      })}
+                    />
+                  </Field>
+                  <Field label="Subtitle (optional)">
+                    <TextInput
+                      value={bp.left.subtitle || ""}
+                      onChange={(e) => setPreview((p) => {
+                        const next = [...p.pages];
+                        next[idx] = { ...next[idx], left: { ...next[idx].left, subtitle: e.target.value } };
+                        return { ...p, pages: next };
+                      })}
+                    />
+                  </Field>
+                  <StringListEditor
+                    label="Paragraphs"
+                    items={bp.left.content}
+                    onChange={(items) => setPreview((p) => {
+                      const next = [...p.pages];
+                      next[idx] = { ...next[idx], left: { ...next[idx].left, content: items } };
+                      return { ...p, pages: next };
+                    })}
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <p className="text-[9px] font-mono uppercase text-stone-400 font-bold">Right Page</p>
+                  <Field label="Eyebrow Header">
+                    <TextInput
+                      value={bp.right.header}
+                      onChange={(e) => setPreview((p) => {
+                        const next = [...p.pages];
+                        next[idx] = { ...next[idx], right: { ...next[idx].right, header: e.target.value } };
+                        return { ...p, pages: next };
+                      })}
+                    />
+                  </Field>
+                  <StringListEditor
+                    label="Paragraphs"
+                    items={bp.right.content}
+                    onChange={(items) => setPreview((p) => {
+                      const next = [...p.pages];
+                      next[idx] = { ...next[idx], right: { ...next[idx].right, content: items } };
+                      return { ...p, pages: next };
+                    })}
+                  />
+                  <Field label="Footer (e.g. Page 1 of 4)">
+                    <TextInput
+                      value={bp.right.footer || ""}
+                      onChange={(e) => setPreview((p) => {
+                        const next = [...p.pages];
+                        next[idx] = { ...next[idx], right: { ...next[idx].right, footer: e.target.value } };
+                        return { ...p, pages: next };
+                      })}
+                    />
+                  </Field>
+                </div>
+              </div>
+            ))}
+            <button
+              onClick={() => setPreview((p) => ({
+                ...p,
+                pages: [...p.pages, {
+                  left: { header: "", title: "", subtitle: "", content: [] },
+                  right: { header: "", content: [], footer: "" }
+                }]
+              }))}
+              className="px-3 py-2 rounded-lg border border-dashed border-border-custom text-xs flex items-center gap-2 cursor-pointer hover:bg-black/5 dark:hover:bg-white/5"
+            >
+              <Plus className="w-3.5 h-3.5" /> Add Page Spread
+            </button>
+          </div>
+
+          <SaveButton onClick={savePreview} saved={savedFlag === "preview"} />
+        </div>
+      )}
+
+      {/* RESOURCES PAGE */}
+      {subTab === "resources" && (
+        <div className="space-y-6 max-w-2xl">
+          <h3 className="font-serif text-base text-foreground font-bold">Page Header</h3>
+          <Field label="Badge Text"><TextInput value={resources.header_badge} onChange={(e) => setResources((p) => ({ ...p, header_badge: e.target.value }))} /></Field>
+          <Field label="Title"><TextInput value={resources.header_title} onChange={(e) => setResources((p) => ({ ...p, header_title: e.target.value }))} /></Field>
+          <Field label="Subtitle"><TextArea rows={2} value={resources.header_subtitle} onChange={(e) => setResources((p) => ({ ...p, header_subtitle: e.target.value }))} /></Field>
+
+          <h3 className="font-serif text-base text-foreground font-bold pt-4 border-t border-border-custom/50">Guides List Heading</h3>
+          <Field label="Section Heading"><TextInput value={resources.section_heading} onChange={(e) => setResources((p) => ({ ...p, section_heading: e.target.value }))} /></Field>
+
+          <h3 className="font-serif text-base text-foreground font-bold pt-4 border-t border-border-custom/50">Unlock Sidebar</h3>
+          <Field label="Heading"><TextInput value={resources.sidebar_heading} onChange={(e) => setResources((p) => ({ ...p, sidebar_heading: e.target.value }))} /></Field>
+          <Field label="Description"><TextArea rows={2} value={resources.sidebar_desc} onChange={(e) => setResources((p) => ({ ...p, sidebar_desc: e.target.value }))} /></Field>
+          <Field label="Info Footnote"><TextArea rows={2} value={resources.sidebar_info} onChange={(e) => setResources((p) => ({ ...p, sidebar_info: e.target.value }))} /></Field>
+
+          <h3 className="font-serif text-base text-foreground font-bold pt-4 border-t border-border-custom/50">Interactive Worksheets Section</h3>
+          <Field label="Badge Text"><TextInput value={resources.worksheets_badge} onChange={(e) => setResources((p) => ({ ...p, worksheets_badge: e.target.value }))} /></Field>
+          <Field label="Heading"><TextInput value={resources.worksheets_heading} onChange={(e) => setResources((p) => ({ ...p, worksheets_heading: e.target.value }))} /></Field>
+          <Field label="Subtext"><TextArea rows={2} value={resources.worksheets_subtitle} onChange={(e) => setResources((p) => ({ ...p, worksheets_subtitle: e.target.value }))} /></Field>
+          <Field label="Locked-State Title"><TextInput value={resources.worksheets_locked_title} onChange={(e) => setResources((p) => ({ ...p, worksheets_locked_title: e.target.value }))} /></Field>
+          <Field label="Locked-State Description"><TextArea rows={2} value={resources.worksheets_locked_desc} onChange={(e) => setResources((p) => ({ ...p, worksheets_locked_desc: e.target.value }))} /></Field>
+
+          <h3 className="font-serif text-base text-foreground font-bold pt-4 border-t border-border-custom/50">Downloadable Guides</h3>
+          <div className="space-y-4">
+            {resources.resources.map((res, idx) => (
+              <div key={res.id} className="p-4 border border-border-custom rounded-xl space-y-3 relative">
+                <button
+                  onClick={() => setResources((p) => ({ ...p, resources: p.resources.filter((_, i) => i !== idx) }))}
+                  className="absolute top-3 right-3 text-red-500 hover:text-red-600 cursor-pointer"
+                  aria-label="Remove resource"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                </button>
+                <Field label="Name">
+                  <TextInput
+                    value={res.name}
+                    onChange={(e) => setResources((p) => {
+                      const next = [...p.resources];
+                      next[idx] = { ...next[idx], name: e.target.value };
+                      return { ...p, resources: next };
+                    })}
+                  />
+                </Field>
+                <Field label="Description">
+                  <TextArea
+                    rows={2}
+                    value={res.desc}
+                    onChange={(e) => setResources((p) => {
+                      const next = [...p.resources];
+                      next[idx] = { ...next[idx], desc: e.target.value };
+                      return { ...p, resources: next };
+                    })}
+                  />
+                </Field>
+                <div className="grid grid-cols-2 gap-3">
+                  <Field label="File Type Label">
+                    <TextInput
+                      value={res.fileType}
+                      onChange={(e) => setResources((p) => {
+                        const next = [...p.resources];
+                        next[idx] = { ...next[idx], fileType: e.target.value };
+                        return { ...p, resources: next };
+                      })}
+                    />
+                  </Field>
+                  <Field label="File Size Label">
+                    <TextInput
+                      value={res.fileSize}
+                      onChange={(e) => setResources((p) => {
+                        const next = [...p.resources];
+                        next[idx] = { ...next[idx], fileSize: e.target.value };
+                        return { ...p, resources: next };
+                      })}
+                    />
+                  </Field>
+                </div>
+                <label className="flex items-center gap-2 text-xs cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={res.isPremium}
+                    onChange={(e) => setResources((p) => {
+                      const next = [...p.resources];
+                      next[idx] = { ...next[idx], isPremium: e.target.checked };
+                      return { ...p, resources: next };
+                    })}
+                    className="w-4 h-4 cursor-pointer"
+                  />
+                  Premium (requires email unlock)
+                </label>
+                <UploadField
+                  label="Resource File"
+                  currentUrl={res.fileUrl}
+                  accept=".pdf,.xlsx,.zip,.doc,.docx"
+                  uploading={uploadingResource === idx}
+                  onFile={(file) => handleResourceFileUpload(idx, file)}
+                  hint="Uploading replaces the file this card links to."
+                />
+              </div>
+            ))}
+            <button
+              onClick={() => setResources((p) => ({
+                ...p,
+                resources: [...p.resources, { id: `res-${Date.now()}`, name: "", desc: "", fileType: "PDF Document", fileSize: "", isPremium: false, fileUrl: "" }]
+              }))}
+              className="px-3 py-2 rounded-lg border border-dashed border-border-custom text-xs flex items-center gap-2 cursor-pointer hover:bg-black/5 dark:hover:bg-white/5"
+            >
+              <Plus className="w-3.5 h-3.5" /> Add Resource
+            </button>
+          </div>
+
+          <SaveButton onClick={saveResources} saved={savedFlag === "resources"} />
+        </div>
+      )}
+
+      {/* EVENTS PAGE HEADER */}
+      {subTab === "events" && (
+        <div className="space-y-6 max-w-2xl">
+          <p className="text-[11px] text-muted-text -mt-2">
+            The event schedule itself is managed under the "Manage Content" tab. This only controls the page's static header and sidebar copy.
+          </p>
+          <h3 className="font-serif text-base text-foreground font-bold">Page Header</h3>
+          <Field label="Badge Text"><TextInput value={eventsPage.header_badge} onChange={(e) => setEventsPage((p) => ({ ...p, header_badge: e.target.value }))} /></Field>
+          <Field label="Title"><TextInput value={eventsPage.header_title} onChange={(e) => setEventsPage((p) => ({ ...p, header_title: e.target.value }))} /></Field>
+          <Field label="Subtitle"><TextArea rows={2} value={eventsPage.header_subtitle} onChange={(e) => setEventsPage((p) => ({ ...p, header_subtitle: e.target.value }))} /></Field>
+
+          <h3 className="font-serif text-base text-foreground font-bold pt-4 border-t border-border-custom/50">Schedule List Heading</h3>
+          <Field label="Section Heading"><TextInput value={eventsPage.schedule_heading} onChange={(e) => setEventsPage((p) => ({ ...p, schedule_heading: e.target.value }))} /></Field>
+
+          <h3 className="font-serif text-base text-foreground font-bold pt-4 border-t border-border-custom/50">RSVP Sidebar</h3>
+          <Field label="Heading"><TextInput value={eventsPage.sidebar_heading} onChange={(e) => setEventsPage((p) => ({ ...p, sidebar_heading: e.target.value }))} /></Field>
+          <Field label="Description"><TextArea rows={2} value={eventsPage.sidebar_desc} onChange={(e) => setEventsPage((p) => ({ ...p, sidebar_desc: e.target.value }))} /></Field>
+
+          <SaveButton onClick={saveEventsPage} saved={savedFlag === "events"} />
+        </div>
+      )}
+
+      {/* REVIEWS PAGE HEADER */}
+      {subTab === "reviews" && (
+        <div className="space-y-6 max-w-2xl">
+          <p className="text-[11px] text-muted-text -mt-2">
+            The review list itself is managed under the "Manage Content" tab (moderation queue). This only controls the page's static header and sidebar copy.
+          </p>
+          <h3 className="font-serif text-base text-foreground font-bold">Page Header</h3>
+          <Field label="Badge Text"><TextInput value={reviewsPage.header_badge} onChange={(e) => setReviewsPage((p) => ({ ...p, header_badge: e.target.value }))} /></Field>
+          <Field label="Title"><TextInput value={reviewsPage.header_title} onChange={(e) => setReviewsPage((p) => ({ ...p, header_title: e.target.value }))} /></Field>
+          <Field label="Subtitle"><TextArea rows={2} value={reviewsPage.header_subtitle} onChange={(e) => setReviewsPage((p) => ({ ...p, header_subtitle: e.target.value }))} /></Field>
+
+          <h3 className="font-serif text-base text-foreground font-bold pt-4 border-t border-border-custom/50">Write-a-Review Sidebar</h3>
+          <Field label="Heading"><TextInput value={reviewsPage.sidebar_heading} onChange={(e) => setReviewsPage((p) => ({ ...p, sidebar_heading: e.target.value }))} /></Field>
+          <Field label="Description"><TextArea rows={2} value={reviewsPage.sidebar_desc} onChange={(e) => setReviewsPage((p) => ({ ...p, sidebar_desc: e.target.value }))} /></Field>
+
+          <SaveButton onClick={saveReviewsPage} saved={savedFlag === "reviews"} />
         </div>
       )}
     </div>

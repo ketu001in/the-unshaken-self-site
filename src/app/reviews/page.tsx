@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import AIChatbot from "@/components/AIChatbot";
 import { Star, MessageSquare, PlusCircle, Check } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import { fetchPageContent } from "@/lib/content";
 
 type Review = {
   id: string;
@@ -17,10 +18,31 @@ type Review = {
   date: string;
 };
 
+type ReviewsPageContent = {
+  header_badge: string;
+  header_title: string;
+  header_subtitle: string;
+  sidebar_heading: string;
+  sidebar_desc: string;
+};
+
+const DEFAULT_REVIEWS_PAGE_CONTENT: ReviewsPageContent = {
+  header_badge: "Reader Endorsements",
+  header_title: "Reviews & Endorsements",
+  header_subtitle: "Read professional assessments, scholar reviews, and feedback from early reader groups. Or share your own preview reflections.",
+  sidebar_heading: "Share Your Thoughts",
+  sidebar_desc: "If you have read Chapter 1 in the preview, write a short reflection. Submissions are reviewed before they appear publicly.",
+};
+
 export default function ReviewsPage() {
   const [filter, setFilter] = useState<"all" | "professional" | "reader" | "celebrity">("all");
   const [sortBy, setSortBy] = useState<"newest" | "highest">("newest");
-  
+  const [content, setContent] = useState<ReviewsPageContent>(DEFAULT_REVIEWS_PAGE_CONTENT);
+
+  useEffect(() => {
+    fetchPageContent("reviews", DEFAULT_REVIEWS_PAGE_CONTENT).then(setContent);
+  }, []);
+
   // Form State
   const [name, setName] = useState("");
   const [role, setRole] = useState("");
@@ -155,13 +177,13 @@ export default function ReviewsPage() {
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(223,177,91,0.03)_0%,transparent_70%)] pointer-events-none" />
         <div className="max-w-4xl mx-auto space-y-4 relative z-10">
           <span className="text-[10px] tracking-[0.3em] text-[#b5924b] dark:text-[#dfb15b] uppercase font-bold">
-            Reader Endorsements
+            {content.header_badge}
           </span>
           <h1 className="text-4xl sm:text-5xl font-serif text-foreground leading-tight">
-            Reviews & Endorsements
+            {content.header_title}
           </h1>
           <p className="text-xs sm:text-sm font-light text-stone-500 dark:text-stone-400 max-w-xl mx-auto leading-relaxed">
-            Read professional assessments, scholar reviews, and feedback from early reader groups. Or share your own preview reflections.
+            {content.header_subtitle}
           </p>
         </div>
       </header>
@@ -271,10 +293,10 @@ export default function ReviewsPage() {
             <div className="space-y-2">
               <h3 className="font-serif text-base text-foreground font-semibold flex items-center gap-2">
                 <PlusCircle className="w-5 h-5 text-[#dfb15b]" />
-                <span>Share Your Thoughts</span>
+                <span>{content.sidebar_heading}</span>
               </h3>
               <p className="text-[11px] font-light text-stone-500 leading-relaxed">
-                If you have read Chapter 1 in the preview, write a short reflection. Submissions are reviewed before they appear publicly.
+                {content.sidebar_desc}
               </p>
             </div>
 
