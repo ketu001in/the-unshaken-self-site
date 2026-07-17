@@ -23,6 +23,9 @@ type HomepageContent = {
   why_heading: string;
   why_paragraphs: string[];
   why_quote: string;
+  author_badge_title: string;
+  author_badge_tags: string;
+  author_brief: string;
   testimonials: Testimonial[];
 };
 
@@ -40,6 +43,9 @@ const DEFAULT_HOMEPAGE_CONTENT: HomepageContent = {
     "The Unshaken Self takes KETUL SHAH's years of scriptural study and converts the Gita's 18 chapters into a mental toolkit. It details how to perform action without burnouts, handle stress with grace, and live a life grounded in presence."
   ],
   why_quote: "An unshaken self is not one that avoids the storm, but one that remains still at the center of it.",
+  author_badge_title: "Author - The Unshaken Self",
+  author_badge_tags: "Spiritual Curious / Avid Reader / Writer",
+  author_brief: "Ketul Shah is a dedicated Vedic philosophy explorer and professional counselor. Driven by a mission to bridge traditional Eastern spirituality with contemporary cognitive therapy, Ketul spent the last seven years studying the Bhagavad Gita's psychological implications. His upcoming book, *The Unshaken Self*, translates Vedic insights into practical mental exercises tailored for people working under extreme pressure.",
   testimonials: [
     { quote: "Ketul Shah has achieved something remarkable—taking a 5,000-year-old dialogue and showing exactly how it can save you from burnout at work. Essential reading for the modern professional.", author: "Dr. Ananya Rao", role: "Mindfulness Researcher & Psychologist", rating: 5 },
     { quote: "The Unshaken Self is an anchor. In a world full of noise, this book offers the precise psychological framework needed to stay calm, focused, and steady.", author: "Vikram Malhotra", role: "Founder, Peak Performance Labs", rating: 5 },
@@ -463,6 +469,11 @@ export default function SiteEditor() {
           <Field label="Heading"><TextInput value={homepage.why_heading} onChange={(e) => setHomepage((p) => ({ ...p, why_heading: e.target.value }))} /></Field>
           <StringListEditor label="Paragraphs" items={homepage.why_paragraphs} onChange={(items) => setHomepage((p) => ({ ...p, why_paragraphs: items }))} />
           <Field label="Pull Quote"><TextArea rows={2} value={homepage.why_quote} onChange={(e) => setHomepage((p) => ({ ...p, why_quote: e.target.value }))} /></Field>
+
+          <h3 className="font-serif text-base text-foreground font-bold pt-4 border-t border-border-custom/50">"Meet the Author" Section</h3>
+          <Field label="Portrait Badge — Title Line"><TextInput value={homepage.author_badge_title} onChange={(e) => setHomepage((p) => ({ ...p, author_badge_title: e.target.value }))} /></Field>
+          <Field label="Portrait Badge — Tags Line"><TextInput value={homepage.author_badge_tags} onChange={(e) => setHomepage((p) => ({ ...p, author_badge_tags: e.target.value }))} /></Field>
+          <Field label="Author Brief Paragraph"><TextArea rows={4} value={homepage.author_brief} onChange={(e) => setHomepage((p) => ({ ...p, author_brief: e.target.value }))} /></Field>
 
           <h3 className="font-serif text-base text-foreground font-bold pt-4 border-t border-border-custom/50">Testimonials</h3>
           <div className="space-y-4">

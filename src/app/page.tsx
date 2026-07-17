@@ -27,6 +27,9 @@ type HomepageContent = {
   why_heading: string;
   why_paragraphs: string[];
   why_quote: string;
+  author_badge_title: string;
+  author_badge_tags: string;
+  author_brief: string;
   testimonials: Testimonial[];
 };
 
@@ -44,6 +47,9 @@ const DEFAULT_HOMEPAGE_CONTENT: HomepageContent = {
     "*The Unshaken Self* takes KETUL SHAH's years of scriptural study and converts the Gita's 18 chapters into a mental toolkit. It details how to perform action without burnouts, handle stress with grace, and live a life grounded in presence."
   ],
   why_quote: "An unshaken self is not one that avoids the storm, but one that remains still at the center of it.",
+  author_badge_title: "Author - The Unshaken Self",
+  author_badge_tags: "Spiritual Curious / Avid Reader / Writer",
+  author_brief: "Ketul Shah is a dedicated Vedic philosophy explorer and professional counselor. Driven by a mission to bridge traditional Eastern spirituality with contemporary cognitive therapy, Ketul spent the last seven years studying the Bhagavad Gita's psychological implications. His upcoming book, *The Unshaken Self*, translates Vedic insights into practical mental exercises tailored for people working under extreme pressure.",
   testimonials: [
     { quote: "Ketul Shah has achieved something remarkable—taking a 5,000-year-old dialogue and showing exactly how it can save you from burnout at work. Essential reading for the modern professional.", author: "Dr. Ananya Rao", role: "Mindfulness Researcher & Psychologist", rating: 5 },
     { quote: "The Unshaken Self is an anchor. In a world full of noise, this book offers the precise psychological framework needed to stay calm, focused, and steady.", author: "Vikram Malhotra", role: "Founder, Peak Performance Labs", rating: 5 },
@@ -448,10 +454,10 @@ export default function Home() {
                     Ketul Shah
                   </p>
                   <p className="text-[9px] text-white/90 uppercase font-mono">
-                    Author - The Unshaken Self
+                    {content.author_badge_title}
                   </p>
                   <p className="text-[8px] text-white/75 uppercase font-mono tracking-wide">
-                    Spiritual Curious / Avid Reader / Writer
+                    {content.author_badge_tags}
                   </p>
                 </div>
               </div>
@@ -468,7 +474,7 @@ export default function Home() {
             </h3>
             
             <p className="text-xs sm:text-sm font-light text-stone-600 dark:text-stone-300 leading-relaxed max-w-xl text-justify sm:text-center lg:text-left">
-              Ketul Shah is a dedicated Vedic philosophy explorer and professional counselor. Driven by a mission to bridge traditional Eastern spirituality with contemporary cognitive therapy, Ketul spent the last seven years studying the Bhagavad Gita's psychological implications. His upcoming book, *The Unshaken Self*, translates Vedic insights into practical mental exercises tailored for people working under extreme pressure.
+              {content.author_brief}
             </p>
 
             <div className="flex gap-4">
