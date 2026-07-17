@@ -589,4 +589,9 @@ export default function Home() {
       </section>
 
       {/* AIChatbot widget */}
-      <AIC
+      <AIChatbot />
+
+      <Footer />
+    </div>
+  );
+}

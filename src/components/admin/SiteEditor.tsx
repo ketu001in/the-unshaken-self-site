@@ -684,4 +684,16 @@ export default function SiteEditor() {
               </div>
             ))}
             <button
-              onClick={() => setAboutAuthor((p) => ({ ...p, speaking_topics: [
+              onClick={() => setAboutAuthor((p) => ({ ...p, speaking_topics: [...p.speaking_topics, { title: "", desc: "" }] }))}
+              className="px-3 py-2 rounded-lg border border-dashed border-border-custom text-xs flex items-center gap-2 cursor-pointer hover:bg-black/5 dark:hover:bg-white/5"
+            >
+              <Plus className="w-3.5 h-3.5" /> Add Speaking Topic
+            </button>
+          </div>
+
+          <SaveButton onClick={saveAboutAuthor} saved={savedFlag === "about-author"} />
+        </div>
+      )}
+    </div>
+  );
+}
