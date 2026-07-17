@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { fetchPageContent, fetchSiteSettings, savePageContent, saveSiteSetting } from "@/lib/content";
-import { DEFAULT_SITE_SETTINGS, SiteSettings, ThemeColors, SectionVisibility } from "@/context/SiteSettingsContext";
+import { fetchPageContent, savePageContent, saveSiteSetting } from "@/lib/content";
+import { DEFAULT_SITE_SETTINGS, SiteSettings, ThemeColors, SectionVisibility, useSiteSettings } from "@/context/SiteSettingsContext";
 import { Upload, Plus, Trash2, Save, Check } from "lucide-react";
 
 /* ------------------------------------------------------------------ */
@@ -198,6 +198,10 @@ type SubTab = "general" | "theme" | "homepage" | "about-book" | "about-author";
 export default function SiteEditor() {
   const [subTab, setSubTab] = useState<SubTab>("general");
 
+  // Share the same site_settings source of truth the live site reads from,
+  // so saves here can push a refresh that every page picks up immediately —
+  // no hard reload required to see a new photo, color, or toggle.
+  const { settings: liveSettings, refresh: refreshSiteSettings } = useSiteSettings();
   const [settings, setSettings] = useState<SiteSettings>(DEFAULT_SITE_SETTINGS);
   const [homepage, setHomepage] = useState<HomepageContent>(DEFAULT_HOMEPAGE_CONTENT);
   const [aboutBook, setAboutBook] = useState<AboutBookContent>(DEFAULT_ABOUT_BOOK_CONTENT);
@@ -209,8 +213,13 @@ export default function SiteEditor() {
   const authorPhotoInputRef = useRef<HTMLInputElement>(null);
   const bookCoverInputRef = useRef<HTMLInputElement>(null);
 
+  // Keep the editable copy in sync with the shared context (on initial load,
+  // and again after we trigger a refresh post-save).
   useEffect(() => {
-    fetchSiteSettings(DEFAULT_SITE_SETTINGS).then(setSettings);
+    setSettings(liveSettings);
+  }, [liveSettings]);
+
+  useEffect(() => {
     fetchPageContent("homepage", DEFAULT_HOMEPAGE_CONTENT).then(setHomepage);
     fetchPageContent("about-book", DEFAULT_ABOUT_BOOK_CONTENT).then(setAboutBook);
     fetchPageContent("about-author", DEFAULT_ABOUT_AUTHOR_CONTENT).then(setAboutAuthor);
@@ -228,6 +237,7 @@ export default function SiteEditor() {
       saveSiteSetting("social_instagram", settings.social_instagram),
       saveSiteSetting("footer_tagline", settings.footer_tagline),
     ]);
+    await refreshSiteSettings();
     flashSaved("general");
   };
 
@@ -236,6 +246,7 @@ export default function SiteEditor() {
       saveSiteSetting("theme_colors", settings.theme_colors),
       saveSiteSetting("section_visibility", settings.section_visibility),
     ]);
+    await refreshSiteSettings();
     flashSaved("theme");
   };
 
@@ -268,8 +279,8 @@ export default function SiteEditor() {
       return;
     }
     const key = kind === "author" ? "author_photo_url" : "book_cover_front_url";
-    setSettings((prev) => ({ ...prev, [key]: url } as SiteSettings));
     await saveSiteSetting(key, url);
+    await refreshSiteSettings();
     flashSaved("general");
   };
 
@@ -673,16 +684,4 @@ export default function SiteEditor() {
               </div>
             ))}
             <button
-              onClick={() => setAboutAuthor((p) => ({ ...p, speaking_topics: [...p.speaking_topics, { title: "", desc: "" }] }))}
-              className="px-3 py-2 rounded-lg border border-dashed border-border-custom text-xs flex items-center gap-2 cursor-pointer hover:bg-black/5 dark:hover:bg-white/5"
-            >
-              <Plus className="w-3.5 h-3.5" /> Add Speaking Topic
-            </button>
-          </div>
-
-          <SaveButton onClick={saveAboutAuthor} saved={savedFlag === "about-author"} />
-        </div>
-      )}
-    </div>
-  );
-}
+              onClick={() => setAboutAuthor((p) => ({ ...p, speaking_topics: [

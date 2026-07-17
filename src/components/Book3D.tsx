@@ -2,8 +2,9 @@
 
 import React, { useState } from "react";
 
-export default function Book3D() {
+export default function Book3D({ coverImageUrl }: { coverImageUrl?: string | null }) {
   const [hovered, setHovered] = useState(false);
+  const cover = coverImageUrl || "/book-cover-front.jpg";
 
   return (
     <div className="flex flex-col items-center justify-center select-none">
@@ -29,7 +30,7 @@ export default function Book3D() {
           {/* Front Cover */}
           <div
             className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: "url('/book-cover-front.jpg')" }}
+            style={{ backgroundImage: `url('${cover}')` }}
           />
 
           {/* Spine shadow for a touch of depth (static, no animation) */}

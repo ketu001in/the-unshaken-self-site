@@ -193,7 +193,7 @@ export default function Home() {
 
           {/* Right: 3D Book Graphic */}
           <div className="lg:col-span-5 flex justify-center py-8">
-            <Book3D />
+            <Book3D coverImageUrl={settings.book_cover_front_url} />
           </div>
 
         </div>
@@ -589,9 +589,4 @@ export default function Home() {
       </section>
 
       {/* AIChatbot widget */}
-      <AIChatbot />
-
-      <Footer />
-    </div>
-  );
-}
+      <AIC

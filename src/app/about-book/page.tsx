@@ -172,27 +172,19 @@ export default function AboutBook() {
                   <span>Available Editions</span>
                 </h2>
                 <div className="space-y-4">
-                  <div className="p-5 border border-border-custom rounded-2xl bg-white dark:bg-[#101614] flex justify-between items-center">
-                    <div>
-                      <h4 className="font-serif text-sm font-semibold">Deluxe Collector's Hardcover</h4>
-                      <p className="text-[10px] text-muted-text mt-1">Smyth-sewn, gold-foil stamping, premium paper.</p>
-                    </div>
-                    <span className="text-xs font-mono text-[#dfb15b] font-semibold">$27.99</span>
+                  <div className="p-5 border border-border-custom rounded-2xl bg-white dark:bg-[#101614]">
+                    <h4 className="font-serif text-sm font-semibold">Deluxe Collector's Hardcover</h4>
+                    <p className="text-[10px] text-muted-text mt-1">Smyth-sewn, gold-foil stamping, premium paper.</p>
                   </div>
-                  <div className="p-5 border border-border-custom rounded-2xl bg-white dark:bg-[#101614] flex justify-between items-center">
-                    <div>
-                      <h4 className="font-serif text-sm font-semibold">Standard Paperback</h4>
-                      <p className="text-[10px] text-muted-text mt-1">Lightweight, recycled acid-free cream paper.</p>
-                    </div>
-                    <span className="text-xs font-mono text-[#dfb15b] font-semibold">$15.99</span>
+                  <div className="p-5 border border-border-custom rounded-2xl bg-white dark:bg-[#101614]">
+                    <h4 className="font-serif text-sm font-semibold">Standard Paperback</h4>
+                    <p className="text-[10px] text-muted-text mt-1">Lightweight, recycled acid-free cream paper.</p>
                   </div>
-                  <div className="p-5 border border-border-custom rounded-2xl bg-white dark:bg-[#101614] flex justify-between items-center">
-                    <div>
-                      <h4 className="font-serif text-sm font-semibold">Digital Edition (Kindle / ePub)</h4>
-                      <p className="text-[10px] text-muted-text mt-1">Full bookmarks, adjustable typography, interactive index.</p>
-                    </div>
-                    <span className="text-xs font-mono text-[#dfb15b] font-semibold">$9.99</span>
+                  <div className="p-5 border border-border-custom rounded-2xl bg-white dark:bg-[#101614]">
+                    <h4 className="font-serif text-sm font-semibold">Digital Edition (Kindle / ePub)</h4>
+                    <p className="text-[10px] text-muted-text mt-1">Full bookmarks, adjustable typography, interactive index.</p>
                   </div>
+                  <p className="text-[10px] text-muted-text italic pt-1">Final pricing for each edition will be announced closer to launch.</p>
                 </div>
               </div>
 
@@ -284,3 +276,5 @@ export default function AboutBook() {
     </div>
   );
 }
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                        
