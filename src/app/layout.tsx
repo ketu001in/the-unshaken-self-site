@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Outfit, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/context/ThemeContext";
+import { SiteSettingsProvider } from "@/context/SiteSettingsContext";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -75,7 +76,9 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col transition-colors duration-300">
         <ThemeProvider>
-          {children}
+          <SiteSettingsProvider>
+            {children}
+          </SiteSettingsProvider>
         </ThemeProvider>
       </body>
     </html>

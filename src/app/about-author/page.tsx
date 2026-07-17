@@ -1,56 +1,59 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AIChatbot from "@/components/AIChatbot";
 import { Download, Calendar, Mail, FileText, UserCheck, ShieldAlert, Award, ArrowUpRight } from "lucide-react";
+import { fetchPageContent } from "@/lib/content";
+import { useSiteSettings } from "@/context/SiteSettingsContext";
+
+type TimelineEvent = { year: string; title: string; desc: string };
+type SpeakingTopic = { title: string; desc: string };
+
+type AboutAuthorContent = {
+  bio_paragraphs: string[];
+  mission: string;
+  vision: string;
+  timeline: TimelineEvent[];
+  speaking_topics: SpeakingTopic[];
+};
+
+const DEFAULT_ABOUT_AUTHOR_CONTENT: AboutAuthorContent = {
+  bio_paragraphs: [
+    "KETUL SHAH bridges the high-stakes reality of the modern corporate world with the profound, quiet depths of ancient spiritual wisdom. For the past twenty years, he has built a highly successful career in the fast-paced, demanding Information Technology (IT) industry. Those who cross his path quickly recognise that his most defining achievement is not his extensive professional resume, but the unshakeable inner peace he maintains amidst the constant pressures of corporate life. He is the living embodiment of the principles shared in The Unshaken Self—a modern professional navigating the complexities of the world with a calm, worry-free mind.",
+    "Beyond the boardroom, Ketul is a dedicated student of life and a passionate explorer of Sanatan history. He has spent years diving deeply into the timeless teachings of the Bhagavad Gita, seeking to decode its ancient verses into practical, everyday keys for human happiness. For Ketul, the Gita is not merely a philosophical or historical text; it is a vital, living manual for understanding the immense power of the human mind. By actively applying these foundational principles to his own life, he has mastered the art of fine-tuning his consciousness to live free of tension—a state of being he passionately believes is accessible to everyone.",
+    "This pursuit of harmony extends far beyond his spiritual studies into a rich, vibrant creative life. Ketul is an accomplished polymath with a profound love for the arts. He is a dedicated musician who explores a multitude of genres and plays more than twelve different instruments, finding deep joy and presence in creating and regenerating music.",
+    "This same creative devotion is mirrored in his culinary arts. In the kitchen, Ketul is an award-winning innovator, celebrated for his unique fusion cuisines and his ability to balance complex flavours. His culinary artistry has earned him prestigious accolades, including the \"Hyper Budding Chef\" and \"Creative Chef\" awards. Whether he is tuning an instrument or crafting a new dish, he approaches his passions with the same total presence and devotion that he applies to his spiritual life.",
+    "At the very core of Ketul's existence is a philosophy of total surrender and trust. He navigates his journey by simply moving with the flow of life, accepting whatever the universe presents without doubt, question, or anxiety. He holds a quiet, unbreakable belief that the universe is inherently benevolent—always working in his favour and constantly guiding him closer to the manifestation of his deepest desires and dreams."
+  ],
+  mission: "To democratize ancient Vedic psychology, making it practical and actionable for high-pressure modern careers.",
+  vision: "A society where professional excellence and deep internal peace co-exist, built upon stable self-knowledge.",
+  timeline: [
+    { year: "2017", title: "Vedic Foundations", desc: "Began deep scholarly study of the Prasthanatrayi (Upanishads, Brahma Sutras, and Bhagavad Gita) under traditional Sanskrit tutors in India." },
+    { year: "2019", title: "Synthesis of Therapy & Wisdom", desc: "Founded a private counseling practice. Integrated Cognitive Behavioral Therapy (CBT) frameworks with Eastern mindfulness and Karma Yoga approaches." },
+    { year: "2021", title: "The Book Concept", desc: "Started structuring drafts for The Unshaken Self, conducting qualitative interviews with over 200 corporate executives suffering from severe work fatigue." },
+    { year: "2024", title: "Researching about the book", desc: "Dedicated the year to deep scriptural research, cross-referencing Vedic psychology elements, and structuring the core chapters." },
+    { year: "2026", title: "Launch of The Unshaken Self", desc: "Finalized publishers and designed global launch operations targeting Krishna Janmashtami 2026." }
+  ],
+  speaking_topics: [
+    { title: "Karma Yoga in the Corporate Arena", desc: "How professionals can execute at the highest levels, launch products, and manage teams without developing chronic performance anxiety." },
+    { title: "The Sthitaprajna Framework", desc: "Drawing from Gita Chapter 2 to build a mind that is neither overly elated by success nor crushed by failures." },
+    { title: "Ancient Mindfulness vs. Modern App-based Meditation", desc: "Moving beyond passive breathing exercises to active, cognitive meditation systems outlined in Vedic literature." }
+  ]
+};
 
 export default function AboutAuthor() {
-  
-  const timelineEvents = [
-    {
-      year: "2017",
-      title: "Vedic Foundations",
-      desc: "Began deep scholarly study of the Prasthanatrayi (Upanishads, Brahma Sutras, and Bhagavad Gita) under traditional Sanskrit tutors in India."
-    },
-    {
-      year: "2019",
-      title: "Synthesis of Therapy & Wisdom",
-      desc: "Founded a private counseling practice. Integrated Cognitive Behavioral Therapy (CBT) frameworks with Eastern mindfulness and Karma Yoga approaches."
-    },
-    {
-      year: "2021",
-      title: "The Book Concept",
-      desc: "Started structuring drafts for *The Unshaken Self*, conducting qualitative interviews with over 200 corporate executives suffering from severe work fatigue."
-    },
-    {
-      year: "2024",
-      title: "Researching about the book",
-      desc: "Dedicated the year to deep scriptural research, cross-referencing Vedic psychology elements, and structuring the core chapters."
-    },
-    {
-      year: "2026",
-      title: "Launch of The Unshaken Self",
-      desc: "Finalized publishers and designed global launch operations targeting Krishna Janmashtami 2026."
-    }
-  ];
+  const [content, setContent] = useState<AboutAuthorContent>(DEFAULT_ABOUT_AUTHOR_CONTENT);
+  const { settings } = useSiteSettings();
 
-  const speakingTopics = [
-    {
-      title: "Karma Yoga in the Corporate Arena",
-      desc: "How professionals can execute at the highest levels, launch products, and manage teams without developing chronic performance anxiety."
-    },
-    {
-      title: "The Sthitaprajna Framework",
-      desc: "Drawing from Gita Chapter 2 to build a mind that is neither overly elated by success nor crushed by failures."
-    },
-    {
-      title: "Ancient Mindfulness vs. Modern App-based Meditation",
-      desc: "Moving beyond passive breathing exercises to active, cognitive meditation systems outlined in Vedic literature."
-    }
-  ];
+  useEffect(() => {
+    fetchPageContent("about-author", DEFAULT_ABOUT_AUTHOR_CONTENT).then(setContent);
+  }, []);
+
+  const timelineEvents = content.timeline;
+  const speakingTopics = content.speaking_topics;
 
   const mediaKitAssets = [
     { name: "High-Res Author Portrait", type: "ZIP (JPG)", size: "79 KB", file: "/media-kit/High-Res_Author_Portraits.zip" },
@@ -91,21 +94,9 @@ export default function AboutAuthor() {
             </div>
 
             <div className="space-y-6 text-stone-600 dark:text-stone-300 font-light text-xs sm:text-sm leading-relaxed text-justify">
-              <p>
-                <strong>KETUL SHAH</strong> bridges the high-stakes reality of the modern corporate world with the profound, quiet depths of ancient spiritual wisdom. For the past twenty years, he has built a highly successful career in the fast-paced, demanding Information Technology (IT) industry. Those who cross his path quickly recognise that his most defining achievement is not his extensive professional resume, but the unshakeable inner peace he maintains amidst the constant pressures of corporate life. He is the living embodiment of the principles shared in <em>The Unshaken Self</em>—a modern professional navigating the complexities of the world with a calm, worry-free mind.
-              </p>
-              <p>
-                Beyond the boardroom, Ketul is a dedicated student of life and a passionate explorer of Sanatan history. He has spent years diving deeply into the timeless teachings of the Bhagavad Gita, seeking to decode its ancient verses into practical, everyday keys for human happiness. For Ketul, the Gita is not merely a philosophical or historical text; it is a vital, living manual for understanding the immense power of the human mind. By actively applying these foundational principles to his own life, he has mastered the art of fine-tuning his consciousness to live free of tension—a state of being he passionately believes is accessible to everyone.
-              </p>
-              <p>
-                This pursuit of harmony extends far beyond his spiritual studies into a rich, vibrant creative life. Ketul is an accomplished polymath with a profound love for the arts. He is a dedicated musician who explores a multitude of genres and plays more than twelve different instruments, finding deep joy and presence in creating and regenerating music.
-              </p>
-              <p>
-                This same creative devotion is mirrored in his culinary arts. In the kitchen, Ketul is an award-winning innovator, celebrated for his unique fusion cuisines and his ability to balance complex flavours. His culinary artistry has earned him prestigious accolades, including the <em>"Hyper Budding Chef"</em> and <em>"Creative Chef"</em> awards. Whether he is tuning an instrument or crafting a new dish, he approaches his passions with the same total presence and devotion that he applies to his spiritual life.
-              </p>
-              <p>
-                At the very core of Ketul's existence is a philosophy of total surrender and trust. He navigates his journey by simply moving with the flow of life, accepting whatever the universe presents without doubt, question, or anxiety. He holds a quiet, unbreakable belief that the universe is inherently benevolent—always working in his favour and constantly guiding him closer to the manifestation of his deepest desires and dreams.
-              </p>
+              {content.bio_paragraphs.map((para, idx) => (
+                <p key={idx}>{para}</p>
+              ))}
             </div>
 
             {/* Mission / Vision Cards */}
@@ -113,13 +104,13 @@ export default function AboutAuthor() {
               <div className="p-6 border border-border-custom bg-white dark:bg-[#101614] rounded-2xl space-y-3">
                 <h4 className="font-serif text-sm text-[#dfb15b] font-semibold">The Mission</h4>
                 <p className="text-xs font-light text-stone-500 leading-relaxed">
-                  To democratize ancient Vedic psychology, making it practical and actionable for high-pressure modern careers.
+                  {content.mission}
                 </p>
               </div>
               <div className="p-6 border border-border-custom bg-white dark:bg-[#101614] rounded-2xl space-y-3">
                 <h4 className="font-serif text-sm text-[#dfb15b] font-semibold">The Vision</h4>
                 <p className="text-xs font-light text-stone-500 leading-relaxed">
-                  A society where professional excellence and deep internal peace co-exist, built upon stable self-knowledge.
+                  {content.vision}
                 </p>
               </div>
             </div>
@@ -131,7 +122,7 @@ export default function AboutAuthor() {
               {/* Author Portrait */}
               <div className="aspect-[3/4] max-w-sm mx-auto rounded-xl border border-border-custom relative overflow-hidden bg-stone-100 dark:bg-[#0b100e]">
                 <Image
-                  src="/images/ketul-shah-author.jpg"
+                  src={settings.author_photo_url || "/images/ketul-shah-author.jpg"}
                   alt="Ketul Shah, author of The Unshaken Self"
                   fill
                   sizes="(max-width: 1024px) 100vw, 384px"
@@ -147,14 +138,14 @@ export default function AboutAuthor() {
                 </p>
                 <div className="space-y-3 pt-2">
                   <a
-                    href="mailto:ketu001in@gmail.com"
+                    href={`mailto:${settings.contact_email}`}
                     className="flex items-center space-x-3 text-xs text-[#b5924b] dark:text-[#dfb15b] hover:underline"
                   >
                     <Mail className="w-4 h-4" />
-                    <span>ketu001in@gmail.com</span>
+                    <span>{settings.contact_email}</span>
                   </a>
                   <a
-                    href="https://instagram.com/TheUnshakenselfbyketulshah"
+                    href={settings.social_instagram}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center space-x-3 text-xs text-[#b5924b] dark:text-[#dfb15b] hover:underline"
@@ -297,7 +288,7 @@ export default function AboutAuthor() {
           <div className="pt-6 border-t border-border-custom/50 flex flex-col sm:flex-row items-center justify-between text-xs text-muted-text gap-4">
             <span>Need customized interview responses or custom sizes?</span>
             <a
-              href="mailto:ketu001in@gmail.com"
+              href={`mailto:${settings.contact_email}`}
               className="inline-flex items-center space-x-1 text-[#dfb15b] font-semibold hover:underline"
             >
               <span>Contact Press Relations</span>

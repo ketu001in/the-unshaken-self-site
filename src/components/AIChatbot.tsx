@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { X, Send, Sparkles, Compass, HelpCircle, MessageCircle, ChevronDown, Mail } from "lucide-react";
+import { useSiteSettings } from "@/context/SiteSettingsContext";
 
 type Message = {
   id: string;
@@ -10,7 +11,7 @@ type Message = {
   timestamp: Date;
 };
 
-const CONTACT_EMAIL = "ketu001in@gmail.com";
+const CONTACT_EMAIL_PLACEHOLDER = "{{CONTACT_EMAIL}}";
 
 const faqs: { q: string; a: string }[] = [
   {
@@ -35,11 +36,13 @@ const faqs: { q: string; a: string }[] = [
   },
   {
     q: "How do I contact KETUL SHAH directly?",
-    a: `You can reach out anytime at ${CONTACT_EMAIL} — Ketul personally reads every message.`
+    a: `You can reach out anytime at ${CONTACT_EMAIL_PLACEHOLDER} — Ketul personally reads every message.`
   },
 ];
 
 export default function AIChatbot() {
+  const { settings } = useSiteSettings();
+  const contactEmail = settings.contact_email;
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState("");
@@ -258,14 +261,14 @@ export default function AIChatbot() {
                     {isOpenItem && (
                       <div className="px-3 pb-3 space-y-2.5">
                         <p className="text-[11px] md:text-xs text-stone-600 dark:text-stone-300 leading-relaxed">
-                          {item.a}
+                          {item.a.replace(CONTACT_EMAIL_PLACEHOLDER, contactEmail)}
                         </p>
                         <a
-                          href={`mailto:${CONTACT_EMAIL}`}
+                          href={`mailto:${contactEmail}`}
                           className="inline-flex items-center gap-1.5 text-[10px] font-semibold text-[#dfb15b] hover:underline"
                         >
                           <Mail className="w-3 h-3" />
-                          <span>Still have questions? Email {CONTACT_EMAIL}</span>
+                          <span>Still have questions? Email {contactEmail}</span>
                         </a>
                       </div>
                     )}

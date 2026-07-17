@@ -1,41 +1,68 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AIChatbot from "@/components/AIChatbot";
 import { Check, ShieldAlert, Award, FileText, Globe, Mail, Bell } from "lucide-react";
+import { fetchPageContent } from "@/lib/content";
 
-export default function AboutBook() {
-  const [activeTab, setActiveTab] = useState<"overview" | "specs">("overview");
+type Spec = { label: string; value: string };
 
-  const targetAudience = {
-    shouldRead: [
-      "Professionals facing extreme stress and burnout who need a mental anchor.",
-      "Students struggling with uncertainty, career anxiety, and self-doubt.",
-      "Seekers looking for a non-dogmatic, practical guide to Eastern philosophy.",
-      "Leaders wanting to make decisions with absolute clarity and equanimity.",
-      "Anyone who has tried meditation but struggles to stay calm in real-world situations."
-    ],
-    shouldNotRead: [
-      "Those looking for a theological or dogmatic religious treatise.",
-      "People seeking 'get rich quick' hacks or simple self-help platitudes.",
-      "Anyone unwilling to reflect honestly and implement daily mindfulness practices.",
-      "Those who prefer escaping reality over facing actions directly in daily life."
-    ]
-  };
+type AboutBookContent = {
+  intro_heading: string;
+  paragraphs: string[];
+  should_read: string[];
+  should_not_read: string[];
+  specifications: Spec[];
+};
 
-  const specifications = [
+const DEFAULT_ABOUT_BOOK_CONTENT: AboutBookContent = {
+  intro_heading: "A Modern Guide to an Ancient Battlefield",
+  paragraphs: [
+    "We live in an age of constant speed — bombarded by notifications, overwhelmed by choices, and quietly afraid of falling behind. Five thousand years ago, on the battlefield of Kurukshetra, the warrior Arjuna froze in that exact same way: paralyzed by doubt, grief, and the noise of conflicting duties. In response, Krishna delivered 700 verses of the Bhagavad Gita — not as an escape from life, but as a way to stand steady in the center of it. The Unshaken Self takes KETUL SHAH's years of scriptural research and turns those ancient verses into a modern mental toolkit: how to act without burning out, how to carry stress without being crushed by it, and how to meet each day from a place of quiet strength rather than reactive panic.",
+    "The book is structured as a chapter-by-chapter journey through the Gita's core teachings, pairing each idea with a real, usable practice — like the Three-Breath Pause you can try right now in the free Chapter 1 preview — so the wisdom never just stays on the page. Exactly how those 18 chapters build on one another into a complete framework for an unshaken mind is something we're keeping under wraps until closer to launch. Subscribe or join the pre-order waitlist below, and you'll be the first to see the full chapter map, early excerpts, and launch-week bonuses before anyone else."
+  ],
+  should_read: [
+    "Professionals facing extreme stress and burnout who need a mental anchor.",
+    "Students struggling with uncertainty, career anxiety, and self-doubt.",
+    "Seekers looking for a non-dogmatic, practical guide to Eastern philosophy.",
+    "Leaders wanting to make decisions with absolute clarity and equanimity.",
+    "Anyone who has tried meditation but struggles to stay calm in real-world situations."
+  ],
+  should_not_read: [
+    "Those looking for a theological or dogmatic religious treatise.",
+    "People seeking 'get rich quick' hacks or simple self-help platitudes.",
+    "Anyone unwilling to reflect honestly and implement daily mindfulness practices.",
+    "Those who prefer escaping reality over facing actions directly in daily life."
+  ],
+  specifications: [
     { label: "Book Title", value: "The Unshaken Self: Key Lessons from the Gita for a Life Without Doubt, Worry, and Fear" },
     { label: "Author Name", value: "KETUL SHAH" },
     { label: "Format", value: "Hardcover, Paperback, Kindle, Audiobook" },
     { label: "Page Count", value: "320 pages" },
     { label: "Publisher", value: "Vedic Wisdom Press (International)" },
-    { label: "ISBN-13", value: "978-3-16-148410-0" },
+    { label: "ISBN-13", value: "978-93-6068-721-2" },
     { label: "Dimensions", value: "6.0 x 9.0 inches" },
     { label: "Release Date", value: "September 4, 2026 (Krishna Janmashtami)" }
-  ];
+  ]
+};
+
+export default function AboutBook() {
+  const [activeTab, setActiveTab] = useState<"overview" | "specs">("overview");
+  const [content, setContent] = useState<AboutBookContent>(DEFAULT_ABOUT_BOOK_CONTENT);
+
+  useEffect(() => {
+    fetchPageContent("about-book", DEFAULT_ABOUT_BOOK_CONTENT).then(setContent);
+  }, []);
+
+  const targetAudience = {
+    shouldRead: content.should_read,
+    shouldNotRead: content.should_not_read
+  };
+
+  const specifications = content.specifications;
 
   return (
     <div className="flex-1 flex flex-col pt-16 bg-[#faf8f5] dark:bg-[#070b09]">
@@ -86,16 +113,13 @@ export default function AboutBook() {
           /* BOOK INTRODUCTION TEASER */
           <div className="max-w-3xl mx-auto space-y-8">
             <div className="text-center space-y-2">
-              <h2 className="font-serif text-2xl text-foreground mb-2">A Modern Guide to an Ancient Battlefield</h2>
+              <h2 className="font-serif text-2xl text-foreground mb-2">{content.intro_heading}</h2>
             </div>
 
             <div className="space-y-6 text-sm sm:text-base font-light text-stone-600 dark:text-stone-300 leading-relaxed text-justify sm:text-center">
-              <p>
-                We live in an age of constant speed — bombarded by notifications, overwhelmed by choices, and quietly afraid of falling behind. Five thousand years ago, on the battlefield of Kurukshetra, the warrior Arjuna froze in that exact same way: paralyzed by doubt, grief, and the noise of conflicting duties. In response, Krishna delivered 700 verses of the Bhagavad Gita — not as an escape from life, but as a way to stand steady in the center of it. <em>The Unshaken Self</em> takes KETUL SHAH&apos;s years of scriptural research and turns those ancient verses into a modern mental toolkit: how to act without burning out, how to carry stress without being crushed by it, and how to meet each day from a place of quiet strength rather than reactive panic.
-              </p>
-              <p>
-                The book is structured as a chapter-by-chapter journey through the Gita&apos;s core teachings, pairing each idea with a real, usable practice — like the Three-Breath Pause you can try right now in the free Chapter 1 preview — so the wisdom never just stays on the page. Exactly how those 18 chapters build on one another into a complete framework for an unshaken mind is something we&apos;re keeping under wraps until closer to launch. Subscribe or join the pre-order waitlist below, and you&apos;ll be the first to see the full chapter map, early excerpts, and launch-week bonuses before anyone else.
-              </p>
+              {content.paragraphs.map((p, idx) => (
+                <p key={idx}>{p}</p>
+              ))}
             </div>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">

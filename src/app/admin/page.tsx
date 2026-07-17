@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import AIChatbot from "@/components/AIChatbot";
 import { Users, Calendar, Bell, MessageSquare, Trash2, Award, ArrowUpRight, LogOut, Check, X as XIcon } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import SiteEditor from "@/components/admin/SiteEditor";
 
 type LoggedSubscriber = { id: string; email: string; date: string; source: string };
 type LoggedRSVP = { id: string; eventId: string; eventTitle: string; name: string; email: string; date: string };
@@ -16,7 +17,7 @@ type LoggedReview = { id: string; author: string; role: string; quote: string; r
 export default function AdminDashboard() {
   const router = useRouter();
   const [adminEmail, setAdminEmail] = useState("");
-  const [activeTab, setActiveTab] = useState<"subscribers" | "rsvps" | "waitlist" | "reviews" | "content">("subscribers");
+  const [activeTab, setActiveTab] = useState<"subscribers" | "rsvps" | "waitlist" | "reviews" | "content" | "site">("subscribers");
   const [subscribers, setSubscribers] = useState<LoggedSubscriber[]>([]);
   const [rsvps, setRsvps] = useState<LoggedRSVP[]>([]);
   const [waitlist, setWaitlist] = useState<LoggedWaitlist[]>([]);
@@ -285,7 +286,8 @@ export default function AdminDashboard() {
               { id: "rsvps", label: "RSVPs Calendar" },
               { id: "waitlist", label: "Notify-Me Waitlist" },
               { id: "reviews", label: "Moderate Reviews" },
-              { id: "content", label: "Manage Content" }
+              { id: "content", label: "Manage Content" },
+              { id: "site", label: "Site Editor" }
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -667,6 +669,8 @@ export default function AdminDashboard() {
                 </div>
               </div>
             )}
+
+            {activeTab === "site" && <SiteEditor />}
 
           </div>
         </div>
