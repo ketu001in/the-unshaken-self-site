@@ -31,11 +31,11 @@ export const metadata: Metadata = {
     "Overcoming worry"
   ],
   authors: [{ name: "KETUL SHAH" }],
-  metadataBase: new URL("http://localhost:3000"),
+  metadataBase: new URL("https://the-unshaken-self-site-hcp1.vercel.app"),
   openGraph: {
     title: "The Unshaken Self | KETUL SHAH",
     description: "Key Lessons from the Gita for a Life Without Doubt, Worry, and Fear.",
-    url: "https://theunshakenself.com",
+    url: "https://the-unshaken-self-site-hcp1.vercel.app",
     siteName: "The Unshaken Self",
     images: [
       {
