@@ -4,8 +4,10 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
-  ChevronRight, Sparkles, BookOpen, Quote, Shield, Compass, Brain, Feather, ChevronDown, X
+  ChevronRight, Sparkles, BookOpen, Quote, Shield, Compass, Brain, Feather, ChevronDown, X,
+  Award, Heart, Star, Sun, Moon, Flame, Anchor, Target
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Book3D from "@/components/Book3D";
@@ -15,7 +17,15 @@ import { createClient } from "@/lib/supabase/client";
 import { fetchPageContent } from "@/lib/content";
 import { useSiteSettings } from "@/context/SiteSettingsContext";
 
+// Chapter icons are stored as string keys in content (JSON can't hold a
+// component reference), then resolved to a real icon here at render time.
+const CHAPTER_ICON_MAP: Record<string, LucideIcon> = {
+  Shield, Compass, Brain, Feather, Sparkles, BookOpen, Award, Heart, Star, Sun, Moon, Flame, Anchor, Target
+};
+
 type Testimonial = { quote: string; author: string; role: string; rating: number };
+type Chapter = { num: number; title: string; theme: string; desc: string; icon: string };
+type Faq = { q: string; a: string };
 
 type HomepageContent = {
   hero_badge: string;
@@ -31,6 +41,8 @@ type HomepageContent = {
   author_badge_tags: string;
   author_brief: string;
   testimonials: Testimonial[];
+  chapters: Chapter[];
+  faqs: Faq[];
 };
 
 const DEFAULT_HOMEPAGE_CONTENT: HomepageContent = {
@@ -54,6 +66,20 @@ const DEFAULT_HOMEPAGE_CONTENT: HomepageContent = {
     { quote: "Ketul Shah has achieved something remarkable—taking a 5,000-year-old dialogue and showing exactly how it can save you from burnout at work. Essential reading for the modern professional.", author: "Dr. Ananya Rao", role: "Mindfulness Researcher & Psychologist", rating: 5 },
     { quote: "The Unshaken Self is an anchor. In a world full of noise, this book offers the precise psychological framework needed to stay calm, focused, and steady.", author: "Vikram Malhotra", role: "Founder, Peak Performance Labs", rating: 5 },
     { quote: "Brilliant, practical, and deeply moving. The chapter on Karma Yoga alone completely altered how I approach product launches and failure.", author: "Siddharth Mehta", role: "Tech Entrepreneur & Book Club Host", rating: 5 }
+  ],
+  chapters: [
+    { num: 1, title: "Mastering Inner Doubt", theme: "Arjuna Vishada Yoga", desc: "How to face anxiety and imposter syndrome when standing before major life transitions.", icon: "Shield" },
+    { num: 2, title: "The Unshaken Center", theme: "Sankhya Yoga", desc: "Cultivating intellectual stability and recognizing the permanent self within.", icon: "Compass" },
+    { num: 3, title: "Action without Anxiety", theme: "Karma Yoga", desc: "The art of performing work with 100% effort while detaching from expectations and results.", icon: "Brain" },
+    { num: 6, title: "Calming the Mental Storm", theme: "Dhyana Yoga", desc: "Practical breathwork and mindfulness guidelines for training a hyper-active mind.", icon: "Feather" },
+    { num: 12, title: "Accepting Life's Rhythm", theme: "Bhakti Yoga", desc: "Developing emotional resilience and surrender in the face of uncontrollable events.", icon: "Sparkles" },
+    { num: 16, title: "Cultivating Divine Habit", theme: "Daivasura Sampad Yoga", desc: "Establishing integrity, self-discipline, and wisdom in everyday actions.", icon: "BookOpen" }
+  ],
+  faqs: [
+    { q: "What makes this book different from traditional translations of the Bhagavad Gita?", a: "Rather than focusing purely on literal translation or theological debates, *The Unshaken Self* acts as a practical handbook. It takes the philosophical essence of all 18 chapters and translates them into actionable exercises—like morning journaling, breath practices, and detached goal planning—built specifically for 2026's busy, high-stress lifestyle." },
+    { q: "When is the launch date and what are the launch phases?", a: "The planned launch is on the eve of Krishna Janmashtami (September 4–5, 2026). Currently, we are in the Pre-Launch phase. Pre-ordering grants you immediate access to Chapter 1, workbook PDFs, and an invite to a private Q&A session with KETUL SHAH. The Launch phase will release the full book/audiobook, followed by Post-Launch workshops." },
+    { q: "Where will the book be available to purchase?", a: "The book will be available globally in hardcover, paperback, kindle, and audiobook formats. Direct links will include Amazon, Flipkart, and leading local bookstore platforms. You can check our preorder page for live price comparisons." },
+    { q: "How does the AI Gita Companion work?", a: "The floating widget at the bottom right represents the AI Gita Companion. It acts as an interactive assistant trained on the chapters of the book. You can query it on topics like 'handling work stress' or 'finding focus', and it will retrieve practical counsel matching the Gita's teachings." }
   ]
 };
 
@@ -71,69 +97,8 @@ export default function Home() {
     setActiveFaq(activeFaq === index ? null : index);
   };
 
-  const gitaChapters = [
-    {
-      num: 1,
-      title: "Mastering Inner Doubt",
-      theme: "Arjuna Vishada Yoga",
-      desc: "How to face anxiety and imposter syndrome when standing before major life transitions.",
-      icon: Shield
-    },
-    {
-      num: 2,
-      title: "The Unshaken Center",
-      theme: "Sankhya Yoga",
-      desc: "Cultivating intellectual stability and recognizing the permanent self within.",
-      icon: Compass
-    },
-    {
-      num: 3,
-      title: "Action without Anxiety",
-      theme: "Karma Yoga",
-      desc: "The art of performing work with 100% effort while detaching from expectations and results.",
-      icon: Brain
-    },
-    {
-      num: 6,
-      title: "Calming the Mental Storm",
-      theme: "Dhyana Yoga",
-      desc: "Practical breathwork and mindfulness guidelines for training a hyper-active mind.",
-      icon: Feather
-    },
-    {
-      num: 12,
-      title: "Accepting Life's Rhythm",
-      theme: "Bhakti Yoga",
-      desc: "Developing emotional resilience and surrender in the face of uncontrollable events.",
-      icon: Sparkles
-    },
-    {
-      num: 16,
-      title: "Cultivating Divine Habit",
-      theme: "Daivasura Sampad Yoga",
-      desc: "Establishing integrity, self-discipline, and wisdom in everyday actions.",
-      icon: BookOpen
-    }
-  ];
-
-  const faqs = [
-    {
-      q: "What makes this book different from traditional translations of the Bhagavad Gita?",
-      a: "Rather than focusing purely on literal translation or theological debates, *The Unshaken Self* acts as a practical handbook. It takes the philosophical essence of all 18 chapters and translates them into actionable exercises—like morning journaling, breath practices, and detached goal planning—built specifically for 2026's busy, high-stress lifestyle."
-    },
-    {
-      q: "When is the launch date and what are the launch phases?",
-      a: "The planned launch is on the eve of Krishna Janmashtami (September 4–5, 2026). Currently, we are in the Pre-Launch phase. Pre-ordering grants you immediate access to Chapter 1, workbook PDFs, and an invite to a private Q&A session with KETUL SHAH. The Launch phase will release the full book/audiobook, followed by Post-Launch workshops."
-    },
-    {
-      q: "Where will the book be available to purchase?",
-      a: "The book will be available globally in hardcover, paperback, kindle, and audiobook formats. Direct links will include Amazon, Flipkart, and leading local bookstore platforms. You can check our preorder page for live price comparisons."
-    },
-    {
-      q: "How does the AI Gita Companion work?",
-      a: "The floating widget at the bottom right represents the AI Gita Companion. It acts as an interactive assistant trained on the chapters of the book. You can query it on topics like 'handling work stress' or 'finding focus', and it will retrieve practical counsel matching the Gita's teachings."
-    }
-  ];
+  const gitaChapters = content.chapters;
+  const faqs = content.faqs;
 
   return (
     <div className="flex-1 flex flex-col pt-16">
@@ -260,16 +225,18 @@ export default function Home() {
 
           {/* Grid Layout */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {gitaChapters.map((ch) => (
-              <div 
-                key={ch.num} 
+            {gitaChapters.map((ch) => {
+              const ChapterIcon = CHAPTER_ICON_MAP[ch.icon] || BookOpen;
+              return (
+              <div
+                key={ch.num}
                 className="bg-white dark:bg-[#101614] rounded-3xl p-8 border border-border-custom flex flex-col justify-between premium-card-hover shadow-sm"
               >
                 <div className="space-y-6">
                   {/* Icon & Chapter Number */}
                   <div className="flex justify-between items-center">
                     <div className="w-12 h-12 rounded-xl bg-[#1e3f20]/5 dark:bg-[#dfb15b]/10 flex items-center justify-center text-primary dark:text-[#dfb15b]">
-                      <ch.icon className="w-5 h-5" />
+                      <ChapterIcon className="w-5 h-5" />
                     </div>
                     <span className="font-mono text-xs text-muted-text font-bold uppercase tracking-widest">
                       Ch. {ch.num}
@@ -301,7 +268,8 @@ export default function Home() {
                   </Link>
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
 
         </div>

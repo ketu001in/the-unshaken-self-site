@@ -12,6 +12,14 @@ import { Upload, Plus, Trash2, Save, Check } from "lucide-react";
 /* ------------------------------------------------------------------ */
 
 type Testimonial = { quote: string; author: string; role: string; rating: number };
+type Chapter = { num: number; title: string; theme: string; desc: string; icon: string };
+type Faq = { q: string; a: string };
+
+// Must match CHAPTER_ICON_MAP in src/app/page.tsx.
+const CHAPTER_ICON_OPTIONS = [
+  "Shield", "Compass", "Brain", "Feather", "Sparkles", "BookOpen",
+  "Award", "Heart", "Star", "Sun", "Moon", "Flame", "Anchor", "Target"
+];
 
 type HomepageContent = {
   hero_badge: string;
@@ -27,6 +35,8 @@ type HomepageContent = {
   author_badge_tags: string;
   author_brief: string;
   testimonials: Testimonial[];
+  chapters: Chapter[];
+  faqs: Faq[];
 };
 
 const DEFAULT_HOMEPAGE_CONTENT: HomepageContent = {
@@ -50,6 +60,20 @@ const DEFAULT_HOMEPAGE_CONTENT: HomepageContent = {
     { quote: "Ketul Shah has achieved something remarkable—taking a 5,000-year-old dialogue and showing exactly how it can save you from burnout at work. Essential reading for the modern professional.", author: "Dr. Ananya Rao", role: "Mindfulness Researcher & Psychologist", rating: 5 },
     { quote: "The Unshaken Self is an anchor. In a world full of noise, this book offers the precise psychological framework needed to stay calm, focused, and steady.", author: "Vikram Malhotra", role: "Founder, Peak Performance Labs", rating: 5 },
     { quote: "Brilliant, practical, and deeply moving. The chapter on Karma Yoga alone completely altered how I approach product launches and failure.", author: "Siddharth Mehta", role: "Tech Entrepreneur & Book Club Host", rating: 5 }
+  ],
+  chapters: [
+    { num: 1, title: "Mastering Inner Doubt", theme: "Arjuna Vishada Yoga", desc: "How to face anxiety and imposter syndrome when standing before major life transitions.", icon: "Shield" },
+    { num: 2, title: "The Unshaken Center", theme: "Sankhya Yoga", desc: "Cultivating intellectual stability and recognizing the permanent self within.", icon: "Compass" },
+    { num: 3, title: "Action without Anxiety", theme: "Karma Yoga", desc: "The art of performing work with 100% effort while detaching from expectations and results.", icon: "Brain" },
+    { num: 6, title: "Calming the Mental Storm", theme: "Dhyana Yoga", desc: "Practical breathwork and mindfulness guidelines for training a hyper-active mind.", icon: "Feather" },
+    { num: 12, title: "Accepting Life's Rhythm", theme: "Bhakti Yoga", desc: "Developing emotional resilience and surrender in the face of uncontrollable events.", icon: "Sparkles" },
+    { num: 16, title: "Cultivating Divine Habit", theme: "Daivasura Sampad Yoga", desc: "Establishing integrity, self-discipline, and wisdom in everyday actions.", icon: "BookOpen" }
+  ],
+  faqs: [
+    { q: "What makes this book different from traditional translations of the Bhagavad Gita?", a: "Rather than focusing purely on literal translation or theological debates, *The Unshaken Self* acts as a practical handbook. It takes the philosophical essence of all 18 chapters and translates them into actionable exercises—like morning journaling, breath practices, and detached goal planning—built specifically for 2026's busy, high-stress lifestyle." },
+    { q: "When is the launch date and what are the launch phases?", a: "The planned launch is on the eve of Krishna Janmashtami (September 4–5, 2026). Currently, we are in the Pre-Launch phase. Pre-ordering grants you immediate access to Chapter 1, workbook PDFs, and an invite to a private Q&A session with KETUL SHAH. The Launch phase will release the full book/audiobook, followed by Post-Launch workshops." },
+    { q: "Where will the book be available to purchase?", a: "The book will be available globally in hardcover, paperback, kindle, and audiobook formats. Direct links will include Amazon, Flipkart, and leading local bookstore platforms. You can check our preorder page for live price comparisons." },
+    { q: "How does the AI Gita Companion work?", a: "The floating widget at the bottom right represents the AI Gita Companion. It acts as an interactive assistant trained on the chapters of the book. You can query it on topics like 'handling work stress' or 'finding focus', and it will retrieve practical counsel matching the Gita's teachings." }
   ]
 };
 
@@ -645,6 +669,128 @@ export default function SiteEditor() {
               className="px-3 py-2 rounded-lg border border-dashed border-border-custom text-xs flex items-center gap-2 cursor-pointer hover:bg-black/5 dark:hover:bg-white/5"
             >
               <Plus className="w-3.5 h-3.5" /> Add Testimonial
+            </button>
+          </div>
+
+          <h3 className="font-serif text-base text-foreground font-bold pt-4 border-t border-border-custom/50">18-Chapters Preview Grid</h3>
+          <div className="space-y-4">
+            {homepage.chapters.map((ch, idx) => (
+              <div key={idx} className="p-4 border border-border-custom rounded-xl space-y-2 relative">
+                <button
+                  onClick={() => setHomepage((p) => ({ ...p, chapters: p.chapters.filter((_, i) => i !== idx) }))}
+                  className="absolute top-3 right-3 text-red-500 hover:text-red-600 cursor-pointer"
+                  aria-label="Remove chapter"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                </button>
+                <div className="grid grid-cols-3 gap-3">
+                  <Field label="Chapter #">
+                    <TextInput
+                      type="number"
+                      value={ch.num}
+                      onChange={(e) => setHomepage((p) => {
+                        const next = [...p.chapters];
+                        next[idx] = { ...next[idx], num: Number(e.target.value) };
+                        return { ...p, chapters: next };
+                      })}
+                    />
+                  </Field>
+                  <Field label="Title">
+                    <TextInput
+                      value={ch.title}
+                      onChange={(e) => setHomepage((p) => {
+                        const next = [...p.chapters];
+                        next[idx] = { ...next[idx], title: e.target.value };
+                        return { ...p, chapters: next };
+                      })}
+                    />
+                  </Field>
+                  <Field label="Sanskrit Theme">
+                    <TextInput
+                      value={ch.theme}
+                      onChange={(e) => setHomepage((p) => {
+                        const next = [...p.chapters];
+                        next[idx] = { ...next[idx], theme: e.target.value };
+                        return { ...p, chapters: next };
+                      })}
+                    />
+                  </Field>
+                </div>
+                <Field label="Description">
+                  <TextArea
+                    rows={2}
+                    value={ch.desc}
+                    onChange={(e) => setHomepage((p) => {
+                      const next = [...p.chapters];
+                      next[idx] = { ...next[idx], desc: e.target.value };
+                      return { ...p, chapters: next };
+                    })}
+                  />
+                </Field>
+                <Field label="Icon">
+                  <select
+                    value={ch.icon}
+                    onChange={(e) => setHomepage((p) => {
+                      const next = [...p.chapters];
+                      next[idx] = { ...next[idx], icon: e.target.value };
+                      return { ...p, chapters: next };
+                    })}
+                    className={inputClass}
+                  >
+                    {CHAPTER_ICON_OPTIONS.map((opt) => (
+                      <option key={opt} value={opt}>{opt}</option>
+                    ))}
+                  </select>
+                </Field>
+              </div>
+            ))}
+            <button
+              onClick={() => setHomepage((p) => ({ ...p, chapters: [...p.chapters, { num: p.chapters.length + 1, title: "", theme: "", desc: "", icon: "BookOpen" }] }))}
+              className="px-3 py-2 rounded-lg border border-dashed border-border-custom text-xs flex items-center gap-2 cursor-pointer hover:bg-black/5 dark:hover:bg-white/5"
+            >
+              <Plus className="w-3.5 h-3.5" /> Add Chapter Card
+            </button>
+          </div>
+
+          <h3 className="font-serif text-base text-foreground font-bold pt-4 border-t border-border-custom/50">Homepage FAQ</h3>
+          <div className="space-y-4">
+            {homepage.faqs.map((faq, idx) => (
+              <div key={idx} className="p-4 border border-border-custom rounded-xl space-y-2 relative">
+                <button
+                  onClick={() => setHomepage((p) => ({ ...p, faqs: p.faqs.filter((_, i) => i !== idx) }))}
+                  className="absolute top-3 right-3 text-red-500 hover:text-red-600 cursor-pointer"
+                  aria-label="Remove FAQ"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                </button>
+                <Field label="Question">
+                  <TextInput
+                    value={faq.q}
+                    onChange={(e) => setHomepage((p) => {
+                      const next = [...p.faqs];
+                      next[idx] = { ...next[idx], q: e.target.value };
+                      return { ...p, faqs: next };
+                    })}
+                  />
+                </Field>
+                <Field label="Answer">
+                  <TextArea
+                    rows={3}
+                    value={faq.a}
+                    onChange={(e) => setHomepage((p) => {
+                      const next = [...p.faqs];
+                      next[idx] = { ...next[idx], a: e.target.value };
+                      return { ...p, faqs: next };
+                    })}
+                  />
+                </Field>
+              </div>
+            ))}
+            <button
+              onClick={() => setHomepage((p) => ({ ...p, faqs: [...p.faqs, { q: "", a: "" }] }))}
+              className="px-3 py-2 rounded-lg border border-dashed border-border-custom text-xs flex items-center gap-2 cursor-pointer hover:bg-black/5 dark:hover:bg-white/5"
+            >
+              <Plus className="w-3.5 h-3.5" /> Add FAQ
             </button>
           </div>
 
