@@ -77,6 +77,29 @@ const DEFAULT_HOMEPAGE_CONTENT: HomepageContent = {
   ]
 };
 
+type PreorderStore = {
+  name: string;
+  format: string;
+  region: string;
+  status: string;
+  isPopular: boolean;
+  features: string[];
+};
+
+type PreorderContent = {
+  header_subtitle: string;
+  stores: PreorderStore[];
+};
+
+const DEFAULT_PREORDER_CONTENT: PreorderContent = {
+  header_subtitle: "The book isn't listed for sale yet, and final pricing hasn't been confirmed. Join the notify list below for your preferred store and we'll email you the moment pre-orders open — plus a bundle of digital resources and live workshop credentials.",
+  stores: [
+    { name: "Amazon Kindle & Hardback", format: "Kindle / Hardcover", region: "Global Store", status: "Coming Soon", isPopular: false, features: ["Chapter 1 digital preview instantly.", "Vedic Reflection Sheets download."] },
+    { name: "Flipkart Paperback", format: "Paperback Edition", region: "India Only", status: "Coming Soon", isPopular: false, features: ["Chapter 1 digital preview instantly.", "Vedic Reflection Sheets download."] },
+    { name: "Publisher Direct Deluxe Bundle", format: "Hardcover + Audio + PDFs", region: "International Shipping", status: "Coming Soon", isPopular: true, features: ["Chapter 1 digital preview instantly.", "Vedic Reflection Sheets download.", "Simulated Audiobook CD/MP3 access.", "Invite to live launch session."] }
+  ]
+};
+
 type Spec = { label: string; value: string };
 
 type AboutBookContent = {
@@ -223,7 +246,7 @@ async function uploadMediaFile(file: File, pathPrefix: string): Promise<string |
 /* Main Site Editor                                                   */
 /* ------------------------------------------------------------------ */
 
-type SubTab = "general" | "media" | "theme" | "homepage" | "about-book" | "about-author";
+type SubTab = "general" | "media" | "theme" | "homepage" | "about-book" | "about-author" | "preorder";
 
 type UploadKey =
   | "author_photo_url"
@@ -299,6 +322,7 @@ export default function SiteEditor() {
   const [homepage, setHomepage] = useState<HomepageContent>(DEFAULT_HOMEPAGE_CONTENT);
   const [aboutBook, setAboutBook] = useState<AboutBookContent>(DEFAULT_ABOUT_BOOK_CONTENT);
   const [aboutAuthor, setAboutAuthor] = useState<AboutAuthorContent>(DEFAULT_ABOUT_AUTHOR_CONTENT);
+  const [preorder, setPreorder] = useState<PreorderContent>(DEFAULT_PREORDER_CONTENT);
 
   const [savedFlag, setSavedFlag] = useState<SubTab | null>(null);
   const [uploading, setUploading] = useState<UploadKey | null>(null);
@@ -313,6 +337,7 @@ export default function SiteEditor() {
     fetchPageContent("homepage", DEFAULT_HOMEPAGE_CONTENT).then(setHomepage);
     fetchPageContent("about-book", DEFAULT_ABOUT_BOOK_CONTENT).then(setAboutBook);
     fetchPageContent("about-author", DEFAULT_ABOUT_AUTHOR_CONTENT).then(setAboutAuthor);
+    fetchPageContent("preorder", DEFAULT_PREORDER_CONTENT).then(setPreorder);
   }, []);
 
   const flashSaved = (tab: SubTab) => {
@@ -355,6 +380,11 @@ export default function SiteEditor() {
     flashSaved("about-author");
   };
 
+  const savePreorder = async () => {
+    await savePageContent("preorder", preorder);
+    flashSaved("preorder");
+  };
+
   const handleFileUpload = async (key: UploadKey, pathPrefix: string, file: File) => {
     setUploading(key);
     const url = await uploadMediaFile(file, pathPrefix);
@@ -383,6 +413,7 @@ export default function SiteEditor() {
     { id: "homepage", label: "Homepage" },
     { id: "about-book", label: "About the Book" },
     { id: "about-author", label: "About the Author" },
+    { id: "preorder", label: "Pre-order Page" },
   ];
 
   return (
@@ -955,6 +986,106 @@ export default function SiteEditor() {
           </div>
 
           <SaveButton onClick={saveAboutAuthor} saved={savedFlag === "about-author"} />
+        </div>
+      )}
+
+      {/* PREORDER PAGE */}
+      {subTab === "preorder" && (
+        <div className="space-y-6 max-w-2xl">
+          <Field label="Header Subtitle">
+            <TextArea
+              rows={3}
+              value={preorder.header_subtitle}
+              onChange={(e) => setPreorder((p) => ({ ...p, header_subtitle: e.target.value }))}
+            />
+          </Field>
+
+          <h3 className="font-serif text-base text-foreground font-bold pt-4 border-t border-border-custom/50">Store / Edition Cards</h3>
+          <div className="space-y-4">
+            {preorder.stores.map((store, idx) => (
+              <div key={idx} className="p-4 border border-border-custom rounded-xl space-y-3 relative">
+                <button
+                  onClick={() => setPreorder((p) => ({ ...p, stores: p.stores.filter((_, i) => i !== idx) }))}
+                  className="absolute top-3 right-3 text-red-500 hover:text-red-600 cursor-pointer"
+                  aria-label="Remove store"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                </button>
+                <div className="grid grid-cols-2 gap-3">
+                  <Field label="Store / Edition Name">
+                    <TextInput
+                      value={store.name}
+                      onChange={(e) => setPreorder((p) => {
+                        const next = [...p.stores];
+                        next[idx] = { ...next[idx], name: e.target.value };
+                        return { ...p, stores: next };
+                      })}
+                    />
+                  </Field>
+                  <Field label="Format">
+                    <TextInput
+                      value={store.format}
+                      onChange={(e) => setPreorder((p) => {
+                        const next = [...p.stores];
+                        next[idx] = { ...next[idx], format: e.target.value };
+                        return { ...p, stores: next };
+                      })}
+                    />
+                  </Field>
+                  <Field label="Region">
+                    <TextInput
+                      value={store.region}
+                      onChange={(e) => setPreorder((p) => {
+                        const next = [...p.stores];
+                        next[idx] = { ...next[idx], region: e.target.value };
+                        return { ...p, stores: next };
+                      })}
+                    />
+                  </Field>
+                  <Field label="Status">
+                    <TextInput
+                      value={store.status}
+                      onChange={(e) => setPreorder((p) => {
+                        const next = [...p.stores];
+                        next[idx] = { ...next[idx], status: e.target.value };
+                        return { ...p, stores: next };
+                      })}
+                    />
+                  </Field>
+                </div>
+                <label className="flex items-center gap-2 text-xs cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={store.isPopular}
+                    onChange={(e) => setPreorder((p) => {
+                      const next = [...p.stores];
+                      next[idx] = { ...next[idx], isPopular: e.target.checked };
+                      return { ...p, stores: next };
+                    })}
+                    className="w-4 h-4 cursor-pointer"
+                  />
+                  Mark as "Recommended" (highlighted card)
+                </label>
+                <StringListEditor
+                  label="Features"
+                  items={store.features}
+                  onChange={(items) => setPreorder((p) => {
+                    const next = [...p.stores];
+                    next[idx] = { ...next[idx], features: items };
+                    return { ...p, stores: next };
+                  })}
+                />
+              </div>
+            ))}
+            <button
+              onClick={() => setPreorder((p) => ({ ...p, stores: [...p.stores, { name: "", format: "", region: "", status: "Coming Soon", isPopular: false, features: [] }] }))}
+              className="px-3 py-2 rounded-lg border border-dashed border-border-custom text-xs flex items-center gap-2 cursor-pointer hover:bg-black/5 dark:hover:bg-white/5"
+            >
+              <Plus className="w-3.5 h-3.5" /> Add Store / Edition Card
+            </button>
+          </div>
+
+          <SaveButton onClick={savePreorder} saved={savedFlag === "preorder"} />
         </div>
       )}
     </div>

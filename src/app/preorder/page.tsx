@@ -1,18 +1,73 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AIChatbot from "@/components/AIChatbot";
 import Countdown from "@/components/Countdown";
 import { Check, Bell } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import { fetchPageContent } from "@/lib/content";
+
+type PreorderStore = {
+  name: string;
+  format: string;
+  region: string;
+  status: string;
+  isPopular: boolean;
+  features: string[];
+};
+
+type PreorderContent = {
+  header_subtitle: string;
+  stores: PreorderStore[];
+};
+
+const DEFAULT_PREORDER_CONTENT: PreorderContent = {
+  header_subtitle: "The book isn't listed for sale yet, and final pricing hasn't been confirmed. Join the notify list below for your preferred store and we'll email you the moment pre-orders open — plus a bundle of digital resources and live workshop credentials.",
+  stores: [
+    {
+      name: "Amazon Kindle & Hardback",
+      format: "Kindle / Hardcover",
+      region: "Global Store",
+      status: "Coming Soon",
+      isPopular: false,
+      features: ["Chapter 1 digital preview instantly.", "Vedic Reflection Sheets download."]
+    },
+    {
+      name: "Flipkart Paperback",
+      format: "Paperback Edition",
+      region: "India Only",
+      status: "Coming Soon",
+      isPopular: false,
+      features: ["Chapter 1 digital preview instantly.", "Vedic Reflection Sheets download."]
+    },
+    {
+      name: "Publisher Direct Deluxe Bundle",
+      format: "Hardcover + Audio + PDFs",
+      region: "International Shipping",
+      status: "Coming Soon",
+      isPopular: true,
+      features: [
+        "Chapter 1 digital preview instantly.",
+        "Vedic Reflection Sheets download.",
+        "Simulated Audiobook CD/MP3 access.",
+        "Invite to live launch session."
+      ]
+    }
+  ]
+};
 
 export default function PreorderPage() {
+  const [content, setContent] = useState<PreorderContent>(DEFAULT_PREORDER_CONTENT);
   const [waitlistEmail, setWaitlistEmail] = useState("");
   const [waitlistStore, setWaitlistStore] = useState("");
   const [waitlistMsg, setWaitlistMsg] = useState("");
   const [waitlisted, setWaitlisted] = useState(false);
+
+  useEffect(() => {
+    fetchPageContent("preorder", DEFAULT_PREORDER_CONTENT).then(setContent);
+  }, []);
 
   const handleJoinWaitlist = async (storeName: string) => {
     setWaitlistStore(storeName);
@@ -40,32 +95,7 @@ export default function PreorderPage() {
     setWaitlistEmail("");
   };
 
-  const stores = [
-    {
-      name: "Amazon Kindle & Hardback",
-      format: "Kindle / Hardcover",
-      region: "Global Store",
-      status: "Coming Soon",
-      linkName: "Buy on Amazon",
-      isPopular: false
-    },
-    {
-      name: "Flipkart Paperback",
-      format: "Paperback Edition",
-      region: "India Only",
-      status: "Coming Soon",
-      linkName: "Buy on Flipkart",
-      isPopular: false
-    },
-    {
-      name: "Publisher Direct Deluxe Bundle",
-      format: "Hardcover + Audio + PDFs",
-      region: "International Shipping",
-      status: "Coming Soon",
-      linkName: "Purchase Direct",
-      isPopular: true
-    }
-  ];
+  const stores = content.stores;
 
   return (
     <div className="flex-1 flex flex-col pt-16 bg-[#faf8f5] dark:bg-[#070b09]">
@@ -82,7 +112,7 @@ export default function PreorderPage() {
             Pre-Order The Unshaken Self
           </h1>
           <p className="text-xs sm:text-sm font-light text-stone-500 dark:text-stone-400 max-w-xl mx-auto leading-relaxed">
-            The book isn't listed for sale yet, and final pricing hasn't been confirmed. Join the notify list below for your preferred store and we'll email you the moment pre-orders open — plus a bundle of digital resources and live workshop credentials.
+            {content.header_subtitle}
           </p>
         </div>
       </header>
@@ -110,8 +140,6 @@ export default function PreorderPage() {
         {/* Pricing Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {stores.map((store, idx) => {
-            const isDirect = store.name.includes("Publisher Direct");
-
             return (
               <div
                 key={idx}
@@ -151,26 +179,12 @@ export default function PreorderPage() {
 
                   {/* Preorder Features */}
                   <ul className="space-y-3.5 text-xs text-stone-500 dark:text-stone-400 font-light leading-relaxed">
-                    <li className="flex space-x-2">
-                      <Check className="w-4 h-4 text-green-500 flex-shrink-0" />
-                      <span>Chapter 1 digital preview instantly.</span>
-                    </li>
-                    <li className="flex space-x-2">
-                      <Check className="w-4 h-4 text-green-500 flex-shrink-0" />
-                      <span>Vedic Reflection Sheets download.</span>
-                    </li>
-                    {isDirect && (
-                      <>
-                        <li className="flex space-x-2 text-[#dfb15b] font-medium">
-                          <Check className="w-4 h-4 text-[#dfb15b] flex-shrink-0" />
-                          <span>Simulated Audiobook CD/MP3 access.</span>
-                        </li>
-                        <li className="flex space-x-2 text-[#dfb15b] font-medium">
-                          <Check className="w-4 h-4 text-[#dfb15b] flex-shrink-0" />
-                          <span>Invite to live launch session.</span>
-                        </li>
-                      </>
-                    )}
+                    {store.features.map((feature, fIdx) => (
+                      <li key={fIdx} className="flex space-x-2">
+                        <Check className="w-4 h-4 text-green-500 flex-shrink-0" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
                   </ul>
                 </div>
 
