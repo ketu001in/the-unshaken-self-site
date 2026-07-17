@@ -77,7 +77,7 @@ export default function AboutAuthor() {
             About KETUL SHAH
           </h1>
           <p className="text-xs sm:text-sm font-light text-stone-500 dark:text-stone-400 max-w-xl mx-auto leading-relaxed">
-            Spiritual researcher, counselor, and writer focused on translating ancient wisdom into modern mental blueprints.
+            Author of The Unshaken Self — spiritual curious, translating ancient wisdom into modern mental blueprints.
           </p>
         </div>
       </header>

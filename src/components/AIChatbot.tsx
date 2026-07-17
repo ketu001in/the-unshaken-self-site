@@ -117,7 +117,7 @@ export default function AIChatbot() {
     }
     
     if (q.includes("ketul") || q.includes("shah") || q.includes("author") || q.includes("who is")) {
-      return "KETUL SHAH is a contemporary spiritual researcher and author dedicated to making ancient wisdom practical for modern professionals. Having spent years studying Vedic scriptures and modern psychology, Ketul wrote *The Unshaken Self* to help people navigate the chaos of the 21st century with the calm, focused mind of a yogi.";
+      return "KETUL SHAH is the author of *The Unshaken Self* — spiritual curious and dedicated to making ancient wisdom practical for modern professionals. Having spent years studying Vedic scriptures and modern psychology, Ketul wrote the book to help people navigate the chaos of the 21st century with the calm, focused mind of a yogi.";
     }
 
     if (q.includes("preorder") || q.includes("buy") || q.includes("price") || q.includes("purchase") || q.includes("get")) {

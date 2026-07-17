@@ -445,9 +445,9 @@ export default function Home() {
                 />
                 <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent p-4 text-center pointer-events-none">
                   <span className="text-[10px] tracking-widest text-white uppercase font-bold">
-                    Ketul Shah
+                    Ketul Shah — Author — The Unshaken Self
                   </span>
-                  <p className="text-[9px] text-white/80 uppercase font-mono mt-1">Author & Vedic Researcher</p>
+                  <p className="text-[9px] text-white/80 uppercase font-mono mt-1">Spiritual Curious</p>
                 </div>
               </div>
             </div>

@@ -290,7 +290,7 @@ export default function BlogPage() {
 
           {/* Footer Callout */}
           <div className="pt-8 border-t border-border-custom flex flex-col sm:flex-row sm:justify-between sm:items-center text-xs text-stone-500 gap-4">
-            <span>Written by KETUL SHAH • Vedic Philosophy Researcher</span>
+            <span>Written by KETUL SHAH • Author, The Unshaken Self</span>
             <button
               onClick={() => {
                 navigator.clipboard.writeText(window.location.href);
