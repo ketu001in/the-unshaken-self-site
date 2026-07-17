@@ -443,11 +443,16 @@ export default function Home() {
                   sizes="320px"
                   className="object-cover object-top"
                 />
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent p-4 text-center pointer-events-none">
-                  <span className="text-[10px] tracking-widest text-white uppercase font-bold">
-                    Ketul Shah — Author — The Unshaken Self
-                  </span>
-                  <p className="text-[9px] text-white/80 uppercase font-mono mt-1">Spiritual Curious</p>
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent p-4 text-center pointer-events-none space-y-0.5">
+                  <p className="text-[10px] tracking-widest text-white uppercase font-bold">
+                    Ketul Shah
+                  </p>
+                  <p className="text-[9px] text-white/90 uppercase font-mono">
+                    Author - The Unshaken Self
+                  </p>
+                  <p className="text-[8px] text-white/75 uppercase font-mono tracking-wide">
+                    Spiritual Curious / Avid Reader / Writer
+                  </p>
                 </div>
               </div>
             </div>
