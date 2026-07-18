@@ -15,8 +15,9 @@ const IDLE_ROTATION = { x: 0, y: 0 };
 const HOVER_TILT_CENTER = { x: 2, y: -8 };
 const PARALLAX_MAX = 18;
 const DRAG_SENSITIVITY = 0.5;
-const DRAG_CLAMP_Y = 100; // degrees — generous, so a full drag can swing round to the back
-const DRAG_CLAMP_X = 28;
+// Y (left/right spin) is intentionally unclamped — dragging all the way
+// around should give a full, continuous 360° rotation, not stop halfway.
+const DRAG_CLAMP_X = 28; // X (up/down tilt) stays bounded so the book can't flip over top/bottom
 
 type Book3DProps = {
   /** Legacy single front-only image — used as a fallback when no wrap image is set. */
@@ -113,11 +114,8 @@ export default function Book3D({ coverImageUrl, wrapUrl, spinePct, backPct, layo
     const onMove = (e: MouseEvent) => {
       const dx = e.clientX - dragStartPos.current.x;
       const dy = e.clientY - dragStartPos.current.y;
-      const nextY = clamp(
-        dragStartRotation.current.y + dx * DRAG_SENSITIVITY,
-        -DRAG_CLAMP_Y,
-        DRAG_CLAMP_Y
-      );
+      // Unclamped — lets a full drag spin the book all the way around (360°+).
+      const nextY = dragStartRotation.current.y + dx * DRAG_SENSITIVITY;
       const nextX = clamp(
         dragStartRotation.current.x - dy * DRAG_SENSITIVITY,
         -DRAG_CLAMP_X,
