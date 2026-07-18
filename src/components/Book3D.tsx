@@ -5,7 +5,14 @@ import { Plus, X } from "lucide-react";
 import { getCoverSliceStyle, DEFAULT_COVER_PROPORTIONS, type CoverLayout } from "@/lib/coverSlices";
 
 const THICKNESS = 22; // px — spine/page-edge depth, independent of the front-face size
-const BASE_TILT = { x: 2, y: -8 };
+
+// Idle = dead-on, no rotation at all. At (0,0) the spine and page-edge faces
+// are perfectly edge-on to the camera (0px visible) and the back cover sits
+// fully hidden behind the front — so this naturally reads as "just the front
+// cover," no opacity/visibility tricks required.
+const IDLE_ROTATION = { x: 0, y: 0 };
+// Where ambient hover parallax centers once the cursor is inside the box.
+const HOVER_TILT_CENTER = { x: 2, y: -8 };
 const PARALLAX_MAX = 18;
 const DRAG_SENSITIVITY = 0.5;
 const DRAG_CLAMP_Y = 100; // degrees — generous, so a full drag can swing round to the back
@@ -24,11 +31,11 @@ type Book3DProps = {
 export default function Book3D({ coverImageUrl, wrapUrl, spinePct, backPct, layout }: Book3DProps) {
   const [hovered, setHovered] = useState(false);
   const [dragging, setDragging] = useState(false);
-  const [rotation, setRotation] = useState(BASE_TILT);
+  const [rotation, setRotation] = useState(IDLE_ROTATION);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const dragStartPos = useRef({ x: 0, y: 0 });
-  const dragStartRotation = useRef(BASE_TILT);
+  const dragStartRotation = useRef(IDLE_ROTATION);
   const hasDraggedRef = useRef(false);
 
   const proportions = {
@@ -58,10 +65,13 @@ export default function Book3D({ coverImageUrl, wrapUrl, spinePct, backPct, layo
     setHovered(false);
     setDragging(false);
     hasDraggedRef.current = false;
-    setRotation(BASE_TILT);
+    setRotation(IDLE_ROTATION);
   };
 
-  const handleMouseEnter = () => setHovered(true);
+  const handleMouseEnter = () => {
+    setHovered(true);
+    if (!hasDraggedRef.current) setRotation(HOVER_TILT_CENTER);
+  };
 
   const handleMouseLeave = () => {
     // While actively dragging, let the drag continue past the box edge — the
@@ -80,8 +90,8 @@ export default function Book3D({ coverImageUrl, wrapUrl, spinePct, backPct, layo
     const relX = (e.clientX - rect.left) / rect.width;
     const relY = (e.clientY - rect.top) / rect.height;
     setRotation({
-      x: BASE_TILT.x - (relY - 0.5) * PARALLAX_MAX,
-      y: BASE_TILT.y + (relX - 0.5) * PARALLAX_MAX * 2,
+      x: HOVER_TILT_CENTER.x - (relY - 0.5) * PARALLAX_MAX,
+      y: HOVER_TILT_CENTER.y + (relX - 0.5) * PARALLAX_MAX * 2,
     });
   };
 
@@ -150,9 +160,20 @@ export default function Book3D({ coverImageUrl, wrapUrl, spinePct, backPct, layo
     return () => window.removeEventListener("keydown", onKey);
   }, [lightboxOpen]);
 
+  const faceBase: React.CSSProperties = { backfaceVisibility: "hidden" };
+
   return (
     <>
       <div className="flex flex-col items-center justify-center select-none">
+        {/*
+          IMPORTANT: `perspective` lives here, on a plain element with no
+          `transform` of its own. The drop-shadow `filter` also lives here,
+          not on the rotating box below — putting `filter` (or `opacity`) on
+          the same element as `transform-style: preserve-3d` forces browsers
+          to flatten it, which silently hides the spine/back/page-edge faces
+          and leaves only the front visible. Keeping them on separate
+          elements is what makes the real 3D faces show up.
+        */}
         <div
           ref={containerRef}
           onMouseEnter={handleMouseEnter}
@@ -160,81 +181,74 @@ export default function Book3D({ coverImageUrl, wrapUrl, spinePct, backPct, layo
           onMouseLeave={handleMouseLeave}
           onMouseDown={handleMouseDown}
           className="relative w-[240px] h-[360px] md:w-[280px] md:h-[420px]"
-          style={{ perspective: "1400px", cursor: dragging ? "grabbing" : hovered ? "grab" : "default" }}
+          style={{
+            perspective: "1400px",
+            cursor: dragging ? "grabbing" : hovered ? "grab" : "default",
+            filter: hovered
+              ? "drop-shadow(28px 32px 45px rgba(0,0,0,0.35))"
+              : "drop-shadow(16px 18px 28px rgba(0,0,0,0.22))",
+            transition: "filter 0.3s ease",
+          }}
         >
-          {/* Idle flat front cover — the resting state, no 3D at all */}
           <div
-            className="absolute inset-0 rounded-sm overflow-hidden border border-white/10 shadow-[16px_18px_28px_rgba(0,0,0,0.22)] transition-opacity duration-300"
+            className="relative w-full h-full"
             style={{
-              opacity: hovered ? 0 : 1,
-              ...frontFaceStyle,
+              transformStyle: "preserve-3d",
+              transition: dragging ? "transform 0.03s linear" : "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
+              transform: `rotateY(${rotation.y}deg) rotateX(${rotation.x}deg)`,
             }}
-          />
-
-          {/* Hover state — the real 3D book box: front, spine, page-edge, back */}
-          <div
-            className="absolute inset-0 transition-opacity duration-300"
-            style={{ opacity: hovered ? 1 : 0, pointerEvents: hovered ? "auto" : "none" }}
           >
+            {/* Back cover */}
             <div
-              className="relative w-full h-full"
+              className="absolute inset-0 rounded-sm bg-[#1a1410] bg-cover bg-center"
               style={{
-                transformStyle: "preserve-3d",
-                transition: dragging
-                  ? "transform 0.03s linear"
-                  : "transform 0.15s ease-out",
-                transform: `rotateY(${rotation.y}deg) rotateX(${rotation.x}deg)`,
-                filter: "drop-shadow(28px 32px 45px rgba(0,0,0,0.35))",
+                ...faceBase,
+                transform: `translateZ(-${THICKNESS / 2}px) rotateY(180deg)`,
+                ...backFaceStyle,
+              }}
+            />
+
+            {/* Spine — hinged at the left edge, sweeps back into depth */}
+            <div
+              className="absolute inset-y-0 left-0 rounded-l-sm bg-gradient-to-b from-[#2a1f16] via-[#1e1610] to-[#150f0a] bg-cover bg-center"
+              style={{
+                ...faceBase,
+                width: `${THICKNESS}px`,
+                transformOrigin: "left center",
+                transform: "rotateY(-90deg)",
+                ...spineFaceStyle,
+              }}
+            />
+
+            {/* Page edge — hinged at the right edge, off-white striped "pages" */}
+            <div
+              className="absolute inset-y-0 right-0 rounded-r-sm"
+              style={{
+                ...faceBase,
+                width: `${THICKNESS}px`,
+                transformOrigin: "right center",
+                transform: "rotateY(90deg)",
+                background:
+                  "repeating-linear-gradient(to bottom, #f4ecd8 0px, #f4ecd8 2px, #e2d6b8 2px, #e2d6b8 3px)",
+              }}
+            />
+
+            {/* Front cover */}
+            <div
+              className="absolute inset-0 rounded-sm overflow-hidden border border-white/10 bg-cover bg-center"
+              style={{
+                ...faceBase,
+                transform: `translateZ(${THICKNESS / 2}px)`,
+                ...frontFaceStyle,
               }}
             >
-              {/* Back cover */}
+              {/* Sheen sweep — moves diagonally while hovering, before a drag takes over */}
               <div
-                className="absolute inset-0 rounded-sm bg-[#1a1410] bg-cover bg-center"
+                className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/15 to-transparent pointer-events-none transition-transform duration-700 ease-out"
                 style={{
-                  transform: `translateZ(-${THICKNESS / 2}px) rotateY(180deg)`,
-                  ...backFaceStyle,
+                  transform: hovered && !dragging ? "translateX(120%) skewX(-20deg)" : "translateX(-120%) skewX(-20deg)",
                 }}
               />
-
-              {/* Spine — hinged at the left edge, sweeps back into depth */}
-              <div
-                className="absolute inset-y-0 left-0 rounded-l-sm bg-gradient-to-b from-[#2a1f16] via-[#1e1610] to-[#150f0a] bg-cover bg-center"
-                style={{
-                  width: `${THICKNESS}px`,
-                  transformOrigin: "left center",
-                  transform: "rotateY(-90deg)",
-                  ...spineFaceStyle,
-                }}
-              />
-
-              {/* Page edge — hinged at the right edge, off-white striped "pages" */}
-              <div
-                className="absolute inset-y-0 right-0 rounded-r-sm"
-                style={{
-                  width: `${THICKNESS}px`,
-                  transformOrigin: "right center",
-                  transform: "rotateY(90deg)",
-                  background:
-                    "repeating-linear-gradient(to bottom, #f4ecd8 0px, #f4ecd8 2px, #e2d6b8 2px, #e2d6b8 3px)",
-                }}
-              />
-
-              {/* Front cover */}
-              <div
-                className="absolute inset-0 rounded-sm overflow-hidden border border-white/10 bg-cover bg-center"
-                style={{
-                  transform: `translateZ(${THICKNESS / 2}px)`,
-                  ...frontFaceStyle,
-                }}
-              >
-                {/* Sheen sweep — moves diagonally while hovering, before a drag takes over */}
-                <div
-                  className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/15 to-transparent pointer-events-none transition-transform duration-700 ease-out"
-                  style={{
-                    transform: hovered && !dragging ? "translateX(120%) skewX(-20deg)" : "translateX(-120%) skewX(-20deg)",
-                  }}
-                />
-              </div>
             </div>
           </div>
 
