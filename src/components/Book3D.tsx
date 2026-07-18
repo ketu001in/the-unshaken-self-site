@@ -64,32 +64,18 @@ export default function Book3D({ coverImageUrl, wrapUrl, spinePct, backPct, layo
   const handleMouseEnter = () => setHovered(true);
 
   const handleMouseLeave = () => {
-    // "Hover out" always restores the flat front cover — cancels any in-progress drag too.
+    // While actively dragging, let the drag continue past the box edge — the
+    // window-level mouseup handler below decides whether to reset once released.
+    if (dragging) return;
     resetToIdle();
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (dragging) return; // handled by the window-level listener so the drag isn't clipped to the box
+    if (hasDraggedRef.current) return; // manual control was taken this hover session — ambient tilt is off
+
     const rect = containerRef.current?.getBoundingClientRect();
     if (!rect) return;
-
-    if (dragging) {
-      const dx = e.clientX - dragStartPos.current.x;
-      const dy = e.clientY - dragStartPos.current.y;
-      const nextY = clamp(
-        dragStartRotation.current.y + dx * DRAG_SENSITIVITY,
-        -DRAG_CLAMP_Y,
-        DRAG_CLAMP_Y
-      );
-      const nextX = clamp(
-        dragStartRotation.current.x - dy * DRAG_SENSITIVITY,
-        -DRAG_CLAMP_X,
-        DRAG_CLAMP_X
-      );
-      setRotation({ x: nextX, y: nextY });
-      return;
-    }
-
-    if (hasDraggedRef.current) return; // manual control was taken this hover session — ambient tilt is off
 
     const relX = (e.clientX - rect.left) / rect.width;
     const relY = (e.clientY - rect.top) / rect.height;
@@ -107,11 +93,51 @@ export default function Book3D({ coverImageUrl, wrapUrl, spinePct, backPct, layo
     dragStartRotation.current = rotation;
   };
 
+  // While dragging, track the mouse at the window level — not just within the
+  // (fairly small) book box — so the spin isn't clipped the instant the
+  // cursor crosses the box edge. On release, only snap back to the idle flat
+  // cover if the pointer ended up outside the box; otherwise stay hovered.
   useEffect(() => {
     if (!dragging) return;
-    const onUp = () => setDragging(false);
+
+    const onMove = (e: MouseEvent) => {
+      const dx = e.clientX - dragStartPos.current.x;
+      const dy = e.clientY - dragStartPos.current.y;
+      const nextY = clamp(
+        dragStartRotation.current.y + dx * DRAG_SENSITIVITY,
+        -DRAG_CLAMP_Y,
+        DRAG_CLAMP_Y
+      );
+      const nextX = clamp(
+        dragStartRotation.current.x - dy * DRAG_SENSITIVITY,
+        -DRAG_CLAMP_X,
+        DRAG_CLAMP_X
+      );
+      setRotation({ x: nextX, y: nextY });
+    };
+
+    const onUp = (e: MouseEvent) => {
+      setDragging(false);
+      const rect = containerRef.current?.getBoundingClientRect();
+      const stillInside =
+        !!rect &&
+        e.clientX >= rect.left &&
+        e.clientX <= rect.right &&
+        e.clientY >= rect.top &&
+        e.clientY <= rect.bottom;
+      if (!stillInside) resetToIdle();
+    };
+
+    document.body.style.cursor = "grabbing";
+    document.body.style.userSelect = "none";
+    window.addEventListener("mousemove", onMove);
     window.addEventListener("mouseup", onUp);
-    return () => window.removeEventListener("mouseup", onUp);
+    return () => {
+      document.body.style.cursor = "";
+      document.body.style.userSelect = "";
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mouseup", onUp);
+    };
   }, [dragging]);
 
   // Close lightbox on Escape
