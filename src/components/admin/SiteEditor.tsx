@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/client";
 import { fetchPageContent, savePageContent, saveSiteSetting } from "@/lib/content";
 import { DEFAULT_SITE_SETTINGS, SiteSettings, ThemeColors, SectionVisibility, useSiteSettings } from "@/context/SiteSettingsContext";
 import { Upload, Plus, Trash2, Save, Check } from "lucide-react";
+import { getCoverSliceStyle, type CoverLayout } from "@/lib/coverSlices";
 
 /* ------------------------------------------------------------------ */
 /* Content type shapes — mirrored from each page's own default        */
@@ -414,6 +415,7 @@ type SubTab = "general" | "media" | "theme" | "homepage" | "about-book" | "about
 type UploadKey =
   | "author_photo_url"
   | "book_cover_front_url"
+  | "book_cover_wrap_url"
   | "trailer_video_url"
   | "media_kit_portrait_url"
   | "media_kit_cover_kit_url"
@@ -526,6 +528,16 @@ export default function SiteEditor() {
     ]);
     await refreshSiteSettings();
     flashSaved("general");
+  };
+
+  const saveCoverProportions = async () => {
+    await Promise.all([
+      saveSiteSetting("book_cover_spine_pct", settings.book_cover_spine_pct),
+      saveSiteSetting("book_cover_back_pct", settings.book_cover_back_pct),
+      saveSiteSetting("book_cover_layout", settings.book_cover_layout),
+    ]);
+    await refreshSiteSettings();
+    flashSaved("media");
   };
 
   const saveTheme = async () => {
@@ -700,13 +712,88 @@ export default function SiteEditor() {
                 onFile={(file) => handleFileUpload("author_photo_url", "author-photo", file)}
               />
               <UploadField
-                label="Book Cover (Front)"
+                label="Book Cover (Front) — legacy fallback"
                 currentUrl={settings.book_cover_front_url}
                 accept="image/*"
                 uploading={uploading === "book_cover_front_url"}
                 onFile={(file) => handleFileUpload("book_cover_front_url", "book-cover-front", file)}
+                hint="Only used if no wraparound cover (below) is set."
               />
             </div>
+          </div>
+
+          <div className="space-y-4 pt-4 border-t border-border-custom/50">
+            <h3 className="font-serif text-base text-foreground font-bold">3D Book Cover (Wraparound)</h3>
+            <p className="text-[11px] text-muted-text leading-relaxed">
+              Upload one flat image containing all three panels of the printed jacket — back cover, spine,
+              and front cover, side by side. The homepage shows only the front panel until a visitor hovers,
+              then reveals a real 3D book they can click-and-drag to spin around and see the spine and back.
+            </p>
+            <UploadField
+              label="Full Wraparound Cover"
+              currentUrl={settings.book_cover_wrap_url}
+              accept="image/*"
+              uploading={uploading === "book_cover_wrap_url"}
+              onFile={(file) => handleFileUpload("book_cover_wrap_url", "book-cover-wrap", file)}
+            />
+
+            <div className="grid grid-cols-2 gap-4">
+              <Field label="Back Cover Width (%)">
+                <TextInput
+                  type="number"
+                  min={5}
+                  max={80}
+                  value={settings.book_cover_back_pct}
+                  onChange={(e) => setSettings((p) => ({ ...p, book_cover_back_pct: Number(e.target.value) }))}
+                />
+              </Field>
+              <Field label="Spine Width (%)">
+                <TextInput
+                  type="number"
+                  min={1}
+                  max={30}
+                  value={settings.book_cover_spine_pct}
+                  onChange={(e) => setSettings((p) => ({ ...p, book_cover_spine_pct: Number(e.target.value) }))}
+                />
+              </Field>
+            </div>
+            <Field label="Panel Order in the Uploaded Image">
+              <select
+                value={settings.book_cover_layout}
+                onChange={(e) => setSettings((p) => ({ ...p, book_cover_layout: e.target.value as CoverLayout }))}
+                className={inputClass}
+              >
+                <option value="back-spine-front">Back → Spine → Front (standard print wrap)</option>
+                <option value="front-spine-back">Front → Spine → Back (mirrored)</option>
+              </select>
+            </Field>
+            <p className="text-[9px] text-muted-text">
+              Front cover is whatever's left over: 100% − back% − spine%. Use the live preview below to
+              check the split looks right before saving.
+            </p>
+
+            {settings.book_cover_wrap_url && (
+              <div className="flex items-end gap-3 pt-1">
+                {(["back", "spine", "front"] as const).map((seg) => (
+                  <div key={seg} className="space-y-1 text-center">
+                    <div
+                      className="w-16 h-24 rounded border border-border-custom bg-cover"
+                      style={{
+                        backgroundImage: `url('${settings.book_cover_wrap_url}')`,
+                        ...getCoverSliceStyle(seg, {
+                          spinePct: settings.book_cover_spine_pct,
+                          backPct: settings.book_cover_back_pct,
+                          layout: settings.book_cover_layout,
+                        }),
+                      }}
+                    />
+                    <span className="text-[9px] uppercase font-mono text-muted-text">{seg}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <SaveButton onClick={saveCoverProportions} saved={savedFlag === "media"} />
           </div>
 
           <div className="space-y-4 pt-4 border-t border-border-custom/50">

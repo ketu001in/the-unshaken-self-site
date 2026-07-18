@@ -164,7 +164,13 @@ export default function Home() {
 
           {/* Right: 3D Book Graphic */}
           <div className="lg:col-span-5 flex justify-center py-8">
-            <Book3D coverImageUrl={settings.book_cover_front_url} />
+            <Book3D
+              coverImageUrl={settings.book_cover_front_url}
+              wrapUrl={settings.book_cover_wrap_url}
+              spinePct={settings.book_cover_spine_pct}
+              backPct={settings.book_cover_back_pct}
+              layout={settings.book_cover_layout}
+            />
           </div>
 
         </div>

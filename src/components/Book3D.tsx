@@ -2,34 +2,117 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { Plus, X } from "lucide-react";
+import { getCoverSliceStyle, DEFAULT_COVER_PROPORTIONS, type CoverLayout } from "@/lib/coverSlices";
 
 const THICKNESS = 22; // px — spine/page-edge depth, independent of the front-face size
+const BASE_TILT = { x: 2, y: -8 };
+const PARALLAX_MAX = 18;
+const DRAG_SENSITIVITY = 0.5;
+const DRAG_CLAMP_Y = 100; // degrees — generous, so a full drag can swing round to the back
+const DRAG_CLAMP_X = 28;
 
-export default function Book3D({ coverImageUrl }: { coverImageUrl?: string | null }) {
+type Book3DProps = {
+  /** Legacy single front-only image — used as a fallback when no wrap image is set. */
+  coverImageUrl?: string | null;
+  /** Full wraparound cover: back cover + spine + front cover in one image. */
+  wrapUrl?: string | null;
+  spinePct?: number;
+  backPct?: number;
+  layout?: CoverLayout;
+};
+
+export default function Book3D({ coverImageUrl, wrapUrl, spinePct, backPct, layout }: Book3DProps) {
   const [hovered, setHovered] = useState(false);
-  const [tilt, setTilt] = useState({ x: 2, y: -8 });
+  const [dragging, setDragging] = useState(false);
+  const [rotation, setRotation] = useState(BASE_TILT);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  const cover = coverImageUrl || "/book-cover-front.jpg";
+  const dragStartPos = useRef({ x: 0, y: 0 });
+  const dragStartRotation = useRef(BASE_TILT);
+  const hasDraggedRef = useRef(false);
 
-  const BASE_TILT = { x: 2, y: -8 };
-  const MAX_TILT = 22;
+  const proportions = {
+    spinePct: spinePct ?? DEFAULT_COVER_PROPORTIONS.spinePct,
+    backPct: backPct ?? DEFAULT_COVER_PROPORTIONS.backPct,
+    layout: layout ?? DEFAULT_COVER_PROPORTIONS.layout,
+  };
+
+  const hasWrap = !!wrapUrl;
+  const wrapSrc = wrapUrl || "";
+  const legacyFront = coverImageUrl || "/book-cover-front.jpg";
+  const frontImg = hasWrap ? wrapSrc : legacyFront;
+
+  const frontFaceStyle = hasWrap
+    ? { backgroundImage: `url('${wrapSrc}')`, ...getCoverSliceStyle("front", proportions) }
+    : { backgroundImage: `url('${legacyFront}')`, backgroundSize: "cover", backgroundPosition: "center" };
+
+  const spineFaceStyle = hasWrap
+    ? { backgroundImage: `url('${wrapSrc}')`, ...getCoverSliceStyle("spine", proportions) }
+    : undefined;
+
+  const backFaceStyle = hasWrap
+    ? { backgroundImage: `url('${wrapSrc}')`, ...getCoverSliceStyle("back", proportions) }
+    : undefined;
+
+  const resetToIdle = () => {
+    setHovered(false);
+    setDragging(false);
+    hasDraggedRef.current = false;
+    setRotation(BASE_TILT);
+  };
+
+  const handleMouseEnter = () => setHovered(true);
+
+  const handleMouseLeave = () => {
+    // "Hover out" always restores the flat front cover — cancels any in-progress drag too.
+    resetToIdle();
+  };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = containerRef.current?.getBoundingClientRect();
     if (!rect) return;
-    const relX = (e.clientX - rect.left) / rect.width; // 0..1
-    const relY = (e.clientY - rect.top) / rect.height; // 0..1
-    const rotateY = BASE_TILT.y + (relX - 0.5) * MAX_TILT * 2;
-    const rotateX = BASE_TILT.x - (relY - 0.5) * MAX_TILT;
-    setTilt({ x: rotateX, y: rotateY });
+
+    if (dragging) {
+      const dx = e.clientX - dragStartPos.current.x;
+      const dy = e.clientY - dragStartPos.current.y;
+      const nextY = clamp(
+        dragStartRotation.current.y + dx * DRAG_SENSITIVITY,
+        -DRAG_CLAMP_Y,
+        DRAG_CLAMP_Y
+      );
+      const nextX = clamp(
+        dragStartRotation.current.x - dy * DRAG_SENSITIVITY,
+        -DRAG_CLAMP_X,
+        DRAG_CLAMP_X
+      );
+      setRotation({ x: nextX, y: nextY });
+      return;
+    }
+
+    if (hasDraggedRef.current) return; // manual control was taken this hover session — ambient tilt is off
+
+    const relX = (e.clientX - rect.left) / rect.width;
+    const relY = (e.clientY - rect.top) / rect.height;
+    setRotation({
+      x: BASE_TILT.x - (relY - 0.5) * PARALLAX_MAX,
+      y: BASE_TILT.y + (relX - 0.5) * PARALLAX_MAX * 2,
+    });
   };
 
-  const handleMouseEnter = () => setHovered(true);
-  const handleMouseLeave = () => {
-    setHovered(false);
-    setTilt(BASE_TILT);
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setDragging(true);
+    hasDraggedRef.current = true;
+    dragStartPos.current = { x: e.clientX, y: e.clientY };
+    dragStartRotation.current = rotation;
   };
+
+  useEffect(() => {
+    if (!dragging) return;
+    const onUp = () => setDragging(false);
+    window.addEventListener("mouseup", onUp);
+    return () => window.removeEventListener("mouseup", onUp);
+  }, [dragging]);
 
   // Close lightbox on Escape
   useEffect(() => {
@@ -49,68 +132,83 @@ export default function Book3D({ coverImageUrl }: { coverImageUrl?: string | nul
           onMouseEnter={handleMouseEnter}
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
-          className="relative w-[240px] h-[360px] md:w-[280px] md:h-[420px] cursor-pointer group"
-          style={{ perspective: "1400px" }}
+          onMouseDown={handleMouseDown}
+          className="relative w-[240px] h-[360px] md:w-[280px] md:h-[420px]"
+          style={{ perspective: "1400px", cursor: dragging ? "grabbing" : hovered ? "grab" : "default" }}
         >
-          {/* The 3D book box: front cover, spine, page-edge, back cover */}
+          {/* Idle flat front cover — the resting state, no 3D at all */}
           <div
-            className="relative w-full h-full"
+            className="absolute inset-0 rounded-sm overflow-hidden border border-white/10 shadow-[16px_18px_28px_rgba(0,0,0,0.22)] transition-opacity duration-300"
             style={{
-              transformStyle: "preserve-3d",
-              transition: hovered
-                ? "transform 0.08s linear"
-                : "transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
-              transform: `rotateY(${tilt.y}deg) rotateX(${tilt.x}deg)`,
-              filter: hovered
-                ? "drop-shadow(28px 32px 45px rgba(0,0,0,0.35))"
-                : "drop-shadow(16px 18px 28px rgba(0,0,0,0.22))",
+              opacity: hovered ? 0 : 1,
+              ...frontFaceStyle,
             }}
+          />
+
+          {/* Hover state — the real 3D book box: front, spine, page-edge, back */}
+          <div
+            className="absolute inset-0 transition-opacity duration-300"
+            style={{ opacity: hovered ? 1 : 0, pointerEvents: hovered ? "auto" : "none" }}
           >
-            {/* Back cover — dark, sits behind everything */}
             <div
-              className="absolute inset-0 rounded-sm bg-[#1a1410]"
-              style={{ transform: `translateZ(-${THICKNESS / 2}px) rotateY(180deg)` }}
-            />
-
-            {/* Spine — hinged at the left edge, sweeps back into depth */}
-            <div
-              className="absolute inset-y-0 left-0 rounded-l-sm bg-gradient-to-b from-[#2a1f16] via-[#1e1610] to-[#150f0a]"
+              className="relative w-full h-full"
               style={{
-                width: `${THICKNESS}px`,
-                transformOrigin: "left center",
-                transform: "rotateY(-90deg)",
-              }}
-            />
-
-            {/* Page edge — hinged at the right edge, off-white striped "pages" */}
-            <div
-              className="absolute inset-y-0 right-0 rounded-r-sm"
-              style={{
-                width: `${THICKNESS}px`,
-                transformOrigin: "right center",
-                transform: "rotateY(90deg)",
-                background:
-                  "repeating-linear-gradient(to bottom, #f4ecd8 0px, #f4ecd8 2px, #e2d6b8 2px, #e2d6b8 3px)",
-              }}
-            />
-
-            {/* Front cover */}
-            <div
-              className="absolute inset-0 rounded-sm overflow-hidden border border-white/10 bg-cover bg-center"
-              style={{
-                backgroundImage: `url('${cover}')`,
-                transform: `translateZ(${THICKNESS / 2}px)`,
+                transformStyle: "preserve-3d",
+                transition: dragging
+                  ? "transform 0.03s linear"
+                  : "transform 0.15s ease-out",
+                transform: `rotateY(${rotation.y}deg) rotateX(${rotation.x}deg)`,
+                filter: "drop-shadow(28px 32px 45px rgba(0,0,0,0.35))",
               }}
             >
-              {/* Sheen sweep — moves diagonally on hover */}
+              {/* Back cover */}
               <div
-                className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/15 to-transparent pointer-events-none transition-transform duration-700 ease-out"
+                className="absolute inset-0 rounded-sm bg-[#1a1410] bg-cover bg-center"
                 style={{
-                  transform: hovered
-                    ? "translateX(120%) skewX(-20deg)"
-                    : "translateX(-120%) skewX(-20deg)",
+                  transform: `translateZ(-${THICKNESS / 2}px) rotateY(180deg)`,
+                  ...backFaceStyle,
                 }}
               />
+
+              {/* Spine — hinged at the left edge, sweeps back into depth */}
+              <div
+                className="absolute inset-y-0 left-0 rounded-l-sm bg-gradient-to-b from-[#2a1f16] via-[#1e1610] to-[#150f0a] bg-cover bg-center"
+                style={{
+                  width: `${THICKNESS}px`,
+                  transformOrigin: "left center",
+                  transform: "rotateY(-90deg)",
+                  ...spineFaceStyle,
+                }}
+              />
+
+              {/* Page edge — hinged at the right edge, off-white striped "pages" */}
+              <div
+                className="absolute inset-y-0 right-0 rounded-r-sm"
+                style={{
+                  width: `${THICKNESS}px`,
+                  transformOrigin: "right center",
+                  transform: "rotateY(90deg)",
+                  background:
+                    "repeating-linear-gradient(to bottom, #f4ecd8 0px, #f4ecd8 2px, #e2d6b8 2px, #e2d6b8 3px)",
+                }}
+              />
+
+              {/* Front cover */}
+              <div
+                className="absolute inset-0 rounded-sm overflow-hidden border border-white/10 bg-cover bg-center"
+                style={{
+                  transform: `translateZ(${THICKNESS / 2}px)`,
+                  ...frontFaceStyle,
+                }}
+              >
+                {/* Sheen sweep — moves diagonally while hovering, before a drag takes over */}
+                <div
+                  className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/15 to-transparent pointer-events-none transition-transform duration-700 ease-out"
+                  style={{
+                    transform: hovered && !dragging ? "translateX(120%) skewX(-20deg)" : "translateX(-120%) skewX(-20deg)",
+                  }}
+                />
+              </div>
             </div>
           </div>
 
@@ -118,6 +216,7 @@ export default function Book3D({ coverImageUrl }: { coverImageUrl?: string | nul
           <button
             type="button"
             aria-label="View full cover"
+            onMouseDown={(e) => e.stopPropagation()}
             onClick={(e) => {
               e.stopPropagation();
               setLightboxOpen(true);
@@ -129,6 +228,12 @@ export default function Book3D({ coverImageUrl }: { coverImageUrl?: string | nul
             <Plus className="w-5 h-5" />
           </button>
         </div>
+
+        {hovered && (
+          <p className="mt-3 text-[9px] uppercase tracking-widest text-muted-text font-mono animate-[fadeIn_0.3s_ease-out]">
+            Click &amp; hold to spin
+          </p>
+        )}
       </div>
 
       {/* Lightbox */}
@@ -145,15 +250,31 @@ export default function Book3D({ coverImageUrl }: { coverImageUrl?: string | nul
           >
             <X className="w-5 h-5" />
           </button>
-          {/* eslint-disable-next-line @next/next/no-img-element -- lightbox needs a plain, unconstrained img for arbitrary uploaded cover URLs */}
-          <img
-            src={cover}
-            alt="Full book cover"
-            onClick={(e) => e.stopPropagation()}
-            className="max-h-[85vh] max-w-[90vw] object-contain rounded-md shadow-2xl animate-[zoomIn_0.25s_cubic-bezier(0.16,1,0.3,1)]"
-          />
+          {hasWrap ? (
+            // Sliced crop of the wrap image — background-image, since object-position
+            // can't isolate an arbitrary panel the way background-size/position can.
+            <div
+              onClick={(e) => e.stopPropagation()}
+              className="w-[min(90vw,480px)] aspect-[2/3] rounded-md shadow-2xl animate-[zoomIn_0.25s_cubic-bezier(0.16,1,0.3,1)]"
+              style={{ backgroundImage: `url('${wrapSrc}')`, ...getCoverSliceStyle("front", proportions) }}
+              role="img"
+              aria-label="Full book cover"
+            />
+          ) : (
+            // eslint-disable-next-line @next/next/no-img-element -- needs an unconstrained img for arbitrary uploaded cover URLs
+            <img
+              src={frontImg}
+              alt="Full book cover"
+              onClick={(e) => e.stopPropagation()}
+              className="max-h-[85vh] max-w-[90vw] object-contain rounded-md shadow-2xl animate-[zoomIn_0.25s_cubic-bezier(0.16,1,0.3,1)]"
+            />
+          )}
         </div>
       )}
     </>
   );
+}
+
+function clamp(v: number, min: number, max: number) {
+  return Math.min(max, Math.max(min, v));
 }
