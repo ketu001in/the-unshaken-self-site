@@ -56,7 +56,7 @@ const DEFAULT_HOMEPAGE_CONTENT: HomepageContent = {
   why_quote: "An unshaken self is not one that avoids the storm, but one that remains still at the center of it.",
   author_badge_title: "Author - The Unshaken Self",
   author_badge_tags: "Spiritual Curious / Avid Reader / Writer",
-  author_brief: "Ketul Shah is a dedicated Vedic philosophy explorer and professional counselor. Driven by a mission to bridge traditional Eastern spirituality with contemporary cognitive therapy, Ketul spent the last seven years studying the Bhagavad Gita's psychological implications. His upcoming book, *The Unshaken Self*, translates Vedic insights into practical mental exercises tailored for people working under extreme pressure.",
+  author_brief: "Ketul Shah is a dedicated spiritual philosophy explorer and a devoted follower of Krishna (Thakorji). Driven by a mission to bridge ancient Eastern spirituality with contemporary cognitive therapy, Ketul spent the last seven years studying the Bhagavad Gita's psychological implications. His upcoming book, *The Unshaken Self*, translates these insights into practical mental exercises tailored for people working under extreme pressure.",
   testimonials: [
     { quote: "Ketul Shah has achieved something remarkable—taking a 5,000-year-old dialogue and showing exactly how it can save you from burnout at work. Essential reading for the modern professional.", author: "Dr. Ananya Rao", role: "Mindfulness Researcher & Psychologist", rating: 5 },
     { quote: "The Unshaken Self is an anchor. In a world full of noise, this book offers the precise psychological framework needed to stay calm, focused, and steady.", author: "Vikram Malhotra", role: "Founder, Peak Performance Labs", rating: 5 },
@@ -319,16 +319,16 @@ type AboutAuthorContent = {
 const DEFAULT_ABOUT_AUTHOR_CONTENT: AboutAuthorContent = {
   bio_paragraphs: [
     "KETUL SHAH bridges the high-stakes reality of the modern corporate world with the profound, quiet depths of ancient spiritual wisdom.",
-    "Beyond the boardroom, Ketul is a dedicated student of life and a passionate explorer of Sanatan history.",
+    "Beyond the boardroom, Ketul was born and raised in a Pushtimargiya Vaishnav family, and remains a devoted follower of Krishna (Thakorji) to this day.",
     "This pursuit of harmony extends far beyond his spiritual studies into a rich, vibrant creative life.",
     "This same creative devotion is mirrored in his culinary arts.",
     "At the very core of Ketul's existence is a philosophy of total surrender and trust."
   ],
-  mission: "To democratize ancient Vedic psychology, making it practical and actionable for high-pressure modern careers.",
+  mission: "To make the spiritual wisdom of the Bhagavad Gita practical and actionable for high-pressure modern careers.",
   vision: "A society where professional excellence and deep internal peace co-exist, built upon stable self-knowledge.",
   timeline: [
-    { year: "2017", title: "Vedic Foundations", desc: "Began deep scholarly study of the Prasthanatrayi under traditional Sanskrit tutors in India." },
-    { year: "2019", title: "Synthesis of Therapy & Wisdom", desc: "Founded a private counseling practice integrating CBT with Eastern mindfulness." },
+    { year: "2017", title: "Vedic Foundations", desc: "Deepened his devotional and scriptural study of the Prasthanatrayi (Upanishads, Brahma Sutras, and Bhagavad Gita), rooted in his lifelong devotion to Krishna (Thakorji)." },
+    { year: "2019", title: "Bringing the Gita to Modern Life", desc: "Began translating Karma Yoga and the Gita's principles into practical frameworks for professionals navigating stress and uncertainty in high-pressure careers." },
     { year: "2021", title: "The Book Concept", desc: "Started structuring drafts for The Unshaken Self." },
     { year: "2024", title: "Researching about the book", desc: "Dedicated the year to deep scriptural research." },
     { year: "2026", title: "Launch of The Unshaken Self", desc: "Finalized publishers and designed global launch operations." }

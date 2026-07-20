@@ -61,7 +61,7 @@ const DEFAULT_HOMEPAGE_CONTENT: HomepageContent = {
   why_quote: "An unshaken self is not one that avoids the storm, but one that remains still at the center of it.",
   author_badge_title: "Author - The Unshaken Self",
   author_badge_tags: "Spiritual Curious / Avid Reader / Writer",
-  author_brief: "Ketul Shah is a dedicated Vedic philosophy explorer and professional counselor. Driven by a mission to bridge traditional Eastern spirituality with contemporary cognitive therapy, Ketul spent the last seven years studying the Bhagavad Gita's psychological implications. His upcoming book, *The Unshaken Self*, translates Vedic insights into practical mental exercises tailored for people working under extreme pressure.",
+  author_brief: "Ketul Shah is a dedicated spiritual philosophy explorer and a devoted follower of Krishna (Thakorji). Driven by a mission to bridge ancient Eastern spirituality with contemporary cognitive therapy, Ketul spent the last seven years studying the Bhagavad Gita's psychological implications. His upcoming book, *The Unshaken Self*, translates these insights into practical mental exercises tailored for people working under extreme pressure.",
   testimonials: [
     { quote: "Ketul Shah has achieved something remarkable—taking a 5,000-year-old dialogue and showing exactly how it can save you from burnout at work. Essential reading for the modern professional.", author: "Dr. Ananya Rao", role: "Mindfulness Researcher & Psychologist", rating: 5 },
     { quote: "The Unshaken Self is an anchor. In a world full of noise, this book offers the precise psychological framework needed to stay calm, focused, and steady.", author: "Vikram Malhotra", role: "Founder, Peak Performance Labs", rating: 5 },
