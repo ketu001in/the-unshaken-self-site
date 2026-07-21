@@ -34,10 +34,18 @@ export default function Book3D({ coverImageUrl, wrapUrl, spinePct, backPct, layo
   const [dragging, setDragging] = useState(false);
   const [rotation, setRotation] = useState(IDLE_ROTATION);
   const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const dragStartPos = useRef({ x: 0, y: 0 });
   const dragStartRotation = useRef(IDLE_ROTATION);
   const hasDraggedRef = useRef(false);
+
+  // Phones/tablets (and touch laptops) have no real "hover" — show the spin
+  // hint and the zoom button up front instead of gating them on a hover
+  // event that will never fire.
+  useEffect(() => {
+    setIsTouchDevice(window.matchMedia("(hover: none), (pointer: coarse)").matches);
+  }, []);
 
   const proportions = {
     spinePct: spinePct ?? DEFAULT_COVER_PROPORTIONS.spinePct,
@@ -148,6 +156,67 @@ export default function Book3D({ coverImageUrl, wrapUrl, spinePct, backPct, layo
     };
   }, [dragging]);
 
+  // Touch support (phones, tablets, touch-screen laptops). React's synthetic
+  // touch handlers are attached passively by default, so calling
+  // preventDefault() inside an onTouchMove prop silently does nothing and
+  // the page just scrolls instead of spinning the book. Native listeners
+  // with { passive: false } are required to actually stop that scroll.
+  // Touch has no persistent "hover" the way a mouse does, so a touch starts
+  // the interactive/drag state directly, and lifting the finger always
+  // resets back to the flat idle cover (no lingering-hover concept to keep).
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    let touchActive = false;
+
+    const onTouchStart = (e: TouchEvent) => {
+      const t = e.touches[0];
+      if (!t) return;
+      e.preventDefault();
+      touchActive = true;
+      setHovered(true);
+      setDragging(true);
+      hasDraggedRef.current = true;
+      dragStartPos.current = { x: t.clientX, y: t.clientY };
+      dragStartRotation.current = IDLE_ROTATION;
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      if (!touchActive) return;
+      const t = e.touches[0];
+      if (!t) return;
+      e.preventDefault();
+      const dx = t.clientX - dragStartPos.current.x;
+      const dy = t.clientY - dragStartPos.current.y;
+      const nextY = dragStartRotation.current.y + dx * DRAG_SENSITIVITY;
+      const nextX = clamp(
+        dragStartRotation.current.x - dy * DRAG_SENSITIVITY,
+        -DRAG_CLAMP_X,
+        DRAG_CLAMP_X
+      );
+      setRotation({ x: nextX, y: nextY });
+    };
+
+    const onTouchEnd = () => {
+      if (!touchActive) return;
+      touchActive = false;
+      resetToIdle();
+    };
+
+    el.addEventListener("touchstart", onTouchStart, { passive: false });
+    el.addEventListener("touchmove", onTouchMove, { passive: false });
+    el.addEventListener("touchend", onTouchEnd, { passive: false });
+    el.addEventListener("touchcancel", onTouchEnd, { passive: false });
+    return () => {
+      el.removeEventListener("touchstart", onTouchStart);
+      el.removeEventListener("touchmove", onTouchMove);
+      el.removeEventListener("touchend", onTouchEnd);
+      el.removeEventListener("touchcancel", onTouchEnd);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- intentionally stable: only reads refs and stable setState setters
+  }, []);
+
   // Close lightbox on Escape
   useEffect(() => {
     if (!lightboxOpen) return;
@@ -182,6 +251,7 @@ export default function Book3D({ coverImageUrl, wrapUrl, spinePct, backPct, layo
           style={{
             perspective: "1400px",
             cursor: dragging ? "grabbing" : hovered ? "grab" : "default",
+            touchAction: "none", // let JS handle the gesture instead of the browser scrolling/zooming
             filter: hovered
               ? "drop-shadow(28px 32px 45px rgba(0,0,0,0.35))"
               : "drop-shadow(16px 18px 28px rgba(0,0,0,0.22))",
@@ -255,21 +325,22 @@ export default function Book3D({ coverImageUrl, wrapUrl, spinePct, backPct, layo
             type="button"
             aria-label="View full cover"
             onMouseDown={(e) => e.stopPropagation()}
+            onTouchStart={(e) => e.stopPropagation()}
             onClick={(e) => {
               e.stopPropagation();
               setLightboxOpen(true);
             }}
             className={`absolute bottom-3 right-3 z-10 w-10 h-10 rounded-full bg-black/60 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white transition-all duration-300 hover:bg-black/80 hover:scale-110 cursor-pointer ${
-              hovered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-1 pointer-events-none"
+              hovered || isTouchDevice ? "opacity-100 translate-y-0" : "opacity-0 translate-y-1 pointer-events-none"
             }`}
           >
             <Plus className="w-5 h-5" />
           </button>
         </div>
 
-        {hovered && (
+        {(hovered || isTouchDevice) && (
           <p className="mt-3 text-[9px] uppercase tracking-widest text-muted-text font-mono animate-[fadeIn_0.3s_ease-out]">
-            Click &amp; hold to spin
+            {isTouchDevice ? "Tap & hold to spin" : "Click & hold to spin"}
           </p>
         )}
       </div>
