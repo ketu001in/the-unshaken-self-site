@@ -36,6 +36,7 @@ export default function AdminDashboard() {
   const [eventTime, setEventTime] = useState("");
   const [eventLocation, setEventLocation] = useState("");
   const [eventType, setEventType] = useState<"virtual" | "in-person">("virtual");
+  const [editingEventId, setEditingEventId] = useState<string | null>(null);
 
   const [cmsBlogPosts, setCmsBlogPosts] = useState<any[]>([]);
   const [cmsEvents, setCmsEvents] = useState<any[]>([]);
@@ -59,7 +60,16 @@ export default function AdminDashboard() {
     if (waitlistRes.data) setWaitlist(waitlistRes.data.map((w) => ({ id: w.id, email: w.email, preferredStore: w.preferred_store || "Any", date: w.created_at })));
     if (reviewsRes.data) setReviews(reviewsRes.data.map((r) => ({ id: r.id, author: r.author, role: r.role || "Reader", quote: r.quote, rating: r.rating, type: r.type, status: r.status, date: r.created_at })));
     if (postsRes.data) setCmsBlogPosts(postsRes.data.map((p) => ({ id: p.id, title: p.title, excerpt: p.excerpt, date: p.published_date, readTime: p.read_time })));
-    if (eventsRes.data) setCmsEvents(eventsRes.data.map((ev) => ({ id: ev.id, title: ev.title, date: ev.event_date, type: ev.event_type })));
+    if (eventsRes.data) setCmsEvents(eventsRes.data.map((ev) => ({
+      id: ev.id,
+      title: ev.title,
+      desc: ev.description,
+      date: ev.event_date,
+      time: ev.event_time,
+      location: ev.location,
+      type: ev.event_type,
+      capacity: ev.capacity,
+    })));
   };
 
   useEffect(() => {
@@ -129,11 +139,63 @@ export default function AdminDashboard() {
     }
   };
 
-  const handleCreateEvent = async (e: React.FormEvent) => {
+  const resetEventForm = () => {
+    setEditingEventId(null);
+    setEventTitle("");
+    setEventDesc("");
+    setEventDate("");
+    setEventTime("");
+    setEventLocation("");
+    setEventType("virtual");
+  };
+
+  const handleEditEventClick = (ev: any) => {
+    setEditingEventId(ev.id);
+    setEventTitle(ev.title || "");
+    setEventDesc(ev.desc || "");
+    setEventDate(ev.date || "");
+    setEventTime(ev.time || "");
+    setEventLocation(ev.location || "");
+    setEventType(ev.type === "in-person" ? "in-person" : "virtual");
+    // Scroll the form into view so the edit is obvious, especially on mobile
+    // where the form and the list aren't side by side.
+    document.getElementById("event-form")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const handleSubmitEvent = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!eventTitle.trim() || !eventDesc.trim() || !eventDate.trim() || !eventLocation.trim()) return;
 
     const supabase = createClient();
+
+    if (editingEventId) {
+      // Editing an existing event — update in place rather than the old
+      // delete-and-recreate workaround, so the date/time can be changed
+      // directly without losing the event's RSVPs (they're linked by
+      // event_id, which stays the same on an update).
+      const { error } = await supabase
+        .from("events")
+        .update({
+          title: eventTitle,
+          description: eventDesc,
+          event_date: eventDate,
+          event_time: eventTime || "TBD",
+          location: eventLocation,
+          event_type: eventType,
+        })
+        .eq("id", editingEventId);
+
+      if (error) {
+        alert("Something went wrong saving these changes — please try again.");
+        return;
+      }
+
+      resetEventForm();
+      await refreshData();
+      alert("Event updated — the new date/time is live on the Events page.");
+      return;
+    }
+
     const { error } = await supabase.from("events").insert({
       title: eventTitle,
       description: eventDesc,
@@ -149,11 +211,7 @@ export default function AdminDashboard() {
       return;
     }
 
-    setEventTitle("");
-    setEventDesc("");
-    setEventDate("");
-    setEventTime("");
-    setEventLocation("");
+    resetEventForm();
     await refreshData();
     alert("Event successfully scheduled and live!");
   };
@@ -162,6 +220,7 @@ export default function AdminDashboard() {
     if (confirm("Are you sure you want to delete this event?")) {
       const supabase = createClient();
       await supabase.from("events").delete().eq("id", id);
+      if (editingEventId === id) resetEventForm();
       refreshData();
     }
   };
@@ -530,10 +589,28 @@ export default function AdminDashboard() {
                       </form>
                     </div>
 
-                    {/* Add Event */}
-                    <div className="space-y-4 pt-6 border-t border-border-custom/50">
-                      <h3 className="font-serif text-base text-foreground font-bold border-b border-border-custom/50 pb-2">Schedule New Launch Event</h3>
-                      <form onSubmit={handleCreateEvent} className="space-y-3">
+                    {/* Add / Edit Event */}
+                    <div id="event-form" className="space-y-4 pt-6 border-t border-border-custom/50">
+                      <div className="flex items-center justify-between border-b border-border-custom/50 pb-2">
+                        <h3 className="font-serif text-base text-foreground font-bold">
+                          {editingEventId ? "Edit Launch Event" : "Schedule New Launch Event"}
+                        </h3>
+                        {editingEventId && (
+                          <button
+                            type="button"
+                            onClick={resetEventForm}
+                            className="text-[10px] font-mono uppercase text-muted-text hover:text-foreground cursor-pointer"
+                          >
+                            Cancel Edit
+                          </button>
+                        )}
+                      </div>
+                      {editingEventId && (
+                        <p className="text-[10px] text-[#dfb15b] font-mono -mt-2">
+                          Editing "{eventTitle}" — change the date/time below and save. RSVPs for this event stay linked.
+                        </p>
+                      )}
+                      <form onSubmit={handleSubmitEvent} className="space-y-3">
                         <div className="space-y-1">
                           <label className="text-[10px] font-mono uppercase text-stone-400 font-bold block">Event Title *</label>
                           <input
@@ -607,7 +684,7 @@ export default function AdminDashboard() {
                           type="submit"
                           className="w-full py-2.5 rounded-full bg-[#0f2b48] dark:bg-[#dfb15b] text-white dark:text-black text-xs uppercase tracking-widest font-bold shadow-md cursor-pointer hover:opacity-90 transition-opacity"
                         >
-                          Schedule Event
+                          {editingEventId ? "Save Changes" : "Schedule Event"}
                         </button>
                       </form>
                     </div>
@@ -649,17 +726,32 @@ export default function AdminDashboard() {
                       ) : (
                         <div className="space-y-2 max-h-60 overflow-y-auto no-scrollbar pr-2">
                           {cmsEvents.map((ev: any) => (
-                            <div key={ev.id} className="p-3 border border-border-custom bg-stone-50/50 dark:bg-black/20 rounded-xl text-xs flex justify-between items-center gap-4">
+                            <div
+                              key={ev.id}
+                              className={`p-3 border rounded-xl text-xs flex justify-between items-center gap-4 ${
+                                editingEventId === ev.id
+                                  ? "border-[#dfb15b] bg-[#dfb15b]/5"
+                                  : "border-border-custom bg-stone-50/50 dark:bg-black/20"
+                              }`}
+                            >
                               <div className="space-y-1 min-w-0 flex-1">
                                 <p className="font-semibold text-foreground truncate">{ev.title}</p>
-                                <p className="text-[10px] text-[#dfb15b] font-mono uppercase">{ev.date} • {ev.type}</p>
+                                <p className="text-[10px] text-[#dfb15b] font-mono uppercase">{ev.date} • {ev.time || "TBD"} • {ev.type}</p>
                               </div>
-                              <button
-                                onClick={() => handleDeleteEvent(ev.id)}
-                                className="px-2.5 py-1 text-[9px] font-mono border border-red-500/20 text-red-500 rounded hover:bg-red-500/10 cursor-pointer flex-shrink-0"
-                              >
-                                Delete
-                              </button>
+                              <div className="flex items-center gap-2 flex-shrink-0">
+                                <button
+                                  onClick={() => handleEditEventClick(ev)}
+                                  className="px-2.5 py-1 text-[9px] font-mono border border-border-custom text-foreground rounded hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer"
+                                >
+                                  Edit
+                                </button>
+                                <button
+                                  onClick={() => handleDeleteEvent(ev.id)}
+                                  className="px-2.5 py-1 text-[9px] font-mono border border-red-500/20 text-red-500 rounded hover:bg-red-500/10 cursor-pointer"
+                                >
+                                  Delete
+                                </button>
+                              </div>
                             </div>
                           ))}
                         </div>
