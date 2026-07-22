@@ -27,6 +27,7 @@ export type SiteSettings = {
   book_cover_back_pct: number;
   book_cover_layout: "back-spine-front" | "front-spine-back";
   trailer_video_url: string | null;
+  trailer_thumbnail_url: string | null;
   media_kit_portrait_url: string | null;
   media_kit_cover_kit_url: string | null;
   media_kit_press_release_url: string | null;
@@ -49,6 +50,7 @@ export const DEFAULT_SITE_SETTINGS: SiteSettings = {
   book_cover_back_pct: 46,
   book_cover_layout: "back-spine-front",
   trailer_video_url: null,
+  trailer_thumbnail_url: null,
   media_kit_portrait_url: null,
   media_kit_cover_kit_url: null,
   media_kit_press_release_url: null,

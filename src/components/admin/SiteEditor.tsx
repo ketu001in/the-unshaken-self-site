@@ -417,6 +417,7 @@ type UploadKey =
   | "book_cover_front_url"
   | "book_cover_wrap_url"
   | "trailer_video_url"
+  | "trailer_thumbnail_url"
   | "media_kit_portrait_url"
   | "media_kit_cover_kit_url"
   | "media_kit_press_release_url"
@@ -798,6 +799,10 @@ export default function SiteEditor() {
 
           <div className="space-y-4 pt-4 border-t border-border-custom/50">
             <h3 className="font-serif text-base text-foreground font-bold">Homepage Trailer Video</h3>
+            <p className="text-[11px] text-muted-text leading-relaxed">
+              The video never autoplays — visitors always see a still thumbnail with the quote and a Play
+              button first, and the trailer only starts once they click Play.
+            </p>
             <UploadField
               label="Cinematic Trailer"
               currentUrl={settings.trailer_video_url}
@@ -805,6 +810,14 @@ export default function SiteEditor() {
               uploading={uploading === "trailer_video_url"}
               onFile={(file) => handleFileUpload("trailer_video_url", "trailer-video", file)}
               hint="MP4/WebM recommended. 200MB max on the free tier — compress the file first if it's larger."
+            />
+            <UploadField
+              label="Trailer Thumbnail (optional)"
+              currentUrl={settings.trailer_thumbnail_url}
+              accept="image/*"
+              uploading={uploading === "trailer_thumbnail_url"}
+              onFile={(file) => handleFileUpload("trailer_thumbnail_url", "trailer-thumbnail", file)}
+              hint="A still image shown before Play is clicked. If left blank, the video's own first frame is used instead."
             />
           </div>
 

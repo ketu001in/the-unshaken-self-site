@@ -297,15 +297,25 @@ export default function Home() {
           <div className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl bg-black border border-border-custom group">
             {!videoPlaying ? (
               <div className="absolute inset-0 z-10 flex flex-col justify-center items-center p-6 bg-gradient-to-t from-black/85 via-black/45 to-black/30">
-                {settings.trailer_video_url && (
-                  <video
-                    src={settings.trailer_video_url}
-                    className="absolute inset-0 w-full h-full object-cover"
-                    muted
-                    loop
-                    autoPlay
-                    playsInline
+                {/* Static thumbnail only — nothing plays until Play is clicked.
+                    A dedicated thumbnail image (if uploaded) wins for a crisp,
+                    guaranteed still frame; otherwise the video element's own
+                    first frame is used as a poster (no autoplay/loop here). */}
+                {settings.trailer_thumbnail_url ? (
+                  <div
+                    className="absolute inset-0 w-full h-full bg-cover bg-center"
+                    style={{ backgroundImage: `url('${settings.trailer_thumbnail_url}')` }}
                   />
+                ) : (
+                  settings.trailer_video_url && (
+                    <video
+                      src={settings.trailer_video_url}
+                      className="absolute inset-0 w-full h-full object-cover"
+                      muted
+                      playsInline
+                      preload="metadata"
+                    />
+                  )
                 )}
                 {/* Visual Cover/Overlay */}
                 <div className="absolute inset-0 bg-stone-900/60 mix-blend-overlay group-hover:scale-105 transition-transform duration-700 pointer-events-none" />
