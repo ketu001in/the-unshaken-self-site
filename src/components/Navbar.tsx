@@ -30,6 +30,18 @@ export default function Navbar() {
 
   const isActive = (href: string) => pathname === href;
 
+  // Next.js's Link is a no-op when you click through to the route you're
+  // already on — so clicking the logo while on the homepage did nothing at
+  // all (page stayed wherever it was scrolled to). Force a scroll-to-top in
+  // that case; for every other page, Link's normal navigation already lands
+  // at the top of the new page.
+  const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (pathname === "/") {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
   return (
     <nav
       className={`fixed top-0 inset-x-0 z-40 transition-all duration-300 ${
@@ -43,8 +55,9 @@ export default function Navbar() {
           
           {/* Logo Section */}
           <div className="flex-shrink-0">
-            <Link 
-              href="/" 
+            <Link
+              href="/"
+              onClick={handleLogoClick}
               className="flex items-center space-x-2 text-primary font-serif tracking-widest text-base sm:text-lg uppercase hover:opacity-80 transition-opacity"
             >
               <BookOpen className="w-5 h-5 text-[#dfb15b]" />

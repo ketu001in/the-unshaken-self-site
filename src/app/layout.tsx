@@ -73,6 +73,16 @@ export default function RootLayout({
             __html: `(function(){try{var t=localStorage.getItem("theme");if(!t){t=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";}document.documentElement.classList.toggle("dark",t==="dark");}catch(e){}})();`,
           }}
         />
+        <script
+          dangerouslySetInnerHTML={{
+            // Browsers restore the previous scroll position on a plain reload
+            // by default, which made a reload look like it "did nothing."
+            // Disabling scroll restoration must happen this early (before the
+            // browser applies it) so a reload always starts at the top, like
+            // a genuinely fresh page load.
+            __html: `(function(){try{if("scrollRestoration" in history){history.scrollRestoration="manual";}}catch(e){}})();`,
+          }}
+        />
       </head>
       <body className="min-h-full flex flex-col transition-colors duration-300">
         <ThemeProvider>
