@@ -353,6 +353,7 @@ export default function Home() {
                   controls
                   autoPlay
                   playsInline
+                  onEnded={() => setVideoPlaying(false)}
                 />
                 <button
                   onClick={() => setVideoPlaying(false)}
