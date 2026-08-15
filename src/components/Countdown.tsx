@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import React, { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import { ArrowRight, CalendarPlus, ChevronDown, Users } from "lucide-react";
+import { createClient } from "@/lib/supabase/client";
 
 type TimeLeft = {
   days: number;
@@ -11,11 +12,55 @@ type TimeLeft = {
   seconds: number;
 };
 
+const LAUNCH_DATE_ICS = "20260904";
+const LAUNCH_DATE_ICS_END = "20260905"; // exclusive, per iCal all-day convention
+const LAUNCH_TITLE = "The Unshaken Self — Book Launch";
+const LAUNCH_DETAILS =
+  "Launching on the auspicious eve of Krishna Janmashtami 2026.";
+const EVENTS_URL = "https://the-unshaken-self-site-hcp1.vercel.app/events";
+
+// Below this, a real signup count reads as sparse rather than as social
+// proof — show a neutral aspirational line instead until it's meaningful.
+const WAITLIST_DISPLAY_THRESHOLD = 5;
+
+function buildGoogleCalendarUrl() {
+  const params = new URLSearchParams({
+    action: "TEMPLATE",
+    text: LAUNCH_TITLE,
+    dates: `${LAUNCH_DATE_ICS}/${LAUNCH_DATE_ICS_END}`,
+    details: LAUNCH_DETAILS,
+    location: EVENTS_URL,
+  });
+  return `https://calendar.google.com/calendar/render?${params.toString()}`;
+}
+
+function buildIcsContent() {
+  const stamp = new Date().toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
+  return [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//The Unshaken Self//Launch//EN",
+    "BEGIN:VEVENT",
+    "UID:unshaken-self-launch-2026@theunshakenself.com",
+    `DTSTAMP:${stamp}`,
+    `DTSTART;VALUE=DATE:${LAUNCH_DATE_ICS}`,
+    `DTEND;VALUE=DATE:${LAUNCH_DATE_ICS_END}`,
+    `SUMMARY:${LAUNCH_TITLE}`,
+    `DESCRIPTION:${LAUNCH_DETAILS} ${EVENTS_URL}`,
+    "END:VEVENT",
+    "END:VCALENDAR",
+  ].join("\r\n");
+}
+
 export default function Countdown() {
   const targetDate = new Date("2026-09-04T00:00:00").getTime();
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [isMounted, setIsMounted] = useState(false);
   const [hovered, setHovered] = useState(false);
+  const [waitlistCount, setWaitlistCount] = useState<number | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   useEffect(() => {
     setIsMounted(true);
@@ -44,6 +89,52 @@ export default function Countdown() {
     return () => clearInterval(timer);
   }, [targetDate]);
 
+  useEffect(() => {
+    const supabase = createClient();
+    supabase
+      .rpc("waitlist_count")
+      .then(({ data, error }: { data: number | null; error: unknown }) => {
+        if (!error && typeof data === "number") {
+          setWaitlistCount(data);
+        }
+      });
+  }, []);
+
+  // Close the calendar dropdown on outside click.
+  useEffect(() => {
+    if (!menuOpen) return;
+    const handleClickOutside = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [menuOpen]);
+
+  const goToEvents = () => router.push("/events");
+
+  const handleCardKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      goToEvents();
+    }
+  };
+
+  const handleDownloadIcs = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const blob = new Blob([buildIcsContent()], { type: "text/calendar;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "the-unshaken-self-launch.ics";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    setMenuOpen(false);
+  };
+
   if (!isMounted) {
     return (
       <div className="flex justify-center space-x-4 md:space-x-8 opacity-50">
@@ -64,9 +155,14 @@ export default function Countdown() {
     { label: "Seconds", value: timeLeft.seconds },
   ];
 
+  const showWaitlistCount = waitlistCount !== null && waitlistCount >= WAITLIST_DISPLAY_THRESHOLD;
+
   return (
-    <Link
-      href="/events"
+    <div
+      role="link"
+      tabIndex={0}
+      onClick={goToEvents}
+      onKeyDown={handleCardKeyDown}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       className="group relative flex flex-col items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#dfb15b]/50 rounded-3xl cursor-pointer"
@@ -138,6 +234,57 @@ export default function Countdown() {
           Launching on the auspicious eve of <span className="text-[#dfb15b] font-medium">Krishna Janmashtami 2026</span>
         </p>
 
+        {/* Social proof — only once the number is meaningful */}
+        <div className="flex items-center gap-1.5 mt-3 text-[11px] text-muted-text">
+          <Users className="w-3.5 h-3.5 text-[#dfb15b]" />
+          <span>
+            {showWaitlistCount
+              ? `${waitlistCount}+ readers already notified`
+              : "Be among the first to get notified"}
+          </span>
+        </div>
+
+        {/* Add to Calendar — stops propagation so it never triggers the card's own navigation */}
+        <div ref={menuRef} className="relative mt-4" onClick={(e) => e.stopPropagation()}>
+          <button
+            type="button"
+            onClick={() => setMenuOpen((o) => !o)}
+            className="flex items-center gap-1.5 px-4 py-2 rounded-full border border-border-custom text-[10px] uppercase tracking-widest font-semibold text-foreground hover:border-[#dfb15b]/60 hover:text-[#dfb15b] transition-colors cursor-pointer"
+            aria-haspopup="menu"
+            aria-expanded={menuOpen}
+          >
+            <CalendarPlus className="w-3.5 h-3.5" />
+            <span>Add to Calendar</span>
+            <ChevronDown className={`w-3 h-3 transition-transform ${menuOpen ? "rotate-180" : ""}`} />
+          </button>
+
+          {menuOpen && (
+            <div
+              role="menu"
+              className="absolute left-1/2 -translate-x-1/2 mt-2 w-48 rounded-xl border border-border-custom bg-white dark:bg-[#101614] shadow-xl overflow-hidden z-20"
+            >
+              <a
+                href={buildGoogleCalendarUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                role="menuitem"
+                onClick={() => setMenuOpen(false)}
+                className="block px-4 py-2.5 text-xs text-foreground hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+              >
+                Google Calendar
+              </a>
+              <button
+                type="button"
+                role="menuitem"
+                onClick={handleDownloadIcs}
+                className="w-full text-left px-4 py-2.5 text-xs text-foreground hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer"
+              >
+                Apple / Outlook (.ics)
+              </button>
+            </div>
+          )}
+        </div>
+
         {/* CTA — fades/slides in on hover */}
         <div
           className={`flex items-center gap-1.5 mt-4 text-[11px] font-semibold uppercase tracking-widest transition-all duration-300 ${
@@ -148,6 +295,6 @@ export default function Countdown() {
           <ArrowRight className={`w-3.5 h-3.5 transition-transform duration-300 ${hovered ? "translate-x-1" : ""}`} />
         </div>
       </div>
-    </Link>
+    </div>
   );
 }
