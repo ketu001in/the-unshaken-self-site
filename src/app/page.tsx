@@ -13,6 +13,8 @@ import Footer from "@/components/Footer";
 import Book3D from "@/components/Book3D";
 import Countdown from "@/components/Countdown";
 import AIChatbot from "@/components/AIChatbot";
+import WisdomDraw from "@/components/WisdomDraw";
+import UnshakenQuiz from "@/components/UnshakenQuiz";
 import { createClient } from "@/lib/supabase/client";
 import { fetchPageContent } from "@/lib/content";
 import { useSiteSettings } from "@/context/SiteSettingsContext";
@@ -177,6 +179,24 @@ export default function Home() {
 
       </section>
 
+      {/* 1.5. WISDOM DRAW — a small interactive "oracle card" moment near the hero */}
+      <section className="py-20 px-4 bg-[#faf8f5] dark:bg-[#050806] border-t border-border-custom">
+        <div className="max-w-4xl mx-auto text-center space-y-10">
+          <div className="space-y-3">
+            <h2 className="text-xs uppercase tracking-[0.25em] text-[#b5924b] dark:text-[#dfb15b] font-semibold">
+              A Small Ritual
+            </h2>
+            <h3 className="text-2xl sm:text-3xl font-serif text-foreground">
+              Draw a Teaching
+            </h3>
+            <p className="text-xs sm:text-sm font-light text-stone-500 dark:text-stone-400 max-w-md mx-auto">
+              Click the card for a single line drawn at random from one of the book&apos;s 18 chapters.
+            </p>
+          </div>
+          <WisdomDraw />
+        </div>
+      </section>
+
       {/* 2. WHY THIS BOOK */}
       <section className="py-24 px-4 bg-white dark:bg-[#070b09] border-t border-border-custom">
         <div className="max-w-4xl mx-auto text-center space-y-12">
@@ -278,6 +298,24 @@ export default function Home() {
             })}
           </div>
 
+        </div>
+      </section>
+
+      {/* 3.5. UNSHAKEN ARCHETYPE QUIZ */}
+      <section className="py-24 px-4 bg-white dark:bg-[#070b09] border-t border-border-custom">
+        <div className="max-w-4xl mx-auto space-y-12">
+          <div className="text-center space-y-4">
+            <h2 className="text-xs uppercase tracking-[0.25em] text-[#b5924b] dark:text-[#dfb15b] font-semibold">
+              Know Yourself
+            </h2>
+            <h3 className="text-2xl sm:text-3xl font-serif text-foreground">
+              What&apos;s Your Unshaken Archetype?
+            </h3>
+            <p className="text-xs sm:text-sm font-light text-stone-500 dark:text-stone-400 max-w-md mx-auto">
+              Five quick questions on how you respond under pressure — matched to one of the Gita&apos;s paths to steadiness.
+            </p>
+          </div>
+          <UnshakenQuiz />
         </div>
       </section>
 

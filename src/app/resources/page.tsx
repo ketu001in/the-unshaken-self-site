@@ -7,6 +7,7 @@ import AIChatbot from "@/components/AIChatbot";
 import { Download, Lock, Unlock, FileText, CheckCircle, Info } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { fetchPageContent } from "@/lib/content";
+import BreathWidget from "@/components/BreathWidget";
 
 type Resource = {
   id: string;
@@ -190,6 +191,24 @@ export default function ResourcesPage() {
           </p>
         </div>
       </header>
+
+      {/* GUIDED BREATH — free interactive moment, no unlock required */}
+      <section className="py-16 px-4 border-b border-border-custom bg-white dark:bg-[#050806]">
+        <div className="max-w-3xl mx-auto text-center space-y-10">
+          <div className="space-y-3">
+            <span className="text-[10px] tracking-[0.3em] text-[#dfb15b] uppercase font-bold">
+              Try It Now
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-serif text-foreground">
+              A Guided Breath
+            </h2>
+            <p className="text-xs sm:text-sm font-light text-stone-500 dark:text-stone-400 max-w-md mx-auto">
+              Free for anyone, no unlock needed — a short, paced breathing exercise you can use right now.
+            </p>
+          </div>
+          <BreathWidget />
+        </div>
+      </section>
 
       {/* Resources Hub */}
       <section className="py-16 px-4 max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 flex-1">
