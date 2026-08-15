@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AIChatbot from "@/components/AIChatbot";
+import Countdown from "@/components/Countdown";
 import { Check, Bell } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { fetchPageContent } from "@/lib/content";
@@ -115,6 +116,11 @@ export default function PreorderPage() {
           </p>
         </div>
       </header>
+
+      {/* Countdown Panel — click through to Events */}
+      <section className="py-16 px-4 bg-white dark:bg-[#050806] border-b border-border-custom flex justify-center">
+        <Countdown />
+      </section>
 
       {/* Pricing Comparison Hub */}
       <section className="py-20 px-4 max-w-7xl mx-auto w-full flex-1 space-y-16">

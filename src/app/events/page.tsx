@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AIChatbot from "@/components/AIChatbot";
+import Countdown from "@/components/Countdown";
 import { Calendar, Clock, Users, Check, ArrowRight } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { fetchPageContent } from "@/lib/content";
@@ -162,6 +163,11 @@ export default function EventsPage() {
           </p>
         </div>
       </header>
+
+      {/* Countdown Panel */}
+      <section className="py-16 px-4 bg-white dark:bg-[#050806] border-b border-border-custom flex justify-center">
+        <Countdown />
+      </section>
 
       {/* Events Hub */}
       <section className="py-16 px-4 max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 flex-1">
