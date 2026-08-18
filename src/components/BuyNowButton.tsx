@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { BookOpen, Clock, ShoppingCart, X, Zap } from "lucide-react";
+import { BookOpen, Clock, ShoppingCart, Sparkles, X, Zap } from "lucide-react";
 import { useSiteSettings } from "@/context/SiteSettingsContext";
 
 type Store = {
@@ -9,6 +9,7 @@ type Store = {
   badge?: string;
   href: string | null;
   accent: string;
+  recommended?: boolean;
 };
 
 type BuyNowButtonProps = {
@@ -16,8 +17,25 @@ type BuyNowButtonProps = {
   onOpen?: () => void;
 };
 
+// Same launch target used by the site's main Countdown component.
+const LAUNCH_TIMESTAMP = new Date("2026-09-04T00:00:00").getTime();
+
+type TimeLeft = { days: number; hours: number; minutes: number; seconds: number };
+
+function computeTimeLeft(): TimeLeft {
+  const diff = LAUNCH_TIMESTAMP - Date.now();
+  if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+  return {
+    days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+    hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
+    minutes: Math.floor((diff / 1000 / 60) % 60),
+    seconds: Math.floor((diff / 1000) % 60),
+  };
+}
+
 export default function BuyNowButton({ fullWidth = false, onOpen }: BuyNowButtonProps) {
   const [open, setOpen] = useState(false);
+  const [timeLeft, setTimeLeft] = useState<TimeLeft | null>(null);
   const { settings } = useSiteSettings();
 
   const handleTrigger = () => {
@@ -39,10 +57,24 @@ export default function BuyNowButton({ fullWidth = false, onOpen }: BuyNowButton
     };
   }, [open]);
 
+  // Tick the countdown only while the modal is actually open.
+  useEffect(() => {
+    if (!open) return;
+    setTimeLeft(computeTimeLeft());
+    const id = setInterval(() => setTimeLeft(computeTimeLeft()), 1000);
+    return () => clearInterval(id);
+  }, [open]);
+
   const stores: Store[] = [
     { name: "Amazon", href: settings.buy_link_amazon, accent: "#ff9900" },
     { name: "Flipkart", href: settings.buy_link_flipkart, accent: "#2874f0" },
-    { name: "ZiffyBee", badge: "Fastest Delivery", href: settings.buy_link_ziffybee, accent: "#dfb15b" },
+    {
+      name: "ZiffyBee",
+      badge: "Fastest Delivery",
+      href: settings.buy_link_ziffybee,
+      accent: "#dfb15b",
+      recommended: true,
+    },
   ];
 
   return (
@@ -91,6 +123,24 @@ export default function BuyNowButton({ fullWidth = false, onOpen }: BuyNowButton
               <h3 className="font-serif text-xl text-foreground">Choose Where to Buy</h3>
             </div>
 
+            {/* Countdown to launch */}
+            {timeLeft && (
+              <div className="flex items-center justify-center gap-3 py-3 px-4 rounded-2xl bg-[#faf8f5] dark:bg-[#070b09] border border-border-custom">
+                <span className="text-[9px] uppercase tracking-widest font-semibold text-muted-text whitespace-nowrap">
+                  Launching In
+                </span>
+                <div className="flex items-center gap-1 font-mono text-sm text-[#dfb15b] font-bold tabular-nums">
+                  <span>{timeLeft.days}d</span>
+                  <span className="opacity-30">:</span>
+                  <span>{String(timeLeft.hours).padStart(2, "0")}h</span>
+                  <span className="opacity-30">:</span>
+                  <span>{String(timeLeft.minutes).padStart(2, "0")}m</span>
+                  <span className="opacity-30">:</span>
+                  <span>{String(timeLeft.seconds).padStart(2, "0")}s</span>
+                </div>
+              </div>
+            )}
+
             <div className="space-y-3">
               {stores.map((store) => {
                 const isLive = Boolean(store.href);
@@ -105,12 +155,20 @@ export default function BuyNowButton({ fullWidth = false, onOpen }: BuyNowButton
                       </div>
                       <div className="text-left">
                         <p className="text-sm font-semibold text-foreground">{store.name}</p>
-                        {store.badge && (
-                          <span className="inline-flex items-center gap-1 text-[9px] uppercase tracking-widest font-bold text-[#dfb15b]">
-                            <Zap className="w-2.5 h-2.5" />
-                            {store.badge}
-                          </span>
-                        )}
+                        <div className="flex items-center gap-2 flex-wrap">
+                          {store.recommended && (
+                            <span className="inline-flex items-center gap-1 text-[9px] uppercase tracking-widest font-bold text-white bg-[#dfb15b] px-1.5 py-0.5 rounded-full">
+                              <Sparkles className="w-2.5 h-2.5" />
+                              Recommended
+                            </span>
+                          )}
+                          {store.badge && (
+                            <span className="inline-flex items-center gap-1 text-[9px] uppercase tracking-widest font-bold text-[#dfb15b]">
+                              <Zap className="w-2.5 h-2.5" />
+                              {store.badge}
+                            </span>
+                          )}
+                        </div>
                       </div>
                     </div>
                     {isLive ? (
@@ -126,13 +184,17 @@ export default function BuyNowButton({ fullWidth = false, onOpen }: BuyNowButton
                   </>
                 );
 
+                const recommendedIdle = store.recommended
+                  ? "border-2 border-[#dfb15b] bg-[#dfb15b]/5 shadow-md shadow-[#dfb15b]/10"
+                  : "border border-border-custom";
+
                 return isLive ? (
                   <a
                     key={store.name}
                     href={store.href!}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full flex items-center justify-between px-4 py-3.5 rounded-2xl border border-border-custom hover:border-[#d64545]/50 hover:bg-[#d64545]/5 transition-colors cursor-pointer"
+                    className={`w-full flex items-center justify-between px-4 py-3.5 rounded-2xl transition-colors cursor-pointer hover:border-[#d64545]/50 hover:bg-[#d64545]/5 ${recommendedIdle}`}
                   >
                     {content}
                   </a>
@@ -140,7 +202,11 @@ export default function BuyNowButton({ fullWidth = false, onOpen }: BuyNowButton
                   <div
                     key={store.name}
                     aria-disabled="true"
-                    className="w-full flex items-center justify-between px-4 py-3.5 rounded-2xl border border-dashed border-border-custom opacity-60 cursor-not-allowed"
+                    className={`w-full flex items-center justify-between px-4 py-3.5 rounded-2xl cursor-not-allowed ${
+                      store.recommended
+                        ? "border-2 border-dashed border-[#dfb15b]/70 bg-[#dfb15b]/5"
+                        : "border border-dashed border-border-custom opacity-60"
+                    }`}
                   >
                     {content}
                   </div>
