@@ -526,6 +526,10 @@ export default function SiteEditor() {
       saveSiteSetting("social_linkedin", settings.social_linkedin),
       saveSiteSetting("social_instagram", settings.social_instagram),
       saveSiteSetting("footer_tagline", settings.footer_tagline),
+      saveSiteSetting("buy_link_amazon", settings.buy_link_amazon),
+      saveSiteSetting("buy_link_flipkart", settings.buy_link_flipkart),
+      saveSiteSetting("buy_link_ziffybee", settings.buy_link_ziffybee),
+      saveSiteSetting("publisher_name", settings.publisher_name),
     ]);
     await refreshSiteSettings();
     flashSaved("general");
@@ -692,6 +696,41 @@ export default function SiteEditor() {
               rows={3}
               value={settings.footer_tagline}
               onChange={(e) => setSettings((p) => ({ ...p, footer_tagline: e.target.value }))}
+            />
+          </Field>
+
+          <h3 className="font-serif text-base text-foreground font-bold pt-4">Buy Now Links</h3>
+          <p className="text-[11px] text-muted-text -mt-4">
+            Leave a link blank until it&apos;s live — the Buy Now button will show that store as
+            &quot;Coming Soon&quot; rather than linking anywhere.
+          </p>
+          <Field label="Amazon Buy Link">
+            <TextInput
+              value={settings.buy_link_amazon || ""}
+              onChange={(e) => setSettings((p) => ({ ...p, buy_link_amazon: e.target.value }))}
+              placeholder="https://www.amazon.in/..."
+            />
+          </Field>
+          <Field label="Flipkart Buy Link">
+            <TextInput
+              value={settings.buy_link_flipkart || ""}
+              onChange={(e) => setSettings((p) => ({ ...p, buy_link_flipkart: e.target.value }))}
+              placeholder="https://www.flipkart.com/..."
+            />
+          </Field>
+          <Field label="ZiffyBee Buy Link">
+            <TextInput
+              value={settings.buy_link_ziffybee || ""}
+              onChange={(e) => setSettings((p) => ({ ...p, buy_link_ziffybee: e.target.value }))}
+              placeholder="https://www.ziffybee.com/..."
+            />
+          </Field>
+
+          <h3 className="font-serif text-base text-foreground font-bold pt-4">Publisher</h3>
+          <Field label="Publisher Name">
+            <TextInput
+              value={settings.publisher_name}
+              onChange={(e) => setSettings((p) => ({ ...p, publisher_name: e.target.value }))}
             />
           </Field>
 

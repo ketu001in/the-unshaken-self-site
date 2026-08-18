@@ -189,7 +189,7 @@ export default function Footer() {
 
         {/* Lower Footer */}
         <div className="flex flex-col sm:flex-row justify-between items-center pt-8 text-stone-500 dark:text-stone-400 text-[10px] font-mono tracking-widest gap-4">
-          <p>© 2026 KETUL SHAH. ALL RIGHTS RESERVED.</p>
+          <p>© 2026 KETUL SHAH. ALL RIGHTS RESERVED. · PUBLISHED BY {settings.publisher_name.toUpperCase()}</p>
           <div className="flex space-x-6">
             <Link href="/privacy" className="hover:text-primary transition-colors">PRIVACY POLICY</Link>
             <Link href="/terms" className="hover:text-primary transition-colors">TERMS OF SERVICE</Link>

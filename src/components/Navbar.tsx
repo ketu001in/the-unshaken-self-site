@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import ThemeToggle from "./ThemeToggle";
+import BuyNowButton from "./BuyNowButton";
 import { Menu, X, BookOpen } from "lucide-react";
 
 export default function Navbar() {
@@ -94,6 +95,9 @@ export default function Navbar() {
             >
               Pre-order
             </Link>
+
+            {/* Buy Now — distinctly colored, highest-urgency CTA as launch nears */}
+            <BuyNowButton />
           </div>
 
           {/* Mobile Menu Actions (Toggle + Hamburger) */}
@@ -130,8 +134,9 @@ export default function Navbar() {
               </Link>
             ))}
             
-            {/* Mobile Pre-order CTA */}
-            <div className="pt-4 border-t border-border-custom px-3">
+            {/* Mobile Buy Now + Pre-order CTAs */}
+            <div className="pt-4 border-t border-border-custom px-3 space-y-3">
+              <BuyNowButton fullWidth onOpen={() => setIsOpen(false)} />
               <Link
                 href="/preorder"
                 onClick={() => setIsOpen(false)}

@@ -35,6 +35,10 @@ export type SiteSettings = {
   sample_pdf_url: string | null;
   theme_colors: ThemeColors;
   section_visibility: SectionVisibility;
+  buy_link_amazon: string | null;
+  buy_link_flipkart: string | null;
+  buy_link_ziffybee: string | null;
+  publisher_name: string;
 };
 
 export const DEFAULT_SITE_SETTINGS: SiteSettings = {
@@ -66,6 +70,10 @@ export const DEFAULT_SITE_SETTINGS: SiteSettings = {
     show_countdown: true,
     show_testimonials: true,
   },
+  buy_link_amazon: null,
+  buy_link_flipkart: null,
+  buy_link_ziffybee: null,
+  publisher_name: "Clever Fox Publishers, India",
 };
 
 type SiteSettingsContextType = {
