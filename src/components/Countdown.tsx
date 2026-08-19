@@ -193,7 +193,7 @@ export default function Countdown() {
             <span className="relative inline-flex rounded-full h-2 w-2 bg-[#dfb15b]" />
           </span>
           <span className="text-[10px] font-mono uppercase tracking-widest text-[#dfb15b]">
-            Pre-Launch Countdown
+            Official Launch Countdown
           </span>
         </div>
 

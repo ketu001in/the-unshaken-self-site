@@ -17,25 +17,8 @@ type BuyNowButtonProps = {
   onOpen?: () => void;
 };
 
-// Same launch target used by the site's main Countdown component.
-const LAUNCH_TIMESTAMP = new Date("2026-09-04T00:00:00").getTime();
-
-type TimeLeft = { days: number; hours: number; minutes: number; seconds: number };
-
-function computeTimeLeft(): TimeLeft {
-  const diff = LAUNCH_TIMESTAMP - Date.now();
-  if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 };
-  return {
-    days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-    hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
-    minutes: Math.floor((diff / 1000 / 60) % 60),
-    seconds: Math.floor((diff / 1000) % 60),
-  };
-}
-
 export default function BuyNowButton({ fullWidth = false, onOpen }: BuyNowButtonProps) {
   const [open, setOpen] = useState(false);
-  const [timeLeft, setTimeLeft] = useState<TimeLeft | null>(null);
   const { settings } = useSiteSettings();
 
   const handleTrigger = () => {
@@ -55,14 +38,6 @@ export default function BuyNowButton({ fullWidth = false, onOpen }: BuyNowButton
       document.removeEventListener("keydown", onKeyDown);
       document.body.style.overflow = prevOverflow;
     };
-  }, [open]);
-
-  // Tick the countdown only while the modal is actually open.
-  useEffect(() => {
-    if (!open) return;
-    setTimeLeft(computeTimeLeft());
-    const id = setInterval(() => setTimeLeft(computeTimeLeft()), 1000);
-    return () => clearInterval(id);
   }, [open]);
 
   const stores: Store[] = [
@@ -98,7 +73,7 @@ export default function BuyNowButton({ fullWidth = false, onOpen }: BuyNowButton
           className="fixed inset-0 z-50 flex items-center justify-center p-4"
           role="dialog"
           aria-modal="true"
-          aria-label="Buy Now — choose a store"
+          aria-label="Pre-buy — choose a store"
         >
           {/* Backdrop */}
           <div
@@ -116,30 +91,27 @@ export default function BuyNowButton({ fullWidth = false, onOpen }: BuyNowButton
               <X className="w-4 h-4" />
             </button>
 
-            <div className="space-y-1.5 pr-8">
-              <span className="text-[10px] tracking-[0.3em] text-[#d64545] uppercase font-bold">
-                The Unshaken Self
-              </span>
-              <h3 className="font-serif text-xl text-foreground">Choose Where to Buy</h3>
+            <div className="space-y-2 pr-8">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="text-[10px] tracking-[0.3em] text-[#d64545] uppercase font-bold">
+                  The Unshaken Self
+                </span>
+                <span className="text-[9px] uppercase tracking-widest font-bold text-white bg-[#d64545] px-2 py-0.5 rounded-full">
+                  Pre-Buy
+                </span>
+              </div>
+              <h3 className="font-serif text-xl text-foreground">Choose Where to Pre-Buy</h3>
             </div>
 
-            {/* Countdown to launch */}
-            {timeLeft && (
-              <div className="flex items-center justify-center gap-3 py-3 px-4 rounded-2xl bg-[#faf8f5] dark:bg-[#070b09] border border-border-custom">
-                <span className="text-[9px] uppercase tracking-widest font-semibold text-muted-text whitespace-nowrap">
-                  Launching In
-                </span>
-                <div className="flex items-center gap-1 font-mono text-sm text-[#dfb15b] font-bold tabular-nums">
-                  <span>{timeLeft.days}d</span>
-                  <span className="opacity-30">:</span>
-                  <span>{String(timeLeft.hours).padStart(2, "0")}h</span>
-                  <span className="opacity-30">:</span>
-                  <span>{String(timeLeft.minutes).padStart(2, "0")}m</span>
-                  <span className="opacity-30">:</span>
-                  <span>{String(timeLeft.seconds).padStart(2, "0")}s</span>
-                </div>
-              </div>
-            )}
+            {/* Static note replacing the countdown here — buying is open now,
+                ahead of the official launch date shown on the Countdown
+                widget elsewhere on the site. */}
+            <div className="flex items-center justify-center gap-2 py-3 px-4 rounded-2xl bg-[#faf8f5] dark:bg-[#070b09] border border-border-custom text-center">
+              <span className="text-[10px] text-muted-text leading-relaxed">
+                Available to pre-buy now — official launch is{" "}
+                <span className="text-[#dfb15b] font-semibold">September 4, 2026</span>.
+              </span>
+            </div>
 
             <div className="space-y-3">
               {stores.map((store) => {
