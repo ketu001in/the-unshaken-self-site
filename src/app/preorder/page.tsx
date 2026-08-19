@@ -5,9 +5,10 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AIChatbot from "@/components/AIChatbot";
 import Countdown from "@/components/Countdown";
-import { Check, Bell } from "lucide-react";
+import { Check, Bell, ShoppingCart } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { fetchPageContent } from "@/lib/content";
+import { useSiteSettings } from "@/context/SiteSettingsContext";
 
 type PreorderStore = {
   name: string;
@@ -16,7 +17,19 @@ type PreorderStore = {
   status: string;
   isPopular: boolean;
   features: string[];
+  price?: string;
 };
+
+// Matches a store card's admin-authored name to the right live buy link,
+// so cards render a real "Buy Now" button instead of the waitlist form
+// whenever the store is one of the three the site actually sells through.
+function getBuyLink(storeName: string, settings: { buy_link_amazon: string | null; buy_link_flipkart: string | null; buy_link_ziffybee: string | null }): string | null {
+  const n = storeName.toLowerCase();
+  if (n.includes("amazon")) return settings.buy_link_amazon;
+  if (n.includes("flipkart")) return settings.buy_link_flipkart;
+  if (n.includes("ziffy")) return settings.buy_link_ziffybee;
+  return null;
+}
 
 type PreorderContent = {
   header_subtitle: string;
@@ -24,30 +37,33 @@ type PreorderContent = {
 };
 
 const DEFAULT_PREORDER_CONTENT: PreorderContent = {
-  header_subtitle: "The book isn't listed for sale yet, and final pricing hasn't been confirmed. Join the notify list below for your preferred store and we'll email you the moment pre-orders open — plus a bundle of digital resources and live workshop credentials.",
+  header_subtitle: "The Unshaken Self is now available to pre-buy at ₹399/- on Amazon, Flipkart, and ZiffyBee — with ZiffyBee offering the fastest delivery. Prefer to wait? Join the notify list below and we'll keep you posted as the official launch approaches.",
   stores: [
     {
       name: "Amazon Kindle & Hardback",
       format: "Kindle / Hardcover",
       region: "Global Store",
-      status: "Coming Soon",
+      status: "Available Now",
       isPopular: false,
+      price: "₹399/-",
       features: ["Chapter 1 digital preview instantly.", "Vedic Reflection Sheets download."]
     },
     {
       name: "Flipkart Paperback",
       format: "Paperback Edition",
       region: "India Only",
-      status: "Coming Soon",
+      status: "Available Now",
       isPopular: false,
+      price: "₹399/-",
       features: ["Chapter 1 digital preview instantly.", "Vedic Reflection Sheets download."]
     },
     {
       name: "Publisher Direct Deluxe Bundle",
       format: "Hardcover + Audio + PDFs",
       region: "International Shipping",
-      status: "Coming Soon",
+      status: "Available Now",
       isPopular: true,
+      price: "₹399/-",
       features: [
         "Chapter 1 digital preview instantly.",
         "Vedic Reflection Sheets download.",
@@ -60,6 +76,7 @@ const DEFAULT_PREORDER_CONTENT: PreorderContent = {
 
 export default function PreorderPage() {
   const [content, setContent] = useState<PreorderContent>(DEFAULT_PREORDER_CONTENT);
+  const { settings } = useSiteSettings();
   const [waitlistEmail, setWaitlistEmail] = useState("");
   const [waitlistStore, setWaitlistStore] = useState("");
   const [waitlistMsg, setWaitlistMsg] = useState("");
@@ -137,6 +154,7 @@ export default function PreorderPage() {
         {/* Pricing Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {stores.map((store, idx) => {
+            const buyLink = getBuyLink(store.name, settings);
             return (
               <div
                 key={idx}
@@ -167,7 +185,7 @@ export default function PreorderPage() {
                   {/* Price info */}
                   <div className="py-4 border-y border-border-custom/50">
                     <span className="text-lg font-serif font-bold text-[#dfb15b] tracking-wide">
-                      PRICES WILL BE OUT SOON
+                      {store.price || "PRICES WILL BE OUT SOON"}
                     </span>
                     <span className="text-[9px] font-mono text-green-600 dark:text-green-400 mt-1.5 block uppercase">
                       {store.status}
@@ -186,17 +204,33 @@ export default function PreorderPage() {
                 </div>
 
                 <div className="mt-8 pt-4">
-                  <button
-                    onClick={() => handleJoinWaitlist(store.name)}
-                    className={`w-full py-3.5 rounded-full flex items-center justify-center space-x-2 text-xs uppercase tracking-widest font-bold shadow-md cursor-pointer transition-all hover:scale-103 ${
-                      store.isPopular
-                        ? "bg-[#1e3f20] dark:bg-[#dfb15b] text-white dark:text-black"
-                        : "border border-border-custom hover:bg-black/5 dark:hover:bg-white/5 text-foreground"
-                    }`}
-                  >
-                    <Bell className="w-3.5 h-3.5" />
-                    <span>Notify Me — {store.name.split(" ")[0]}</span>
-                  </button>
+                  {buyLink ? (
+                    <a
+                      href={buyLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`w-full py-3.5 rounded-full flex items-center justify-center space-x-2 text-xs uppercase tracking-widest font-bold shadow-md cursor-pointer transition-all hover:scale-103 ${
+                        store.isPopular
+                          ? "bg-[#1e3f20] dark:bg-[#dfb15b] text-white dark:text-black"
+                          : "border border-border-custom hover:bg-black/5 dark:hover:bg-white/5 text-foreground"
+                      }`}
+                    >
+                      <ShoppingCart className="w-3.5 h-3.5" />
+                      <span>Buy Now — {store.name.split(" ")[0]}</span>
+                    </a>
+                  ) : (
+                    <button
+                      onClick={() => handleJoinWaitlist(store.name)}
+                      className={`w-full py-3.5 rounded-full flex items-center justify-center space-x-2 text-xs uppercase tracking-widest font-bold shadow-md cursor-pointer transition-all hover:scale-103 ${
+                        store.isPopular
+                          ? "bg-[#1e3f20] dark:bg-[#dfb15b] text-white dark:text-black"
+                          : "border border-border-custom hover:bg-black/5 dark:hover:bg-white/5 text-foreground"
+                      }`}
+                    >
+                      <Bell className="w-3.5 h-3.5" />
+                      <span>Notify Me — {store.name.split(" ")[0]}</span>
+                    </button>
+                  )}
                 </div>
               </div>
             );
@@ -211,8 +245,8 @@ export default function PreorderPage() {
           </div>
           <p className="text-xs font-light text-stone-500 leading-relaxed">
             {waitlistStore
-              ? <>We'll email you the moment <span className="font-semibold text-foreground">{waitlistStore}</span> goes live.</>
-              : "Pre-orders aren't open yet. Leave your email and we'll notify you the moment they are."}
+              ? <>We'll keep you posted on <span className="font-semibold text-foreground">{waitlistStore}</span> updates.</>
+              : "Want a heads-up on launch day extras and events? Leave your email and we'll keep you posted."}
           </p>
 
           {waitlisted ? (

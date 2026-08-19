@@ -85,6 +85,7 @@ type PreorderStore = {
   status: string;
   isPopular: boolean;
   features: string[];
+  price?: string;
 };
 
 type PreorderContent = {
@@ -93,11 +94,11 @@ type PreorderContent = {
 };
 
 const DEFAULT_PREORDER_CONTENT: PreorderContent = {
-  header_subtitle: "The book isn't listed for sale yet, and final pricing hasn't been confirmed. Join the notify list below for your preferred store and we'll email you the moment pre-orders open — plus a bundle of digital resources and live workshop credentials.",
+  header_subtitle: "The Unshaken Self is now available to pre-buy at ₹399/- on Amazon, Flipkart, and ZiffyBee — with ZiffyBee offering the fastest delivery. Prefer to wait? Join the notify list below and we'll keep you posted as the official launch approaches.",
   stores: [
-    { name: "Amazon Kindle & Hardback", format: "Kindle / Hardcover", region: "Global Store", status: "Coming Soon", isPopular: false, features: ["Chapter 1 digital preview instantly.", "Vedic Reflection Sheets download."] },
-    { name: "Flipkart Paperback", format: "Paperback Edition", region: "India Only", status: "Coming Soon", isPopular: false, features: ["Chapter 1 digital preview instantly.", "Vedic Reflection Sheets download."] },
-    { name: "Publisher Direct Deluxe Bundle", format: "Hardcover + Audio + PDFs", region: "International Shipping", status: "Coming Soon", isPopular: true, features: ["Chapter 1 digital preview instantly.", "Vedic Reflection Sheets download.", "Simulated Audiobook CD/MP3 access.", "Invite to live launch session."] }
+    { name: "Amazon Kindle & Hardback", format: "Kindle / Hardcover", region: "Global Store", status: "Available Now", isPopular: false, price: "₹399/-", features: ["Chapter 1 digital preview instantly.", "Vedic Reflection Sheets download."] },
+    { name: "Flipkart Paperback", format: "Paperback Edition", region: "India Only", status: "Available Now", isPopular: false, price: "₹399/-", features: ["Chapter 1 digital preview instantly.", "Vedic Reflection Sheets download."] },
+    { name: "Publisher Direct Deluxe Bundle", format: "Hardcover + Audio + PDFs", region: "International Shipping", status: "Available Now", isPopular: true, price: "₹399/-", features: ["Chapter 1 digital preview instantly.", "Vedic Reflection Sheets download.", "Simulated Audiobook CD/MP3 access.", "Invite to live launch session."] }
   ]
 };
 
@@ -1351,6 +1352,11 @@ export default function SiteEditor() {
           </Field>
 
           <h3 className="font-serif text-base text-foreground font-bold pt-4 border-t border-border-custom/50">Store / Edition Cards</h3>
+          <p className="text-[11px] text-muted-text -mt-2">
+            A card whose name contains &quot;Amazon&quot;, &quot;Flipkart&quot;, or &quot;Ziffy&quot; automatically
+            shows a live &quot;Buy Now&quot; button using that store&apos;s link from the Buy Now Links
+            section above — otherwise it falls back to the email waitlist button.
+          </p>
           <div className="space-y-4">
             {preorder.stores.map((store, idx) => (
               <div key={idx} className="p-4 border border-border-custom rounded-xl space-y-3 relative">
@@ -1402,6 +1408,17 @@ export default function SiteEditor() {
                       })}
                     />
                   </Field>
+                  <Field label="Price">
+                    <TextInput
+                      value={store.price || ""}
+                      onChange={(e) => setPreorder((p) => {
+                        const next = [...p.stores];
+                        next[idx] = { ...next[idx], price: e.target.value };
+                        return { ...p, stores: next };
+                      })}
+                      placeholder="₹399/-"
+                    />
+                  </Field>
                 </div>
                 <label className="flex items-center gap-2 text-xs cursor-pointer">
                   <input
@@ -1428,7 +1445,7 @@ export default function SiteEditor() {
               </div>
             ))}
             <button
-              onClick={() => setPreorder((p) => ({ ...p, stores: [...p.stores, { name: "", format: "", region: "", status: "Coming Soon", isPopular: false, features: [] }] }))}
+              onClick={() => setPreorder((p) => ({ ...p, stores: [...p.stores, { name: "", format: "", region: "", status: "Available Now", isPopular: false, price: "₹399/-", features: [] }] }))}
               className="px-3 py-2 rounded-lg border border-dashed border-border-custom text-xs flex items-center gap-2 cursor-pointer hover:bg-black/5 dark:hover:bg-white/5"
             >
               <Plus className="w-3.5 h-3.5" /> Add Store / Edition Card

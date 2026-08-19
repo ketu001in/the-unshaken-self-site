@@ -87,16 +87,8 @@ export default function Navbar() {
           <div className="hidden lg:flex items-center space-x-4">
             {/* Theme Toggle */}
             <ThemeToggle />
-            
-            {/* Preorder Call to Action */}
-            <Link
-              href="/preorder"
-              className="px-5 py-2.5 rounded-full bg-[#1e3f20] dark:bg-[#dfb15b] hover:bg-[#142a15] dark:hover:bg-[#c49945] text-white dark:text-black font-sans text-xs uppercase tracking-widest font-semibold shadow-md transition-all hover:scale-105 active:scale-95 duration-200"
-            >
-              Pre-order
-            </Link>
 
-            {/* Buy Now — distinctly colored, highest-urgency CTA as launch nears */}
+            {/* Pre-Buy — the single purchase CTA now that stores are live */}
             <BuyNowButton />
           </div>
 
@@ -134,16 +126,12 @@ export default function Navbar() {
               </Link>
             ))}
             
-            {/* Mobile Buy Now + Pre-order CTAs */}
-            <div className="pt-4 border-t border-border-custom px-3 space-y-3">
-              <BuyNowButton fullWidth onOpen={() => setIsOpen(false)} />
-              <Link
-                href="/preorder"
-                onClick={() => setIsOpen(false)}
-                className="w-full block text-center py-3 rounded-full bg-[#1e3f20] dark:bg-[#dfb15b] text-white dark:text-black font-sans text-xs uppercase tracking-widest font-semibold shadow-md transition-all duration-200"
-              >
-                Pre-order Now
-              </Link>
+            {/* Mobile Pre-Buy CTA — no onOpen/close-drawer coordination needed;
+                the modal's own full-screen backdrop covers the drawer fine,
+                and leaving the drawer mounted avoids unmounting the button
+                (and its just-opened modal) mid-click. */}
+            <div className="pt-4 border-t border-border-custom px-3">
+              <BuyNowButton fullWidth />
             </div>
           </div>
         </div>

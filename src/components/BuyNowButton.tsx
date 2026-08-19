@@ -65,24 +65,27 @@ export default function BuyNowButton({ fullWidth = false, onOpen }: BuyNowButton
           <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-white" />
         </span>
         <ShoppingCart className="w-3.5 h-3.5" />
-        <span>Buy Now</span>
+        <span>Pre-Buy</span>
       </button>
 
       {open && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto"
           role="dialog"
           aria-modal="true"
           aria-label="Pre-buy — choose a store"
         >
           {/* Backdrop */}
           <div
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm"
             onClick={() => setOpen(false)}
           />
 
-          {/* Modal card */}
-          <div className="relative w-full max-w-md bg-white dark:bg-[#101614] border border-border-custom rounded-3xl shadow-2xl p-6 sm:p-8 space-y-6 animate-[fadeIn_0.2s_ease-out]">
+          {/* Modal card — capped height + its own scroll so tall content
+              (badges, note, three store rows) never gets stranded off-screen
+              with no way to reach it, since the page behind is scroll-locked
+              while the modal is open. */}
+          <div className="relative w-full max-w-md my-auto max-h-[85vh] overflow-y-auto bg-white dark:bg-[#101614] border border-border-custom rounded-3xl shadow-2xl p-6 sm:p-8 space-y-6 animate-[fadeIn_0.2s_ease-out]">
             <button
               onClick={() => setOpen(false)}
               className="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center text-muted-text hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer"
