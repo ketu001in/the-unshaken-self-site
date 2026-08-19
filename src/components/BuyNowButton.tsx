@@ -207,7 +207,7 @@ export default function BuyNowButton({ fullWidth = false, onOpen }: BuyNowButton
           <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-white" />
         </span>
         <ShoppingCart className="w-3.5 h-3.5" />
-        <span>Early Access</span>
+        <span>Early Access - Get a Copy Now</span>
       </button>
 
       {mounted && modal ? createPortal(modal, document.body) : null}
