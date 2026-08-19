@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { X, Send, Sparkles, Compass, HelpCircle, MessageCircle, ChevronDown, Mail } from "lucide-react";
-import { useSiteSettings } from "@/context/SiteSettingsContext";
+import { useSiteSettings, type SiteSettings } from "@/context/SiteSettingsContext";
 
 type Message = {
   id: string;
@@ -12,33 +12,87 @@ type Message = {
 };
 
 const CONTACT_EMAIL_PLACEHOLDER = "{{CONTACT_EMAIL}}";
+const BOOK_PRICE = "₹399/-";
+const LAUNCH_EVENT_LINE = "The official launch celebration is on the eve of Krishna Janmashtami, September 4, 2026.";
 
-const faqs: { q: string; a: string }[] = [
-  {
-    q: "When will the book launch?",
-    a: "The Unshaken Self is planned to launch on the eve of Krishna Janmashtami, September 4, 2026. Join the pre-order waitlist to get notified the moment it goes live."
-  },
-  {
-    q: "How much will the book cost?",
-    a: "Final pricing hasn't been confirmed yet. The Pre-Order page shows indicative prices in INR (with an option to view other currencies) — we'll update it the moment official pricing is set."
-  },
-  {
-    q: "What formats will be available?",
-    a: "Hardcover, paperback, Kindle, and audiobook editions are planned, available through Amazon, Flipkart, and directly through the publisher."
-  },
-  {
-    q: "Can I read a free sample?",
-    a: "Yes — the Chapter 1 preview and a printable sample PDF (including the Three-Breath Pause practice and a reflection worksheet) are available on the Preview page."
-  },
-  {
-    q: "Who is this book for?",
-    a: "It's written for anyone facing stress, burnout, or uncertainty who wants a practical, non-dogmatic guide rooted in the Bhagavad Gita. See the About the Book page for who should — and shouldn't — read it."
-  },
-  {
-    q: "How do I contact KETUL SHAH directly?",
-    a: `You can reach out anytime at ${CONTACT_EMAIL_PLACEHOLDER} — Ketul personally reads every message.`
-  },
-];
+// Reads the same live buy links the Early Access modal uses, so this
+// chatbot's answers about buying/pricing/formats can never drift out of
+// sync with the rest of the site the way a hardcoded string can.
+function getLiveStores(settings: SiteSettings): string[] {
+  const stores: string[] = [];
+  if (settings.buy_link_amazon) stores.push("Amazon");
+  if (settings.buy_link_flipkart) stores.push("Flipkart");
+  if (settings.buy_link_ziffybee) stores.push("ZiffyBee");
+  return stores;
+}
+
+function joinWithAnd(items: string[]): string {
+  if (items.length === 0) return "";
+  if (items.length === 1) return items[0];
+  return `${items.slice(0, -1).join(", ")} and ${items[items.length - 1]}`;
+}
+
+function buildFaqs(settings: SiteSettings): { q: string; a: string }[] {
+  const liveStores = getLiveStores(settings);
+  const storeList = joinWithAnd(liveStores);
+  const available = liveStores.length > 0;
+
+  return [
+    {
+      q: "When will the book launch?",
+      a: available
+        ? `The Unshaken Self is already available for early access — you can buy it right now on ${storeList}, ahead of the official launch. ${LAUNCH_EVENT_LINE}`
+        : `The planned launch is on the eve of Krishna Janmashtami, September 4, 2026. Join the pre-order waitlist to get notified the moment it goes live.`
+    },
+    {
+      q: "How much will the book cost?",
+      a: available
+        ? `It's priced at ${BOOK_PRICE} across ${storeList}.`
+        : "Final pricing hasn't been confirmed yet. The Pre-Order page shows indicative prices in INR (with an option to view other currencies) — we'll update it the moment official pricing is set."
+    },
+    {
+      q: "What formats will be available?",
+      a: available
+        ? `Paperback is available now through ${storeList} — ZiffyBee ships fastest and is the author's own recommendation. Kindle and audiobook editions are planned for a later release.`
+        : "Hardcover, paperback, Kindle, and audiobook editions are planned, available through Amazon, Flipkart, and directly through the publisher."
+    },
+    {
+      q: "Can I read a free sample?",
+      a: "Yes — the Chapter 1 preview and a printable sample PDF (including the Three-Breath Pause practice and a reflection worksheet) are available on the Preview page."
+    },
+    {
+      q: "Who is this book for?",
+      a: "It's written for anyone facing stress, burnout, or uncertainty who wants a practical, non-dogmatic guide rooted in the Bhagavad Gita. See the About the Book page for who should — and shouldn't — read it."
+    },
+    {
+      q: "How do I contact KETUL SHAH directly?",
+      a: `You can reach out anytime at ${CONTACT_EMAIL_PLACEHOLDER} — Ketul personally reads every message.`
+    },
+  ];
+}
+
+// A short, factual anchor — used both for direct "how do I buy" questions
+// and folded into the catch-all fallback, so even an unmatched question
+// still surfaces real, current information instead of pure filler.
+function buildQuickFacts(settings: SiteSettings): string {
+  const liveStores = getLiveStores(settings);
+  if (liveStores.length === 0) {
+    return `Pre-orders haven't opened yet, but you can join the waitlist on the Pre-order page. ${LAUNCH_EVENT_LINE}`;
+  }
+  const storeList = joinWithAnd(liveStores);
+  return `It's available now for early access at ${BOOK_PRICE} on ${storeList}. ${LAUNCH_EVENT_LINE}`;
+}
+
+function buildBuyResponse(settings: SiteSettings): string {
+  const liveStores = getLiveStores(settings);
+  if (liveStores.length === 0) {
+    return "Pre-orders haven't opened yet — join the waitlist on the Pre-order page and we'll email you the moment they do.";
+  }
+  const storeList = joinWithAnd(
+    liveStores.map((s) => (s === "ZiffyBee" ? "ZiffyBee (fastest delivery, and the author's own recommendation)" : s))
+  );
+  return `Great news — *The Unshaken Self* is available right now for early access at ${BOOK_PRICE} on ${storeList}. Tap the "Early Access" button at the top of the page, or visit the Pre-order page for direct links. ${LAUNCH_EVENT_LINE}`;
+}
 
 export default function AIChatbot() {
   const { settings } = useSiteSettings();
@@ -50,6 +104,7 @@ export default function AIChatbot() {
   const [viewMode, setViewMode] = useState<"chat" | "faq">("chat");
   const [openFaqIdx, setOpenFaqIdx] = useState<number | null>(null);
   const chatEndRef = useRef<HTMLDivElement>(null);
+  const faqs = buildFaqs(settings);
 
   // Initialize with a welcome message
   useEffect(() => {
@@ -121,7 +176,7 @@ export default function AIChatbot() {
     }
 
     if (q.includes("preorder") || q.includes("buy") || q.includes("price") || q.includes("purchase") || q.includes("get")) {
-      return "You can preorder *The Unshaken Self* on our preorder page! Pre-orders will launch soon on Amazon, Flipkart, and directly through our publisher, offering exclusive access to worksheets, audiobook pre-reads, and a live Q&A session with KETUL SHAH.";
+      return buildBuyResponse(settings);
     }
 
     if (q.includes("quote") || q.includes("wisdom") || q.includes("inspiration")) {
@@ -134,7 +189,10 @@ export default function AIChatbot() {
       return quotes[Math.floor(Math.random() * quotes.length)];
     }
 
-    return "That is a profound question. *The Unshaken Self* emphasizes that clarity resides within. When you face doubt, stop, take a slow breath, and perform your next action with absolute presence. Is there a specific challenge (like stress, decision-making, or focus) you'd like to reflect on using the Gita's wisdom?";
+    // Catch-all — still grounded in real, current facts (not just
+    // philosophical filler) so an unmatched question doesn't leave the
+    // reader without anything concrete and accurate to act on.
+    return `That's worth sitting with. A quick, real answer in the meantime: ${buildQuickFacts(settings)} Ask me about a specific chapter, the author, or how to buy — or tell me what you're facing (stress, doubt, a decision) and I'll point you to the right teaching.`;
   };
 
   const suggestions = [
