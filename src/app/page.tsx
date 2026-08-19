@@ -48,7 +48,7 @@ type HomepageContent = {
 };
 
 const DEFAULT_HOMEPAGE_CONTENT: HomepageContent = {
-  hero_badge: "Upcoming Book Launch",
+  hero_badge: "",
   hero_headline_line1: "The",
   hero_headline_accent: "Unshaken",
   hero_headline_line2: "Self",
@@ -118,13 +118,16 @@ export default function Home() {
           {/* Left: Headline & Callouts */}
           <div className="lg:col-span-7 space-y-8 text-center lg:text-left flex flex-col items-center lg:items-start">
             
-            {/* Tagline Badge */}
-            <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-[#1e3f20]/5 dark:bg-[#dfb15b]/10 border border-[#1e3f20]/10 dark:border-[#dfb15b]/20">
-              <Sparkles className="w-4.5 h-4.5 text-[#dfb15b]" />
-              <span className="text-[11px] tracking-[0.2em] uppercase font-semibold text-primary dark:text-[#dfb15b]">
-                {content.hero_badge}
-              </span>
-            </div>
+            {/* Tagline Badge — hidden entirely when empty, so this stays
+                removable/re-addable from the CMS without a code change */}
+            {content.hero_badge && (
+              <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-[#1e3f20]/5 dark:bg-[#dfb15b]/10 border border-[#1e3f20]/10 dark:border-[#dfb15b]/20">
+                <Sparkles className="w-4.5 h-4.5 text-[#dfb15b]" />
+                <span className="text-[11px] tracking-[0.2em] uppercase font-semibold text-primary dark:text-[#dfb15b]">
+                  {content.hero_badge}
+                </span>
+              </div>
+            )}
 
             {/* Headline */}
             <div className="space-y-4">

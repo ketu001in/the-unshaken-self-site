@@ -41,7 +41,7 @@ type HomepageContent = {
 };
 
 const DEFAULT_HOMEPAGE_CONTENT: HomepageContent = {
-  hero_badge: "Upcoming Book Launch",
+  hero_badge: "",
   hero_headline_line1: "The",
   hero_headline_accent: "Unshaken",
   hero_headline_line2: "Self",
