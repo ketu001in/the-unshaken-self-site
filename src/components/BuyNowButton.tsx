@@ -134,7 +134,7 @@ export default function BuyNowButton({ fullWidth = false, onOpen }: BuyNowButton
                           {store.recommended && (
                             <span className="inline-flex items-center gap-1 text-[9px] uppercase tracking-widest font-bold text-white bg-[#dfb15b] px-1.5 py-0.5 rounded-full">
                               <Sparkles className="w-2.5 h-2.5" />
-                              Recommended
+                              Author&apos;s Recommendation
                             </span>
                           )}
                           {store.badge && (

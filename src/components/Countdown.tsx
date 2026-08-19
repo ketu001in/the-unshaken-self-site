@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowRight, CalendarPlus, ChevronDown, Users } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import BuyNowButton from "@/components/BuyNowButton";
 
 type TimeLeft = {
   days: number;
@@ -193,7 +194,7 @@ export default function Countdown() {
             <span className="relative inline-flex rounded-full h-2 w-2 bg-[#dfb15b]" />
           </span>
           <span className="text-[10px] font-mono uppercase tracking-widest text-[#dfb15b]">
-            Official Launch Countdown
+            Official Launch Event — Countdown
           </span>
         </div>
 
@@ -244,45 +245,54 @@ export default function Countdown() {
           </span>
         </div>
 
-        {/* Add to Calendar — stops propagation so it never triggers the card's own navigation */}
-        <div ref={menuRef} className="relative mt-4" onClick={(e) => e.stopPropagation()}>
-          <button
-            type="button"
-            onClick={() => setMenuOpen((o) => !o)}
-            className="flex items-center gap-1.5 px-4 py-2 rounded-full border border-border-custom text-[10px] uppercase tracking-widest font-semibold text-foreground hover:border-[#dfb15b]/60 hover:text-[#dfb15b] transition-colors cursor-pointer"
-            aria-haspopup="menu"
-            aria-expanded={menuOpen}
-          >
-            <CalendarPlus className="w-3.5 h-3.5" />
-            <span>Add to Calendar</span>
-            <ChevronDown className={`w-3 h-3 transition-transform ${menuOpen ? "rotate-180" : ""}`} />
-          </button>
-
-          {menuOpen && (
-            <div
-              role="menu"
-              className="absolute left-1/2 -translate-x-1/2 mt-2 w-48 rounded-xl border border-border-custom bg-white dark:bg-[#101614] shadow-xl overflow-hidden z-20"
+        {/* Add to Calendar + Pre-Buy — both stop propagation so neither
+            triggers the card's own navigate-to-Events click. */}
+        <div
+          className="flex flex-wrap items-center justify-center gap-3 mt-4"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div ref={menuRef} className="relative">
+            <button
+              type="button"
+              onClick={() => setMenuOpen((o) => !o)}
+              className="flex items-center gap-1.5 px-4 py-2 rounded-full border border-border-custom text-[10px] uppercase tracking-widest font-semibold text-foreground hover:border-[#dfb15b]/60 hover:text-[#dfb15b] transition-colors cursor-pointer"
+              aria-haspopup="menu"
+              aria-expanded={menuOpen}
             >
-              <a
-                href={buildGoogleCalendarUrl()}
-                target="_blank"
-                rel="noopener noreferrer"
-                role="menuitem"
-                onClick={() => setMenuOpen(false)}
-                className="block px-4 py-2.5 text-xs text-foreground hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+              <CalendarPlus className="w-3.5 h-3.5" />
+              <span>Add to Calendar</span>
+              <ChevronDown className={`w-3 h-3 transition-transform ${menuOpen ? "rotate-180" : ""}`} />
+            </button>
+
+            {menuOpen && (
+              <div
+                role="menu"
+                className="absolute left-1/2 -translate-x-1/2 mt-2 w-48 rounded-xl border border-border-custom bg-white dark:bg-[#101614] shadow-xl overflow-hidden z-20"
               >
-                Google Calendar
-              </a>
-              <button
-                type="button"
-                role="menuitem"
-                onClick={handleDownloadIcs}
-                className="w-full text-left px-4 py-2.5 text-xs text-foreground hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer"
-              >
-                Apple / Outlook (.ics)
-              </button>
-            </div>
-          )}
+                <a
+                  href={buildGoogleCalendarUrl()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  role="menuitem"
+                  onClick={() => setMenuOpen(false)}
+                  className="block px-4 py-2.5 text-xs text-foreground hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+                >
+                  Google Calendar
+                </a>
+                <button
+                  type="button"
+                  role="menuitem"
+                  onClick={handleDownloadIcs}
+                  className="w-full text-left px-4 py-2.5 text-xs text-foreground hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer"
+                >
+                  Apple / Outlook (.ics)
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* Pre-Buy — reuses the same trigger+modal used site-wide */}
+          <BuyNowButton />
         </div>
 
         {/* CTA — fades/slides in on hover */}

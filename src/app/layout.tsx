@@ -17,7 +17,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "The Unshaken Self | KETUL SHAH",
+  title: "The Unshaken Self — A Book By Ketul Shah",
   description: "Key Lessons from the Gita for a Life Without Doubt, Worry, and Fear. A premium book guide by KETUL SHAH.",
   keywords: [
     "Bhagavad Gita", 
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   authors: [{ name: "KETUL SHAH" }],
   metadataBase: new URL("https://the-unshaken-self-site-hcp1.vercel.app"),
   openGraph: {
-    title: "The Unshaken Self | KETUL SHAH",
+    title: "The Unshaken Self — A Book By Ketul Shah",
     description: "Key Lessons from the Gita for a Life Without Doubt, Worry, and Fear.",
     url: "https://the-unshaken-self-site-hcp1.vercel.app",
     siteName: "The Unshaken Self",
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "The Unshaken Self | KETUL SHAH",
+    title: "The Unshaken Self — A Book By Ketul Shah",
     description: "Key Lessons from the Gita for a Life Without Doubt, Worry, and Fear.",
     images: ["/og-image.jpg"],
   },
