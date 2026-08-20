@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useCallback, useState } from "react";
-import { RotateCw, Sparkles } from "lucide-react";
+import { RotateCw, Share2, Sparkles } from "lucide-react";
+import { generateWisdomShareCard } from "@/lib/shareCard";
 
 type WisdomLine = { num: number; theme: string; line: string };
 
@@ -33,6 +34,7 @@ export default function WisdomDraw() {
   const [current, setCurrent] = useState<WisdomLine | null>(null);
   const [flipped, setFlipped] = useState(false);
   const [drawing, setDrawing] = useState(false);
+  const [sharing, setSharing] = useState(false);
 
   const draw = useCallback(() => {
     if (drawing) return;
@@ -56,6 +58,46 @@ export default function WisdomDraw() {
       setDrawing(false);
     }, current ? 220 : 0);
   }, [current, drawing]);
+
+  const handleShare = useCallback(
+    async (e: React.MouseEvent) => {
+      e.stopPropagation();
+      if (!current || sharing) return;
+      setSharing(true);
+      try {
+        const blob = await generateWisdomShareCard(current);
+        if (!blob) return;
+
+        const fileName = `unshaken-self-chapter-${current.num}.png`;
+        const file = new File([blob], fileName, { type: "image/png" });
+        const shareData: ShareData = {
+          files: [file],
+          title: "The Unshaken Self",
+          text: `Chapter ${current.num} · ${current.theme} — a teaching from The Unshaken Self.`,
+        };
+
+        if (navigator.canShare && navigator.canShare(shareData)) {
+          await navigator.share(shareData);
+        } else {
+          // Desktop / unsupported browsers — direct download fallback.
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = fileName;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          URL.revokeObjectURL(url);
+        }
+      } catch {
+        // User cancelled the native share sheet, or generation failed —
+        // no error UI needed, this is a low-stakes secondary action.
+      } finally {
+        setSharing(false);
+      }
+    },
+    [current, sharing]
+  );
 
   return (
     <div className="flex flex-col items-center gap-5">
@@ -109,10 +151,22 @@ export default function WisdomDraw() {
                 <p className="font-serif text-base sm:text-lg text-foreground leading-relaxed">
                   &ldquo;{current.line}&rdquo;
                 </p>
-                <span className="flex items-center gap-1.5 text-[10px] uppercase tracking-widest text-[#dfb15b] font-semibold mt-2">
-                  <RotateCw className="w-3 h-3" />
-                  Draw Another
-                </span>
+                <div className="flex items-center gap-4 mt-2">
+                  <span className="flex items-center gap-1.5 text-[10px] uppercase tracking-widest text-[#dfb15b] font-semibold">
+                    <RotateCw className="w-3 h-3" />
+                    Draw Another
+                  </span>
+                  <button
+                    type="button"
+                    onClick={handleShare}
+                    disabled={sharing}
+                    className="flex items-center gap-1.5 text-[10px] uppercase tracking-widest text-muted-text hover:text-[#dfb15b] font-semibold transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-wait"
+                    aria-label="Share this teaching as an image"
+                  >
+                    <Share2 className="w-3 h-3" />
+                    {sharing ? "Preparing…" : "Share"}
+                  </button>
+                </div>
               </>
             )}
           </div>
