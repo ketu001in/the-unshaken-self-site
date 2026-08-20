@@ -47,8 +47,6 @@ export default function BuyNowButton({ fullWidth = false, onOpen }: BuyNowButton
   }, [open]);
 
   const stores: Store[] = [
-    { name: "Amazon", href: settings.buy_link_amazon, accent: "#ff9900" },
-    { name: "Flipkart", href: settings.buy_link_flipkart, accent: "#2874f0" },
     {
       name: "ZiffyBee",
       badge: "Fastest Delivery",
@@ -56,6 +54,8 @@ export default function BuyNowButton({ fullWidth = false, onOpen }: BuyNowButton
       accent: "#dfb15b",
       recommended: true,
     },
+    { name: "Amazon", href: settings.buy_link_amazon, accent: "#ff9900" },
+    { name: "Flipkart", href: settings.buy_link_flipkart, accent: "#2874f0" },
   ];
 
   // Rendered via a portal straight to document.body — this component gets
