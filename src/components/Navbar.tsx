@@ -52,7 +52,7 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-12">
+        <div className="flex items-center justify-between min-h-12">
           
           {/* Logo Section */}
           <div className="flex-shrink-0">
@@ -66,13 +66,16 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Desktop Navigation Links */}
-          <div className="hidden lg:flex items-center space-x-8">
+          {/* Desktop Navigation Links — pinned to a fixed 12px (not the
+              site-wide text-xs token) and whitespace-nowrap: this is
+              compact UI chrome that needs to stay on one line regardless
+              of body-copy font-size changes elsewhere on the site. */}
+          <div className="hidden lg:flex items-center space-x-6 xl:space-x-8">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
-                className={`text-xs uppercase tracking-widest transition-colors hover:text-foreground nav-link-hover ${
+                className={`text-[12px] whitespace-nowrap uppercase tracking-widest transition-colors hover:text-foreground nav-link-hover ${
                   isActive(link.href)
                     ? "text-[#dfb15b] font-semibold"
                     : "text-muted-text"

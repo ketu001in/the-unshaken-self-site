@@ -212,7 +212,7 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
       {!hideTrigger && (
         <button
           onClick={handleTrigger}
-          className={`relative inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-gradient-to-r from-[#d64545] to-[#b02e2e] text-white text-xs uppercase tracking-widest font-bold shadow-lg shadow-[#d64545]/25 hover:shadow-xl hover:shadow-[#d64545]/35 transition-all hover:scale-105 active:scale-95 cursor-pointer ${
+          className={`relative inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-gradient-to-r from-[#d64545] to-[#b02e2e] text-white text-[12px] whitespace-nowrap uppercase tracking-widest font-bold shadow-lg shadow-[#d64545]/25 hover:shadow-xl hover:shadow-[#d64545]/35 transition-all hover:scale-105 active:scale-95 cursor-pointer ${
             fullWidth ? "w-full justify-center" : ""
           }`}
         >
