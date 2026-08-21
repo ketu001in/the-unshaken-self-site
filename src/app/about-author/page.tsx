@@ -5,7 +5,8 @@ import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AIChatbot from "@/components/AIChatbot";
-import { Download, Calendar, Mail, FileText, UserCheck, ShieldAlert, Award, ArrowUpRight } from "lucide-react";
+import ImageLightbox from "@/components/ImageLightbox";
+import { Download, Calendar, Mail, FileText, UserCheck, ShieldAlert, Award, ArrowUpRight, Maximize2 } from "lucide-react";
 import { fetchPageContent } from "@/lib/content";
 import { useSiteSettings } from "@/context/SiteSettingsContext";
 
@@ -46,7 +47,9 @@ const DEFAULT_ABOUT_AUTHOR_CONTENT: AboutAuthorContent = {
 
 export default function AboutAuthor() {
   const [content, setContent] = useState<AboutAuthorContent>(DEFAULT_ABOUT_AUTHOR_CONTENT);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
   const { settings } = useSiteSettings();
+  const authorPhotoSrc = settings.author_photo_url || "/images/ketul-shah-author.jpg";
 
   useEffect(() => {
     fetchPageContent("about-author", DEFAULT_ABOUT_AUTHOR_CONTENT).then(setContent);
@@ -121,17 +124,43 @@ export default function AboutAuthor() {
           {/* Right Column: Mini Portrait & Direct Contacts */}
           <div className="lg:col-span-5 space-y-8">
             <div className="border border-border-custom rounded-2xl bg-white dark:bg-[#101614] p-6 space-y-6">
-              {/* Author Portrait */}
-              <div className="aspect-[3/4] max-w-sm mx-auto rounded-xl border border-border-custom relative overflow-hidden bg-stone-100 dark:bg-[#0b100e]">
+              {/* Author Portrait — click to open a zoomable/pannable
+                  full-screen view */}
+              <div
+                onClick={() => setLightboxOpen(true)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    setLightboxOpen(true);
+                  }
+                }}
+                aria-label="Open full-screen photo of Ketul Shah"
+                className="group aspect-[3/4] max-w-sm mx-auto rounded-xl border border-border-custom relative overflow-hidden bg-stone-100 dark:bg-[#0b100e] cursor-zoom-in"
+              >
                 <Image
-                  src={settings.author_photo_url || "/images/ketul-shah-author.jpg"}
+                  src={authorPhotoSrc}
                   alt="Ketul Shah, author of The Unshaken Self"
                   fill
                   sizes="(max-width: 1024px) 100vw, 384px"
-                  className="object-cover object-top"
+                  className="object-cover object-top transition-transform duration-300 group-hover:scale-105"
                   priority
                 />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300 flex items-center justify-center">
+                  <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-1.5 text-[10px] uppercase tracking-widest font-bold text-white bg-black/50 px-3 py-1.5 rounded-full">
+                    <Maximize2 className="w-3 h-3" />
+                    View Full Size
+                  </span>
+                </div>
               </div>
+
+              <ImageLightbox
+                src={authorPhotoSrc}
+                alt="Ketul Shah, author of The Unshaken Self"
+                open={lightboxOpen}
+                onClose={() => setLightboxOpen(false)}
+              />
               
               <div className="space-y-4">
                 <h3 className="font-serif text-base text-foreground font-semibold">Speaking & Media Inquiry</h3>

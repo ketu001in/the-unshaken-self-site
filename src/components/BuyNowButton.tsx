@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { BookOpen, Clock, ShoppingCart, Sparkles, X, Zap } from "lucide-react";
 import { useSiteSettings } from "@/context/SiteSettingsContext";
+import { AmazonLogo, FlipkartLogo, ZiffyBeeLogo } from "@/components/StoreLogos";
+import type { ComponentType } from "react";
 
 type Store = {
   name: string;
@@ -11,6 +13,7 @@ type Store = {
   href: string | null;
   accent: string;
   recommended?: boolean;
+  Logo: ComponentType<{ className?: string }>;
 };
 
 type BuyNowButtonProps = {
@@ -65,9 +68,10 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
       href: settings.buy_link_ziffybee,
       accent: "#dfb15b",
       recommended: true,
+      Logo: ZiffyBeeLogo,
     },
-    { name: "Amazon", href: settings.buy_link_amazon, accent: "#ff9900" },
-    { name: "Flipkart", href: settings.buy_link_flipkart, accent: "#2874f0" },
+    { name: "Amazon", href: settings.buy_link_amazon, accent: "#ff9900", Logo: AmazonLogo },
+    { name: "Flipkart", href: settings.buy_link_flipkart, accent: "#2874f0", Logo: FlipkartLogo },
   ];
 
   // Rendered via a portal straight to document.body — this component gets
@@ -131,11 +135,8 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
             const content = (
               <>
                 <div className="flex items-center gap-3">
-                  <div
-                    className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
-                    style={{ backgroundColor: `${store.accent}1a`, color: store.accent }}
-                  >
-                    <ShoppingCart className="w-4 h-4" />
+                  <div className="w-11 h-11 rounded-xl overflow-hidden flex-shrink-0 shadow-sm ring-1 ring-black/5">
+                    <store.Logo className="w-11 h-11" />
                   </div>
                   <div className="text-left">
                     <p className="text-sm font-semibold text-foreground">{store.name}</p>
