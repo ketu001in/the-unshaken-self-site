@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import Navbar from "@/components/Navbar";
+import BuyNowButton from "@/components/BuyNowButton";
 import Footer from "@/components/Footer";
 import Book3D from "@/components/Book3D";
 import Countdown from "@/components/Countdown";
@@ -105,6 +106,10 @@ export default function Home() {
   return (
     <div className="flex-1 flex flex-col pt-16">
       <Navbar />
+      {/* Auto-opens the Buy Now modal the moment the homepage loads, so
+          it's the first thing a visitor sees. Renders no visible button
+          of its own — the red navbar CTA stays the only trigger UI. */}
+      <BuyNowButton autoOpen hideTrigger />
 
       {/* 1. HERO SECTION */}
       <section className="relative min-h-[90vh] flex items-center justify-center py-16 px-4 overflow-hidden bg-gradient-to-b from-[#faf8f5] via-[#faf8f5] to-[#f2ede4] dark:from-[#070b09] dark:via-[#070b09] dark:to-[#0d1612]">

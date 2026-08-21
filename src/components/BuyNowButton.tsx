@@ -16,9 +16,17 @@ type Store = {
 type BuyNowButtonProps = {
   fullWidth?: boolean;
   onOpen?: () => void;
+  // When true, the modal opens itself as soon as this instance mounts —
+  // used once on the homepage so Buy Now is the first thing a visitor
+  // sees, without duplicating a second visible trigger button.
+  autoOpen?: boolean;
+  // When true, only the modal (and its portal) render — no trigger
+  // button — so the homepage's auto-open instance stays invisible and
+  // the single red navbar button remains the only visible CTA.
+  hideTrigger?: boolean;
 };
 
-export default function BuyNowButton({ fullWidth = false, onOpen }: BuyNowButtonProps) {
+export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = false, hideTrigger = false }: BuyNowButtonProps) {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const { settings } = useSiteSettings();
@@ -26,6 +34,10 @@ export default function BuyNowButton({ fullWidth = false, onOpen }: BuyNowButton
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  useEffect(() => {
+    if (autoOpen) setOpen(true);
+  }, [autoOpen]);
 
   const handleTrigger = () => {
     setOpen(true);
@@ -196,19 +208,21 @@ export default function BuyNowButton({ fullWidth = false, onOpen }: BuyNowButton
 
   return (
     <>
-      <button
-        onClick={handleTrigger}
-        className={`relative inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-gradient-to-r from-[#d64545] to-[#b02e2e] text-white text-xs uppercase tracking-widest font-bold shadow-lg shadow-[#d64545]/25 hover:shadow-xl hover:shadow-[#d64545]/35 transition-all hover:scale-105 active:scale-95 cursor-pointer ${
-          fullWidth ? "w-full justify-center" : ""
-        }`}
-      >
-        <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-70" />
-          <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-white" />
-        </span>
-        <ShoppingCart className="w-3.5 h-3.5" />
-        <span>Early Access - Get a Copy Now</span>
-      </button>
+      {!hideTrigger && (
+        <button
+          onClick={handleTrigger}
+          className={`relative inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-gradient-to-r from-[#d64545] to-[#b02e2e] text-white text-xs uppercase tracking-widest font-bold shadow-lg shadow-[#d64545]/25 hover:shadow-xl hover:shadow-[#d64545]/35 transition-all hover:scale-105 active:scale-95 cursor-pointer ${
+            fullWidth ? "w-full justify-center" : ""
+          }`}
+        >
+          <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-70" />
+            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-white" />
+          </span>
+          <ShoppingCart className="w-3.5 h-3.5" />
+          <span>Early Access - Get a Copy Now</span>
+        </button>
+      )}
 
       {mounted && modal ? createPortal(modal, document.body) : null}
     </>
