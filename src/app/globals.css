@@ -36,15 +36,24 @@
   --color-foreground: var(--foreground);
   --color-card: var(--card-bg);
   --color-border-custom: var(--border-color);
-  
+
   --color-primary: var(--primary);
   --color-primary-hover: var(--primary-hover);
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
   --color-muted-text: var(--muted-text);
-  
+
   --font-sans: var(--font-sans);
   --font-serif: var(--font-serif);
+
+  /* Site-wide body text bumped +2px from Tailwind's defaults. Only the
+     copy-reading sizes (xs/sm/base) are raised — headings mostly use
+     text-lg and up, which are left untouched. Line-heights are
+     unitless ratios in Tailwind's scale, so they recompute in px
+     automatically off the new font-size; no separate override needed. */
+  --text-xs: 0.875rem;   /* was 0.75rem (12px) -> 14px */
+  --text-sm: 1rem;       /* was 0.875rem (14px) -> 16px */
+  --text-base: 1.125rem; /* was 1rem (16px) -> 18px */
 }
 
 body {
