@@ -5,10 +5,9 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AIChatbot from "@/components/AIChatbot";
 import Countdown from "@/components/Countdown";
-import { Check, Bell, ShoppingCart } from "lucide-react";
+import { Check, Bell } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { fetchPageContent } from "@/lib/content";
-import { useSiteSettings } from "@/context/SiteSettingsContext";
 
 type PreorderStore = {
   name: string;
@@ -19,17 +18,6 @@ type PreorderStore = {
   features: string[];
   price?: string;
 };
-
-// Matches a store card's admin-authored name to the right live buy link,
-// so cards render a real "Buy Now" button instead of the waitlist form
-// whenever the store is one of the three the site actually sells through.
-function getBuyLink(storeName: string, settings: { buy_link_amazon: string | null; buy_link_flipkart: string | null; buy_link_ziffybee: string | null }): string | null {
-  const n = storeName.toLowerCase();
-  if (n.includes("amazon")) return settings.buy_link_amazon;
-  if (n.includes("flipkart")) return settings.buy_link_flipkart;
-  if (n.includes("ziffy")) return settings.buy_link_ziffybee;
-  return null;
-}
 
 type PreorderContent = {
   header_subtitle: string;
@@ -76,7 +64,6 @@ const DEFAULT_PREORDER_CONTENT: PreorderContent = {
 
 export default function PreorderPage() {
   const [content, setContent] = useState<PreorderContent>(DEFAULT_PREORDER_CONTENT);
-  const { settings } = useSiteSettings();
   const [waitlistEmail, setWaitlistEmail] = useState("");
   const [waitlistStore, setWaitlistStore] = useState("");
   const [waitlistMsg, setWaitlistMsg] = useState("");
@@ -154,7 +141,6 @@ export default function PreorderPage() {
         {/* Pricing Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {stores.map((store, idx) => {
-            const buyLink = getBuyLink(store.name, settings);
             return (
               <div
                 key={idx}
@@ -204,33 +190,17 @@ export default function PreorderPage() {
                 </div>
 
                 <div className="mt-8 pt-4">
-                  {buyLink ? (
-                    <a
-                      href={buyLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`w-full py-3.5 rounded-full flex items-center justify-center space-x-2 text-xs uppercase tracking-widest font-bold shadow-md cursor-pointer transition-all hover:scale-103 ${
-                        store.isPopular
-                          ? "bg-[#1e3f20] dark:bg-[#dfb15b] text-white dark:text-black"
-                          : "border border-border-custom hover:bg-black/5 dark:hover:bg-white/5 text-foreground"
-                      }`}
-                    >
-                      <ShoppingCart className="w-3.5 h-3.5" />
-                      <span>Buy Now — {store.name.split(" ")[0]}</span>
-                    </a>
-                  ) : (
-                    <button
-                      onClick={() => handleJoinWaitlist(store.name)}
-                      className={`w-full py-3.5 rounded-full flex items-center justify-center space-x-2 text-xs uppercase tracking-widest font-bold shadow-md cursor-pointer transition-all hover:scale-103 ${
-                        store.isPopular
-                          ? "bg-[#1e3f20] dark:bg-[#dfb15b] text-white dark:text-black"
-                          : "border border-border-custom hover:bg-black/5 dark:hover:bg-white/5 text-foreground"
-                      }`}
-                    >
-                      <Bell className="w-3.5 h-3.5" />
-                      <span>Notify Me — {store.name.split(" ")[0]}</span>
-                    </button>
-                  )}
+                  <button
+                    onClick={() => handleJoinWaitlist(store.name)}
+                    className={`w-full py-3.5 rounded-full flex items-center justify-center space-x-2 text-xs uppercase tracking-widest font-bold shadow-md cursor-pointer transition-all hover:scale-103 ${
+                      store.isPopular
+                        ? "bg-[#1e3f20] dark:bg-[#dfb15b] text-white dark:text-black"
+                        : "border border-border-custom hover:bg-black/5 dark:hover:bg-white/5 text-foreground"
+                    }`}
+                  >
+                    <Bell className="w-3.5 h-3.5" />
+                    <span>Notify Me — {store.name.split(" ")[0]}</span>
+                  </button>
                 </div>
               </div>
             );

@@ -527,9 +527,6 @@ export default function SiteEditor() {
       saveSiteSetting("social_linkedin", settings.social_linkedin),
       saveSiteSetting("social_instagram", settings.social_instagram),
       saveSiteSetting("footer_tagline", settings.footer_tagline),
-      saveSiteSetting("buy_link_amazon", settings.buy_link_amazon),
-      saveSiteSetting("buy_link_flipkart", settings.buy_link_flipkart),
-      saveSiteSetting("buy_link_ziffybee", settings.buy_link_ziffybee),
       saveSiteSetting("publisher_name", settings.publisher_name),
     ]);
     await refreshSiteSettings();
@@ -697,33 +694,6 @@ export default function SiteEditor() {
               rows={3}
               value={settings.footer_tagline}
               onChange={(e) => setSettings((p) => ({ ...p, footer_tagline: e.target.value }))}
-            />
-          </Field>
-
-          <h3 className="font-serif text-base text-foreground font-bold pt-4">Buy Now Links</h3>
-          <p className="text-[11px] text-muted-text -mt-4">
-            Leave a link blank until it&apos;s live — the Buy Now button will show that store as
-            &quot;Coming Soon&quot; rather than linking anywhere.
-          </p>
-          <Field label="Amazon Buy Link">
-            <TextInput
-              value={settings.buy_link_amazon || ""}
-              onChange={(e) => setSettings((p) => ({ ...p, buy_link_amazon: e.target.value }))}
-              placeholder="https://www.amazon.in/..."
-            />
-          </Field>
-          <Field label="Flipkart Buy Link">
-            <TextInput
-              value={settings.buy_link_flipkart || ""}
-              onChange={(e) => setSettings((p) => ({ ...p, buy_link_flipkart: e.target.value }))}
-              placeholder="https://www.flipkart.com/..."
-            />
-          </Field>
-          <Field label="ZiffyBee Buy Link">
-            <TextInput
-              value={settings.buy_link_ziffybee || ""}
-              onChange={(e) => setSettings((p) => ({ ...p, buy_link_ziffybee: e.target.value }))}
-              placeholder="https://www.ziffybee.com/..."
             />
           </Field>
 
@@ -1353,9 +1323,8 @@ export default function SiteEditor() {
 
           <h3 className="font-serif text-base text-foreground font-bold pt-4 border-t border-border-custom/50">Store / Edition Cards</h3>
           <p className="text-[11px] text-muted-text -mt-2">
-            A card whose name contains &quot;Amazon&quot;, &quot;Flipkart&quot;, or &quot;Ziffy&quot; automatically
-            shows a live &quot;Buy Now&quot; button using that store&apos;s link from the Buy Now Links
-            section above — otherwise it falls back to the email waitlist button.
+            Early access buy links have been removed site-wide — every card now shows the email
+            waitlist button instead of a live &quot;Buy Now&quot; link.
           </p>
           <div className="space-y-4">
             {preorder.stores.map((store, idx) => (

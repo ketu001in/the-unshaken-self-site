@@ -2,32 +2,28 @@
 
 import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { BookOpen, Clock, ShoppingCart, Sparkles, X, Zap } from "lucide-react";
+import { BookOpen, CalendarClock, X } from "lucide-react";
 import { useSiteSettings } from "@/context/SiteSettingsContext";
-import { AmazonLogo, FlipkartLogo, ZiffyBeeLogo } from "@/components/StoreLogos";
-import type { ComponentType } from "react";
-
-type Store = {
-  name: string;
-  badge?: string;
-  href: string | null;
-  accent: string;
-  recommended?: boolean;
-  Logo: ComponentType<{ className?: string }>;
-};
 
 type BuyNowButtonProps = {
   fullWidth?: boolean;
   onOpen?: () => void;
   // When true, the modal opens itself as soon as this instance mounts —
-  // used once on the homepage so Buy Now is the first thing a visitor
-  // sees, without duplicating a second visible trigger button.
+  // used once on the homepage so the closure notice is the first thing a
+  // visitor sees, without duplicating a second visible trigger button.
   autoOpen?: boolean;
   // When true, only the modal (and its portal) render — no trigger
   // button — so the homepage's auto-open instance stays invisible and
   // the single red navbar button remains the only visible CTA.
   hideTrigger?: boolean;
 };
+
+// Early access has closed — the three store links (Amazon, Flipkart,
+// ZiffyBee) have been pulled from the whole site. This component now
+// exists purely to communicate that clearly, wherever it's mounted
+// (navbar, Countdown card, homepage auto-open).
+const CLOSED_MESSAGE =
+  "Early Access window is closed & Book will be available to Order from 5th September 2026";
 
 export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = false, hideTrigger = false }: BuyNowButtonProps) {
   const [open, setOpen] = useState(false);
@@ -61,19 +57,6 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
     };
   }, [open]);
 
-  const stores: Store[] = [
-    {
-      name: "ZiffyBee",
-      badge: "Fastest Delivery",
-      href: settings.buy_link_ziffybee,
-      accent: "#dfb15b",
-      recommended: true,
-      Logo: ZiffyBeeLogo,
-    },
-    { name: "Amazon", href: settings.buy_link_amazon, accent: "#ff9900", Logo: AmazonLogo },
-    { name: "Flipkart", href: settings.buy_link_flipkart, accent: "#2874f0", Logo: FlipkartLogo },
-  ];
-
   // Rendered via a portal straight to document.body — this component gets
   // nested inside cards elsewhere on the site (e.g. Countdown) that apply a
   // CSS transform on hover. A transformed ancestor becomes the containing
@@ -86,7 +69,7 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
       className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto"
       role="dialog"
       aria-modal="true"
-      aria-label="Early access — get your copy now"
+      aria-label="Early access closed"
     >
       {/* Backdrop */}
       <div
@@ -94,10 +77,6 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
         onClick={() => setOpen(false)}
       />
 
-      {/* Modal card — capped height + its own scroll so tall content
-          (badges, note, three store rows) never gets stranded off-screen
-          with no way to reach it, since the page behind is scroll-locked
-          while the modal is open. */}
       <div className="relative w-full max-w-md my-auto max-h-[85vh] overflow-y-auto bg-white dark:bg-[#101614] border border-border-custom rounded-3xl shadow-2xl p-6 sm:p-8 space-y-6 animate-[fadeIn_0.2s_ease-out]">
         <button
           onClick={() => setOpen(false)}
@@ -112,91 +91,18 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
             <span className="text-[10px] tracking-[0.3em] text-[#d64545] uppercase font-bold">
               The Unshaken Self
             </span>
-            <span className="text-[9px] uppercase tracking-widest font-bold text-white bg-[#d64545] px-2 py-0.5 rounded-full">
-              Early Access
+            <span className="text-[9px] uppercase tracking-widest font-bold text-white bg-stone-500 px-2 py-0.5 rounded-full">
+              Closed
             </span>
           </div>
-          <h3 className="font-serif text-xl text-foreground">Get Your Copy Now</h3>
+          <h3 className="font-serif text-xl text-foreground">Early Access Has Closed</h3>
         </div>
 
-        {/* Static note replacing the countdown here — buying is open now,
-            ahead of the official launch date shown on the Countdown
-            widget elsewhere on the site. */}
-        <div className="flex items-center justify-center gap-2 py-3 px-4 rounded-2xl bg-[#faf8f5] dark:bg-[#070b09] border border-border-custom text-center">
-          <span className="text-[10px] text-muted-text leading-relaxed">
-            You have early access — official launch is{" "}
-            <span className="text-[#dfb15b] font-semibold">September 4, 2026</span>.
-          </span>
-        </div>
-
-        <div className="space-y-3">
-          {stores.map((store) => {
-            const isLive = Boolean(store.href);
-            const content = (
-              <>
-                <div className="flex items-center gap-3">
-                  <div className="w-11 h-11 rounded-xl overflow-hidden flex-shrink-0 shadow-sm ring-1 ring-black/5">
-                    <store.Logo className="w-11 h-11" />
-                  </div>
-                  <div className="text-left">
-                    <p className="text-sm font-semibold text-foreground">{store.name}</p>
-                    <div className="flex items-center gap-2 flex-wrap">
-                      {store.recommended && (
-                        <span className="inline-flex items-center gap-1 text-[9px] uppercase tracking-widest font-bold text-white bg-[#dfb15b] px-1.5 py-0.5 rounded-full">
-                          <Sparkles className="w-2.5 h-2.5" />
-                          Author&apos;s Recommendation
-                        </span>
-                      )}
-                      {store.badge && (
-                        <span className="inline-flex items-center gap-1 text-[9px] uppercase tracking-widest font-bold text-[#dfb15b]">
-                          <Zap className="w-2.5 h-2.5" />
-                          {store.badge}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </div>
-                {isLive ? (
-                  <span className="text-[10px] uppercase tracking-widest font-bold text-[#1e3f20] dark:text-[#dfb15b]">
-                    Buy →
-                  </span>
-                ) : (
-                  <span className="flex items-center gap-1 text-[9px] uppercase tracking-widest font-bold text-muted-text">
-                    <Clock className="w-3 h-3" />
-                    Coming Soon
-                  </span>
-                )}
-              </>
-            );
-
-            const recommendedIdle = store.recommended
-              ? "border-2 border-[#dfb15b] bg-[#dfb15b]/5 shadow-md shadow-[#dfb15b]/10"
-              : "border border-border-custom";
-
-            return isLive ? (
-              <a
-                key={store.name}
-                href={store.href!}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`w-full flex items-center justify-between px-4 py-3.5 rounded-2xl transition-colors cursor-pointer hover:border-[#d64545]/50 hover:bg-[#d64545]/5 ${recommendedIdle}`}
-              >
-                {content}
-              </a>
-            ) : (
-              <div
-                key={store.name}
-                aria-disabled="true"
-                className={`w-full flex items-center justify-between px-4 py-3.5 rounded-2xl cursor-not-allowed ${
-                  store.recommended
-                    ? "border-2 border-dashed border-[#dfb15b]/70 bg-[#dfb15b]/5"
-                    : "border border-dashed border-border-custom opacity-60"
-                }`}
-              >
-                {content}
-              </div>
-            );
-          })}
+        <div className="flex flex-col items-center gap-3 py-6 px-5 rounded-2xl bg-[#faf8f5] dark:bg-[#070b09] border border-[#dfb15b]/30 text-center">
+          <CalendarClock className="w-6 h-6 text-[#dfb15b]" />
+          <p className="text-sm text-foreground font-medium leading-relaxed">
+            {CLOSED_MESSAGE}
+          </p>
         </div>
 
         <div className="pt-4 border-t border-border-custom/50 flex items-center gap-2 text-[10px] text-muted-text">
@@ -216,12 +122,8 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
             fullWidth ? "w-full justify-center" : ""
           }`}
         >
-          <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-70" />
-            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-white" />
-          </span>
-          <ShoppingCart className="w-3.5 h-3.5" />
-          <span>Early Access - Get a Copy Now</span>
+          <CalendarClock className="w-3.5 h-3.5" />
+          <span>Ordering Opens 5 Sept 2026</span>
         </button>
       )}
 

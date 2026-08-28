@@ -14,6 +14,7 @@ type Message = {
 const CONTACT_EMAIL_PLACEHOLDER = "{{CONTACT_EMAIL}}";
 const BOOK_PRICE = "₹399/-";
 const LAUNCH_EVENT_LINE = "The official launch celebration is on the eve of Krishna Janmashtami, September 4, 2026.";
+const CLOSED_MESSAGE = "Early Access window is closed & Book will be available to Order from 5th September 2026.";
 
 // Reads the same live buy links the Early Access modal uses, so this
 // chatbot's answers about buying/pricing/formats can never drift out of
@@ -42,19 +43,19 @@ function buildFaqs(settings: SiteSettings): { q: string; a: string }[] {
       q: "When will the book launch?",
       a: available
         ? `The Unshaken Self is already available for early access — you can buy it right now on ${storeList}, ahead of the official launch. ${LAUNCH_EVENT_LINE}`
-        : `The planned launch is on the eve of Krishna Janmashtami, September 4, 2026. Join the pre-order waitlist to get notified the moment it goes live.`
+        : `${CLOSED_MESSAGE} ${LAUNCH_EVENT_LINE} Join the pre-order waitlist to get notified the moment ordering opens.`
     },
     {
       q: "How much will the book cost?",
       a: available
         ? `It's priced at ${BOOK_PRICE} across ${storeList}.`
-        : "Final pricing hasn't been confirmed yet. The Pre-Order page shows indicative prices in INR (with an option to view other currencies) — we'll update it the moment official pricing is set."
+        : `It's priced at ${BOOK_PRICE}. ${CLOSED_MESSAGE}`
     },
     {
       q: "What formats will be available?",
       a: available
         ? `Paperback is available now through ${storeList} — ZiffyBee ships fastest and is the author's own recommendation. Kindle and audiobook editions are planned for a later release.`
-        : "Hardcover, paperback, Kindle, and audiobook editions are planned, available through Amazon, Flipkart, and directly through the publisher."
+        : `Paperback will be available through Amazon, Flipkart, and ZiffyBee. Kindle and audiobook editions are planned for a later release. ${CLOSED_MESSAGE}`
     },
     {
       q: "Can I read a free sample?",
@@ -77,7 +78,7 @@ function buildFaqs(settings: SiteSettings): { q: string; a: string }[] {
 function buildQuickFacts(settings: SiteSettings): string {
   const liveStores = getLiveStores(settings);
   if (liveStores.length === 0) {
-    return `Pre-orders haven't opened yet, but you can join the waitlist on the Pre-order page. ${LAUNCH_EVENT_LINE}`;
+    return `${CLOSED_MESSAGE} Join the waitlist on the Pre-order page to get notified. ${LAUNCH_EVENT_LINE}`;
   }
   const storeList = joinWithAnd(liveStores);
   return `It's available now for early access at ${BOOK_PRICE} on ${storeList}. ${LAUNCH_EVENT_LINE}`;
@@ -86,7 +87,7 @@ function buildQuickFacts(settings: SiteSettings): string {
 function buildBuyResponse(settings: SiteSettings): string {
   const liveStores = getLiveStores(settings);
   if (liveStores.length === 0) {
-    return "Pre-orders haven't opened yet — join the waitlist on the Pre-order page and we'll email you the moment they do.";
+    return `${CLOSED_MESSAGE} Join the waitlist on the Pre-order page and we'll email you the moment ordering opens.`;
   }
   const storeList = joinWithAnd(
     liveStores.map((s) => (s === "ZiffyBee" ? "ZiffyBee (fastest delivery, and the author's own recommendation)" : s))
