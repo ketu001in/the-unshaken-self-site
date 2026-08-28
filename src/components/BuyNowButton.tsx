@@ -2,8 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { BookOpen, CalendarClock, X } from "lucide-react";
-import { useSiteSettings } from "@/context/SiteSettingsContext";
+import { CalendarClock, X } from "lucide-react";
 
 type BuyNowButtonProps = {
   fullWidth?: boolean;
@@ -28,7 +27,6 @@ const CLOSED_MESSAGE =
 export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = false, hideTrigger = false }: BuyNowButtonProps) {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const { settings } = useSiteSettings();
 
   useEffect(() => {
     setMounted(true);
@@ -103,11 +101,6 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
           <p className="text-sm text-foreground font-medium leading-relaxed">
             {CLOSED_MESSAGE}
           </p>
-        </div>
-
-        <div className="pt-4 border-t border-border-custom/50 flex items-center gap-2 text-[10px] text-muted-text">
-          <BookOpen className="w-3.5 h-3.5 text-[#dfb15b] flex-shrink-0" />
-          <span>Published by {settings.publisher_name}</span>
         </div>
       </div>
     </div>
