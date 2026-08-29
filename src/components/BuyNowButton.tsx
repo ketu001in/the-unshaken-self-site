@@ -102,7 +102,7 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
           <CalendarClock className="w-6 h-6 text-[#dfb15b]" />
           <p className="text-sm text-foreground font-medium leading-relaxed">
             {CLOSED_MESSAGE_PREFIX}
-            <span className="date-flash font-bold">{CLOSED_MESSAGE_DATE}</span>
+            <span className="date-flash">{CLOSED_MESSAGE_DATE}</span>
           </p>
         </div>
       </div>
