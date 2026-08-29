@@ -20,9 +20,11 @@ type BuyNowButtonProps = {
 // Early access has closed — the three store links (Amazon, Flipkart,
 // ZiffyBee) have been pulled from the whole site. This component now
 // exists purely to communicate that clearly, wherever it's mounted
-// (navbar, Countdown card, homepage auto-open).
-const CLOSED_MESSAGE =
-  "Early Access window is closed & Book will be available to Order from 5th September 2026";
+// (navbar, Countdown card, homepage auto-open). Split into a prefix and
+// the date so the date itself can be wrapped in a flashing highlight.
+const CLOSED_MESSAGE_PREFIX =
+  "Early Access window is closed & Book will be available to Order from ";
+const CLOSED_MESSAGE_DATE = "5th September 2026";
 
 export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = false, hideTrigger = false }: BuyNowButtonProps) {
   const [open, setOpen] = useState(false);
@@ -99,7 +101,8 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
         <div className="flex flex-col items-center gap-3 py-6 px-5 rounded-2xl bg-[#faf8f5] dark:bg-[#070b09] border border-[#dfb15b]/30 text-center">
           <CalendarClock className="w-6 h-6 text-[#dfb15b]" />
           <p className="text-sm text-foreground font-medium leading-relaxed">
-            {CLOSED_MESSAGE}
+            {CLOSED_MESSAGE_PREFIX}
+            <span className="date-flash font-bold">{CLOSED_MESSAGE_DATE}</span>
           </p>
         </div>
       </div>
