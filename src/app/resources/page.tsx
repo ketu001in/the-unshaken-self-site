@@ -4,10 +4,12 @@ import React, { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AIChatbot from "@/components/AIChatbot";
-import { Download, Lock, Unlock, FileText, CheckCircle, Info } from "lucide-react";
+import { Download, Lock, Unlock, FileText, CheckCircle, Info, ImageDown } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { fetchPageContent } from "@/lib/content";
 import BreathWidget from "@/components/BreathWidget";
+import { WISDOM_LINES } from "@/lib/wisdomLines";
+import { generateWisdomShareCard } from "@/lib/shareCard";
 
 type Resource = {
   id: string;
@@ -210,6 +212,31 @@ export default function ResourcesPage() {
         </div>
       </section>
 
+      {/* AFFIRMATION CARDS — one printable/shareable branded image per
+          chapter, free for anyone, reusing the same canvas generator as
+          the homepage's Wisdom Draw share cards. */}
+      <section className="py-16 px-4 border-b border-border-custom bg-[#faf8f5] dark:bg-[#070b09]">
+        <div className="max-w-6xl mx-auto space-y-10">
+          <div className="text-center space-y-3">
+            <span className="text-[10px] tracking-[0.3em] text-[#dfb15b] uppercase font-bold">
+              Free For Anyone
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-serif text-foreground">
+              18 Printable Affirmation Cards
+            </h2>
+            <p className="text-xs sm:text-sm font-light text-stone-500 dark:text-stone-400 max-w-md mx-auto">
+              One branded card per chapter — download, print, or set as a wallpaper. No unlock needed.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+            {WISDOM_LINES.map((wl) => (
+              <AffirmationCardButton key={wl.num} data={wl} />
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Resources Hub */}
       <section className="py-16 px-4 max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 flex-1">
         
@@ -394,6 +421,47 @@ export default function ResourcesPage() {
       <AIChatbot />
       <Footer />
     </div>
+  );
+}
+
+function AffirmationCardButton({ data }: { data: { num: number; theme: string; line: string } }) {
+  const [downloading, setDownloading] = useState(false);
+
+  const handleDownload = async () => {
+    if (downloading) return;
+    setDownloading(true);
+    try {
+      const blob = await generateWisdomShareCard(data);
+      if (!blob) return;
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `unshaken-self-chapter-${data.num}-affirmation.png`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } finally {
+      setDownloading(false);
+    }
+  };
+
+  return (
+    <button
+      type="button"
+      onClick={handleDownload}
+      disabled={downloading}
+      className="group flex flex-col items-center justify-center gap-2 p-4 rounded-2xl border border-border-custom bg-white dark:bg-[#101614] hover:border-[#dfb15b]/60 hover:shadow-md transition-all cursor-pointer disabled:opacity-60 disabled:cursor-wait text-center"
+    >
+      <span className="text-lg font-serif text-[#dfb15b] font-bold">{data.num}</span>
+      <span className="text-[9px] uppercase tracking-widest text-muted-text font-mono leading-tight">
+        {data.theme}
+      </span>
+      <span className="flex items-center gap-1 text-[9px] uppercase tracking-widest font-bold text-foreground group-hover:text-[#dfb15b] transition-colors">
+        <ImageDown className="w-3 h-3" />
+        {downloading ? "Preparing…" : "Download"}
+      </span>
+    </button>
   );
 }
 

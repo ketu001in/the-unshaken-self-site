@@ -1,45 +1,81 @@
 "use client";
 
-import React, { useCallback, useState } from "react";
-import { RotateCw, Share2, Sparkles } from "lucide-react";
+import React, { useCallback, useEffect, useState } from "react";
+import { Flame, RotateCw, Share2, Sparkles } from "lucide-react";
 import { generateWisdomShareCard } from "@/lib/shareCard";
+import { WISDOM_LINES, type WisdomLine } from "@/lib/wisdomLines";
 
-type WisdomLine = { num: number; theme: string; line: string };
+// Day-of-year, used to deterministically pick "today's teaching" — the
+// same chapter for every visitor on a given calendar date, so the first
+// draw of the day is a shared, shareable, repeatable ritual rather than
+// pure randomness.
+function getDayOfYear(d: Date): number {
+  const start = new Date(d.getFullYear(), 0, 0);
+  return Math.floor((d.getTime() - start.getTime()) / 86400000);
+}
 
-// One original, non-verse teaching per chapter — paraphrased insight, not a
-// direct scripture quotation — tying each traditional chapter name to the
-// book's anxiety/psychology framing established elsewhere on the site.
-const WISDOM_LINES: WisdomLine[] = [
-  { num: 1, theme: "Arjuna Vishada Yoga", line: "Doubt is not weakness — it's often the first honest look at a decision that matters." },
-  { num: 2, theme: "Sankhya Yoga", line: "You are not the panic passing through you — you are the stillness that notices it." },
-  { num: 3, theme: "Karma Yoga", line: "Give the work your full hand, and let the outcome answer to time, not to your grip." },
-  { num: 4, theme: "Jnana Karma Sanyasa Yoga", line: "Right action done with clear understanding never needs to be undone by guilt." },
-  { num: 5, theme: "Karma Sanyasa Yoga", line: "Renunciation isn't quitting the task — it's releasing your hold on how it should end." },
-  { num: 6, theme: "Dhyana Yoga", line: "Before you can steady the world, sit still long enough to steady one breath." },
-  { num: 7, theme: "Jnana Vijnana Yoga", line: "Knowledge without direct experience is a map you've never actually walked." },
-  { num: 8, theme: "Akshara Brahma Yoga", line: "What you think of in the final moment is what you've quietly practiced all along." },
-  { num: 9, theme: "Raja Vidya Raja Guhya Yoga", line: "The most private truths are often the simplest ones you've been avoiding." },
-  { num: 10, theme: "Vibhuti Yoga", line: "Look closely enough at anything excellent, and you'll find the same quiet source behind it." },
-  { num: 11, theme: "Vishwarupa Darshana Yoga", line: "Some truths are too large for comfort — see them anyway." },
-  { num: 12, theme: "Bhakti Yoga", line: "Devotion isn't believing perfectly — it's showing up consistently." },
-  { num: 13, theme: "Kshetra Kshetrajna Vibhaga Yoga", line: "You are not the field of your circumstances — you are the one who knows the field." },
-  { num: 14, theme: "Gunatraya Vibhaga Yoga", line: "Notice which quality is driving you right now — clarity, restlessness, or heaviness — before you act from it." },
-  { num: 15, theme: "Purushottama Yoga", line: "Roots reach down before branches reach up. Anchor yourself before you grow." },
-  { num: 16, theme: "Daivasura Sampad Vibhaga Yoga", line: "Fear, anger, and pride shrink a life. Courage, humility, and truth expand it." },
-  { num: 17, theme: "Shraddhatraya Vibhaga Yoga", line: "What you quietly have faith in is what you slowly become." },
-  { num: 18, theme: "Moksha Sanyasa Yoga", line: "Freedom isn't found by escaping your duties — it's found by doing them without needing to be someone else." },
-];
+const STREAK_KEY = "unshaken_wisdom_streak";
+
+function loadStreak(): { streak: number; lastVisit: string } {
+  if (typeof window === "undefined") return { streak: 0, lastVisit: "" };
+  try {
+    const raw = localStorage.getItem(STREAK_KEY);
+    return raw ? JSON.parse(raw) : { streak: 0, lastVisit: "" };
+  } catch {
+    return { streak: 0, lastVisit: "" };
+  }
+}
 
 export default function WisdomDraw() {
   const [current, setCurrent] = useState<WisdomLine | null>(null);
   const [flipped, setFlipped] = useState(false);
   const [drawing, setDrawing] = useState(false);
   const [sharing, setSharing] = useState(false);
+  // Whether the visitor has revealed anything yet this visit — controls
+  // the back-face copy ("Reveal Today's Teaching" vs "Draw Another").
+  const [revealed, setRevealed] = useState(false);
+  // True while `current` is today's deterministic pick; false once the
+  // visitor has drawn again at random.
+  const [isTodayTeaching, setIsTodayTeaching] = useState(true);
+  const [streak, setStreak] = useState(0);
+
+  // Pre-load today's teaching (unrevealed — card still shows its back
+  // face) and update the daily-visit streak, once on mount.
+  useEffect(() => {
+    const today = new Date();
+    const todayStr = today.toISOString().slice(0, 10);
+    const { streak: prevStreak, lastVisit } = loadStreak();
+
+    let nextStreak = prevStreak;
+    if (lastVisit !== todayStr) {
+      const yesterday = new Date(today);
+      yesterday.setDate(yesterday.getDate() - 1);
+      const yesterdayStr = yesterday.toISOString().slice(0, 10);
+      nextStreak = lastVisit === yesterdayStr ? prevStreak + 1 : 1;
+      localStorage.setItem(STREAK_KEY, JSON.stringify({ streak: nextStreak, lastVisit: todayStr }));
+    } else {
+      nextStreak = prevStreak || 1;
+    }
+    setStreak(nextStreak);
+
+    const idx = getDayOfYear(today) % WISDOM_LINES.length;
+    setCurrent(WISDOM_LINES[idx]);
+  }, []);
 
   const draw = useCallback(() => {
     if (drawing) return;
+
+    // First interaction of the visit — just reveal the already-loaded
+    // teaching for today, no shuffle needed since nothing was shown yet.
+    if (!revealed) {
+      setRevealed(true);
+      setFlipped(true);
+      return;
+    }
+
     setDrawing(true);
     setFlipped(false);
+    setIsTodayTeaching(false);
 
     // A brief pause before loading the next line so repeat draws feel like a
     // genuine shuffle (flip back to blank, then flip to a new line) rather
@@ -56,8 +92,8 @@ export default function WisdomDraw() {
       });
       setFlipped(true);
       setDrawing(false);
-    }, current ? 220 : 0);
-  }, [current, drawing]);
+    }, 220);
+  }, [drawing, revealed]);
 
   const handleShare = useCallback(
     async (e: React.MouseEvent) => {
@@ -112,7 +148,7 @@ export default function WisdomDraw() {
               draw();
             }
           }}
-          aria-label={current ? "Draw another teaching" : "Draw a teaching"}
+          aria-label={revealed ? "Draw another teaching" : "Reveal today's teaching"}
           className="relative w-full h-full cursor-pointer transition-transform duration-500 ease-out"
           style={{
             transformStyle: "preserve-3d",
@@ -127,10 +163,12 @@ export default function WisdomDraw() {
             <div className="absolute inset-4 rounded-2xl border border-dashed border-[#dfb15b]/25 pointer-events-none" />
             <Sparkles className="w-8 h-8 text-[#dfb15b]" />
             <span className="text-[11px] uppercase tracking-[0.25em] text-[#dfb15b] font-semibold">
-              {current ? "Draw Another" : "Draw a Verse"}
+              {revealed ? "Draw Another" : "Reveal Today's Teaching"}
             </span>
             <span className="text-[10px] text-white/50 max-w-[200px] text-center leading-relaxed">
-              One teaching, chosen at random, from the book&apos;s 18 chapters.
+              {revealed
+                ? "One teaching, chosen at random, from the book's 18 chapters."
+                : "A new teaching is chosen each day — click to reveal today's."}
             </span>
           </div>
 
@@ -145,6 +183,11 @@ export default function WisdomDraw() {
           >
             {current && (
               <>
+                {isTodayTeaching && (
+                  <span className="text-[9px] uppercase tracking-widest font-bold text-white bg-[#dfb15b] px-2 py-0.5 rounded-full">
+                    Today&apos;s Teaching
+                  </span>
+                )}
                 <span className="text-[10px] font-mono uppercase tracking-widest text-muted-text">
                   Chapter {current.num} • {current.theme}
                 </span>
@@ -172,6 +215,13 @@ export default function WisdomDraw() {
           </div>
         </div>
       </div>
+
+      {streak > 1 && (
+        <div className="flex items-center gap-1.5 text-[11px] text-[#dfb15b] font-semibold">
+          <Flame className="w-3.5 h-3.5" />
+          <span>{streak}-day streak — keep it going through launch</span>
+        </div>
+      )}
     </div>
   );
 }

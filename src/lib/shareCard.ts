@@ -14,12 +14,26 @@ export type WisdomCardData = {
   line: string;
 };
 
+export type ArchetypeCardData = {
+  name: string;
+  chapterRef: string;
+  line: string;
+};
+
+export type CountdownCardData = {
+  daysLeft: number;
+};
+
 const CARD_SIZE = 1080;
 const SITE_URL = "the-unshaken-self-site-hcp1.vercel.app";
 const GOLD = "#dfb15b";
 const CREAM = "#f5f1e8";
 const SANS = "'Segoe UI', Arial, sans-serif";
 const SERIF = "Georgia, 'Times New Roman', serif";
+// Ordering is closed until this date — kept in sync with BuyNowButton's
+// closure message so a share card never says something the site itself
+// doesn't currently say.
+const FOOTER_LINE = "ORDERING OPENS 5 SEPTEMBER 2026";
 
 function wrapText(ctx: CanvasRenderingContext2D, text: string, maxWidth: number): string[] {
   const words = text.split(" ");
@@ -39,8 +53,8 @@ function wrapText(ctx: CanvasRenderingContext2D, text: string, maxWidth: number)
   return lines;
 }
 
-// Shrinks the quote's font size until it wraps within maxLines, so a long
-// teaching never overflows or gets clipped off the card.
+// Shrinks a quote's font size until it wraps within maxLines, so long
+// text never overflows or gets clipped off the card.
 function fitQuote(ctx: CanvasRenderingContext2D, text: string, maxWidth: number, maxLines: number) {
   let fontSize = 64;
   let lines: string[] = [];
@@ -69,53 +83,72 @@ function fillTextSpaced(ctx: CanvasRenderingContext2D, text: string, centerX: nu
   ctx.textAlign = prevAlign;
 }
 
-export async function generateWisdomShareCard(data: WisdomCardData): Promise<Blob | null> {
+// Shared background + frame + kicker/subtitle + footer used by every
+// card variant, so each generator only has to draw its own middle
+// content. Returns the ready canvas + context for the caller to finish.
+function createCardShell(): { canvas: HTMLCanvasElement; ctx: CanvasRenderingContext2D } | null {
   if (typeof document === "undefined") return null;
-
   const canvas = document.createElement("canvas");
   canvas.width = CARD_SIZE;
   canvas.height = CARD_SIZE;
   const ctx = canvas.getContext("2d");
   if (!ctx) return null;
 
-  // Background
   const bg = ctx.createLinearGradient(0, 0, CARD_SIZE, CARD_SIZE);
   bg.addColorStop(0, "#16311a");
   bg.addColorStop(1, "#070b09");
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, CARD_SIZE, CARD_SIZE);
 
-  // Soft center glow
   const glow = ctx.createRadialGradient(CARD_SIZE / 2, CARD_SIZE / 2, 80, CARD_SIZE / 2, CARD_SIZE / 2, 560);
   glow.addColorStop(0, "rgba(223,177,91,0.10)");
   glow.addColorStop(1, "rgba(223,177,91,0)");
   ctx.fillStyle = glow;
   ctx.fillRect(0, 0, CARD_SIZE, CARD_SIZE);
 
-  // Decorative frame
   ctx.strokeStyle = "rgba(223,177,91,0.35)";
   ctx.lineWidth = 2;
   const inset = 44;
   ctx.strokeRect(inset, inset, CARD_SIZE - inset * 2, CARD_SIZE - inset * 2);
 
   ctx.textAlign = "center";
-
-  // Kicker
   ctx.fillStyle = GOLD;
   ctx.font = `700 28px ${SANS}`;
   fillTextSpaced(ctx, "THE UNSHAKEN SELF", CARD_SIZE / 2, 168, 6);
 
-  // Subtitle
   ctx.fillStyle = "rgba(245,241,232,0.7)";
   ctx.font = `400 22px ${SANS}`;
   ctx.fillText("A Book by Ketul Shah", CARD_SIZE / 2, 208);
 
-  // Chapter label
+  return { canvas, ctx };
+}
+
+function drawFooter(ctx: CanvasRenderingContext2D) {
+  ctx.textAlign = "center";
+  ctx.fillStyle = GOLD;
+  ctx.font = `700 22px ${SANS}`;
+  fillTextSpaced(ctx, FOOTER_LINE, CARD_SIZE / 2, CARD_SIZE - 110, 2);
+
+  ctx.fillStyle = "rgba(245,241,232,0.65)";
+  ctx.font = `400 20px ${SANS}`;
+  ctx.fillText(SITE_URL, CARD_SIZE / 2, CARD_SIZE - 78);
+}
+
+function toPngBlob(canvas: HTMLCanvasElement): Promise<Blob | null> {
+  return new Promise((resolve) => {
+    canvas.toBlob((blob) => resolve(blob), "image/png");
+  });
+}
+
+export async function generateWisdomShareCard(data: WisdomCardData): Promise<Blob | null> {
+  const shell = createCardShell();
+  if (!shell) return null;
+  const { canvas, ctx } = shell;
+
   ctx.fillStyle = GOLD;
   ctx.font = `700 22px ${SANS}`;
   fillTextSpaced(ctx, `CHAPTER ${data.num} • ${data.theme.toUpperCase()}`, CARD_SIZE / 2, 318, 2);
 
-  // Quote — fit, wrap, vertically center in the middle band
   const quoteText = `“${data.line}”`;
   const { fontSize, lines } = fitQuote(ctx, quoteText, 820, 6);
   ctx.font = `italic 600 ${fontSize}px ${SERIF}`;
@@ -128,21 +161,76 @@ export async function generateWisdomShareCard(data: WisdomCardData): Promise<Blo
     y += lineHeight;
   }
 
-  // Ornament
   ctx.fillStyle = "rgba(223,177,91,0.6)";
   ctx.font = `400 32px ${SERIF}`;
   ctx.fillText("✦", CARD_SIZE / 2, y + 24);
 
-  // Footer
+  drawFooter(ctx);
+  return toPngBlob(canvas);
+}
+
+export async function generateArchetypeShareCard(data: ArchetypeCardData): Promise<Blob | null> {
+  const shell = createCardShell();
+  if (!shell) return null;
+  const { canvas, ctx } = shell;
+
+  ctx.fillStyle = GOLD;
+  ctx.font = `700 20px ${SANS}`;
+  fillTextSpaced(ctx, "MY UNSHAKEN ARCHETYPE IS", CARD_SIZE / 2, 320, 2);
+
+  ctx.fillStyle = CREAM;
+  ctx.font = `700 72px ${SERIF}`;
+  const nameLines = wrapText(ctx, data.name, 880);
+  let y = 430;
+  for (const line of nameLines) {
+    ctx.fillText(line, CARD_SIZE / 2, y);
+    y += 84;
+  }
+
   ctx.fillStyle = GOLD;
   ctx.font = `700 22px ${SANS}`;
-  fillTextSpaced(ctx, "EARLY ACCESS AVAILABLE NOW", CARD_SIZE / 2, CARD_SIZE - 110, 2);
+  fillTextSpaced(ctx, data.chapterRef.toUpperCase(), CARD_SIZE / 2, y + 30, 2);
 
-  ctx.fillStyle = "rgba(245,241,232,0.65)";
-  ctx.font = `400 20px ${SANS}`;
-  ctx.fillText(SITE_URL, CARD_SIZE / 2, CARD_SIZE - 78);
+  ctx.fillStyle = "rgba(245,241,232,0.85)";
+  const { fontSize, lines } = fitQuote(ctx, data.line, 780, 3);
+  ctx.font = `italic 500 ${fontSize}px ${SERIF}`;
+  const lineHeight = fontSize * 1.4;
+  let qy = y + 110;
+  for (const line of lines) {
+    ctx.fillText(line, CARD_SIZE / 2, qy);
+    qy += lineHeight;
+  }
 
-  return new Promise((resolve) => {
-    canvas.toBlob((blob) => resolve(blob), "image/png");
-  });
+  ctx.fillStyle = "rgba(223,177,91,0.6)";
+  ctx.font = `400 32px ${SERIF}`;
+  ctx.fillText("✦", CARD_SIZE / 2, qy + 30);
+
+  drawFooter(ctx);
+  return toPngBlob(canvas);
+}
+
+export async function generateCountdownShareCard(data: CountdownCardData): Promise<Blob | null> {
+  const shell = createCardShell();
+  if (!shell) return null;
+  const { canvas, ctx } = shell;
+
+  ctx.fillStyle = GOLD;
+  ctx.font = `700 22px ${SANS}`;
+  fillTextSpaced(ctx, "OFFICIAL LAUNCH EVENT — COUNTDOWN", CARD_SIZE / 2, 340, 2);
+
+  const dayLabel = data.daysLeft === 1 ? "DAY" : "DAYS";
+  ctx.fillStyle = CREAM;
+  ctx.font = `700 260px ${SERIF}`;
+  ctx.fillText(String(Math.max(data.daysLeft, 0)), CARD_SIZE / 2, 620);
+
+  ctx.fillStyle = GOLD;
+  ctx.font = `700 26px ${SANS}`;
+  fillTextSpaced(ctx, `${dayLabel} TO GO`, CARD_SIZE / 2, 680, 4);
+
+  ctx.fillStyle = "rgba(245,241,232,0.75)";
+  ctx.font = `italic 400 30px ${SERIF}`;
+  ctx.fillText("until the eve of Krishna Janmashtami 2026", CARD_SIZE / 2, 750);
+
+  drawFooter(ctx);
+  return toPngBlob(canvas);
 }

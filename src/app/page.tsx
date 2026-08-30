@@ -198,7 +198,8 @@ export default function Home() {
               Draw a Teaching
             </h3>
             <p className="text-xs sm:text-sm font-light text-stone-500 dark:text-stone-400 max-w-md mx-auto">
-              Click the card for a single line drawn at random from one of the book&apos;s 18 chapters.
+              A new teaching is chosen each day through the countdown to Krishna Janmashtami — click to
+              reveal today&apos;s, or draw again at random from the book&apos;s 18 chapters.
             </p>
           </div>
           <WisdomDraw />

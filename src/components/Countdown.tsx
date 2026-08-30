@@ -2,9 +2,10 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowRight, CalendarPlus, ChevronDown, Users } from "lucide-react";
+import { ArrowRight, CalendarPlus, ChevronDown, Share2, Users } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import BuyNowButton from "@/components/BuyNowButton";
+import { generateCountdownShareCard } from "@/lib/shareCard";
 
 type TimeLeft = {
   days: number;
@@ -60,6 +61,7 @@ export default function Countdown() {
   const [hovered, setHovered] = useState(false);
   const [waitlistCount, setWaitlistCount] = useState<number | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [sharing, setSharing] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
@@ -119,6 +121,41 @@ export default function Countdown() {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
       goToEvents();
+    }
+  };
+
+  const handleShare = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (sharing) return;
+    setSharing(true);
+    try {
+      const blob = await generateCountdownShareCard({ daysLeft: timeLeft.days });
+      if (!blob) return;
+
+      const fileName = "unshaken-self-countdown.png";
+      const file = new File([blob], fileName, { type: "image/png" });
+      const shareData: ShareData = {
+        files: [file],
+        title: "The Unshaken Self",
+        text: `${timeLeft.days} days to go until The Unshaken Self launches.`,
+      };
+
+      if (navigator.canShare && navigator.canShare(shareData)) {
+        await navigator.share(shareData);
+      } else {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+    } catch {
+      // Cancelled share sheet or generation failure — low-stakes, no error UI.
+    } finally {
+      setSharing(false);
     }
   };
 
@@ -293,6 +330,17 @@ export default function Countdown() {
 
           {/* Pre-Buy — reuses the same trigger+modal used site-wide */}
           <BuyNowButton />
+
+          <button
+            type="button"
+            onClick={handleShare}
+            disabled={sharing}
+            className="flex items-center gap-1.5 px-4 py-2 rounded-full border border-border-custom text-[10px] uppercase tracking-widest font-semibold text-foreground hover:border-[#dfb15b]/60 hover:text-[#dfb15b] transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-wait"
+            aria-label="Share this countdown"
+          >
+            <Share2 className="w-3.5 h-3.5" />
+            <span>{sharing ? "Preparing…" : "Share"}</span>
+          </button>
         </div>
 
         {/* CTA — fades/slides in on hover */}

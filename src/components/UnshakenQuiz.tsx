@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import Link from "next/link";
-import { CheckCircle, ChevronRight, Mail, RotateCw } from "lucide-react";
+import { CheckCircle, ChevronRight, Mail, RotateCw, Share2 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import { generateArchetypeShareCard } from "@/lib/shareCard";
 
 type ArchetypeKey = "karma" | "bhakti" | "witness" | "seeker";
 
@@ -201,6 +202,56 @@ export default function UnshakenQuiz() {
   );
 }
 
+function ShareResultButton({ result }: { result: Archetype }) {
+  const [sharing, setSharing] = useState(false);
+
+  const handleShare = useCallback(async () => {
+    if (sharing) return;
+    setSharing(true);
+    try {
+      const blob = await generateArchetypeShareCard(result);
+      if (!blob) return;
+
+      const fileName = `unshaken-self-archetype-${result.key}.png`;
+      const file = new File([blob], fileName, { type: "image/png" });
+      const shareData: ShareData = {
+        files: [file],
+        title: "The Unshaken Self",
+        text: `My Unshaken Archetype is ${result.name} — take the quiz on The Unshaken Self site.`,
+      };
+
+      if (navigator.canShare && navigator.canShare(shareData)) {
+        await navigator.share(shareData);
+      } else {
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = fileName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+      }
+    } catch {
+      // Cancelled share sheet or generation failure — low-stakes, no error UI.
+    } finally {
+      setSharing(false);
+    }
+  }, [result, sharing]);
+
+  return (
+    <button
+      type="button"
+      onClick={handleShare}
+      disabled={sharing}
+      className="flex items-center gap-1.5 text-[11px] uppercase tracking-widest font-semibold text-muted-text hover:text-[#dfb15b] transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-wait"
+    >
+      <Share2 className="w-3.5 h-3.5" />
+      {sharing ? "Preparing…" : "Share Result"}
+    </button>
+  );
+}
+
 function ResultView({
   result,
   email,
@@ -257,7 +308,7 @@ function ResultView({
         </form>
       )}
 
-      <div className="flex items-center justify-center gap-4 pt-4">
+      <div className="flex items-center justify-center gap-4 pt-4 flex-wrap">
         <button
           onClick={onRetake}
           className="flex items-center gap-1.5 text-[11px] uppercase tracking-widest font-semibold text-muted-text hover:text-foreground transition-colors cursor-pointer"
@@ -265,6 +316,7 @@ function ResultView({
           <RotateCw className="w-3.5 h-3.5" />
           Retake
         </button>
+        <ShareResultButton result={result} />
         <Link
           href="/preorder"
           className="text-[11px] uppercase tracking-widest font-semibold text-[#b5924b] dark:text-[#dfb15b] hover:text-[#9c7b3b] dark:hover:text-[#c49945] transition-colors"
