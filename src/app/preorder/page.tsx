@@ -20,7 +20,6 @@ type PreorderStore = {
   status: string;
   isPopular: boolean;
   features: string[];
-  price?: string;
 };
 
 type PreorderContent = {
@@ -29,7 +28,7 @@ type PreorderContent = {
 };
 
 const DEFAULT_PREORDER_CONTENT: PreorderContent = {
-  header_subtitle: "The Unshaken Self is now available to pre-buy at ₹399/- on Amazon, Flipkart, and ZiffyBee — with ZiffyBee offering the fastest delivery. Prefer to wait? Join the notify list below and we'll keep you posted as the official launch approaches.",
+  header_subtitle: "Early access has closed. The Unshaken Self will be available to order from 5th September 2026. Join the notify list below and we'll keep you posted the moment ordering opens.",
   stores: [
     {
       name: "Amazon Kindle & Hardback",
@@ -37,7 +36,6 @@ const DEFAULT_PREORDER_CONTENT: PreorderContent = {
       region: "Global Store",
       status: "Available Now",
       isPopular: false,
-      price: "₹399/-",
       features: ["Chapter 1 digital preview instantly.", "Vedic Reflection Sheets download."]
     },
     {
@@ -46,7 +44,6 @@ const DEFAULT_PREORDER_CONTENT: PreorderContent = {
       region: "India Only",
       status: "Available Now",
       isPopular: false,
-      price: "₹399/-",
       features: ["Chapter 1 digital preview instantly.", "Vedic Reflection Sheets download."]
     },
     {
@@ -55,7 +52,6 @@ const DEFAULT_PREORDER_CONTENT: PreorderContent = {
       region: "International Shipping",
       status: "Available Now",
       isPopular: true,
-      price: "₹399/-",
       features: [
         "Chapter 1 digital preview instantly.",
         "Vedic Reflection Sheets download.",
@@ -159,19 +155,19 @@ export default function PreorderPage() {
         <Countdown />
       </section>
 
-      {/* Pricing Comparison Hub */}
+      {/* Editions Comparison Hub */}
       <section className="py-20 px-4 max-w-7xl mx-auto w-full flex-1 space-y-16">
-        
+
         <div className="text-center space-y-4">
           <h2 className="text-xs uppercase tracking-[0.25em] text-[#b5924b] dark:text-[#dfb15b] font-semibold">
-            Price Comparison
+            Available Editions
           </h2>
           <h3 className="text-2xl sm:text-3xl font-serif text-foreground">
             Compare Editions & Channels
           </h3>
         </div>
 
-        {/* Pricing Cards Grid */}
+        {/* Store Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {stores.map((store, idx) => {
             return (
@@ -201,12 +197,9 @@ export default function PreorderPage() {
                     </p>
                   </div>
 
-                  {/* Price info */}
+                  {/* Availability info */}
                   <div className="py-4 border-y border-border-custom/50">
-                    <span className="text-lg font-serif font-bold text-[#dfb15b] tracking-wide">
-                      {store.price || "PRICES WILL BE OUT SOON"}
-                    </span>
-                    <span className="text-[9px] font-mono text-green-600 dark:text-green-400 mt-1.5 block uppercase">
+                    <span className="text-[9px] font-mono text-green-600 dark:text-green-400 block uppercase">
                       {store.status}
                     </span>
                   </div>

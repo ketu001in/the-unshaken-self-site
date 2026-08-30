@@ -73,7 +73,7 @@ const DEFAULT_HOMEPAGE_CONTENT: HomepageContent = {
   faqs: [
     { q: "What makes this book different from traditional translations of the Bhagavad Gita?", a: "Rather than focusing purely on literal translation or theological debates, *The Unshaken Self* acts as a practical handbook. It takes the philosophical essence of all 18 chapters and translates them into actionable exercises—like morning journaling, breath practices, and detached goal planning—built specifically for 2026's busy, high-stress lifestyle." },
     { q: "When is the launch date and what are the launch phases?", a: "The planned launch is on the eve of Krishna Janmashtami (September 4–5, 2026). Currently, we are in the Pre-Launch phase. Pre-ordering grants you immediate access to Chapter 1, workbook PDFs, and an invite to a private Q&A session with KETUL SHAH. The Launch phase will release the full book/audiobook, followed by Post-Launch workshops." },
-    { q: "Where will the book be available to purchase?", a: "The book will be available globally in hardcover, paperback, kindle, and audiobook formats. Direct links will include Amazon, Flipkart, and leading local bookstore platforms. You can check our preorder page for live price comparisons." },
+    { q: "Where will the book be available to purchase?", a: "The book will be available globally in hardcover, paperback, kindle, and audiobook formats. Direct links will include Amazon, Flipkart, and leading local bookstore platforms. You can check our preorder page for store and edition details." },
     { q: "How does the AI Gita Companion work?", a: "The floating widget at the bottom right represents the AI Gita Companion. It acts as an interactive assistant trained on the chapters of the book. You can query it on topics like 'handling work stress' or 'finding focus', and it will retrieve practical counsel matching the Gita's teachings." }
   ]
 };
@@ -85,7 +85,6 @@ type PreorderStore = {
   status: string;
   isPopular: boolean;
   features: string[];
-  price?: string;
 };
 
 type PreorderContent = {
@@ -94,11 +93,11 @@ type PreorderContent = {
 };
 
 const DEFAULT_PREORDER_CONTENT: PreorderContent = {
-  header_subtitle: "The Unshaken Self is now available to pre-buy at ₹399/- on Amazon, Flipkart, and ZiffyBee — with ZiffyBee offering the fastest delivery. Prefer to wait? Join the notify list below and we'll keep you posted as the official launch approaches.",
+  header_subtitle: "Early access has closed. The Unshaken Self will be available to order from 5th September 2026. Join the notify list below and we'll keep you posted the moment ordering opens.",
   stores: [
-    { name: "Amazon Kindle & Hardback", format: "Kindle / Hardcover", region: "Global Store", status: "Available Now", isPopular: false, price: "₹399/-", features: ["Chapter 1 digital preview instantly.", "Vedic Reflection Sheets download."] },
-    { name: "Flipkart Paperback", format: "Paperback Edition", region: "India Only", status: "Available Now", isPopular: false, price: "₹399/-", features: ["Chapter 1 digital preview instantly.", "Vedic Reflection Sheets download."] },
-    { name: "Publisher Direct Deluxe Bundle", format: "Hardcover + Audio + PDFs", region: "International Shipping", status: "Available Now", isPopular: true, price: "₹399/-", features: ["Chapter 1 digital preview instantly.", "Vedic Reflection Sheets download.", "Simulated Audiobook CD/MP3 access.", "Invite to live launch session."] }
+    { name: "Amazon Kindle & Hardback", format: "Kindle / Hardcover", region: "Global Store", status: "Available Now", isPopular: false, features: ["Chapter 1 digital preview instantly.", "Vedic Reflection Sheets download."] },
+    { name: "Flipkart Paperback", format: "Paperback Edition", region: "India Only", status: "Available Now", isPopular: false, features: ["Chapter 1 digital preview instantly.", "Vedic Reflection Sheets download."] },
+    { name: "Publisher Direct Deluxe Bundle", format: "Hardcover + Audio + PDFs", region: "International Shipping", status: "Available Now", isPopular: true, features: ["Chapter 1 digital preview instantly.", "Vedic Reflection Sheets download.", "Simulated Audiobook CD/MP3 access.", "Invite to live launch session."] }
   ]
 };
 
@@ -1406,17 +1405,6 @@ export default function SiteEditor() {
                       })}
                     />
                   </Field>
-                  <Field label="Price">
-                    <TextInput
-                      value={store.price || ""}
-                      onChange={(e) => setPreorder((p) => {
-                        const next = [...p.stores];
-                        next[idx] = { ...next[idx], price: e.target.value };
-                        return { ...p, stores: next };
-                      })}
-                      placeholder="₹399/-"
-                    />
-                  </Field>
                 </div>
                 <label className="flex items-center gap-2 text-xs cursor-pointer">
                   <input
@@ -1443,7 +1431,7 @@ export default function SiteEditor() {
               </div>
             ))}
             <button
-              onClick={() => setPreorder((p) => ({ ...p, stores: [...p.stores, { name: "", format: "", region: "", status: "Available Now", isPopular: false, price: "₹399/-", features: [] }] }))}
+              onClick={() => setPreorder((p) => ({ ...p, stores: [...p.stores, { name: "", format: "", region: "", status: "Available Now", isPopular: false, features: [] }] }))}
               className="px-3 py-2 rounded-lg border border-dashed border-border-custom text-xs flex items-center gap-2 cursor-pointer hover:bg-black/5 dark:hover:bg-white/5"
             >
               <Plus className="w-3.5 h-3.5" /> Add Store / Edition Card

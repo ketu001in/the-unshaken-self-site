@@ -12,7 +12,6 @@ type Message = {
 };
 
 const CONTACT_EMAIL_PLACEHOLDER = "{{CONTACT_EMAIL}}";
-const BOOK_PRICE = "₹399/-";
 const LAUNCH_EVENT_LINE = "The official launch celebration is on the eve of Krishna Janmashtami, September 4, 2026.";
 const CLOSED_MESSAGE = "Early Access window is closed & Book will be available to Order from 5th September 2026.";
 
@@ -48,8 +47,8 @@ function buildFaqs(settings: SiteSettings): { q: string; a: string }[] {
     {
       q: "How much will the book cost?",
       a: available
-        ? `It's priced at ${BOOK_PRICE} across ${storeList}.`
-        : `It's priced at ${BOOK_PRICE}. ${CLOSED_MESSAGE}`
+        ? `Pricing details are shown on the store listing at ${storeList}.`
+        : `${CLOSED_MESSAGE} Pricing will be shared once ordering opens.`
     },
     {
       q: "What formats will be available?",
@@ -81,7 +80,7 @@ function buildQuickFacts(settings: SiteSettings): string {
     return `${CLOSED_MESSAGE} Join the waitlist on the Pre-order page to get notified. ${LAUNCH_EVENT_LINE}`;
   }
   const storeList = joinWithAnd(liveStores);
-  return `It's available now for early access at ${BOOK_PRICE} on ${storeList}. ${LAUNCH_EVENT_LINE}`;
+  return `It's available now for early access on ${storeList}. ${LAUNCH_EVENT_LINE}`;
 }
 
 function buildBuyResponse(settings: SiteSettings): string {
@@ -92,7 +91,7 @@ function buildBuyResponse(settings: SiteSettings): string {
   const storeList = joinWithAnd(
     liveStores.map((s) => (s === "ZiffyBee" ? "ZiffyBee (fastest delivery, and the author's own recommendation)" : s))
   );
-  return `Great news — *The Unshaken Self* is available right now for early access at ${BOOK_PRICE} on ${storeList}. Tap the "Early Access" button at the top of the page, or visit the Pre-order page for direct links. ${LAUNCH_EVENT_LINE}`;
+  return `Great news — *The Unshaken Self* is available right now for early access on ${storeList}. Tap the "Early Access" button at the top of the page, or visit the Pre-order page for direct links. ${LAUNCH_EVENT_LINE}`;
 }
 
 export default function AIChatbot() {
