@@ -528,6 +528,9 @@ export default function SiteEditor() {
       saveSiteSetting("social_instagram", settings.social_instagram),
       saveSiteSetting("footer_tagline", settings.footer_tagline),
       saveSiteSetting("publisher_name", settings.publisher_name),
+      saveSiteSetting("live_session_title", settings.live_session_title),
+      saveSiteSetting("live_session_datetime", settings.live_session_datetime),
+      saveSiteSetting("live_session_link", settings.live_session_link),
     ]);
     await refreshSiteSettings();
     flashSaved("general");
@@ -702,6 +705,32 @@ export default function SiteEditor() {
             <TextInput
               value={settings.publisher_name}
               onChange={(e) => setSettings((p) => ({ ...p, publisher_name: e.target.value }))}
+            />
+          </Field>
+
+          <h3 className="font-serif text-base text-foreground font-bold pt-4">Ask Ketul — Live Session</h3>
+          <p className="text-[11px] text-muted-text -mt-4">
+            Leave the date/time blank to show &quot;coming soon&quot; on the banner. Fill it in once a
+            session is actually scheduled.
+          </p>
+          <Field label="Session Title">
+            <TextInput
+              value={settings.live_session_title}
+              onChange={(e) => setSettings((p) => ({ ...p, live_session_title: e.target.value }))}
+            />
+          </Field>
+          <Field label="Date / Time (free text)">
+            <TextInput
+              value={settings.live_session_datetime}
+              onChange={(e) => setSettings((p) => ({ ...p, live_session_datetime: e.target.value }))}
+              placeholder="e.g. September 2, 2026, 7:00 PM IST"
+            />
+          </Field>
+          <Field label="Join Link (Zoom / YouTube / Instagram Live)">
+            <TextInput
+              value={settings.live_session_link}
+              onChange={(e) => setSettings((p) => ({ ...p, live_session_link: e.target.value }))}
+              placeholder="https://..."
             />
           </Field>
 

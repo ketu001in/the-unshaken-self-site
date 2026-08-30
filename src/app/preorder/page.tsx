@@ -5,9 +5,13 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AIChatbot from "@/components/AIChatbot";
 import Countdown from "@/components/Countdown";
+import FoundingReadersWall from "@/components/FoundingReadersWall";
+import ReferralPanel from "@/components/ReferralPanel";
 import { Check, Bell } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { fetchPageContent } from "@/lib/content";
+
+const REFERRAL_CODE_KEY = "unshaken_referral_code";
 
 type PreorderStore = {
   name: string;
@@ -65,12 +69,30 @@ const DEFAULT_PREORDER_CONTENT: PreorderContent = {
 export default function PreorderPage() {
   const [content, setContent] = useState<PreorderContent>(DEFAULT_PREORDER_CONTENT);
   const [waitlistEmail, setWaitlistEmail] = useState("");
+  const [waitlistName, setWaitlistName] = useState("");
   const [waitlistStore, setWaitlistStore] = useState("");
   const [waitlistMsg, setWaitlistMsg] = useState("");
   const [waitlisted, setWaitlisted] = useState(false);
+  const [referralCode, setReferralCode] = useState<string | null>(null);
+  const [referredByCode, setReferredByCode] = useState<string | null>(null);
 
   useEffect(() => {
     fetchPageContent("preorder", DEFAULT_PREORDER_CONTENT).then(setContent);
+  }, []);
+
+  // Restore a previously-issued referral code (returning visitor), and
+  // capture ?ref=CODE from a shared link so a fresh signup can be
+  // attributed to whoever shared it. Read directly from
+  // window.location rather than next/navigation's useSearchParams, which
+  // would force this already-client-only page into a Suspense boundary
+  // just for one query param.
+  useEffect(() => {
+    const savedCode = localStorage.getItem(REFERRAL_CODE_KEY);
+    if (savedCode) setReferralCode(savedCode);
+
+    const params = new URLSearchParams(window.location.search);
+    const ref = params.get("ref");
+    if (ref) setReferredByCode(ref);
   }, []);
 
   const handleJoinWaitlist = async (storeName: string) => {
@@ -84,19 +106,27 @@ export default function PreorderPage() {
     if (!waitlistEmail.trim()) return;
 
     const supabase = createClient();
-    const { error } = await supabase.from("preorder_waitlist").insert({
-      email: waitlistEmail.trim(),
-      preferred_store: waitlistStore || "Any",
+    const { data, error } = await supabase.rpc("join_waitlist", {
+      p_email: waitlistEmail.trim(),
+      p_preferred_store: waitlistStore || "Any",
+      p_name: waitlistName.trim() || null,
+      p_referred_by_code: referredByCode,
     });
 
-    if (error && !error.message.includes("duplicate")) {
+    if (error) {
       setWaitlistMsg("Something went wrong — please try again.");
       return;
+    }
+
+    if (typeof data === "string" && data) {
+      localStorage.setItem(REFERRAL_CODE_KEY, data);
+      setReferralCode(data);
     }
 
     setWaitlisted(true);
     setWaitlistMsg("You're on the list! We'll email you the moment pre-orders go live.");
     setWaitlistEmail("");
+    setWaitlistName("");
   };
 
   const stores = content.stores;
@@ -118,6 +148,9 @@ export default function PreorderPage() {
           <p className="text-xs sm:text-sm font-light text-stone-500 dark:text-stone-400 max-w-xl mx-auto leading-relaxed">
             {content.header_subtitle}
           </p>
+          <div className="pt-2">
+            <FoundingReadersWall />
+          </div>
         </div>
       </header>
 
@@ -225,21 +258,30 @@ export default function PreorderPage() {
               <span>{waitlistMsg}</span>
             </div>
           ) : (
-            <form onSubmit={handleWaitlistSubmit} className="flex flex-col sm:flex-row gap-3">
+            <form onSubmit={handleWaitlistSubmit} className="space-y-3">
+              <div className="flex flex-col sm:flex-row gap-3">
+                <input
+                  type="email"
+                  value={waitlistEmail}
+                  onChange={(e) => setWaitlistEmail(e.target.value)}
+                  placeholder="Enter your email address"
+                  className="flex-1 text-xs bg-stone-50 dark:bg-[#070b09] border border-border-custom rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-[#dfb15b]/40 text-foreground"
+                  required
+                />
+                <button
+                  type="submit"
+                  className="px-5 py-2.5 rounded-lg bg-[#1e3f20] dark:bg-[#dfb15b] hover:bg-[#142a15] dark:hover:bg-[#c49945] text-white dark:text-black text-xs uppercase tracking-widest font-bold cursor-pointer whitespace-nowrap"
+                >
+                  Notify Me
+                </button>
+              </div>
               <input
-                type="email"
-                value={waitlistEmail}
-                onChange={(e) => setWaitlistEmail(e.target.value)}
-                placeholder="Enter your email address"
-                className="flex-1 text-xs bg-stone-50 dark:bg-[#070b09] border border-border-custom rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-[#dfb15b]/40 text-foreground"
-                required
+                type="text"
+                value={waitlistName}
+                onChange={(e) => setWaitlistName(e.target.value)}
+                placeholder="First name (optional — appears on the Founding Readers wall)"
+                className="w-full text-xs bg-stone-50 dark:bg-[#070b09] border border-border-custom rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-[#dfb15b]/40 text-foreground"
               />
-              <button
-                type="submit"
-                className="px-5 py-2.5 rounded-lg bg-[#1e3f20] dark:bg-[#dfb15b] hover:bg-[#142a15] dark:hover:bg-[#c49945] text-white dark:text-black text-xs uppercase tracking-widest font-bold cursor-pointer whitespace-nowrap"
-              >
-                Notify Me
-              </button>
             </form>
           )}
           {waitlistMsg && !waitlisted && (
@@ -248,6 +290,8 @@ export default function PreorderPage() {
             </div>
           )}
         </div>
+
+        <ReferralPanel referralCode={referralCode} />
 
       </section>
 

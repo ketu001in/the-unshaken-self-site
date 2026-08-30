@@ -39,6 +39,11 @@ export type SiteSettings = {
   buy_link_flipkart: string | null;
   buy_link_ziffybee: string | null;
   publisher_name: string;
+  // "Ask Ketul" live session — blank datetime means "coming soon" in the
+  // banner rather than exposing an empty/broken join link.
+  live_session_title: string;
+  live_session_datetime: string;
+  live_session_link: string;
 };
 
 export const DEFAULT_SITE_SETTINGS: SiteSettings = {
@@ -74,6 +79,9 @@ export const DEFAULT_SITE_SETTINGS: SiteSettings = {
   buy_link_flipkart: null,
   buy_link_ziffybee: null,
   publisher_name: "Clever Fox Publishers, India",
+  live_session_title: "Ask Ketul — Live Q&A",
+  live_session_datetime: "",
+  live_session_link: "",
 };
 
 type SiteSettingsContextType = {

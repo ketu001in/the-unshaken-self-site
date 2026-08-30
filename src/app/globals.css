@@ -161,3 +161,14 @@ h1, h2, h3, h4, h5, h6, .font-serif {
   font-weight: 800;
   animation: dateFlash 0.9s ease-in-out infinite;
 }
+
+/* Seamless horizontal ticker for the Founding Readers wall — the name
+   list is rendered twice back-to-back, and this scrolls exactly one
+   copy's width so the loop point is invisible. */
+@keyframes foundingScroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.founding-scroll {
+  animation: foundingScroll 22s linear infinite;
+}

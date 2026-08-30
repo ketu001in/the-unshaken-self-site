@@ -16,6 +16,7 @@ import Countdown from "@/components/Countdown";
 import AIChatbot from "@/components/AIChatbot";
 import WisdomDraw from "@/components/WisdomDraw";
 import UnshakenQuiz from "@/components/UnshakenQuiz";
+import FoundingReadersWall from "@/components/FoundingReadersWall";
 import { createClient } from "@/lib/supabase/client";
 import { fetchPageContent } from "@/lib/content";
 import { useSiteSettings } from "@/context/SiteSettingsContext";
@@ -152,6 +153,8 @@ export default function Home() {
                 <Countdown />
               </div>
             )}
+
+            <FoundingReadersWall />
 
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
