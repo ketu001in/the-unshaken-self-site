@@ -2,6 +2,10 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+html {
+  scroll-behavior: smooth;
+}
+
 :root {
   --background: #faf8f5; /* Warm Sand light background */
   --foreground: #0b1a2e; /* Deep twilight blue-black text */
@@ -171,4 +175,16 @@ h1, h2, h3, h4, h5, h6, .font-serif {
 }
 .founding-scroll {
   animation: foundingScroll 22s linear infinite;
+}
+
+/* Soft "come play with me" pulse ring around the visitor-count badge —
+   subtle enough to not compete with the date-flash badge on the closed
+   Buy Now button, just enough motion to invite a click. */
+@keyframes visitorPulseRing {
+  0% { box-shadow: 0 0 0 0 rgba(223, 177, 91, 0.45); }
+  70% { box-shadow: 0 0 0 10px rgba(223, 177, 91, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(223, 177, 91, 0); }
+}
+.visitor-badge-pulse {
+  animation: visitorPulseRing 2.6s ease-out infinite;
 }

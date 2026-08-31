@@ -17,6 +17,7 @@ import AIChatbot from "@/components/AIChatbot";
 import WisdomDraw from "@/components/WisdomDraw";
 import UnshakenQuiz from "@/components/UnshakenQuiz";
 import FoundingReadersWall from "@/components/FoundingReadersWall";
+import VisitorCounterBadge from "@/components/VisitorCounterBadge";
 import { createClient } from "@/lib/supabase/client";
 import { fetchPageContent } from "@/lib/content";
 import { useSiteSettings } from "@/context/SiteSettingsContext";
@@ -112,6 +113,12 @@ export default function Home() {
           of its own — the red navbar CTA stays the only trigger UI. */}
       <BuyNowButton autoOpen hideTrigger />
 
+      {/* Visitor counter — a genuine, live-growing count that doubles as
+          the entry point into the Spin Wheel engagement loop. */}
+      <div className="flex justify-center py-3 px-4 bg-white dark:bg-[#070b09] border-b border-border-custom">
+        <VisitorCounterBadge />
+      </div>
+
       {/* 1. HERO SECTION */}
       <section className="relative min-h-[90vh] flex items-center justify-center py-16 px-4 overflow-hidden bg-gradient-to-b from-[#faf8f5] via-[#faf8f5] to-[#f2ede4] dark:from-[#070b09] dark:via-[#070b09] dark:to-[#0d1612]">
         
@@ -191,7 +198,7 @@ export default function Home() {
       </section>
 
       {/* 1.5. WISDOM DRAW — a small interactive "oracle card" moment near the hero */}
-      <section className="py-20 px-4 bg-[#faf8f5] dark:bg-[#050806] border-t border-border-custom">
+      <section id="wisdom-draw" className="py-20 px-4 bg-[#faf8f5] dark:bg-[#050806] border-t border-border-custom scroll-mt-20">
         <div className="max-w-4xl mx-auto text-center space-y-10">
           <div className="space-y-3">
             <h2 className="text-xs uppercase tracking-[0.25em] text-[#b5924b] dark:text-[#dfb15b] font-semibold">
@@ -314,7 +321,7 @@ export default function Home() {
       </section>
 
       {/* 3.5. UNSHAKEN ARCHETYPE QUIZ */}
-      <section className="py-24 px-4 bg-white dark:bg-[#070b09] border-t border-border-custom">
+      <section id="archetype-quiz" className="py-24 px-4 bg-white dark:bg-[#070b09] border-t border-border-custom scroll-mt-20">
         <div className="max-w-4xl mx-auto space-y-12">
           <div className="text-center space-y-4">
             <h2 className="text-xs uppercase tracking-[0.25em] text-[#b5924b] dark:text-[#dfb15b] font-semibold">
