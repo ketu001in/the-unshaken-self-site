@@ -12,49 +12,54 @@ type Message = {
 };
 
 const CONTACT_EMAIL_PLACEHOLDER = "{{CONTACT_EMAIL}}";
-const LAUNCH_EVENT_LINE = "The official launch celebration is on the eve of Krishna Janmashtami, September 4, 2026.";
-const CLOSED_MESSAGE = "Early Access window is closed & Book will be available to Order from 5th September 2026.";
+const LAUNCH_EVENT_LINE = "The official live launch celebration follows shortly after — see the Events page for details.";
+const NOT_YET_LISTED_MESSAGE = "Store links are being finalized — check back shortly, or visit the Pre-order page.";
 
-// Reads the same live buy links the Early Access modal uses, so this
-// chatbot's answers about buying/pricing/formats can never drift out of
-// sync with the rest of the site the way a hardcoded string can.
-function getLiveStores(settings: SiteSettings): string[] {
-  const stores: string[] = [];
-  if (settings.buy_link_amazon) stores.push("Amazon");
-  if (settings.buy_link_flipkart) stores.push("Flipkart");
-  if (settings.buy_link_ziffybee) stores.push("ZiffyBee");
-  return stores;
+// Reads the same live settings the Buy Now modal uses, so this chatbot's
+// answers about buying/pricing/formats can never drift out of sync with
+// the rest of the site the way hardcoded copy would.
+function hasAnyStore(settings: SiteSettings): boolean {
+  return Boolean(
+    settings.buy_link_notionpress_paperback ||
+    settings.buy_link_notionpress_hardcover ||
+    settings.buy_link_amazon_paperback ||
+    settings.buy_link_amazon_hardcover
+  );
 }
 
-function joinWithAnd(items: string[]): string {
-  if (items.length === 0) return "";
-  if (items.length === 1) return items[0];
-  return `${items.slice(0, -1).join(", ")} and ${items[items.length - 1]}`;
+function describeStores(settings: SiteSettings): string {
+  const hasNotionPress = Boolean(settings.buy_link_notionpress_paperback || settings.buy_link_notionpress_hardcover);
+  const hasAmazon = Boolean(settings.buy_link_amazon_paperback || settings.buy_link_amazon_hardcover);
+  if (hasNotionPress && hasAmazon) {
+    return "on Amazon.in, and directly from Notion Press (the author's own recommended store)";
+  }
+  if (hasNotionPress) return "directly from Notion Press (the author's own recommended store)";
+  if (hasAmazon) return "on Amazon.in";
+  return "";
 }
 
 function buildFaqs(settings: SiteSettings): { q: string; a: string }[] {
-  const liveStores = getLiveStores(settings);
-  const storeList = joinWithAnd(liveStores);
-  const available = liveStores.length > 0;
+  const available = hasAnyStore(settings);
+  const storeDescription = describeStores(settings);
 
   return [
     {
       q: "When will the book launch?",
       a: available
-        ? `The Unshaken Self is already available for early access — you can buy it right now on ${storeList}, ahead of the official launch. ${LAUNCH_EVENT_LINE}`
-        : `${CLOSED_MESSAGE} ${LAUNCH_EVENT_LINE} Join the pre-order waitlist to get notified the moment ordering opens.`
+        ? `The Unshaken Self is available now — you can buy it right now ${storeDescription}. ${LAUNCH_EVENT_LINE}`
+        : `${NOT_YET_LISTED_MESSAGE} ${LAUNCH_EVENT_LINE}`
     },
     {
       q: "How much will the book cost?",
       a: available
-        ? `Pricing details are shown on the store listing at ${storeList}.`
-        : `${CLOSED_MESSAGE} Pricing will be shared once ordering opens.`
+        ? `Paperback is ${settings.price_paperback} and Hardcover is ${settings.price_hardcover}, ${storeDescription}.`
+        : NOT_YET_LISTED_MESSAGE
     },
     {
       q: "What formats will be available?",
       a: available
-        ? `Paperback is available now through ${storeList} — ZiffyBee ships fastest and is the author's own recommendation. Kindle and audiobook editions are planned for a later release.`
-        : `Paperback will be available through Amazon, Flipkart, and ZiffyBee. Kindle and audiobook editions are planned for a later release. ${CLOSED_MESSAGE}`
+        ? `Paperback and Hardcover are both available now, ${storeDescription}. Kindle and audiobook editions are planned for a later release.`
+        : `Paperback and Hardcover will be available on Amazon and Notion Press. Kindle and audiobook editions are planned for a later release. ${NOT_YET_LISTED_MESSAGE}`
     },
     {
       q: "Can I read a free sample?",
@@ -75,23 +80,17 @@ function buildFaqs(settings: SiteSettings): { q: string; a: string }[] {
 // and folded into the catch-all fallback, so even an unmatched question
 // still surfaces real, current information instead of pure filler.
 function buildQuickFacts(settings: SiteSettings): string {
-  const liveStores = getLiveStores(settings);
-  if (liveStores.length === 0) {
-    return `${CLOSED_MESSAGE} Join the waitlist on the Pre-order page to get notified. ${LAUNCH_EVENT_LINE}`;
+  if (!hasAnyStore(settings)) {
+    return `${NOT_YET_LISTED_MESSAGE} ${LAUNCH_EVENT_LINE}`;
   }
-  const storeList = joinWithAnd(liveStores);
-  return `It's available now for early access on ${storeList}. ${LAUNCH_EVENT_LINE}`;
+  return `It's available now — Paperback ${settings.price_paperback}, Hardcover ${settings.price_hardcover} — ${describeStores(settings)}. ${LAUNCH_EVENT_LINE}`;
 }
 
 function buildBuyResponse(settings: SiteSettings): string {
-  const liveStores = getLiveStores(settings);
-  if (liveStores.length === 0) {
-    return `${CLOSED_MESSAGE} Join the waitlist on the Pre-order page and we'll email you the moment ordering opens.`;
+  if (!hasAnyStore(settings)) {
+    return `${NOT_YET_LISTED_MESSAGE}`;
   }
-  const storeList = joinWithAnd(
-    liveStores.map((s) => (s === "ZiffyBee" ? "ZiffyBee (fastest delivery, and the author's own recommendation)" : s))
-  );
-  return `Great news — *The Unshaken Self* is available right now for early access on ${storeList}. Tap the "Early Access" button at the top of the page, or visit the Pre-order page for direct links. ${LAUNCH_EVENT_LINE}`;
+  return `Great news — *The Unshaken Self* is available right now! Paperback is ${settings.price_paperback} and Hardcover is ${settings.price_hardcover}, ${describeStores(settings)}. Tap the "Buy Now" button at the top of the page, or visit the Pre-order page for direct links. ${LAUNCH_EVENT_LINE}`;
 }
 
 export default function AIChatbot() {

@@ -72,8 +72,8 @@ const DEFAULT_HOMEPAGE_CONTENT: HomepageContent = {
   ],
   faqs: [
     { q: "What makes this book different from traditional translations of the Bhagavad Gita?", a: "Rather than focusing purely on literal translation or theological debates, *The Unshaken Self* acts as a practical handbook. It takes the philosophical essence of all 18 chapters and translates them into actionable exercises—like morning journaling, breath practices, and detached goal planning—built specifically for 2026's busy, high-stress lifestyle." },
-    { q: "When is the launch date and what are the launch phases?", a: "The planned launch is on the eve of Krishna Janmashtami (September 4–5, 2026). Currently, we are in the Pre-Launch phase. Pre-ordering grants you immediate access to Chapter 1, workbook PDFs, and an invite to a private Q&A session with KETUL SHAH. The Launch phase will release the full book/audiobook, followed by Post-Launch workshops." },
-    { q: "Where will the book be available to purchase?", a: "The book will be available globally in hardcover, paperback, kindle, and audiobook formats. Direct links will include Amazon, Flipkart, and leading local bookstore platforms. You can check our preorder page for store and edition details." },
+    { q: "When is the launch date and what are the launch phases?", a: "The Unshaken Self is available now, in paperback and hardcover, on Amazon and Notion Press. The official live launch celebration follows shortly after — ordering now also gets you an invite to the live Q&A session with KETUL SHAH. See the Events page for details." },
+    { q: "Where will the book be available to purchase?", a: "The book is available now in paperback and hardcover on Amazon.in and directly from Notion Press (the author's own recommended store). You can check our preorder page for store and edition details." },
     { q: "How does the AI Gita Companion work?", a: "The floating widget at the bottom right represents the AI Gita Companion. It acts as an interactive assistant trained on the chapters of the book. You can query it on topics like 'handling work stress' or 'finding focus', and it will retrieve practical counsel matching the Gita's teachings." }
   ]
 };
@@ -83,8 +83,11 @@ type PreorderStore = {
   format: string;
   region: string;
   status: string;
+  price: string;
+  link: string;
   isPopular: boolean;
   features: string[];
+  logo: "amazon" | "notionpress";
 };
 
 type PreorderContent = {
@@ -93,11 +96,12 @@ type PreorderContent = {
 };
 
 const DEFAULT_PREORDER_CONTENT: PreorderContent = {
-  header_subtitle: "Early access has closed. The Unshaken Self will be available to order from 5th September 2026. Join the notify list below and we'll keep you posted the moment ordering opens.",
+  header_subtitle: "The Unshaken Self is available now — choose your favorite store and format below. Notion Press is the author's own recommended store; Amazon.in ships fast across India.",
   stores: [
-    { name: "Amazon Kindle & Hardback", format: "Kindle / Hardcover", region: "Global Store", status: "Available Now", isPopular: false, features: ["Chapter 1 digital preview instantly.", "Vedic Reflection Sheets download."] },
-    { name: "Flipkart Paperback", format: "Paperback Edition", region: "India Only", status: "Available Now", isPopular: false, features: ["Chapter 1 digital preview instantly.", "Vedic Reflection Sheets download."] },
-    { name: "Publisher Direct Deluxe Bundle", format: "Hardcover + Audio + PDFs", region: "International Shipping", status: "Available Now", isPopular: true, features: ["Chapter 1 digital preview instantly.", "Vedic Reflection Sheets download.", "Simulated Audiobook CD/MP3 access.", "Invite to live launch session."] }
+    { name: "Notion Press — Paperback", format: "Paperback Edition", region: "India + International Shipping", status: "Available Now", price: "₹499", link: "https://direct.notionpress.com/in/read/the-unshaken-self/paperback", isPopular: true, logo: "notionpress", features: ["Author's own recommended store.", "Direct from the publisher.", "Track your shipping status online."] },
+    { name: "Notion Press — Hardcover", format: "Hardcover Edition", region: "India + International Shipping", status: "Available Now", price: "₹575", link: "https://direct.notionpress.com/in/read/the-unshaken-self-hardcover/hardcover", isPopular: true, logo: "notionpress", features: ["Author's own recommended store.", "Premium hardbound edition.", "Direct from the publisher."] },
+    { name: "Amazon.in — Paperback", format: "Paperback Edition", region: "Amazon.in", status: "Available Now", price: "₹499", link: "https://www.amazon.in/dp/B0HHNKF7FQ", isPopular: false, logo: "amazon", features: ["Fast Amazon delivery.", "Sold by Notion Press, fulfilled by Amazon."] },
+    { name: "Amazon.in — Hardcover", format: "Hardcover Edition", region: "Amazon.in", status: "Available Now", price: "₹575", link: "https://www.amazon.in/dp/B0HHNW1DJH", isPopular: false, logo: "amazon", features: ["Fast Amazon delivery.", "Sold by Notion Press, fulfilled by Amazon."] }
   ]
 };
 
@@ -530,6 +534,12 @@ export default function SiteEditor() {
       saveSiteSetting("live_session_title", settings.live_session_title),
       saveSiteSetting("live_session_datetime", settings.live_session_datetime),
       saveSiteSetting("live_session_link", settings.live_session_link),
+      saveSiteSetting("buy_link_amazon_paperback", settings.buy_link_amazon_paperback),
+      saveSiteSetting("buy_link_amazon_hardcover", settings.buy_link_amazon_hardcover),
+      saveSiteSetting("buy_link_notionpress_paperback", settings.buy_link_notionpress_paperback),
+      saveSiteSetting("buy_link_notionpress_hardcover", settings.buy_link_notionpress_hardcover),
+      saveSiteSetting("price_paperback", settings.price_paperback),
+      saveSiteSetting("price_hardcover", settings.price_hardcover),
     ]);
     await refreshSiteSettings();
     flashSaved("general");
@@ -704,6 +714,56 @@ export default function SiteEditor() {
             <TextInput
               value={settings.publisher_name}
               onChange={(e) => setSettings((p) => ({ ...p, publisher_name: e.target.value }))}
+            />
+          </Field>
+
+          <h3 className="font-serif text-base text-foreground font-bold pt-4">Buy Links &amp; Pricing</h3>
+          <p className="text-[11px] text-muted-text -mt-2">
+            Drives the site-wide Buy Now button/modal, the Preorder page cards, and the chatbot&apos;s
+            answers. Notion Press is treated as the author&apos;s recommended store.
+          </p>
+          <div className="grid grid-cols-2 gap-3">
+            <Field label="Price — Paperback">
+              <TextInput
+                value={settings.price_paperback}
+                onChange={(e) => setSettings((p) => ({ ...p, price_paperback: e.target.value }))}
+                placeholder="₹499"
+              />
+            </Field>
+            <Field label="Price — Hardcover">
+              <TextInput
+                value={settings.price_hardcover}
+                onChange={(e) => setSettings((p) => ({ ...p, price_hardcover: e.target.value }))}
+                placeholder="₹575"
+              />
+            </Field>
+          </div>
+          <Field label="Notion Press — Paperback Link">
+            <TextInput
+              value={settings.buy_link_notionpress_paperback ?? ""}
+              onChange={(e) => setSettings((p) => ({ ...p, buy_link_notionpress_paperback: e.target.value || null }))}
+              placeholder="https://direct.notionpress.com/..."
+            />
+          </Field>
+          <Field label="Notion Press — Hardcover Link">
+            <TextInput
+              value={settings.buy_link_notionpress_hardcover ?? ""}
+              onChange={(e) => setSettings((p) => ({ ...p, buy_link_notionpress_hardcover: e.target.value || null }))}
+              placeholder="https://direct.notionpress.com/..."
+            />
+          </Field>
+          <Field label="Amazon — Paperback Link">
+            <TextInput
+              value={settings.buy_link_amazon_paperback ?? ""}
+              onChange={(e) => setSettings((p) => ({ ...p, buy_link_amazon_paperback: e.target.value || null }))}
+              placeholder="https://www.amazon.in/dp/..."
+            />
+          </Field>
+          <Field label="Amazon — Hardcover Link">
+            <TextInput
+              value={settings.buy_link_amazon_hardcover ?? ""}
+              onChange={(e) => setSettings((p) => ({ ...p, buy_link_amazon_hardcover: e.target.value || null }))}
+              placeholder="https://www.amazon.in/dp/..."
             />
           </Field>
 
@@ -1351,8 +1411,8 @@ export default function SiteEditor() {
 
           <h3 className="font-serif text-base text-foreground font-bold pt-4 border-t border-border-custom/50">Store / Edition Cards</h3>
           <p className="text-[11px] text-muted-text -mt-2">
-            Early access buy links have been removed site-wide — every card now shows the email
-            waitlist button instead of a live &quot;Buy Now&quot; link.
+            The book is live — each card&apos;s Link field opens directly in a new tab as the card&apos;s
+            &quot;Buy Now&quot; button.
           </p>
           <div className="space-y-4">
             {preorder.stores.map((store, idx) => (
@@ -1405,7 +1465,43 @@ export default function SiteEditor() {
                       })}
                     />
                   </Field>
+                  <Field label="Price">
+                    <TextInput
+                      value={store.price}
+                      onChange={(e) => setPreorder((p) => {
+                        const next = [...p.stores];
+                        next[idx] = { ...next[idx], price: e.target.value };
+                        return { ...p, stores: next };
+                      })}
+                      placeholder="₹499"
+                    />
+                  </Field>
+                  <Field label="Logo">
+                    <select
+                      value={store.logo}
+                      onChange={(e) => setPreorder((p) => {
+                        const next = [...p.stores];
+                        next[idx] = { ...next[idx], logo: e.target.value as "amazon" | "notionpress" };
+                        return { ...p, stores: next };
+                      })}
+                      className={inputClass}
+                    >
+                      <option value="amazon">Amazon</option>
+                      <option value="notionpress">Notion Press</option>
+                    </select>
+                  </Field>
                 </div>
+                <Field label="Buy Link (opens in a new tab)">
+                  <TextInput
+                    value={store.link}
+                    onChange={(e) => setPreorder((p) => {
+                      const next = [...p.stores];
+                      next[idx] = { ...next[idx], link: e.target.value };
+                      return { ...p, stores: next };
+                    })}
+                    placeholder="https://..."
+                  />
+                </Field>
                 <label className="flex items-center gap-2 text-xs cursor-pointer">
                   <input
                     type="checkbox"
@@ -1417,7 +1513,7 @@ export default function SiteEditor() {
                     })}
                     className="w-4 h-4 cursor-pointer"
                   />
-                  Mark as "Recommended" (highlighted card)
+                  Mark as &quot;Author&apos;s Pick&quot; (highlighted card)
                 </label>
                 <StringListEditor
                   label="Features"
@@ -1431,7 +1527,7 @@ export default function SiteEditor() {
               </div>
             ))}
             <button
-              onClick={() => setPreorder((p) => ({ ...p, stores: [...p.stores, { name: "", format: "", region: "", status: "Available Now", isPopular: false, features: [] }] }))}
+              onClick={() => setPreorder((p) => ({ ...p, stores: [...p.stores, { name: "", format: "", region: "", status: "Available Now", price: "", link: "", isPopular: false, logo: "amazon", features: [] }] }))}
               className="px-3 py-2 rounded-lg border border-dashed border-border-custom text-xs flex items-center gap-2 cursor-pointer hover:bg-black/5 dark:hover:bg-white/5"
             >
               <Plus className="w-3.5 h-3.5" /> Add Store / Edition Card

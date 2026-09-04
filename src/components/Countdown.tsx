@@ -14,11 +14,11 @@ type TimeLeft = {
   seconds: number;
 };
 
-const LAUNCH_DATE_ICS = "20260904";
-const LAUNCH_DATE_ICS_END = "20260905"; // exclusive, per iCal all-day convention
-const LAUNCH_TITLE = "The Unshaken Self — Book Launch";
+const LAUNCH_DATE_ICS = "20260905";
+const LAUNCH_DATE_ICS_END = "20260906"; // exclusive, per iCal all-day convention
+const LAUNCH_TITLE = "The Unshaken Self — Live Launch Celebration";
 const LAUNCH_DETAILS =
-  "Launching on the auspicious eve of Krishna Janmashtami 2026.";
+  "The official live launch celebration for The Unshaken Self — the book is available now on Amazon and Notion Press.";
 const EVENTS_URL = "https://the-unshaken-self-site-hcp1.vercel.app/events";
 
 // Below this, a real signup count reads as sparse rather than as social
@@ -55,7 +55,7 @@ function buildIcsContent() {
 }
 
 export default function Countdown() {
-  const targetDate = new Date("2026-09-04T00:00:00").getTime();
+  const targetDate = new Date("2026-09-05T08:30:00").getTime();
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [isMounted, setIsMounted] = useState(false);
   const [hovered, setHovered] = useState(false);
@@ -269,7 +269,7 @@ export default function Countdown() {
 
         {/* Subtitle / Focus message */}
         <p className="mt-8 text-center text-xs md:text-sm text-stone-400 font-light max-w-md tracking-wider">
-          Launching on the auspicious eve of <span className="text-[#dfb15b] font-medium">Krishna Janmashtami 2026</span>
+          The book is available now — join us live for the <span className="text-[#dfb15b] font-medium">official launch celebration</span>
         </p>
 
         {/* Social proof — only once the number is meaningful */}
