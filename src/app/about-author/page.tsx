@@ -75,7 +75,7 @@ export default function AboutAuthor() {
       <header className="py-20 px-4 text-center border-b border-border-custom bg-white dark:bg-[#050806] relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(223,177,91,0.03)_0%,transparent_70%)] pointer-events-none" />
         <div className="max-w-4xl mx-auto space-y-4 relative z-10">
-          <span className="text-[10px] tracking-[0.3em] text-[#b5924b] dark:text-[#dfb15b] uppercase font-bold">
+          <span className="text-[12px] tracking-[0.3em] text-[#b5924b] dark:text-[#dfb15b] uppercase font-bold">
             The Author's Path
           </span>
           <h1 className="text-4xl sm:text-5xl font-serif text-foreground leading-tight">
@@ -148,7 +148,7 @@ export default function AboutAuthor() {
                   priority
                 />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300 flex items-center justify-center">
-                  <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-1.5 text-[10px] uppercase tracking-widest font-bold text-white bg-black/50 px-3 py-1.5 rounded-full">
+                  <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-1.5 text-[12px] uppercase tracking-widest font-bold text-white bg-black/50 px-3 py-1.5 rounded-full">
                     <Maximize2 className="w-3 h-3" />
                     View Full Size
                   </span>
@@ -225,7 +225,7 @@ export default function AboutAuthor() {
                 
                 <div className="space-y-2">
                   {/* Year tag for mobile */}
-                  <span className="inline-block md:hidden font-mono text-[10px] tracking-widest text-[#dfb15b] font-bold mb-1">
+                  <span className="inline-block md:hidden font-mono text-[12px] tracking-widest text-[#dfb15b] font-bold mb-1">
                     {event.year}
                   </span>
                   <h4 className="font-serif text-base text-foreground font-semibold">
@@ -300,7 +300,7 @@ export default function AboutAuthor() {
                     <FileText className="w-4 h-4 text-[#dfb15b]" />
                     <span>{asset.name}</span>
                   </h4>
-                  <p className="text-[10px] text-muted-text font-mono uppercase">
+                  <p className="text-[12px] text-muted-text font-mono uppercase">
                     {asset.type} • {asset.size}
                   </p>
                 </div>

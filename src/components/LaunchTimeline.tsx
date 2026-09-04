@@ -67,7 +67,7 @@ export default function LaunchTimeline() {
                   <h4 className="text-sm font-serif font-semibold text-foreground">
                     {step.label}
                   </h4>
-                  <p className="text-[11px] font-light text-stone-500 dark:text-stone-400 leading-relaxed max-w-[220px]">
+                  <p className="text-[13px] font-light text-stone-500 dark:text-stone-400 leading-relaxed max-w-[220px]">
                     {step.desc}
                   </p>
                 </div>

@@ -50,14 +50,23 @@ html {
   --font-sans: var(--font-sans);
   --font-serif: var(--font-serif);
 
-  /* Site-wide body text bumped +2px from Tailwind's defaults. Only the
-     copy-reading sizes (xs/sm/base) are raised — headings mostly use
-     text-lg and up, which are left untouched. Line-heights are
+  /* Site-wide type scale, bumped +2px on top of Tailwind's defaults.
+     Every size token actually used on the site is covered, not just
+     copy-reading sizes, per a follow-up request to raise font size
+     throughout the whole site (not just body text). Line-heights are
      unitless ratios in Tailwind's scale, so they recompute in px
      automatically off the new font-size; no separate override needed. */
-  --text-xs: 0.875rem;   /* was 0.75rem (12px) -> 14px */
-  --text-sm: 1rem;       /* was 0.875rem (14px) -> 16px */
-  --text-base: 1.125rem; /* was 1rem (16px) -> 18px */
+  --text-xs: 1rem;       /* was 0.75rem (12px) -> now 16px */
+  --text-sm: 1.125rem;   /* was 0.875rem (14px) -> now 18px */
+  --text-base: 1.25rem;  /* was 1rem (16px) -> now 20px */
+  --text-lg: 1.25rem;    /* was 1.125rem (18px) -> now 20px */
+  --text-xl: 1.375rem;   /* was 1.25rem (20px) -> now 22px */
+  --text-2xl: 1.625rem;  /* was 1.5rem (24px) -> now 26px */
+  --text-3xl: 2rem;      /* was 1.875rem (30px) -> now 32px */
+  --text-4xl: 2.375rem;  /* was 2.25rem (36px) -> now 38px */
+  --text-5xl: 3.125rem;  /* was 3rem (48px) -> now 50px */
+  --text-6xl: 3.875rem;  /* was 3.75rem (60px) -> now 62px */
+  --text-7xl: 4.625rem;  /* was 4.5rem (72px) -> now 74px */
 }
 
 body {
@@ -187,6 +196,34 @@ h1, h2, h3, h4, h5, h6, .font-serif {
 }
 .visitor-badge-pulse {
   animation: visitorPulseRing 2.6s ease-out infinite;
+}
+
+/* Attention-grabbing flash for the "Now Live" badge — cycles between
+   the two brand accent treatments (deep green <-> gold) with a
+   matching glow, mirroring the .date-flash pattern used elsewhere.
+   Text/icon color flips with the background each half-cycle so
+   contrast stays readable throughout — nothing ever dims. */
+@keyframes nowLiveFlash {
+  0%, 100% {
+    background-color: #1e3f20;
+    color: #ffffff;
+    box-shadow: 0 0 0 0 rgba(30, 63, 32, 0.5);
+  }
+  50% {
+    background-color: #dfb15b;
+    color: #1a1200;
+    box-shadow: 0 0 16px 4px rgba(223, 177, 91, 0.55);
+  }
+}
+.now-live-flash {
+  animation: nowLiveFlash 1.1s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .now-live-flash {
+    animation: none;
+    background-color: #1e3f20;
+    color: #ffffff;
+  }
 }
 
 /* One-time confetti burst for the "Now Live" launch banner — plays once

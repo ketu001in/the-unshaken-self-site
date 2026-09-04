@@ -65,7 +65,7 @@ export default function ReferralPanel({ referralCode }: { referralCode: string |
           readOnly
           value={shareLink}
           onFocus={(e) => e.currentTarget.select()}
-          className="flex-1 text-[11px] bg-stone-50 dark:bg-[#070b09] border border-border-custom rounded-lg px-4 py-2.5 text-foreground font-mono"
+          className="flex-1 text-[13px] bg-stone-50 dark:bg-[#070b09] border border-border-custom rounded-lg px-4 py-2.5 text-foreground font-mono"
         />
         <div className="flex gap-2">
           <button
@@ -91,7 +91,7 @@ export default function ReferralPanel({ referralCode }: { referralCode: string |
       </div>
 
       <div className="space-y-2">
-        <div className="flex items-center justify-between text-[10px] uppercase tracking-widest text-muted-text font-mono">
+        <div className="flex items-center justify-between text-[12px] uppercase tracking-widest text-muted-text font-mono">
           <span>Referrals</span>
           <span>
             {progress}/{REFERRAL_GOAL}
@@ -107,7 +107,7 @@ export default function ReferralPanel({ referralCode }: { referralCode: string |
 
       {unlocked ? (
         <div className="p-5 border border-[#dfb15b]/30 bg-[#dfb15b]/5 rounded-2xl space-y-3">
-          <div className="flex items-center gap-2 text-[#dfb15b] text-[10px] uppercase tracking-widest font-bold">
+          <div className="flex items-center gap-2 text-[#dfb15b] text-[12px] uppercase tracking-widest font-bold">
             <Unlock className="w-3.5 h-3.5" />
             <span>Chapter 2 — Unlocked</span>
           </div>

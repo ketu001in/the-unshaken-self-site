@@ -152,7 +152,7 @@ export default function EventsPage() {
       <header className="py-20 px-4 text-center border-b border-border-custom bg-white dark:bg-[#050806] relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(223,177,91,0.03)_0%,transparent_70%)] pointer-events-none" />
         <div className="max-w-4xl mx-auto space-y-4 relative z-10">
-          <span className="text-[10px] tracking-[0.3em] text-[#b5924b] dark:text-[#dfb15b] uppercase font-bold">
+          <span className="text-[12px] tracking-[0.3em] text-[#b5924b] dark:text-[#dfb15b] uppercase font-bold">
             {content.header_badge}
           </span>
           <h1 className="text-4xl sm:text-5xl font-serif text-foreground leading-tight">
@@ -192,7 +192,7 @@ export default function EventsPage() {
                 className="bg-white dark:bg-[#101614] border border-border-custom p-6 sm:p-8 rounded-3xl space-y-6 hover:shadow-md transition-shadow relative overflow-hidden group"
               >
                 {/* Event Type Ribbon Accent */}
-                <div className={`absolute top-0 right-0 px-4 py-1 text-[9px] uppercase tracking-widest font-mono font-bold rounded-bl-xl ${
+                <div className={`absolute top-0 right-0 px-4 py-1 text-[11px] uppercase tracking-widest font-mono font-bold rounded-bl-xl ${
                   event.type === "virtual"
                     ? "bg-green-500/10 text-green-600 dark:text-green-400 border-l border-b border-green-500/20"
                     : "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-l border-b border-blue-500/20"
@@ -204,13 +204,13 @@ export default function EventsPage() {
                   <h3 className="font-serif text-lg text-foreground font-semibold leading-snug">
                     {event.title}
                   </h3>
-                  <p className="text-xs sm:text-[13px] font-light text-stone-500 dark:text-stone-400 leading-relaxed">
+                  <p className="text-xs sm:text-[15px] font-light text-stone-500 dark:text-stone-400 leading-relaxed">
                     {event.desc}
                   </p>
                 </div>
 
                 {/* Metadata Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-border-custom/50 text-[11px] text-muted-text font-mono">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-border-custom/50 text-[13px] text-muted-text font-mono">
                   <div className="flex items-center space-x-2">
                     <Calendar className="w-4 h-4 text-[#dfb15b]" />
                     <span>{event.date}</span>
@@ -222,7 +222,7 @@ export default function EventsPage() {
                 </div>
 
                 <div className="pt-4 flex justify-between items-center">
-                  <div className="flex items-center space-x-2 text-[10px] text-stone-400 font-mono">
+                  <div className="flex items-center space-x-2 text-[12px] text-stone-400 font-mono">
                     <Users className="w-4 h-4" />
                     <span>{event.capacity}</span>
                   </div>
@@ -251,7 +251,7 @@ export default function EventsPage() {
                 <Calendar className="w-5 h-5 text-[#dfb15b]" />
                 <span>{content.sidebar_heading}</span>
               </h3>
-              <p className="text-[11px] font-light text-stone-500 leading-relaxed">
+              <p className="text-[13px] font-light text-stone-500 leading-relaxed">
                 {content.sidebar_desc}
               </p>
             </div>
@@ -260,7 +260,7 @@ export default function EventsPage() {
               
               {/* Select Event */}
               <div className="space-y-1.5">
-                <label className="text-[10px] font-mono uppercase tracking-wider text-stone-400 block font-semibold">Select Event</label>
+                <label className="text-[12px] font-mono uppercase tracking-wider text-stone-400 block font-semibold">Select Event</label>
                 <select
                   value={selectedEvent}
                   onChange={(e) => setSelectedEvent(e.target.value)}
@@ -276,7 +276,7 @@ export default function EventsPage() {
 
               {/* Name */}
               <div className="space-y-1.5">
-                <label className="text-[10px] font-mono uppercase tracking-wider text-stone-400 block font-semibold">Your Name *</label>
+                <label className="text-[12px] font-mono uppercase tracking-wider text-stone-400 block font-semibold">Your Name *</label>
                 <input
                   type="text"
                   value={name}
@@ -289,7 +289,7 @@ export default function EventsPage() {
 
               {/* Email */}
               <div className="space-y-1.5">
-                <label className="text-[10px] font-mono uppercase tracking-wider text-stone-400 block font-semibold">Email Address *</label>
+                <label className="text-[12px] font-mono uppercase tracking-wider text-stone-400 block font-semibold">Email Address *</label>
                 <input
                   type="email"
                   value={email}
@@ -317,13 +317,13 @@ export default function EventsPage() {
               </button>
 
               {registered && (
-                <div className="p-3 border border-green-500/20 bg-green-500/5 rounded-lg flex items-center gap-2 text-[10px] text-green-600 dark:text-green-400 font-mono">
+                <div className="p-3 border border-green-500/20 bg-green-500/5 rounded-lg flex items-center gap-2 text-[12px] text-green-600 dark:text-green-400 font-mono">
                   <Check className="w-4 h-4 flex-shrink-0" />
                   <span>RSVP saved! View registrations in /admin.</span>
                 </div>
               )}
               {submitError && (
-                <div className="p-3 border border-red-500/20 bg-red-500/5 rounded-lg text-[10px] text-red-500 font-mono">
+                <div className="p-3 border border-red-500/20 bg-red-500/5 rounded-lg text-[12px] text-red-500 font-mono">
                   {submitError}
                 </div>
               )}

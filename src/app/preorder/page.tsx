@@ -150,7 +150,7 @@ export default function PreorderPage() {
       <header className="py-20 px-4 text-center border-b border-border-custom bg-white dark:bg-[#050806] relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(223,177,91,0.03)_0%,transparent_70%)] pointer-events-none" />
         <div className="max-w-4xl mx-auto space-y-4 relative z-10">
-          <span className="text-[10px] tracking-[0.3em] text-[#b5924b] dark:text-[#dfb15b] uppercase font-bold">
+          <span className="text-[12px] tracking-[0.3em] text-[#b5924b] dark:text-[#dfb15b] uppercase font-bold">
             Secure Your Edition
           </span>
           <h1 className="text-4xl sm:text-5xl font-serif text-foreground leading-tight">
@@ -192,7 +192,7 @@ export default function PreorderPage() {
               >
                 {/* Popularity Badge */}
                 {store.isPopular && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#dfb15b] text-black font-mono text-[9px] uppercase tracking-widest font-bold px-4 py-1 rounded-full whitespace-nowrap">
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#dfb15b] text-black font-mono text-[11px] uppercase tracking-widest font-bold px-4 py-1 rounded-full whitespace-nowrap">
                     Author&apos;s Pick
                   </span>
                 )}
@@ -205,7 +205,7 @@ export default function PreorderPage() {
                       <h4 className="font-serif text-sm text-foreground font-semibold leading-tight">
                         {store.name}
                       </h4>
-                      <p className="text-[9px] font-mono text-muted-text uppercase tracking-wider">
+                      <p className="text-[11px] font-mono text-muted-text uppercase tracking-wider">
                         {store.format}
                       </p>
                     </div>
@@ -216,13 +216,13 @@ export default function PreorderPage() {
                     <span className="text-xl font-serif font-bold text-[#b5924b] dark:text-[#dfb15b]">
                       {store.price}
                     </span>
-                    <span className="text-[8px] font-mono text-green-600 dark:text-green-400 uppercase">
+                    <span className="text-[10px] font-mono text-green-600 dark:text-green-400 uppercase">
                       {store.status}
                     </span>
                   </div>
 
                   {/* Preorder Features */}
-                  <ul className="space-y-3 text-[11px] text-stone-500 dark:text-stone-400 font-light leading-relaxed">
+                  <ul className="space-y-3 text-[13px] text-stone-500 dark:text-stone-400 font-light leading-relaxed">
                     {store.features.map((feature, fIdx) => (
                       <li key={fIdx} className="flex space-x-2">
                         <Check className="w-3.5 h-3.5 text-green-500 flex-shrink-0" />
@@ -237,7 +237,7 @@ export default function PreorderPage() {
                     href={store.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`w-full py-3 rounded-full flex items-center justify-center space-x-2 text-[11px] uppercase tracking-widest font-bold shadow-md cursor-pointer transition-all hover:scale-103 ${
+                    className={`w-full py-3 rounded-full flex items-center justify-center space-x-2 text-[13px] uppercase tracking-widest font-bold shadow-md cursor-pointer transition-all hover:scale-103 ${
                       store.isPopular
                         ? "bg-[#1e3f20] dark:bg-[#dfb15b] text-white dark:text-black"
                         : "border border-border-custom hover:bg-black/5 dark:hover:bg-white/5 text-foreground"
@@ -267,7 +267,7 @@ export default function PreorderPage() {
           </p>
 
           {waitlisted ? (
-            <div className="p-4 border border-green-500/20 bg-green-500/5 rounded-lg flex items-center gap-2 text-[11px] text-green-600 dark:text-green-400 font-mono">
+            <div className="p-4 border border-green-500/20 bg-green-500/5 rounded-lg flex items-center gap-2 text-[13px] text-green-600 dark:text-green-400 font-mono">
               <Check className="w-4 h-4 flex-shrink-0" />
               <span>{waitlistMsg}</span>
             </div>
@@ -299,7 +299,7 @@ export default function PreorderPage() {
             </form>
           )}
           {waitlistMsg && !waitlisted && (
-            <div className="p-3 border border-red-500/20 bg-red-500/5 rounded-lg text-[10px] text-red-500 font-mono">
+            <div className="p-3 border border-red-500/20 bg-red-500/5 rounded-lg text-[12px] text-red-500 font-mono">
               {waitlistMsg}
             </div>
           )}

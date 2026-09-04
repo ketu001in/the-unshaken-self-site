@@ -57,7 +57,7 @@ export default function AdminLoginPage() {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-1.5">
-            <label className="text-[10px] font-mono uppercase tracking-wider text-stone-400 block font-semibold">
+            <label className="text-[12px] font-mono uppercase tracking-wider text-stone-400 block font-semibold">
               Email
             </label>
             <input
@@ -69,7 +69,7 @@ export default function AdminLoginPage() {
             />
           </div>
           <div className="space-y-1.5">
-            <label className="text-[10px] font-mono uppercase tracking-wider text-stone-400 block font-semibold">
+            <label className="text-[12px] font-mono uppercase tracking-wider text-stone-400 block font-semibold">
               Password
             </label>
             <input
@@ -82,7 +82,7 @@ export default function AdminLoginPage() {
           </div>
 
           {error && (
-            <div className="p-3 border border-red-500/20 bg-red-500/5 rounded-lg text-[10px] text-red-500 font-mono">
+            <div className="p-3 border border-red-500/20 bg-red-500/5 rounded-lg text-[12px] text-red-500 font-mono">
               {error}
             </div>
           )}
@@ -98,7 +98,7 @@ export default function AdminLoginPage() {
 
         <Link
           href="/"
-          className="flex items-center justify-center gap-2 text-[10px] uppercase tracking-widest text-muted-text hover:text-foreground transition-colors"
+          className="flex items-center justify-center gap-2 text-[12px] uppercase tracking-widest text-muted-text hover:text-foreground transition-colors"
         >
           <BookOpen className="w-3.5 h-3.5" />
           <span>Back to Site</span>

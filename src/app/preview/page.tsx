@@ -113,7 +113,7 @@ export default function Preview() {
       <header className="py-20 px-4 text-center border-b border-border-custom bg-white dark:bg-[#050806] relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(223,177,91,0.03)_0%,transparent_70%)] pointer-events-none" />
         <div className="max-w-4xl mx-auto space-y-4 relative z-10">
-          <span className="text-[10px] tracking-[0.3em] text-[#b5924b] dark:text-[#dfb15b] uppercase font-bold">
+          <span className="text-[12px] tracking-[0.3em] text-[#b5924b] dark:text-[#dfb15b] uppercase font-bold">
             {content.header_badge}
           </span>
           <h1 className="text-4xl sm:text-5xl font-serif text-foreground leading-tight">
@@ -133,7 +133,7 @@ export default function Preview() {
           <div className="text-center space-y-3">
             <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-[#dfb15b]/10 border border-[#dfb15b]/20">
               <BookOpen className="w-3.5 h-3.5 text-[#dfb15b]" />
-              <span className="text-[9px] tracking-widest uppercase font-bold text-[#b5924b] dark:text-[#dfb15b]">{content.section_badge}</span>
+              <span className="text-[11px] tracking-widest uppercase font-bold text-[#b5924b] dark:text-[#dfb15b]">{content.section_badge}</span>
             </div>
             <h2 className="font-serif text-2xl md:text-3xl text-foreground">
               {content.section_title}
@@ -153,7 +153,7 @@ export default function Preview() {
               {/* Left Page */}
               <div className="space-y-6 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-border-custom pb-8 lg:pb-0 lg:pr-12">
                 <div className="space-y-4">
-                  <span className="block font-mono text-[9px] text-[#b5924b] dark:text-[#dfb15b] uppercase tracking-widest font-semibold">
+                  <span className="block font-mono text-[11px] text-[#b5924b] dark:text-[#dfb15b] uppercase tracking-widest font-semibold">
                     {bookPages[page].left.header}
                   </span>
 
@@ -168,7 +168,7 @@ export default function Preview() {
                     </p>
                   )}
 
-                  <div className="space-y-4 text-xs sm:text-[13px] font-light text-stone-600 dark:text-stone-300 leading-relaxed text-justify">
+                  <div className="space-y-4 text-xs sm:text-[15px] font-light text-stone-600 dark:text-stone-300 leading-relaxed text-justify">
                     {bookPages[page].left.content.map((pText, i) => (
                       <p key={i}>{pText}</p>
                     ))}
@@ -179,11 +179,11 @@ export default function Preview() {
               {/* Right Page */}
               <div className="space-y-6 flex flex-col justify-between lg:pl-6">
                 <div className="space-y-4">
-                  <span className="block font-mono text-[9px] text-[#b5924b] dark:text-[#dfb15b] uppercase tracking-widest font-semibold">
+                  <span className="block font-mono text-[11px] text-[#b5924b] dark:text-[#dfb15b] uppercase tracking-widest font-semibold">
                     {bookPages[page].right.header}
                   </span>
 
-                  <div className="space-y-4 text-xs sm:text-[13px] font-light text-stone-600 dark:text-stone-300 leading-relaxed text-justify">
+                  <div className="space-y-4 text-xs sm:text-[15px] font-light text-stone-600 dark:text-stone-300 leading-relaxed text-justify">
                     {bookPages[page].right.content.map((pText, i) => {
                       if (pText.startsWith("•")) {
                         return (
@@ -192,13 +192,13 @@ export default function Preview() {
                           </div>
                         );
                       }
-                      return <p key={i} className={pText.startsWith("**The Exercise") || pText.includes("**The Three-Breath Pause**") ? "font-serif text-[#dfb15b] text-[14px]" : ""}>{pText}</p>;
+                      return <p key={i} className={pText.startsWith("**The Exercise") || pText.includes("**The Three-Breath Pause**") ? "font-serif text-[#dfb15b] text-[16px]" : ""}>{pText}</p>;
                     })}
                   </div>
                 </div>
 
                 {/* Page Number footer */}
-                <div className="text-right text-[10px] font-mono text-muted-text tracking-widest uppercase">
+                <div className="text-right text-[12px] font-mono text-muted-text tracking-widest uppercase">
                   {bookPages[page].right.footer}
                 </div>
               </div>

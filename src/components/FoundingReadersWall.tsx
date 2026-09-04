@@ -57,7 +57,7 @@ export default function FoundingReadersWall() {
             {marqueeNames.map((n, i) => (
               <span
                 key={i}
-                className="flex-shrink-0 px-3 py-1.5 rounded-full border border-border-custom bg-white dark:bg-[#101614] text-[10px] uppercase tracking-widest font-semibold text-muted-text"
+                className="flex-shrink-0 px-3 py-1.5 rounded-full border border-border-custom bg-white dark:bg-[#101614] text-[12px] uppercase tracking-widest font-semibold text-muted-text"
               >
                 {n}
               </span>

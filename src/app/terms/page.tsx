@@ -12,7 +12,7 @@ export default function TermsPage() {
 
       <main className="max-w-4xl mx-auto w-full px-4 py-16 flex-1 space-y-8">
         <header className="space-y-2">
-          <span className="text-[10px] tracking-[0.25em] font-mono text-[#dfb15b] uppercase font-semibold">Legal Notice</span>
+          <span className="text-[12px] tracking-[0.25em] font-mono text-[#dfb15b] uppercase font-semibold">Legal Notice</span>
           <h1 className="text-3xl sm:text-4xl font-serif text-foreground">Terms of Service</h1>
           <p className="text-xs text-muted-text">Last Updated: July 16, 2026</p>
         </header>

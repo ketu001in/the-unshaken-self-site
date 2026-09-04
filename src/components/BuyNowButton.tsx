@@ -86,10 +86,10 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
 
         <div className="space-y-2 pr-8">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-[10px] tracking-[0.3em] text-[#b5924b] dark:text-[#dfb15b] uppercase font-bold">
+            <span className="text-[12px] tracking-[0.3em] text-[#b5924b] dark:text-[#dfb15b] uppercase font-bold">
               The Unshaken Self
             </span>
-            <span className="text-[9px] uppercase tracking-widest font-bold text-white bg-[#1e3f20] dark:bg-[#dfb15b] dark:text-black px-2 py-0.5 rounded-full">
+            <span className="text-[11px] uppercase tracking-widest font-bold text-white bg-[#1e3f20] dark:bg-[#dfb15b] dark:text-black px-2 py-0.5 rounded-full">
               Available Now
             </span>
           </div>
@@ -102,7 +102,7 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
             <NotionPressLogo className="w-9 h-9 flex-shrink-0" />
             <div>
               <p className="text-sm font-serif text-foreground font-semibold">Notion Press</p>
-              <span className="inline-flex items-center gap-1 text-[9px] uppercase tracking-widest font-bold text-[#b5924b] dark:text-[#dfb15b]">
+              <span className="inline-flex items-center gap-1 text-[11px] uppercase tracking-widest font-bold text-[#b5924b] dark:text-[#dfb15b]">
                 <Sparkles className="w-3 h-3" />
                 Author&apos;s Recommended Store
               </span>
@@ -118,7 +118,7 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
                   rel="noopener noreferrer"
                   className="flex flex-col items-center justify-center gap-0.5 py-3 rounded-xl bg-[#1e3f20] hover:bg-[#142a15] dark:bg-[#dfb15b] dark:hover:bg-[#c49945] text-white dark:text-black transition-transform hover:scale-105"
                 >
-                  <span className="text-[10px] uppercase tracking-widest font-bold">{ed.label}</span>
+                  <span className="text-[12px] uppercase tracking-widest font-bold">{ed.label}</span>
                   <span className="text-sm font-serif font-bold">{ed.price}</span>
                 </a>
               ) : null
@@ -142,7 +142,7 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
                   rel="noopener noreferrer"
                   className="flex flex-col items-center justify-center gap-0.5 py-3 rounded-xl border border-border-custom hover:bg-black/5 dark:hover:bg-white/5 text-foreground transition-transform hover:scale-105"
                 >
-                  <span className="text-[10px] uppercase tracking-widest font-bold">{ed.label}</span>
+                  <span className="text-[12px] uppercase tracking-widest font-bold">{ed.label}</span>
                   <span className="text-sm font-serif font-bold">{ed.price}</span>
                 </a>
               ) : null
@@ -150,7 +150,7 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
           </div>
         </div>
 
-        <p className="text-[10px] text-center text-muted-text">
+        <p className="text-[12px] text-center text-muted-text">
           Prices inclusive of all taxes. Delivered by each store directly.
         </p>
       </div>
@@ -162,7 +162,7 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
       {!hideTrigger && (
         <button
           onClick={handleTrigger}
-          className={`relative inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-gradient-to-r from-[#1e3f20] to-[#142a15] dark:from-[#dfb15b] dark:to-[#c49945] text-white dark:text-black text-[12px] whitespace-nowrap uppercase tracking-widest font-bold shadow-lg shadow-[#1e3f20]/20 dark:shadow-[#dfb15b]/25 hover:shadow-xl transition-all hover:scale-105 active:scale-95 cursor-pointer ${
+          className={`relative inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-gradient-to-r from-[#1e3f20] to-[#142a15] dark:from-[#dfb15b] dark:to-[#c49945] text-white dark:text-black text-[14px] whitespace-nowrap uppercase tracking-widest font-bold shadow-lg shadow-[#1e3f20]/20 dark:shadow-[#dfb15b]/25 hover:shadow-xl transition-all hover:scale-105 active:scale-95 cursor-pointer ${
             fullWidth ? "w-full justify-center" : ""
           }`}
         >

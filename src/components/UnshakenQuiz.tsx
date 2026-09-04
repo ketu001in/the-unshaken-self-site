@@ -166,7 +166,7 @@ export default function UnshakenQuiz() {
           </div>
 
           <div className="space-y-1">
-            <span className="text-[10px] font-mono uppercase tracking-widest text-muted-text">
+            <span className="text-[12px] font-mono uppercase tracking-widest text-muted-text">
               Question {step + 1} of {QUESTIONS.length}
             </span>
             <h3 className="font-serif text-lg sm:text-xl text-foreground leading-snug">
@@ -244,7 +244,7 @@ function ShareResultButton({ result }: { result: Archetype }) {
       type="button"
       onClick={handleShare}
       disabled={sharing}
-      className="flex items-center gap-1.5 text-[11px] uppercase tracking-widest font-semibold text-muted-text hover:text-[#dfb15b] transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-wait"
+      className="flex items-center gap-1.5 text-[13px] uppercase tracking-widest font-semibold text-muted-text hover:text-[#dfb15b] transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-wait"
     >
       <Share2 className="w-3.5 h-3.5" />
       {sharing ? "Preparing…" : "Share Result"}
@@ -271,7 +271,7 @@ function ResultView({
 }) {
   return (
     <div className="space-y-6 text-center">
-      <span className="text-[10px] tracking-[0.3em] text-[#b5924b] dark:text-[#dfb15b] uppercase font-bold">
+      <span className="text-[12px] tracking-[0.3em] text-[#b5924b] dark:text-[#dfb15b] uppercase font-bold">
         Your Unshaken Archetype
       </span>
       <h3 className="font-serif text-2xl sm:text-3xl text-foreground">{result.name}</h3>
@@ -311,7 +311,7 @@ function ResultView({
       <div className="flex items-center justify-center gap-4 pt-4 flex-wrap">
         <button
           onClick={onRetake}
-          className="flex items-center gap-1.5 text-[11px] uppercase tracking-widest font-semibold text-muted-text hover:text-foreground transition-colors cursor-pointer"
+          className="flex items-center gap-1.5 text-[13px] uppercase tracking-widest font-semibold text-muted-text hover:text-foreground transition-colors cursor-pointer"
         >
           <RotateCw className="w-3.5 h-3.5" />
           Retake
@@ -319,7 +319,7 @@ function ResultView({
         <ShareResultButton result={result} />
         <Link
           href="/preorder"
-          className="text-[11px] uppercase tracking-widest font-semibold text-[#b5924b] dark:text-[#dfb15b] hover:text-[#9c7b3b] dark:hover:text-[#c49945] transition-colors"
+          className="text-[13px] uppercase tracking-widest font-semibold text-[#b5924b] dark:text-[#dfb15b] hover:text-[#9c7b3b] dark:hover:text-[#c49945] transition-colors"
         >
           Pre-order the Book →
         </Link>

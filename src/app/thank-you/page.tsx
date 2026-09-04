@@ -22,7 +22,7 @@ export default function ThankYouPage() {
           </div>
 
           <div className="space-y-3">
-            <span className="text-[10px] tracking-[0.3em] font-mono text-[#dfb15b] uppercase font-bold">Action Completed</span>
+            <span className="text-[12px] tracking-[0.3em] font-mono text-[#dfb15b] uppercase font-bold">Action Completed</span>
             <h1 className="text-3xl font-serif text-foreground leading-tight">Pranam, Thank You!</h1>
             <p className="text-xs sm:text-sm font-light text-stone-500 dark:text-stone-400 leading-relaxed max-w-sm mx-auto">
               Your details have been successfully recorded in our database. We have sent a confirmation packet directly to your inbox.
@@ -35,7 +35,7 @@ export default function ThankYouPage() {
             <p className="text-xs font-serif italic text-foreground tracking-wide">
               "Establish yourself in yoga, perform your duties, and discard all attachment to success or failure."
             </p>
-            <span className="block text-[8px] font-mono text-muted-text uppercase tracking-widest text-right">— Bhagavad Gita 2.48</span>
+            <span className="block text-[10px] font-mono text-muted-text uppercase tracking-widest text-right">— Bhagavad Gita 2.48</span>
           </div>
 
           {/* Navigation options */}

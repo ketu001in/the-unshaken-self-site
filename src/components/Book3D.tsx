@@ -339,7 +339,7 @@ export default function Book3D({ coverImageUrl, wrapUrl, spinePct, backPct, layo
         </div>
 
         {(hovered || isTouchDevice) && (
-          <p className="mt-3 text-[9px] uppercase tracking-widest text-muted-text font-mono animate-[fadeIn_0.3s_ease-out]">
+          <p className="mt-3 text-[11px] uppercase tracking-widest text-muted-text font-mono animate-[fadeIn_0.3s_ease-out]">
             {isTouchDevice ? "Tap & hold to spin" : "Click & hold to spin"}
           </p>
         )}
