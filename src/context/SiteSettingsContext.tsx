@@ -11,7 +11,7 @@ export type ThemeColors = {
 };
 
 export type SectionVisibility = {
-  show_countdown: boolean;
+  show_launch_banner: boolean;
   show_testimonials: boolean;
 };
 
@@ -79,7 +79,7 @@ export const DEFAULT_SITE_SETTINGS: SiteSettings = {
     accent_dark: "#3182ce",
   },
   section_visibility: {
-    show_countdown: true,
+    show_launch_banner: true,
     show_testimonials: true,
   },
   buy_link_amazon_paperback: "https://www.amazon.in/dp/B0HHNKF7FQ",

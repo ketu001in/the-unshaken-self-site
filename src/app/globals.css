@@ -188,3 +188,27 @@ h1, h2, h3, h4, h5, h6, .font-serif {
 .visitor-badge-pulse {
   animation: visitorPulseRing 2.6s ease-out infinite;
 }
+
+/* One-time confetti burst for the "Now Live" launch banner — plays once
+   on mount (JS only ever mounts the pieces once), each piece falls,
+   drifts sideways, spins, and fades via its own randomized inline
+   custom properties (--x, --rot, --delay, --duration) set per-piece. */
+@keyframes confettiFall {
+  0% { transform: translate(0, -12px) rotate(0deg); opacity: 0; }
+  12% { opacity: 1; }
+  100% { transform: translate(var(--x, 0px), 90px) rotate(var(--rot, 200deg)); opacity: 0; }
+}
+.confetti-piece {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 7px;
+  height: 11px;
+  animation: confettiFall var(--duration, 2s) ease-in var(--delay, 0s) 1 both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .confetti-piece {
+    animation: none;
+    display: none;
+  }
+}

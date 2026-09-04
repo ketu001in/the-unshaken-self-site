@@ -4,13 +4,13 @@ import React, { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AIChatbot from "@/components/AIChatbot";
-import Countdown from "@/components/Countdown";
 import FoundingReadersWall from "@/components/FoundingReadersWall";
 import ReferralPanel from "@/components/ReferralPanel";
 import { Check, Bell, ExternalLink } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { fetchPageContent } from "@/lib/content";
 import { AmazonLogo, NotionPressLogo } from "@/components/StoreLogos";
+import ReaderThankYouCard from "@/components/ReaderThankYouCard";
 
 const REFERRAL_CODE_KEY = "unshaken_referral_code";
 
@@ -165,11 +165,6 @@ export default function PreorderPage() {
         </div>
       </header>
 
-      {/* Countdown Panel — click through to Events */}
-      <section className="py-16 px-4 bg-white dark:bg-[#050806] border-b border-border-custom flex justify-center">
-        <Countdown />
-      </section>
-
       {/* Editions Comparison Hub */}
       <section className="py-20 px-4 max-w-7xl mx-auto w-full flex-1 space-y-16">
 
@@ -256,6 +251,8 @@ export default function PreorderPage() {
             );
           })}
         </div>
+
+        <ReaderThankYouCard />
 
         {/* Stay-updated newsletter — no longer a "notify when it opens"
             gate now that ordering is live, just an optional way to hear

@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AIChatbot from "@/components/AIChatbot";
-import Countdown from "@/components/Countdown";
 import AskKetulPanel from "@/components/AskKetulPanel";
 import { Calendar, Clock, Users, Check, ArrowRight } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
@@ -164,11 +163,6 @@ export default function EventsPage() {
           </p>
         </div>
       </header>
-
-      {/* Countdown Panel */}
-      <section className="py-16 px-4 bg-white dark:bg-[#050806] border-b border-border-custom flex justify-center">
-        <Countdown />
-      </section>
 
       {/* Ask Ketul — live session banner + always-open question box */}
       <section className="py-16 px-4 border-b border-border-custom">

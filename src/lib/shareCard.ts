@@ -20,20 +20,15 @@ export type ArchetypeCardData = {
   line: string;
 };
 
-export type CountdownCardData = {
-  daysLeft: number;
-};
-
 const CARD_SIZE = 1080;
 const SITE_URL = "the-unshaken-self-site-hcp1.vercel.app";
 const GOLD = "#dfb15b";
 const CREAM = "#f5f1e8";
 const SANS = "'Segoe UI', Arial, sans-serif";
 const SERIF = "Georgia, 'Times New Roman', serif";
-// Ordering is closed until this date — kept in sync with BuyNowButton's
-// closure message so a share card never says something the site itself
-// doesn't currently say.
-const FOOTER_LINE = "ORDERING OPENS 5 SEPTEMBER 2026";
+// The book is live — kept in sync with the rest of the site so a share
+// card never says something the site itself doesn't currently say.
+const FOOTER_LINE = "AVAILABLE NOW · AMAZON & NOTION PRESS";
 
 function wrapText(ctx: CanvasRenderingContext2D, text: string, maxWidth: number): string[] {
   const words = text.split(" ");
@@ -209,27 +204,31 @@ export async function generateArchetypeShareCard(data: ArchetypeCardData): Promi
   return toPngBlob(canvas);
 }
 
-export async function generateCountdownShareCard(data: CountdownCardData): Promise<Blob | null> {
+export async function generateLaunchShareCard(): Promise<Blob | null> {
   const shell = createCardShell();
   if (!shell) return null;
   const { canvas, ctx } = shell;
 
   ctx.fillStyle = GOLD;
   ctx.font = `700 22px ${SANS}`;
-  fillTextSpaced(ctx, "OFFICIAL LAUNCH EVENT — COUNTDOWN", CARD_SIZE / 2, 340, 2);
+  fillTextSpaced(ctx, "IT'S HERE", CARD_SIZE / 2, 400, 3);
 
-  const dayLabel = data.daysLeft === 1 ? "DAY" : "DAYS";
   ctx.fillStyle = CREAM;
-  ctx.font = `700 260px ${SERIF}`;
-  ctx.fillText(String(Math.max(data.daysLeft, 0)), CARD_SIZE / 2, 620);
+  ctx.font = `700 96px ${SERIF}`;
+  const headlineLines = wrapText(ctx, "Now Live", 880);
+  let y = 520;
+  for (const line of headlineLines) {
+    ctx.fillText(line, CARD_SIZE / 2, y);
+    y += 108;
+  }
 
-  ctx.fillStyle = GOLD;
-  ctx.font = `700 26px ${SANS}`;
-  fillTextSpaced(ctx, `${dayLabel} TO GO`, CARD_SIZE / 2, 680, 4);
+  ctx.fillStyle = "rgba(245,241,232,0.8)";
+  ctx.font = `italic 400 32px ${SERIF}`;
+  ctx.fillText("Paperback & Hardcover, on Amazon and Notion Press", CARD_SIZE / 2, y + 30);
 
-  ctx.fillStyle = "rgba(245,241,232,0.75)";
-  ctx.font = `italic 400 30px ${SERIF}`;
-  ctx.fillText("until the eve of Krishna Janmashtami 2026", CARD_SIZE / 2, 750);
+  ctx.fillStyle = "rgba(223,177,91,0.6)";
+  ctx.font = `400 34px ${SERIF}`;
+  ctx.fillText("✦", CARD_SIZE / 2, y + 90);
 
   drawFooter(ctx);
   return toPngBlob(canvas);

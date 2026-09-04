@@ -1009,8 +1009,8 @@ export default function SiteEditor() {
           <div className="space-y-4 pt-4 border-t border-border-custom/50">
             <h3 className="font-serif text-base text-foreground font-bold">Section Visibility</h3>
             <label className="flex items-center gap-3 text-xs cursor-pointer">
-              <input type="checkbox" checked={settings.section_visibility.show_countdown} onChange={(e) => updateVisibility("show_countdown", e.target.checked)} className="w-4 h-4 cursor-pointer" />
-              Show launch countdown on Homepage
+              <input type="checkbox" checked={settings.section_visibility.show_launch_banner} onChange={(e) => updateVisibility("show_launch_banner", e.target.checked)} className="w-4 h-4 cursor-pointer" />
+              Show &quot;Now Live&quot; launch banner on Homepage
             </label>
             <label className="flex items-center gap-3 text-xs cursor-pointer">
               <input type="checkbox" checked={settings.section_visibility.show_testimonials} onChange={(e) => updateVisibility("show_testimonials", e.target.checked)} className="w-4 h-4 cursor-pointer" />

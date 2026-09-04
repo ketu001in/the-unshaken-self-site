@@ -12,12 +12,13 @@ import Navbar from "@/components/Navbar";
 import BuyNowButton from "@/components/BuyNowButton";
 import Footer from "@/components/Footer";
 import Book3D from "@/components/Book3D";
-import Countdown from "@/components/Countdown";
 import AIChatbot from "@/components/AIChatbot";
 import WisdomDraw from "@/components/WisdomDraw";
 import UnshakenQuiz from "@/components/UnshakenQuiz";
 import FoundingReadersWall from "@/components/FoundingReadersWall";
 import VisitorCounterBadge from "@/components/VisitorCounterBadge";
+import LaunchBanner from "@/components/LaunchBanner";
+import LaunchTimeline from "@/components/LaunchTimeline";
 import { createClient } from "@/lib/supabase/client";
 import { fetchPageContent } from "@/lib/content";
 import { useSiteSettings } from "@/context/SiteSettingsContext";
@@ -154,12 +155,9 @@ export default function Home() {
               </p>
             </div>
 
-            {/* Countdown Component */}
-            {settings.section_visibility.show_countdown && (
-              <div className="py-4 w-full">
-                <Countdown />
-              </div>
-            )}
+            {/* Launch Banner — "Now Live" moment, replaces the old
+                pre-launch countdown now that the book is actually out. */}
+            {settings.section_visibility.show_launch_banner && <LaunchBanner />}
 
             <FoundingReadersWall />
 
@@ -169,7 +167,7 @@ export default function Home() {
                 href="/preorder"
                 className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-[#1e3f20] hover:bg-[#142a15] dark:bg-[#dfb15b] dark:hover:bg-[#c49945] text-white dark:text-black text-xs uppercase tracking-widest font-bold shadow-lg transition-transform hover:scale-105"
               >
-                Pre-Order Book
+                Buy the Book Now
               </Link>
               <Link
                 href="/preview"
@@ -197,6 +195,8 @@ export default function Home() {
 
       </section>
 
+      <LaunchTimeline />
+
       {/* 1.5. WISDOM DRAW — a small interactive "oracle card" moment near the hero */}
       <section id="wisdom-draw" className="py-20 px-4 bg-[#faf8f5] dark:bg-[#050806] border-t border-border-custom scroll-mt-20">
         <div className="max-w-4xl mx-auto text-center space-y-10">
@@ -208,8 +208,8 @@ export default function Home() {
               Draw a Teaching
             </h3>
             <p className="text-xs sm:text-sm font-light text-stone-500 dark:text-stone-400 max-w-md mx-auto">
-              A new teaching is chosen each day through the countdown to Krishna Janmashtami — click to
-              reveal today&apos;s, or draw again at random from the book&apos;s 18 chapters.
+              A new teaching is chosen each day — click to reveal today&apos;s, or draw again at random
+              from the book&apos;s 18 chapters.
             </p>
           </div>
           <WisdomDraw />
@@ -444,7 +444,7 @@ export default function Home() {
                 {/* Simulated text transitions overlay */}
                 <div className="absolute bottom-6 inset-x-6 z-20 text-center pointer-events-none">
                   <span className="bg-black/60 px-4 py-1.5 rounded-full text-[11px] tracking-widest text-[#dfb15b] uppercase font-mono">
-                    The Unshaken Self — Coming Krishna Janmashtami 2026
+                    The Unshaken Self — Available Now
                   </span>
                 </div>
               </div>
