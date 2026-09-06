@@ -4,7 +4,7 @@
 // wheel (no charting library needed for six pie slices). Six segments,
 // each pointing at a different curiosity/engagement loop already built
 // elsewhere on the site (Wisdom Draw, the Archetype Quiz, the referral
-// panel, the Breath Widget, the notify-me waitlist) plus a couple of
+// panel, the Breath Widget, the direct Buy Now flow) plus a couple of
 // standalone rewards (a random wisdom line, a Gita fun fact) so a spin
 // is worth taking even with nothing to "win" in a literal sense.
 
@@ -14,7 +14,7 @@ import { X, Sparkles } from "lucide-react";
 import { WISDOM_LINES } from "@/lib/wisdomLines";
 import { GITA_FACTS } from "@/lib/gitaFacts";
 
-type SegmentKey = "wisdom" | "fact" | "quiz" | "share" | "breath" | "notify";
+type SegmentKey = "wisdom" | "fact" | "quiz" | "share" | "breath" | "buy";
 
 type Segment = { key: SegmentKey; emoji: string; label: string; color: string };
 
@@ -26,7 +26,11 @@ const SEGMENTS: Segment[] = [
   { key: "quiz", emoji: "🧭", label: "Your Archetype", color: "#142a15" },
   { key: "share", emoji: "🔗", label: "Share & Unlock", color: "#c49945" },
   { key: "breath", emoji: "🌬️", label: "3-Breath Reset", color: "#2c5a2f" },
-  { key: "notify", emoji: "🔔", label: "Notify Me First", color: "#b5924b" },
+  // Was "Notify Me First" (pointing at the 5 September 2026 launch date),
+  // which is stale now that the book has actually shipped and is live on
+  // Amazon, Flipkart, and Notion Press — replaced with a real, immediately
+  // actionable prize instead of a notify-me gate that no longer applies.
+  { key: "buy", emoji: "🛍️", label: "Buy Now", color: "#b5924b" },
 ];
 
 const SEGMENT_ANGLE = 360 / SEGMENTS.length;
@@ -120,13 +124,13 @@ function buildResult(key: SegmentKey): ResultContent {
         ctaLabel: "Try the Guided Version",
         href: "/resources",
       };
-    case "notify":
+    case "buy":
       return {
-        emoji: "🔔",
-        title: "Be First to Know",
-        body: "Ordering opens 5th September 2026 — join the notify list and we'll email you the moment it does.",
-        ctaLabel: "Join the Notify List",
-        href: "/preorder#waitlist-form",
+        emoji: "🛍️",
+        title: "It's Live",
+        body: "The Unshaken Self is available right now — Paperback and Hardcover, on Amazon, Flipkart, and Notion Press (the author's own recommended store).",
+        ctaLabel: "Buy Now",
+        href: "/preorder",
       };
   }
 }
