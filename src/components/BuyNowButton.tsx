@@ -2,9 +2,9 @@
 
 import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { ShoppingBag, X, Sparkles } from "lucide-react";
+import { ShoppingBag, X, Sparkles, Truck } from "lucide-react";
 import { useSiteSettings } from "@/context/SiteSettingsContext";
-import { AmazonLogo, NotionPressLogo } from "./StoreLogos";
+import { AmazonLogo, NotionPressLogo, FlipkartLogo } from "./StoreLogos";
 
 type BuyNowButtonProps = {
   fullWidth?: boolean;
@@ -52,8 +52,8 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
   }, [open]);
 
   const editions = [
-    { label: "Paperback", price: settings.price_paperback, npLink: settings.buy_link_notionpress_paperback, amazonLink: settings.buy_link_amazon_paperback },
-    { label: "Hardcover", price: settings.price_hardcover, npLink: settings.buy_link_notionpress_hardcover, amazonLink: settings.buy_link_amazon_hardcover },
+    { label: "Paperback", price: settings.price_paperback, npLink: settings.buy_link_notionpress_paperback, amazonLink: settings.buy_link_amazon_paperback, flipkartLink: settings.buy_link_flipkart_paperback },
+    { label: "Hardcover", price: settings.price_hardcover, npLink: settings.buy_link_notionpress_hardcover, amazonLink: settings.buy_link_amazon_hardcover, flipkartLink: settings.buy_link_flipkart_hardcover },
   ];
 
   // Rendered via a portal straight to document.body — this component gets
@@ -130,7 +130,13 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
         <div className="rounded-2xl border border-border-custom p-4 sm:p-5 space-y-3">
           <div className="flex items-center gap-3">
             <AmazonLogo className="w-9 h-9 flex-shrink-0" />
-            <p className="text-sm font-serif text-foreground font-semibold">Amazon.in</p>
+            <div>
+              <p className="text-sm font-serif text-foreground font-semibold">Amazon.in</p>
+              <span className="inline-flex items-center gap-1 text-[11px] uppercase tracking-widest font-bold text-[#00A8E1]">
+                <Truck className="w-3 h-3" />
+                Now on Amazon Prime
+              </span>
+            </div>
           </div>
           <div className="grid grid-cols-2 gap-2.5">
             {editions.map((ed) =>
@@ -138,6 +144,30 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
                 <a
                   key={`amz-${ed.label}`}
                   href={ed.amazonLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex flex-col items-center justify-center gap-0.5 py-3 rounded-xl border border-border-custom hover:bg-black/5 dark:hover:bg-white/5 text-foreground transition-transform hover:scale-105"
+                >
+                  <span className="text-[12px] uppercase tracking-widest font-bold">{ed.label}</span>
+                  <span className="text-sm font-serif font-bold">{ed.price}</span>
+                </a>
+              ) : null
+            )}
+          </div>
+        </div>
+
+        {/* Flipkart */}
+        <div className="rounded-2xl border border-border-custom p-4 sm:p-5 space-y-3">
+          <div className="flex items-center gap-3">
+            <FlipkartLogo className="w-9 h-9 flex-shrink-0" />
+            <p className="text-sm font-serif text-foreground font-semibold">Flipkart</p>
+          </div>
+          <div className="grid grid-cols-2 gap-2.5">
+            {editions.map((ed) =>
+              ed.flipkartLink ? (
+                <a
+                  key={`fk-${ed.label}`}
+                  href={ed.flipkartLink}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex flex-col items-center justify-center gap-0.5 py-3 rounded-xl border border-border-custom hover:bg-black/5 dark:hover:bg-white/5 text-foreground transition-transform hover:scale-105"

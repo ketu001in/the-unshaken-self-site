@@ -65,3 +65,31 @@ export function NotionPressLogo({ className = "w-11 h-11" }: LogoProps) {
     </svg>
   );
 }
+
+export function FlipkartLogo({ className = "w-11 h-11" }: LogoProps) {
+  return (
+    <svg viewBox="0 0 40 40" className={className} aria-hidden="true">
+      <rect width="40" height="40" rx="9" fill="#2874F0" />
+      <text
+        x="19"
+        y="26"
+        textAnchor="middle"
+        fontFamily="Georgia, 'Times New Roman', serif"
+        fontWeight="700"
+        fontStyle="italic"
+        fontSize="19"
+        fill="#ffffff"
+      >
+        f
+      </text>
+      <path
+        d="M25.5 15.5l3 3-3 3"
+        stroke="#FFE500"
+        strokeWidth="2.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+      />
+    </svg>
+  );
+}

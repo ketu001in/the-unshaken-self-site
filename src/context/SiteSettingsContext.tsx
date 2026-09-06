@@ -35,12 +35,14 @@ export type SiteSettings = {
   sample_pdf_url: string | null;
   theme_colors: ThemeColors;
   section_visibility: SectionVisibility;
-  // Book is live — two platforms (Amazon, and Notion Press, the author's
-  // own recommended store), each in Paperback and Hardcover. Price is the
-  // same across platforms for a given format, so it's tracked once per
-  // format rather than once per link.
+  // Book is live — three platforms (Amazon, Flipkart, and Notion Press,
+  // the author's own recommended store), each in Paperback and Hardcover.
+  // Price is the same across platforms for a given format, so it's
+  // tracked once per format rather than once per link.
   buy_link_amazon_paperback: string | null;
   buy_link_amazon_hardcover: string | null;
+  buy_link_flipkart_paperback: string | null;
+  buy_link_flipkart_hardcover: string | null;
   buy_link_notionpress_paperback: string | null;
   buy_link_notionpress_hardcover: string | null;
   price_paperback: string;
@@ -84,6 +86,8 @@ export const DEFAULT_SITE_SETTINGS: SiteSettings = {
   },
   buy_link_amazon_paperback: "https://www.amazon.in/dp/B0HHNKF7FQ",
   buy_link_amazon_hardcover: "https://www.amazon.in/dp/B0HHNW1DJH",
+  buy_link_flipkart_paperback: "https://www.flipkart.com/the-unshaken-self/p/itm1004d27433425?pid=9798906961297&affid=editornoti",
+  buy_link_flipkart_hardcover: "https://www.flipkart.com/unshaken-self-wisdom-gita-life-without-doubt-worry-fear/p/itm1004d27433425?pid=9798906961303&affid=editornoti",
   buy_link_notionpress_paperback: "https://direct.notionpress.com/in/read/the-unshaken-self/paperback",
   buy_link_notionpress_hardcover: "https://direct.notionpress.com/in/read/the-unshaken-self-hardcover/hardcover",
   price_paperback: "₹499",

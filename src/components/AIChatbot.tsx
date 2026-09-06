@@ -23,18 +23,26 @@ function hasAnyStore(settings: SiteSettings): boolean {
     settings.buy_link_notionpress_paperback ||
     settings.buy_link_notionpress_hardcover ||
     settings.buy_link_amazon_paperback ||
-    settings.buy_link_amazon_hardcover
+    settings.buy_link_amazon_hardcover ||
+    settings.buy_link_flipkart_paperback ||
+    settings.buy_link_flipkart_hardcover
   );
 }
 
 function describeStores(settings: SiteSettings): string {
   const hasNotionPress = Boolean(settings.buy_link_notionpress_paperback || settings.buy_link_notionpress_hardcover);
   const hasAmazon = Boolean(settings.buy_link_amazon_paperback || settings.buy_link_amazon_hardcover);
-  if (hasNotionPress && hasAmazon) {
-    return "on Amazon.in, and directly from Notion Press (the author's own recommended store)";
+  const hasFlipkart = Boolean(settings.buy_link_flipkart_paperback || settings.buy_link_flipkart_hardcover);
+
+  const other: string[] = [];
+  if (hasAmazon) other.push("Amazon.in (now with Prime)");
+  if (hasFlipkart) other.push("Flipkart");
+
+  if (hasNotionPress && other.length) {
+    return `on ${other.join(" and ")}, and directly from Notion Press (the author's own recommended store)`;
   }
   if (hasNotionPress) return "directly from Notion Press (the author's own recommended store)";
-  if (hasAmazon) return "on Amazon.in";
+  if (other.length) return `on ${other.join(" and ")}`;
   return "";
 }
 

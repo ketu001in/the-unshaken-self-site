@@ -9,7 +9,7 @@ import ReferralPanel from "@/components/ReferralPanel";
 import { Check, Bell, ExternalLink } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { fetchPageContent } from "@/lib/content";
-import { AmazonLogo, NotionPressLogo } from "@/components/StoreLogos";
+import { AmazonLogo, NotionPressLogo, FlipkartLogo } from "@/components/StoreLogos";
 import ReaderThankYouCard from "@/components/ReaderThankYouCard";
 
 const REFERRAL_CODE_KEY = "unshaken_referral_code";
@@ -23,7 +23,7 @@ type PreorderStore = {
   link: string;
   isPopular: boolean;
   features: string[];
-  logo: "amazon" | "notionpress";
+  logo: "amazon" | "notionpress" | "flipkart";
 };
 
 type PreorderContent = {
@@ -31,11 +31,11 @@ type PreorderContent = {
   stores: PreorderStore[];
 };
 
-// Real, live, confirmed-matching prices/links across both platforms
-// (Amazon.in and Notion Press) — see the two format ASINs/URLs the
+// Real, live, confirmed-matching prices/links across all three platforms
+// (Amazon.in, Flipkart, and Notion Press) — see the ASINs/pids/URLs the
 // author supplied. Notion Press is the author's own recommended store.
 const DEFAULT_PREORDER_CONTENT: PreorderContent = {
-  header_subtitle: "The Unshaken Self is available now — choose your favorite store and format below. Notion Press is the author's own recommended store; Amazon.in ships fast across India.",
+  header_subtitle: "The Unshaken Self is available now — choose your favorite store and format below. Notion Press is the author's own recommended store; Amazon.in and Flipkart also ship fast across India.",
   stores: [
     {
       name: "Notion Press — Paperback",
@@ -68,7 +68,7 @@ const DEFAULT_PREORDER_CONTENT: PreorderContent = {
       link: "https://www.amazon.in/dp/B0HHNKF7FQ",
       isPopular: false,
       logo: "amazon",
-      features: ["Fast Amazon delivery.", "Sold by Notion Press, fulfilled by Amazon."]
+      features: ["Now available with Amazon Prime.", "Fast Amazon delivery.", "Sold by Notion Press, fulfilled by Amazon."]
     },
     {
       name: "Amazon.in — Hardcover",
@@ -79,7 +79,29 @@ const DEFAULT_PREORDER_CONTENT: PreorderContent = {
       link: "https://www.amazon.in/dp/B0HHNW1DJH",
       isPopular: false,
       logo: "amazon",
-      features: ["Fast Amazon delivery.", "Sold by Notion Press, fulfilled by Amazon."]
+      features: ["Now available with Amazon Prime.", "Fast Amazon delivery.", "Sold by Notion Press, fulfilled by Amazon."]
+    },
+    {
+      name: "Flipkart — Paperback",
+      format: "Paperback Edition",
+      region: "Flipkart",
+      status: "Available Now",
+      price: "₹499",
+      link: "https://www.flipkart.com/the-unshaken-self/p/itm1004d27433425?pid=9798906961297&affid=editornoti",
+      isPopular: false,
+      logo: "flipkart",
+      features: ["7 days replacement.", "Sold by NotionPress on Flipkart."]
+    },
+    {
+      name: "Flipkart — Hardcover",
+      format: "Hardcover Edition",
+      region: "Flipkart",
+      status: "Available Now",
+      price: "₹575",
+      link: "https://www.flipkart.com/unshaken-self-wisdom-gita-life-without-doubt-worry-fear/p/itm1004d27433425?pid=9798906961303&affid=editornoti",
+      isPopular: false,
+      logo: "flipkart",
+      features: ["7 days replacement.", "Sold by NotionPress on Flipkart."]
     }
   ]
 };
@@ -180,7 +202,7 @@ export default function PreorderPage() {
         {/* Store Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {stores.map((store, idx) => {
-            const Logo = store.logo === "notionpress" ? NotionPressLogo : AmazonLogo;
+            const Logo = store.logo === "notionpress" ? NotionPressLogo : store.logo === "flipkart" ? FlipkartLogo : AmazonLogo;
             return (
               <div
                 key={idx}

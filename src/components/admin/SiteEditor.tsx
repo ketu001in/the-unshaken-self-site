@@ -87,7 +87,7 @@ type PreorderStore = {
   link: string;
   isPopular: boolean;
   features: string[];
-  logo: "amazon" | "notionpress";
+  logo: "amazon" | "notionpress" | "flipkart";
 };
 
 type PreorderContent = {
@@ -96,12 +96,14 @@ type PreorderContent = {
 };
 
 const DEFAULT_PREORDER_CONTENT: PreorderContent = {
-  header_subtitle: "The Unshaken Self is available now — choose your favorite store and format below. Notion Press is the author's own recommended store; Amazon.in ships fast across India.",
+  header_subtitle: "The Unshaken Self is available now — choose your favorite store and format below. Notion Press is the author's own recommended store; Amazon.in and Flipkart also ship fast across India.",
   stores: [
     { name: "Notion Press — Paperback", format: "Paperback Edition", region: "India + International Shipping", status: "Available Now", price: "₹499", link: "https://direct.notionpress.com/in/read/the-unshaken-self/paperback", isPopular: true, logo: "notionpress", features: ["Author's own recommended store.", "Direct from the publisher.", "Track your shipping status online."] },
     { name: "Notion Press — Hardcover", format: "Hardcover Edition", region: "India + International Shipping", status: "Available Now", price: "₹575", link: "https://direct.notionpress.com/in/read/the-unshaken-self-hardcover/hardcover", isPopular: true, logo: "notionpress", features: ["Author's own recommended store.", "Premium hardbound edition.", "Direct from the publisher."] },
-    { name: "Amazon.in — Paperback", format: "Paperback Edition", region: "Amazon.in", status: "Available Now", price: "₹499", link: "https://www.amazon.in/dp/B0HHNKF7FQ", isPopular: false, logo: "amazon", features: ["Fast Amazon delivery.", "Sold by Notion Press, fulfilled by Amazon."] },
-    { name: "Amazon.in — Hardcover", format: "Hardcover Edition", region: "Amazon.in", status: "Available Now", price: "₹575", link: "https://www.amazon.in/dp/B0HHNW1DJH", isPopular: false, logo: "amazon", features: ["Fast Amazon delivery.", "Sold by Notion Press, fulfilled by Amazon."] }
+    { name: "Amazon.in — Paperback", format: "Paperback Edition", region: "Amazon.in", status: "Available Now", price: "₹499", link: "https://www.amazon.in/dp/B0HHNKF7FQ", isPopular: false, logo: "amazon", features: ["Now available with Amazon Prime.", "Fast Amazon delivery.", "Sold by Notion Press, fulfilled by Amazon."] },
+    { name: "Amazon.in — Hardcover", format: "Hardcover Edition", region: "Amazon.in", status: "Available Now", price: "₹575", link: "https://www.amazon.in/dp/B0HHNW1DJH", isPopular: false, logo: "amazon", features: ["Now available with Amazon Prime.", "Fast Amazon delivery.", "Sold by Notion Press, fulfilled by Amazon."] },
+    { name: "Flipkart — Paperback", format: "Paperback Edition", region: "Flipkart", status: "Available Now", price: "₹499", link: "https://www.flipkart.com/the-unshaken-self/p/itm1004d27433425?pid=9798906961297&affid=editornoti", isPopular: false, logo: "flipkart", features: ["7 days replacement.", "Sold by NotionPress on Flipkart."] },
+    { name: "Flipkart — Hardcover", format: "Hardcover Edition", region: "Flipkart", status: "Available Now", price: "₹575", link: "https://www.flipkart.com/unshaken-self-wisdom-gita-life-without-doubt-worry-fear/p/itm1004d27433425?pid=9798906961303&affid=editornoti", isPopular: false, logo: "flipkart", features: ["7 days replacement.", "Sold by NotionPress on Flipkart."] }
   ]
 };
 
@@ -536,6 +538,8 @@ export default function SiteEditor() {
       saveSiteSetting("live_session_link", settings.live_session_link),
       saveSiteSetting("buy_link_amazon_paperback", settings.buy_link_amazon_paperback),
       saveSiteSetting("buy_link_amazon_hardcover", settings.buy_link_amazon_hardcover),
+      saveSiteSetting("buy_link_flipkart_paperback", settings.buy_link_flipkart_paperback),
+      saveSiteSetting("buy_link_flipkart_hardcover", settings.buy_link_flipkart_hardcover),
       saveSiteSetting("buy_link_notionpress_paperback", settings.buy_link_notionpress_paperback),
       saveSiteSetting("buy_link_notionpress_hardcover", settings.buy_link_notionpress_hardcover),
       saveSiteSetting("price_paperback", settings.price_paperback),
@@ -764,6 +768,20 @@ export default function SiteEditor() {
               value={settings.buy_link_amazon_hardcover ?? ""}
               onChange={(e) => setSettings((p) => ({ ...p, buy_link_amazon_hardcover: e.target.value || null }))}
               placeholder="https://www.amazon.in/dp/..."
+            />
+          </Field>
+          <Field label="Flipkart — Paperback Link">
+            <TextInput
+              value={settings.buy_link_flipkart_paperback ?? ""}
+              onChange={(e) => setSettings((p) => ({ ...p, buy_link_flipkart_paperback: e.target.value || null }))}
+              placeholder="https://www.flipkart.com/..."
+            />
+          </Field>
+          <Field label="Flipkart — Hardcover Link">
+            <TextInput
+              value={settings.buy_link_flipkart_hardcover ?? ""}
+              onChange={(e) => setSettings((p) => ({ ...p, buy_link_flipkart_hardcover: e.target.value || null }))}
+              placeholder="https://www.flipkart.com/..."
             />
           </Field>
 
@@ -1481,13 +1499,14 @@ export default function SiteEditor() {
                       value={store.logo}
                       onChange={(e) => setPreorder((p) => {
                         const next = [...p.stores];
-                        next[idx] = { ...next[idx], logo: e.target.value as "amazon" | "notionpress" };
+                        next[idx] = { ...next[idx], logo: e.target.value as "amazon" | "notionpress" | "flipkart" };
                         return { ...p, stores: next };
                       })}
                       className={inputClass}
                     >
                       <option value="amazon">Amazon</option>
                       <option value="notionpress">Notion Press</option>
+                      <option value="flipkart">Flipkart</option>
                     </select>
                   </Field>
                 </div>
@@ -1527,7 +1546,7 @@ export default function SiteEditor() {
               </div>
             ))}
             <button
-              onClick={() => setPreorder((p) => ({ ...p, stores: [...p.stores, { name: "", format: "", region: "", status: "Available Now", price: "", link: "", isPopular: false, logo: "amazon", features: [] }] }))}
+              onClick={() => setPreorder((p) => ({ ...p, stores: [...p.stores, { name: "", format: "", region: "", status: "Available Now", price: "", link: "", isPopular: false, logo: "amazon" as const, features: [] }] }))}
               className="px-3 py-2 rounded-lg border border-dashed border-border-custom text-xs flex items-center gap-2 cursor-pointer hover:bg-black/5 dark:hover:bg-white/5"
             >
               <Plus className="w-3.5 h-3.5" /> Add Store / Edition Card
