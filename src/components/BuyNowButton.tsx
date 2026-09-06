@@ -75,40 +75,47 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
         onClick={() => setOpen(false)}
       />
 
-      <div className="relative w-full max-w-md my-auto max-h-[92vh] overflow-y-auto bg-white dark:bg-[#101614] border border-border-custom rounded-3xl shadow-2xl p-6 sm:p-8 space-y-6 animate-[fadeIn_0.2s_ease-out]">
+      {/* Font sizes below are deliberately set as fixed px values rather
+          than the site's bumped text-xs/sm/base tokens — with three store
+          sections now stacked in here, using the same larger site-wide
+          scale pushed this modal past a comfortable height on laptop
+          screens. This keeps the popup compact and fully visible without
+          relying on internal scrolling, independent of the global type
+          scale used everywhere else on the site. */}
+      <div className="relative w-full max-w-md my-auto max-h-[92vh] overflow-y-auto bg-white dark:bg-[#101614] border border-border-custom rounded-3xl shadow-2xl p-5 sm:p-6 space-y-3.5 animate-[fadeIn_0.2s_ease-out]">
         <button
           onClick={() => setOpen(false)}
-          className="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center text-muted-text hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer z-10"
+          className="absolute top-3.5 right-3.5 w-7 h-7 rounded-full flex items-center justify-center text-muted-text hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer z-10"
           aria-label="Close"
         >
-          <X className="w-4 h-4" />
+          <X className="w-3.5 h-3.5" />
         </button>
 
-        <div className="space-y-2 pr-8">
-          <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-[12px] tracking-[0.3em] text-[#b5924b] dark:text-[#dfb15b] uppercase font-bold">
+        <div className="space-y-1 pr-7">
+          <div className="flex items-center gap-1.5 flex-wrap">
+            <span className="text-[10px] tracking-[0.25em] text-[#b5924b] dark:text-[#dfb15b] uppercase font-bold">
               The Unshaken Self
             </span>
-            <span className="text-[11px] uppercase tracking-widest font-bold text-white bg-[#1e3f20] dark:bg-[#dfb15b] dark:text-black px-2 py-0.5 rounded-full">
+            <span className="text-[9px] uppercase tracking-widest font-bold text-white bg-[#1e3f20] dark:bg-[#dfb15b] dark:text-black px-1.5 py-0.5 rounded-full">
               Available Now
             </span>
           </div>
-          <h3 className="font-serif text-xl text-foreground">Choose Your Edition</h3>
+          <h3 className="font-serif text-[17px] text-foreground">Choose Your Edition</h3>
         </div>
 
         {/* Notion Press — Author's Pick */}
-        <div className="rounded-2xl border-2 border-[#dfb15b]/50 bg-[#faf8f5] dark:bg-[#070b09] p-4 sm:p-5 space-y-3">
-          <div className="flex items-center gap-3">
-            <NotionPressLogo className="w-9 h-9 flex-shrink-0" />
+        <div className="rounded-xl border-2 border-[#dfb15b]/50 bg-[#faf8f5] dark:bg-[#070b09] p-3 space-y-2">
+          <div className="flex items-center gap-2.5">
+            <NotionPressLogo className="w-7 h-7 flex-shrink-0" />
             <div>
-              <p className="text-sm font-serif text-foreground font-semibold">Notion Press</p>
-              <span className="inline-flex items-center gap-1 text-[11px] uppercase tracking-widest font-bold text-[#b5924b] dark:text-[#dfb15b]">
-                <Sparkles className="w-3 h-3" />
+              <p className="text-[13px] font-serif text-foreground font-semibold leading-tight">Notion Press</p>
+              <span className="inline-flex items-center gap-1 text-[9px] uppercase tracking-widest font-bold text-[#b5924b] dark:text-[#dfb15b]">
+                <Sparkles className="w-2.5 h-2.5" />
                 Author&apos;s Recommended Store
               </span>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-2.5">
+          <div className="grid grid-cols-2 gap-2">
             {editions.map((ed) =>
               ed.npLink ? (
                 <a
@@ -116,10 +123,10 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
                   href={ed.npLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex flex-col items-center justify-center gap-0.5 py-3 rounded-xl bg-[#1e3f20] hover:bg-[#142a15] dark:bg-[#dfb15b] dark:hover:bg-[#c49945] text-white dark:text-black transition-transform hover:scale-105"
+                  className="flex flex-col items-center justify-center gap-0.5 py-2 rounded-lg bg-[#1e3f20] hover:bg-[#142a15] dark:bg-[#dfb15b] dark:hover:bg-[#c49945] text-white dark:text-black transition-transform hover:scale-105"
                 >
-                  <span className="text-[12px] uppercase tracking-widest font-bold">{ed.label}</span>
-                  <span className="text-sm font-serif font-bold">{ed.price}</span>
+                  <span className="text-[10px] uppercase tracking-widest font-bold">{ed.label}</span>
+                  <span className="text-[13px] font-serif font-bold">{ed.price}</span>
                 </a>
               ) : null
             )}
@@ -127,18 +134,18 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
         </div>
 
         {/* Amazon */}
-        <div className="rounded-2xl border border-border-custom p-4 sm:p-5 space-y-3">
-          <div className="flex items-center gap-3">
-            <AmazonLogo className="w-9 h-9 flex-shrink-0" />
+        <div className="rounded-xl border border-border-custom p-3 space-y-2">
+          <div className="flex items-center gap-2.5">
+            <AmazonLogo className="w-7 h-7 flex-shrink-0" />
             <div>
-              <p className="text-sm font-serif text-foreground font-semibold">Amazon.in</p>
-              <span className="inline-flex items-center gap-1 text-[11px] uppercase tracking-widest font-bold text-[#00A8E1]">
-                <Truck className="w-3 h-3" />
+              <p className="text-[13px] font-serif text-foreground font-semibold leading-tight">Amazon.in</p>
+              <span className="inline-flex items-center gap-1 text-[9px] uppercase tracking-widest font-bold text-[#00A8E1]">
+                <Truck className="w-2.5 h-2.5" />
                 Now on Amazon Prime
               </span>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-2.5">
+          <div className="grid grid-cols-2 gap-2">
             {editions.map((ed) =>
               ed.amazonLink ? (
                 <a
@@ -146,10 +153,10 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
                   href={ed.amazonLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex flex-col items-center justify-center gap-0.5 py-3 rounded-xl border border-border-custom hover:bg-black/5 dark:hover:bg-white/5 text-foreground transition-transform hover:scale-105"
+                  className="flex flex-col items-center justify-center gap-0.5 py-2 rounded-lg border border-border-custom hover:bg-black/5 dark:hover:bg-white/5 text-foreground transition-transform hover:scale-105"
                 >
-                  <span className="text-[12px] uppercase tracking-widest font-bold">{ed.label}</span>
-                  <span className="text-sm font-serif font-bold">{ed.price}</span>
+                  <span className="text-[10px] uppercase tracking-widest font-bold">{ed.label}</span>
+                  <span className="text-[13px] font-serif font-bold">{ed.price}</span>
                 </a>
               ) : null
             )}
@@ -157,12 +164,12 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
         </div>
 
         {/* Flipkart */}
-        <div className="rounded-2xl border border-border-custom p-4 sm:p-5 space-y-3">
-          <div className="flex items-center gap-3">
-            <FlipkartLogo className="w-9 h-9 flex-shrink-0" />
-            <p className="text-sm font-serif text-foreground font-semibold">Flipkart</p>
+        <div className="rounded-xl border border-border-custom p-3 space-y-2">
+          <div className="flex items-center gap-2.5">
+            <FlipkartLogo className="w-7 h-7 flex-shrink-0" />
+            <p className="text-[13px] font-serif text-foreground font-semibold leading-tight">Flipkart</p>
           </div>
-          <div className="grid grid-cols-2 gap-2.5">
+          <div className="grid grid-cols-2 gap-2">
             {editions.map((ed) =>
               ed.flipkartLink ? (
                 <a
@@ -170,17 +177,17 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
                   href={ed.flipkartLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex flex-col items-center justify-center gap-0.5 py-3 rounded-xl border border-border-custom hover:bg-black/5 dark:hover:bg-white/5 text-foreground transition-transform hover:scale-105"
+                  className="flex flex-col items-center justify-center gap-0.5 py-2 rounded-lg border border-border-custom hover:bg-black/5 dark:hover:bg-white/5 text-foreground transition-transform hover:scale-105"
                 >
-                  <span className="text-[12px] uppercase tracking-widest font-bold">{ed.label}</span>
-                  <span className="text-sm font-serif font-bold">{ed.price}</span>
+                  <span className="text-[10px] uppercase tracking-widest font-bold">{ed.label}</span>
+                  <span className="text-[13px] font-serif font-bold">{ed.price}</span>
                 </a>
               ) : null
             )}
           </div>
         </div>
 
-        <p className="text-[12px] text-center text-muted-text">
+        <p className="text-[10px] text-center text-muted-text">
           Prices inclusive of all taxes. Delivered by each store directly.
         </p>
       </div>
