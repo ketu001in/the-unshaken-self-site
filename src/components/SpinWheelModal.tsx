@@ -48,6 +48,24 @@ function describeSector(startAngle: number, endAngle: number) {
   return `M ${CENTER} ${CENTER} L ${start.x} ${start.y} A ${RADIUS} ${RADIUS} 0 ${largeArcFlag} 0 ${end.x} ${end.y} Z`;
 }
 
+// Segment labels are drawn as straight (non-curved) text, so a long
+// single-line label like "Notify Me First" is wider than the wedge is
+// tall at that radius and bleeds into neighboring segments. Wrapping
+// onto two shorter, balanced lines keeps every label inside its own
+// wedge regardless of angle.
+function wrapLabel(label: string): string[] {
+  const words = label.split(" ");
+  if (words.length < 2) return [label];
+  let best = { i: 1, score: Infinity };
+  for (let i = 1; i < words.length; i++) {
+    const line1 = words.slice(0, i).join(" ");
+    const line2 = words.slice(i).join(" ");
+    const score = Math.max(line1.length, line2.length);
+    if (score < best.score) best = { i, score };
+  }
+  return [words.slice(0, best.i).join(" "), words.slice(best.i).join(" ")];
+}
+
 type ResultContent = {
   emoji: string;
   title: string;
@@ -239,7 +257,8 @@ export default function SpinWheelModal({ open, onClose }: SpinWheelModalProps) {
                 // the wheel's center — lands them centered in their wedge,
                 // reading outward from the hub, at any angle.
                 const emojiY = CENTER - RADIUS * 0.62;
-                const labelY = emojiY + 24;
+                const labelY = emojiY + 22;
+                const lines = wrapLabel(seg.label);
                 return (
                   <g key={seg.key}>
                     <path d={describeSector(start, end)} fill={seg.color} stroke="#faf8f5" strokeWidth="2" />
@@ -257,12 +276,16 @@ export default function SpinWheelModal({ open, onClose }: SpinWheelModalProps) {
                       y={labelY}
                       transform={`rotate(${mid} ${CENTER} ${CENTER})`}
                       textAnchor="middle"
-                      fontSize="11"
+                      fontSize="9"
                       fontWeight="700"
                       fill="#faf8f5"
-                      style={{ textTransform: "uppercase", letterSpacing: "0.03em" }}
+                      style={{ textTransform: "uppercase", letterSpacing: "0.02em" }}
                     >
-                      {seg.label}
+                      {lines.map((line, li) => (
+                        <tspan key={li} x={CENTER} dy={li === 0 ? 0 : 10}>
+                          {line}
+                        </tspan>
+                      ))}
                     </text>
                   </g>
                 );
