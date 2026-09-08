@@ -27,6 +27,7 @@ export default function Navbar() {
     { name: "Blog", href: "/blog" },
     { name: "Resources", href: "/resources" },
     { name: "Events", href: "/events" },
+    { name: "Feedback", href: "/feedback" },
   ];
 
   const isActive = (href: string) => pathname === href;

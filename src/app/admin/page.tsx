@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AIChatbot from "@/components/AIChatbot";
-import { Users, Calendar, Bell, MessageSquare, Trash2, Award, ArrowUpRight, LogOut, Check, X as XIcon } from "lucide-react";
+import { Users, Calendar, Bell, MessageSquare, Trash2, Award, ArrowUpRight, LogOut, Check, X as XIcon, Inbox } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import SiteEditor from "@/components/admin/SiteEditor";
 
@@ -13,15 +13,17 @@ type LoggedSubscriber = { id: string; email: string; date: string; source: strin
 type LoggedRSVP = { id: string; eventId: string; eventTitle: string; name: string; email: string; date: string };
 type LoggedWaitlist = { id: string; email: string; preferredStore: string; date: string };
 type LoggedReview = { id: string; author: string; role: string; quote: string; rating: number; type: string; status: "pending" | "approved" | "rejected"; date: string };
+type LoggedFeedback = { id: string; name: string; email: string; category: string; rating: number | null; message: string; date: string };
 
 export default function AdminDashboard() {
   const router = useRouter();
   const [adminEmail, setAdminEmail] = useState("");
-  const [activeTab, setActiveTab] = useState<"subscribers" | "rsvps" | "waitlist" | "reviews" | "content" | "site">("subscribers");
+  const [activeTab, setActiveTab] = useState<"subscribers" | "rsvps" | "waitlist" | "reviews" | "feedback" | "content" | "site">("subscribers");
   const [subscribers, setSubscribers] = useState<LoggedSubscriber[]>([]);
   const [rsvps, setRsvps] = useState<LoggedRSVP[]>([]);
   const [waitlist, setWaitlist] = useState<LoggedWaitlist[]>([]);
   const [reviews, setReviews] = useState<LoggedReview[]>([]);
+  const [feedback, setFeedback] = useState<LoggedFeedback[]>([]);
 
   // Content Manager Input States
   const [blogTitle, setBlogTitle] = useState("");
@@ -46,11 +48,12 @@ export default function AdminDashboard() {
   const refreshData = async () => {
     const supabase = createClient();
 
-    const [subsRes, rsvpsRes, waitlistRes, reviewsRes, postsRes, eventsRes] = await Promise.all([
+    const [subsRes, rsvpsRes, waitlistRes, reviewsRes, feedbackRes, postsRes, eventsRes] = await Promise.all([
       supabase.from("subscribers").select("id, email, source, created_at").order("created_at", { ascending: false }),
       supabase.from("rsvps").select("id, event_id, event_title, name, email, created_at").order("created_at", { ascending: false }),
       supabase.from("preorder_waitlist").select("id, email, preferred_store, created_at").order("created_at", { ascending: false }),
       supabase.from("reviews").select("id, author, role, quote, rating, type, status, created_at").order("created_at", { ascending: false }),
+      supabase.from("feedback").select("id, name, email, category, rating, message, created_at").order("created_at", { ascending: false }),
       supabase.from("blog_posts").select("id, title, excerpt, content, tags, read_time, published_date, created_at").order("created_at", { ascending: false }),
       supabase.from("events").select("id, title, description, event_date, event_time, location, event_type, capacity, created_at").order("created_at", { ascending: false }),
     ]);
@@ -59,6 +62,7 @@ export default function AdminDashboard() {
     if (rsvpsRes.data) setRsvps(rsvpsRes.data.map((r) => ({ id: r.id, eventId: r.event_id, eventTitle: r.event_title, name: r.name, email: r.email, date: r.created_at })));
     if (waitlistRes.data) setWaitlist(waitlistRes.data.map((w) => ({ id: w.id, email: w.email, preferredStore: w.preferred_store || "Any", date: w.created_at })));
     if (reviewsRes.data) setReviews(reviewsRes.data.map((r) => ({ id: r.id, author: r.author, role: r.role || "Reader", quote: r.quote, rating: r.rating, type: r.type, status: r.status, date: r.created_at })));
+    if (feedbackRes.data) setFeedback(feedbackRes.data.map((f) => ({ id: f.id, name: f.name || "Anonymous", email: f.email || "—", category: f.category, rating: f.rating, message: f.message, date: f.created_at })));
     if (postsRes.data) setCmsBlogPosts(postsRes.data.map((p) => ({ id: p.id, title: p.title, excerpt: p.excerpt, date: p.published_date, readTime: p.read_time })));
     if (eventsRes.data) setCmsEvents(eventsRes.data.map((ev) => ({
       id: ev.id,
@@ -101,6 +105,12 @@ export default function AdminDashboard() {
   const handleDeleteReview = async (id: string) => {
     const supabase = createClient();
     await supabase.from("reviews").delete().eq("id", id);
+    refreshData();
+  };
+
+  const handleDeleteFeedback = async (id: string) => {
+    const supabase = createClient();
+    await supabase.from("feedback").delete().eq("id", id);
     refreshData();
   };
 
@@ -237,7 +247,7 @@ export default function AdminDashboard() {
             <span className="text-[11px] tracking-widest font-mono text-[#dfb15b] uppercase font-bold">Admin Console</span>
             <h1 className="text-3xl font-serif text-foreground">Launch Analytics Dashboard</h1>
             <p className="text-xs text-muted-text font-light">
-              {adminEmail ? `Signed in as ${adminEmail}` : "Loading session…"} — real sign-ups, RSVPs, and reviews from Supabase.
+              {adminEmail ? `Signed in as ${adminEmail}` : "Loading session…"} — real sign-ups, RSVPs, reviews, and feedback from Supabase.
             </p>
           </div>
           <button
@@ -254,7 +264,7 @@ export default function AdminDashboard() {
       <main className="max-w-7xl mx-auto w-full px-4 py-12 flex-1 space-y-10">
         
         {/* Metric Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
           
           {/* Card 1: Subscribers */}
           <div className="bg-white dark:bg-[#101614] border border-border-custom p-6 rounded-2xl flex items-center space-x-4 shadow-sm">
@@ -302,6 +312,17 @@ export default function AdminDashboard() {
             </div>
           </div>
 
+          {/* Card 5: Feedback */}
+          <div className="bg-white dark:bg-[#101614] border border-border-custom p-6 rounded-2xl flex items-center space-x-4 shadow-sm">
+            <div className="w-12 h-12 rounded-xl bg-[#1e3f20]/5 dark:bg-[#dfb15b]/10 text-primary dark:text-[#dfb15b] flex items-center justify-center">
+              <Inbox className="w-6 h-6" />
+            </div>
+            <div>
+              <span className="text-[12px] uppercase font-mono tracking-wider text-stone-400 font-semibold">Feedback</span>
+              <h3 className="text-2xl font-serif text-foreground font-bold mt-1">{feedback.length}</h3>
+            </div>
+          </div>
+
         </div>
 
         {/* Charts Mockup Section */}
@@ -345,6 +366,7 @@ export default function AdminDashboard() {
               { id: "rsvps", label: "RSVPs Calendar" },
               { id: "waitlist", label: "Notify-Me Waitlist" },
               { id: "reviews", label: "Moderate Reviews" },
+              { id: "feedback", label: "Feedback" },
               { id: "content", label: "Manage Content" },
               { id: "site", label: "Site Editor" }
             ].map((tab) => (
@@ -503,6 +525,51 @@ export default function AdminDashboard() {
                         )}
                         <button
                           onClick={() => handleDeleteReview(rev.id)}
+                          className="px-3 py-1.5 rounded-lg border border-red-500/20 text-red-500 hover:bg-red-500/10 flex items-center gap-1 text-[12px] font-mono cursor-pointer"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                          <span>Delete</span>
+                        </button>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+            )}
+
+            {activeTab === "feedback" && (
+              <div className="divide-y divide-border-custom">
+                {feedback.length === 0 ? (
+                  <div className="p-8 text-center text-muted-text font-mono">No feedback submitted yet.</div>
+                ) : (
+                  feedback.map((fb) => (
+                    <div
+                      key={fb.id}
+                      className="p-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 hover:bg-stone-50/50 dark:hover:bg-white/5 transition-colors"
+                    >
+                      <div className="space-y-2 max-w-xl">
+                        <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[12px] text-muted-text font-mono">
+                          <span className="text-foreground font-bold font-sans text-xs">{fb.name}</span>
+                          <span>•</span>
+                          <span>{fb.email}</span>
+                          <span>•</span>
+                          <span className="text-[#dfb15b] font-bold uppercase">{fb.category}</span>
+                          {fb.rating && (
+                            <>
+                              <span>•</span>
+                              <span className="text-[#dfb15b] font-bold">★ {fb.rating}/5</span>
+                            </>
+                          )}
+                          <span>•</span>
+                          <span>{new Date(fb.date).toLocaleString()}</span>
+                        </div>
+                        <p className="text-xs font-light text-stone-500 dark:text-stone-400 leading-relaxed">
+                          {fb.message}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-2 flex-shrink-0">
+                        <button
+                          onClick={() => handleDeleteFeedback(fb.id)}
                           className="px-3 py-1.5 rounded-lg border border-red-500/20 text-red-500 hover:bg-red-500/10 flex items-center gap-1 text-[12px] font-mono cursor-pointer"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
