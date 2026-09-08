@@ -104,10 +104,10 @@ export default function LaunchBanner() {
 
       <div className="now-live-flash inline-flex items-center gap-2 px-4 py-1.5 rounded-full shadow-md">
         <PartyPopper className="w-4 h-4" />
-        <span className="text-[13px] uppercase tracking-[0.2em] font-bold">Now Live</span>
+        <span className="text-[11px] uppercase tracking-[0.2em] font-bold">Now Live</span>
       </div>
 
-      <div className="flex flex-wrap items-center justify-center lg:justify-start gap-x-4 gap-y-2 text-[13px] text-muted-text">
+      <div className="flex flex-wrap items-center justify-center lg:justify-start gap-x-4 gap-y-2 text-[11px] text-muted-text">
         <span className="inline-flex items-center gap-1.5">
           <CalendarCheck className="w-3.5 h-3.5 text-[#dfb15b]" />
           Live since {LIVE_SINCE}

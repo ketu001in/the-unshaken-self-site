@@ -72,7 +72,7 @@ export default function AboutBook() {
       <header className="py-20 px-4 text-center border-b border-border-custom bg-white dark:bg-[#050806] relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(223,177,91,0.03)_0%,transparent_70%)] pointer-events-none" />
         <div className="max-w-4xl mx-auto space-y-4 relative z-10">
-          <span className="text-[12px] tracking-[0.3em] text-[#b5924b] dark:text-[#dfb15b] uppercase font-bold">
+          <span className="text-[10px] tracking-[0.3em] text-[#b5924b] dark:text-[#dfb15b] uppercase font-bold">
             The Literary Blueprint
           </span>
           <h1 className="text-4xl sm:text-5xl font-serif text-foreground leading-tight">
@@ -174,17 +174,17 @@ export default function AboutBook() {
                 <div className="space-y-4">
                   <div className="p-5 border border-border-custom rounded-2xl bg-white dark:bg-[#101614]">
                     <h4 className="font-serif text-sm font-semibold">Deluxe Collector's Hardcover</h4>
-                    <p className="text-[12px] text-muted-text mt-1">Smyth-sewn, gold-foil stamping, premium paper.</p>
+                    <p className="text-[10px] text-muted-text mt-1">Smyth-sewn, gold-foil stamping, premium paper.</p>
                   </div>
                   <div className="p-5 border border-border-custom rounded-2xl bg-white dark:bg-[#101614]">
                     <h4 className="font-serif text-sm font-semibold">Standard Paperback</h4>
-                    <p className="text-[12px] text-muted-text mt-1">Lightweight, recycled acid-free cream paper.</p>
+                    <p className="text-[10px] text-muted-text mt-1">Lightweight, recycled acid-free cream paper.</p>
                   </div>
                   <div className="p-5 border border-border-custom rounded-2xl bg-white dark:bg-[#101614]">
                     <h4 className="font-serif text-sm font-semibold">Digital Edition (Kindle / ePub)</h4>
-                    <p className="text-[12px] text-muted-text mt-1">Full bookmarks, adjustable typography, interactive index.</p>
+                    <p className="text-[10px] text-muted-text mt-1">Full bookmarks, adjustable typography, interactive index.</p>
                   </div>
-                  <p className="text-[12px] text-muted-text italic pt-1">Final pricing for each edition will be announced closer to launch.</p>
+                  <p className="text-[10px] text-muted-text italic pt-1">Final pricing for each edition will be announced closer to launch.</p>
                 </div>
               </div>
 

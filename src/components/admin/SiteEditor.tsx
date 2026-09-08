@@ -353,7 +353,7 @@ const DEFAULT_ABOUT_AUTHOR_CONTENT: AboutAuthorContent = {
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="space-y-1">
-      <label className="text-[12px] font-mono uppercase text-stone-400 font-bold block">{label}</label>
+      <label className="text-[10px] font-mono uppercase text-stone-400 font-bold block">{label}</label>
       {children}
     </div>
   );
@@ -454,12 +454,12 @@ function UploadField({
             href={currentUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="block text-[12px] text-[#dfb15b] underline truncate max-w-xs"
+            className="block text-[10px] text-[#dfb15b] underline truncate max-w-xs"
           >
             {currentUrl.split("/").pop()}
           </a>
         )}
-        {hint && <p className="text-[11px] text-muted-text">{hint}</p>}
+        {hint && <p className="text-[9px] text-muted-text">{hint}</p>}
         <input
           ref={ref}
           type="file"
@@ -660,7 +660,7 @@ export default function SiteEditor() {
 
   return (
     <div className="p-6 md:p-8 space-y-8">
-      <p className="text-[13px] text-muted-text font-light max-w-2xl">
+      <p className="text-[11px] text-muted-text font-light max-w-2xl">
         Edit live site content, images, colors, and section visibility. Changes save directly to the
         database and appear on the site immediately (a page refresh may be needed for visitors with
         a cached view).
@@ -672,7 +672,7 @@ export default function SiteEditor() {
           <button
             key={t.id}
             onClick={() => setSubTab(t.id)}
-            className={`px-4 py-2 rounded-full text-[12px] uppercase tracking-widest font-bold cursor-pointer transition-colors ${
+            className={`px-4 py-2 rounded-full text-[10px] uppercase tracking-widest font-bold cursor-pointer transition-colors ${
               subTab === t.id
                 ? "bg-[#0f2b48] dark:bg-[#dfb15b] text-white dark:text-black"
                 : "border border-border-custom text-muted-text hover:text-foreground"
@@ -722,7 +722,7 @@ export default function SiteEditor() {
           </Field>
 
           <h3 className="font-serif text-base text-foreground font-bold pt-4">Buy Links &amp; Pricing</h3>
-          <p className="text-[13px] text-muted-text -mt-2">
+          <p className="text-[11px] text-muted-text -mt-2">
             Drives the site-wide Buy Now button/modal, the Preorder page cards, and the chatbot&apos;s
             answers. Notion Press is treated as the author&apos;s recommended store.
           </p>
@@ -786,7 +786,7 @@ export default function SiteEditor() {
           </Field>
 
           <h3 className="font-serif text-base text-foreground font-bold pt-4">Ask Ketul — Live Session</h3>
-          <p className="text-[13px] text-muted-text -mt-4">
+          <p className="text-[11px] text-muted-text -mt-4">
             Leave the date/time blank to show &quot;coming soon&quot; on the banner. Fill it in once a
             session is actually scheduled.
           </p>
@@ -841,7 +841,7 @@ export default function SiteEditor() {
 
           <div className="space-y-4 pt-4 border-t border-border-custom/50">
             <h3 className="font-serif text-base text-foreground font-bold">3D Book Cover (Wraparound)</h3>
-            <p className="text-[13px] text-muted-text leading-relaxed">
+            <p className="text-[11px] text-muted-text leading-relaxed">
               Upload one flat image containing all three panels of the printed jacket — back cover, spine,
               and front cover, side by side. The homepage shows only the front panel until a visitor hovers,
               then reveals a real 3D book they can click-and-drag to spin around and see the spine and back.
@@ -884,7 +884,7 @@ export default function SiteEditor() {
                 <option value="front-spine-back">Front → Spine → Back (mirrored)</option>
               </select>
             </Field>
-            <p className="text-[11px] text-muted-text">
+            <p className="text-[9px] text-muted-text">
               Front cover is whatever's left over: 100% − back% − spine%. Use the live preview below to
               check the split looks right before saving.
             </p>
@@ -904,7 +904,7 @@ export default function SiteEditor() {
                         }),
                       }}
                     />
-                    <span className="text-[11px] uppercase font-mono text-muted-text">{seg}</span>
+                    <span className="text-[9px] uppercase font-mono text-muted-text">{seg}</span>
                   </div>
                 ))}
               </div>
@@ -915,7 +915,7 @@ export default function SiteEditor() {
 
           <div className="space-y-4 pt-4 border-t border-border-custom/50">
             <h3 className="font-serif text-base text-foreground font-bold">Homepage Trailer Video</h3>
-            <p className="text-[13px] text-muted-text leading-relaxed">
+            <p className="text-[11px] text-muted-text leading-relaxed">
               The video never autoplays — visitors always see a still thumbnail with the quote and a Play
               button first, and the trailer only starts once they click Play.
             </p>
@@ -1428,7 +1428,7 @@ export default function SiteEditor() {
           </Field>
 
           <h3 className="font-serif text-base text-foreground font-bold pt-4 border-t border-border-custom/50">Store / Edition Cards</h3>
-          <p className="text-[13px] text-muted-text -mt-2">
+          <p className="text-[11px] text-muted-text -mt-2">
             The book is live — each card&apos;s Link field opens directly in a new tab as the card&apos;s
             &quot;Buy Now&quot; button.
           </p>
@@ -1575,7 +1575,7 @@ export default function SiteEditor() {
           <Field label="Subtext"><TextArea rows={2} value={preview.cta_subtitle} onChange={(e) => setPreview((p) => ({ ...p, cta_subtitle: e.target.value }))} /></Field>
 
           <h3 className="font-serif text-base text-foreground font-bold pt-4 border-t border-border-custom/50">Flipbook Page Spreads</h3>
-          <p className="text-[12px] text-muted-text -mt-2">
+          <p className="text-[10px] text-muted-text -mt-2">
             Each spread has a left column (chapter draft text) and a right column (commentary / exercise text).
             In the right column, start a line with "•" for a bullet-styled callout.
           </p>
@@ -1589,10 +1589,10 @@ export default function SiteEditor() {
                 >
                   <Trash2 className="w-3.5 h-3.5" />
                 </button>
-                <p className="text-[12px] font-mono uppercase text-[#dfb15b] font-bold">Spread {idx + 1}</p>
+                <p className="text-[10px] font-mono uppercase text-[#dfb15b] font-bold">Spread {idx + 1}</p>
 
                 <div className="space-y-2 pb-3 border-b border-border-custom/50">
-                  <p className="text-[11px] font-mono uppercase text-stone-400 font-bold">Left Page</p>
+                  <p className="text-[9px] font-mono uppercase text-stone-400 font-bold">Left Page</p>
                   <Field label="Eyebrow Header">
                     <TextInput
                       value={bp.left.header}
@@ -1635,7 +1635,7 @@ export default function SiteEditor() {
                 </div>
 
                 <div className="space-y-2">
-                  <p className="text-[11px] font-mono uppercase text-stone-400 font-bold">Right Page</p>
+                  <p className="text-[9px] font-mono uppercase text-stone-400 font-bold">Right Page</p>
                   <Field label="Eyebrow Header">
                     <TextInput
                       value={bp.right.header}
@@ -1804,7 +1804,7 @@ export default function SiteEditor() {
       {/* EVENTS PAGE HEADER */}
       {subTab === "events" && (
         <div className="space-y-6 max-w-2xl">
-          <p className="text-[13px] text-muted-text -mt-2">
+          <p className="text-[11px] text-muted-text -mt-2">
             The event schedule itself is managed under the "Manage Content" tab. This only controls the page's static header and sidebar copy.
           </p>
           <h3 className="font-serif text-base text-foreground font-bold">Page Header</h3>
@@ -1826,7 +1826,7 @@ export default function SiteEditor() {
       {/* REVIEWS PAGE HEADER */}
       {subTab === "reviews" && (
         <div className="space-y-6 max-w-2xl">
-          <p className="text-[13px] text-muted-text -mt-2">
+          <p className="text-[11px] text-muted-text -mt-2">
             The review list itself is managed under the "Manage Content" tab (moderation queue). This only controls the page's static header and sidebar copy.
           </p>
           <h3 className="font-serif text-base text-foreground font-bold">Page Header</h3>

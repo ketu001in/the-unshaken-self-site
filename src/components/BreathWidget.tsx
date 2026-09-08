@@ -77,7 +77,7 @@ export default function BreathWidget() {
         <span>{running ? "Pause" : "Begin Breathing"}</span>
       </button>
 
-      <p className="text-[13px] text-muted-text max-w-xs text-center leading-relaxed">
+      <p className="text-[11px] text-muted-text max-w-xs text-center leading-relaxed">
         The 4-7-8 pattern echoed in Chapter 6 (Dhyana Yoga) — inhale for 4, hold for 7, exhale for 8. A few rounds is enough to settle the nervous system.
       </p>
     </div>

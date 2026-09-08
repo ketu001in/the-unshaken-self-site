@@ -93,14 +93,14 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
 
         <div className="space-y-1 pr-7">
           <div className="flex items-center gap-1.5 flex-wrap">
-            <span className="text-[10px] tracking-[0.25em] text-[#b5924b] dark:text-[#dfb15b] uppercase font-bold">
+            <span className="text-[8px] tracking-[0.25em] text-[#b5924b] dark:text-[#dfb15b] uppercase font-bold">
               The Unshaken Self
             </span>
-            <span className="text-[9px] uppercase tracking-widest font-bold text-white bg-[#1e3f20] dark:bg-[#dfb15b] dark:text-black px-1.5 py-0.5 rounded-full">
+            <span className="text-[7px] uppercase tracking-widest font-bold text-white bg-[#1e3f20] dark:bg-[#dfb15b] dark:text-black px-1.5 py-0.5 rounded-full">
               Available Now
             </span>
           </div>
-          <h3 className="font-serif text-[17px] text-foreground">Choose Your Edition</h3>
+          <h3 className="font-serif text-[15px] text-foreground">Choose Your Edition</h3>
         </div>
 
         {/* Notion Press — Author's Pick */}
@@ -108,8 +108,8 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
           <div className="flex items-center gap-2.5">
             <NotionPressLogo className="w-7 h-7 flex-shrink-0" />
             <div>
-              <p className="text-[13px] font-serif text-foreground font-semibold leading-tight">Notion Press</p>
-              <span className="inline-flex items-center gap-1 text-[9px] uppercase tracking-widest font-bold text-[#b5924b] dark:text-[#dfb15b]">
+              <p className="text-[11px] font-serif text-foreground font-semibold leading-tight">Notion Press</p>
+              <span className="inline-flex items-center gap-1 text-[7px] uppercase tracking-widest font-bold text-[#b5924b] dark:text-[#dfb15b]">
                 <Sparkles className="w-2.5 h-2.5" />
                 Author&apos;s Recommended Store
               </span>
@@ -125,8 +125,8 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
                   rel="noopener noreferrer"
                   className="flex flex-col items-center justify-center gap-0.5 py-2 rounded-lg bg-[#1e3f20] hover:bg-[#142a15] dark:bg-[#dfb15b] dark:hover:bg-[#c49945] text-white dark:text-black transition-transform hover:scale-105"
                 >
-                  <span className="text-[10px] uppercase tracking-widest font-bold">{ed.label}</span>
-                  <span className="text-[13px] font-serif font-bold">{ed.price}</span>
+                  <span className="text-[8px] uppercase tracking-widest font-bold">{ed.label}</span>
+                  <span className="text-[11px] font-serif font-bold">{ed.price}</span>
                 </a>
               ) : null
             )}
@@ -138,8 +138,8 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
           <div className="flex items-center gap-2.5">
             <AmazonLogo className="w-7 h-7 flex-shrink-0" />
             <div>
-              <p className="text-[13px] font-serif text-foreground font-semibold leading-tight">Amazon.in</p>
-              <span className="inline-flex items-center gap-1 text-[9px] uppercase tracking-widest font-bold text-[#00A8E1]">
+              <p className="text-[11px] font-serif text-foreground font-semibold leading-tight">Amazon.in</p>
+              <span className="inline-flex items-center gap-1 text-[7px] uppercase tracking-widest font-bold text-[#00A8E1]">
                 <Truck className="w-2.5 h-2.5" />
                 Now on Amazon Prime
               </span>
@@ -155,8 +155,8 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
                   rel="noopener noreferrer"
                   className="flex flex-col items-center justify-center gap-0.5 py-2 rounded-lg border border-border-custom hover:bg-black/5 dark:hover:bg-white/5 text-foreground transition-transform hover:scale-105"
                 >
-                  <span className="text-[10px] uppercase tracking-widest font-bold">{ed.label}</span>
-                  <span className="text-[13px] font-serif font-bold">{ed.price}</span>
+                  <span className="text-[8px] uppercase tracking-widest font-bold">{ed.label}</span>
+                  <span className="text-[11px] font-serif font-bold">{ed.price}</span>
                 </a>
               ) : null
             )}
@@ -167,7 +167,7 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
         <div className="rounded-xl border border-border-custom p-3 space-y-2">
           <div className="flex items-center gap-2.5">
             <FlipkartLogo className="w-7 h-7 flex-shrink-0" />
-            <p className="text-[13px] font-serif text-foreground font-semibold leading-tight">Flipkart</p>
+            <p className="text-[11px] font-serif text-foreground font-semibold leading-tight">Flipkart</p>
           </div>
           <div className="grid grid-cols-2 gap-2">
             {editions.map((ed) =>
@@ -179,15 +179,15 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
                   rel="noopener noreferrer"
                   className="flex flex-col items-center justify-center gap-0.5 py-2 rounded-lg border border-border-custom hover:bg-black/5 dark:hover:bg-white/5 text-foreground transition-transform hover:scale-105"
                 >
-                  <span className="text-[10px] uppercase tracking-widest font-bold">{ed.label}</span>
-                  <span className="text-[13px] font-serif font-bold">{ed.price}</span>
+                  <span className="text-[8px] uppercase tracking-widest font-bold">{ed.label}</span>
+                  <span className="text-[11px] font-serif font-bold">{ed.price}</span>
                 </a>
               ) : null
             )}
           </div>
         </div>
 
-        <p className="text-[10px] text-center text-muted-text">
+        <p className="text-[8px] text-center text-muted-text">
           Prices inclusive of all taxes. Delivered by each store directly.
         </p>
       </div>
@@ -199,7 +199,7 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
       {!hideTrigger && (
         <button
           onClick={handleTrigger}
-          className={`relative inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-gradient-to-r from-[#1e3f20] to-[#142a15] dark:from-[#dfb15b] dark:to-[#c49945] text-white dark:text-black text-[14px] whitespace-nowrap uppercase tracking-widest font-bold shadow-lg shadow-[#1e3f20]/20 dark:shadow-[#dfb15b]/25 hover:shadow-xl transition-all hover:scale-105 active:scale-95 cursor-pointer ${
+          className={`relative inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-gradient-to-r from-[#1e3f20] to-[#142a15] dark:from-[#dfb15b] dark:to-[#c49945] text-white dark:text-black text-[12px] whitespace-nowrap uppercase tracking-widest font-bold shadow-lg shadow-[#1e3f20]/20 dark:shadow-[#dfb15b]/25 hover:shadow-xl transition-all hover:scale-105 active:scale-95 cursor-pointer ${
             fullWidth ? "w-full justify-center" : ""
           }`}
         >

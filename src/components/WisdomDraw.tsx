@@ -162,10 +162,10 @@ export default function WisdomDraw() {
           >
             <div className="absolute inset-4 rounded-2xl border border-dashed border-[#dfb15b]/25 pointer-events-none" />
             <Sparkles className="w-8 h-8 text-[#dfb15b]" />
-            <span className="text-[13px] uppercase tracking-[0.25em] text-[#dfb15b] font-semibold">
+            <span className="text-[11px] uppercase tracking-[0.25em] text-[#dfb15b] font-semibold">
               {revealed ? "Draw Another" : "Reveal Today's Teaching"}
             </span>
-            <span className="text-[12px] text-white/50 max-w-[200px] text-center leading-relaxed">
+            <span className="text-[10px] text-white/50 max-w-[200px] text-center leading-relaxed">
               {revealed
                 ? "One teaching, chosen at random, from the book's 18 chapters."
                 : "A new teaching is chosen each day — click to reveal today's."}
@@ -184,18 +184,18 @@ export default function WisdomDraw() {
             {current && (
               <>
                 {isTodayTeaching && (
-                  <span className="text-[11px] uppercase tracking-widest font-bold text-white bg-[#dfb15b] px-2 py-0.5 rounded-full">
+                  <span className="text-[9px] uppercase tracking-widest font-bold text-white bg-[#dfb15b] px-2 py-0.5 rounded-full">
                     Today&apos;s Teaching
                   </span>
                 )}
-                <span className="text-[12px] font-mono uppercase tracking-widest text-muted-text">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-muted-text">
                   Chapter {current.num} • {current.theme}
                 </span>
                 <p className="font-serif text-base sm:text-lg text-foreground leading-relaxed">
                   &ldquo;{current.line}&rdquo;
                 </p>
                 <div className="flex items-center gap-4 mt-2">
-                  <span className="flex items-center gap-1.5 text-[12px] uppercase tracking-widest text-[#dfb15b] font-semibold">
+                  <span className="flex items-center gap-1.5 text-[10px] uppercase tracking-widest text-[#dfb15b] font-semibold">
                     <RotateCw className="w-3 h-3" />
                     Draw Another
                   </span>
@@ -203,7 +203,7 @@ export default function WisdomDraw() {
                     type="button"
                     onClick={handleShare}
                     disabled={sharing}
-                    className="flex items-center gap-1.5 text-[12px] uppercase tracking-widest text-muted-text hover:text-[#dfb15b] font-semibold transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-wait"
+                    className="flex items-center gap-1.5 text-[10px] uppercase tracking-widest text-muted-text hover:text-[#dfb15b] font-semibold transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-wait"
                     aria-label="Share this teaching as an image"
                   >
                     <Share2 className="w-3 h-3" />
@@ -217,7 +217,7 @@ export default function WisdomDraw() {
       </div>
 
       {streak > 1 && (
-        <div className="flex items-center gap-1.5 text-[13px] text-[#dfb15b] font-semibold">
+        <div className="flex items-center gap-1.5 text-[11px] text-[#dfb15b] font-semibold">
           <Flame className="w-3.5 h-3.5" />
           <span>{streak}-day streak — keep it going through launch</span>
         </div>

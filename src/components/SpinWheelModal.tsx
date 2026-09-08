@@ -225,7 +225,7 @@ export default function SpinWheelModal({ open, onClose }: SpinWheelModalProps) {
         </button>
 
         <div className="space-y-1.5">
-          <span className="text-[12px] tracking-[0.3em] text-[#b5924b] dark:text-[#dfb15b] uppercase font-bold">
+          <span className="text-[10px] tracking-[0.3em] text-[#b5924b] dark:text-[#dfb15b] uppercase font-bold">
             A Small Surprise
           </span>
           <h3 className="font-serif text-xl text-foreground">Spin the Wheel</h3>
@@ -301,7 +301,7 @@ export default function SpinWheelModal({ open, onClose }: SpinWheelModalProps) {
           <button
             onClick={spin}
             disabled={spinning}
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-white dark:bg-[#101614] border-4 border-[#dfb15b] shadow-lg flex flex-col items-center justify-center text-[11px] font-bold uppercase tracking-wider text-foreground cursor-pointer disabled:cursor-not-allowed hover:scale-105 active:scale-95 transition-transform"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-white dark:bg-[#101614] border-4 border-[#dfb15b] shadow-lg flex flex-col items-center justify-center text-[9px] font-bold uppercase tracking-wider text-foreground cursor-pointer disabled:cursor-not-allowed hover:scale-105 active:scale-95 transition-transform"
             aria-label="Spin the wheel"
           >
             <Sparkles className="w-4 h-4 text-[#dfb15b] mb-0.5" />

@@ -137,7 +137,7 @@ export default function Home() {
             {content.hero_badge && (
               <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-[#1e3f20]/5 dark:bg-[#dfb15b]/10 border border-[#1e3f20]/10 dark:border-[#dfb15b]/20">
                 <Sparkles className="w-4.5 h-4.5 text-[#dfb15b]" />
-                <span className="text-[13px] tracking-[0.2em] uppercase font-semibold text-primary dark:text-[#dfb15b]">
+                <span className="text-[11px] tracking-[0.2em] uppercase font-semibold text-primary dark:text-[#dfb15b]">
                   {content.hero_badge}
                 </span>
               </div>
@@ -293,7 +293,7 @@ export default function Home() {
                     <h4 className="text-lg font-serif text-foreground tracking-wide font-semibold">
                       {ch.title}
                     </h4>
-                    <p className="text-[12px] tracking-widest font-mono text-[#b5924b] dark:text-[#dfb15b] uppercase font-light">
+                    <p className="text-[10px] tracking-widest font-mono text-[#b5924b] dark:text-[#dfb15b] uppercase font-light">
                       {ch.theme}
                     </p>
                   </div>
@@ -307,7 +307,7 @@ export default function Home() {
                 <div className="mt-8 pt-4 border-t border-border-custom/50 flex justify-end">
                   <Link 
                     href="/preview"
-                    className="text-[12px] uppercase tracking-widest font-semibold text-muted-text hover:text-foreground transition-colors"
+                    className="text-[10px] uppercase tracking-widest font-semibold text-muted-text hover:text-foreground transition-colors"
                   >
                     Read Chapter Draft
                   </Link>
@@ -398,7 +398,7 @@ export default function Home() {
                     <path d="M8 5v14l11-7z" />
                   </svg>
                 </button>
-                <span className="relative text-[12px] tracking-widest text-stone-400 mt-4 uppercase font-semibold">
+                <span className="relative text-[10px] tracking-widest text-stone-400 mt-4 uppercase font-semibold">
                   Click to play 1-minute intro preview
                 </span>
               </div>
@@ -428,7 +428,7 @@ export default function Home() {
                 <p className="font-serif italic text-base sm:text-xl text-stone-200 max-w-md">
                   The cinematic trailer is still in production.
                 </p>
-                <span className="text-[12px] tracking-widest text-stone-400 uppercase font-semibold">
+                <span className="text-[10px] tracking-widest text-stone-400 uppercase font-semibold">
                   Check back closer to launch
                 </span>
 
@@ -443,7 +443,7 @@ export default function Home() {
 
                 {/* Simulated text transitions overlay */}
                 <div className="absolute bottom-6 inset-x-6 z-20 text-center pointer-events-none">
-                  <span className="bg-black/60 px-4 py-1.5 rounded-full text-[13px] tracking-widest text-[#dfb15b] uppercase font-mono">
+                  <span className="bg-black/60 px-4 py-1.5 rounded-full text-[11px] tracking-widest text-[#dfb15b] uppercase font-mono">
                     The Unshaken Self — Available Now
                   </span>
                 </div>
@@ -491,7 +491,7 @@ export default function Home() {
                   <h4 className="font-sans text-xs uppercase tracking-widest text-foreground font-bold">
                     {t.author}
                   </h4>
-                  <p className="text-[12px] text-muted-text mt-0.5">
+                  <p className="text-[10px] text-muted-text mt-0.5">
                     {t.role}
                   </p>
                 </div>
@@ -518,13 +518,13 @@ export default function Home() {
                   className="object-cover object-top"
                 />
                 <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent p-4 text-center pointer-events-none space-y-0.5">
-                  <p className="text-[12px] tracking-widest text-white uppercase font-bold">
+                  <p className="text-[10px] tracking-widest text-white uppercase font-bold">
                     Ketul Shah
                   </p>
-                  <p className="text-[11px] text-white/90 uppercase font-mono">
+                  <p className="text-[9px] text-white/90 uppercase font-mono">
                     {content.author_badge_title}
                   </p>
-                  <p className="text-[10px] text-white/75 uppercase font-mono tracking-wide">
+                  <p className="text-[8px] text-white/75 uppercase font-mono tracking-wide">
                     {content.author_badge_tags}
                   </p>
                 </div>

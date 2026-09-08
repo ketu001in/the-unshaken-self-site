@@ -118,7 +118,7 @@ export default function AskKetulPanel() {
               </button>
             </div>
             {error && (
-              <div className="p-3 border border-red-500/20 bg-red-500/5 rounded-lg text-[12px] text-red-500 font-mono">
+              <div className="p-3 border border-red-500/20 bg-red-500/5 rounded-lg text-[10px] text-red-500 font-mono">
                 {error}
               </div>
             )}

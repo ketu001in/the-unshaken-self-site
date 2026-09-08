@@ -182,7 +182,7 @@ export default function ResourcesPage() {
       <header className="py-20 px-4 text-center border-b border-border-custom bg-white dark:bg-[#050806] relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(223,177,91,0.03)_0%,transparent_70%)] pointer-events-none" />
         <div className="max-w-4xl mx-auto space-y-4 relative z-10">
-          <span className="text-[12px] tracking-[0.3em] text-[#b5924b] dark:text-[#dfb15b] uppercase font-bold">
+          <span className="text-[10px] tracking-[0.3em] text-[#b5924b] dark:text-[#dfb15b] uppercase font-bold">
             {content.header_badge}
           </span>
           <h1 className="text-4xl sm:text-5xl font-serif text-foreground leading-tight">
@@ -198,7 +198,7 @@ export default function ResourcesPage() {
       <section className="py-16 px-4 border-b border-border-custom bg-white dark:bg-[#050806]">
         <div className="max-w-3xl mx-auto text-center space-y-10">
           <div className="space-y-3">
-            <span className="text-[12px] tracking-[0.3em] text-[#dfb15b] uppercase font-bold">
+            <span className="text-[10px] tracking-[0.3em] text-[#dfb15b] uppercase font-bold">
               Try It Now
             </span>
             <h2 className="text-2xl sm:text-3xl font-serif text-foreground">
@@ -218,7 +218,7 @@ export default function ResourcesPage() {
       <section className="py-16 px-4 border-b border-border-custom bg-[#faf8f5] dark:bg-[#070b09]">
         <div className="max-w-6xl mx-auto space-y-10">
           <div className="text-center space-y-3">
-            <span className="text-[12px] tracking-[0.3em] text-[#dfb15b] uppercase font-bold">
+            <span className="text-[10px] tracking-[0.3em] text-[#dfb15b] uppercase font-bold">
               Free For Anyone
             </span>
             <h2 className="text-2xl sm:text-3xl font-serif text-foreground">
@@ -257,7 +257,7 @@ export default function ResourcesPage() {
                 >
                   {/* Premium Lock Banner */}
                   {res.isPremium && (
-                    <div className="absolute top-0 right-0 flex items-center space-x-1 px-3 py-1 text-[11px] font-mono uppercase tracking-widest font-semibold bg-[#dfb15b]/10 text-[#dfb15b] border-l border-b border-[#dfb15b]/20 rounded-bl-xl">
+                    <div className="absolute top-0 right-0 flex items-center space-x-1 px-3 py-1 text-[9px] font-mono uppercase tracking-widest font-semibold bg-[#dfb15b]/10 text-[#dfb15b] border-l border-b border-[#dfb15b]/20 rounded-bl-xl">
                       {locked ? <Lock className="w-2.5 h-2.5" /> : <Unlock className="w-2.5 h-2.5" />}
                       <span>Premium</span>
                     </div>
@@ -271,7 +271,7 @@ export default function ResourcesPage() {
                       <h3 className="font-serif text-base text-foreground font-semibold leading-snug pr-12">
                         {res.name}
                       </h3>
-                      <p className="text-[12px] text-muted-text font-mono uppercase">
+                      <p className="text-[10px] text-muted-text font-mono uppercase">
                         {res.fileType} • {res.fileSize}
                       </p>
                     </div>
@@ -281,12 +281,12 @@ export default function ResourcesPage() {
                   </div>
 
                   <div className="mt-8 pt-4 border-t border-border-custom/50 flex justify-between items-center">
-                    <span className="text-[12px] font-mono text-muted-text uppercase tracking-widest">
+                    <span className="text-[10px] font-mono text-muted-text uppercase tracking-widest">
                       {locked ? "Locked" : "Ready"}
                     </span>
                     <button
                       onClick={() => handleDownload(res)}
-                      className={`px-4 py-2 rounded-full text-[12px] uppercase tracking-widest font-bold flex items-center space-x-1.5 cursor-pointer transition-colors ${
+                      className={`px-4 py-2 rounded-full text-[10px] uppercase tracking-widest font-bold flex items-center space-x-1.5 cursor-pointer transition-colors ${
                         locked
                           ? "bg-stone-100 text-stone-400 dark:bg-stone-850 dark:text-stone-600 hover:bg-stone-200"
                           : "bg-[#1e3f20] dark:bg-[#dfb15b] text-white dark:text-black hover:opacity-90"
@@ -311,19 +311,19 @@ export default function ResourcesPage() {
                 {isUnlocked ? <Unlock className="w-5 h-5 text-green-500" /> : <Lock className="w-5 h-5 text-[#dfb15b]" />}
                 <span>{content.sidebar_heading}</span>
               </h3>
-              <p className="text-[13px] font-light text-stone-500 leading-relaxed">
+              <p className="text-[11px] font-light text-stone-500 leading-relaxed">
                 {content.sidebar_desc}
               </p>
             </div>
 
             {checking ? (
-              <div className="p-5 text-center text-[12px] text-muted-text font-mono">Checking...</div>
+              <div className="p-5 text-center text-[10px] text-muted-text font-mono">Checking...</div>
             ) : isUnlocked ? (
               <div className="p-5 border border-green-500/20 bg-green-500/5 rounded-2xl space-y-4 text-center">
                 <CheckCircle className="w-8 h-8 text-green-500 mx-auto" />
                 <div className="space-y-1">
                   <h4 className="font-serif text-sm font-semibold text-foreground">Unlocked</h4>
-                  <p className="text-[12px] text-muted-text">Premium files are now unlocked on this device. You can download them below.</p>
+                  <p className="text-[10px] text-muted-text">Premium files are now unlocked on this device. You can download them below.</p>
                 </div>
                 <button
                   onClick={() => {
@@ -332,7 +332,7 @@ export default function ResourcesPage() {
                     localStorage.removeItem(UNLOCK_STORAGE_KEY);
                     setValidationMsg("");
                   }}
-                  className="text-[12px] uppercase font-mono text-red-500 hover:underline cursor-pointer"
+                  className="text-[10px] uppercase font-mono text-red-500 hover:underline cursor-pointer"
                 >
                   Sign Out
                 </button>
@@ -342,7 +342,7 @@ export default function ResourcesPage() {
 
                 {/* Email */}
                 <div className="space-y-1.5">
-                  <label className="text-[12px] font-mono uppercase tracking-wider text-stone-400 block font-semibold">Email Address *</label>
+                  <label className="text-[10px] font-mono uppercase tracking-wider text-stone-400 block font-semibold">Email Address *</label>
                   <input
                     type="email"
                     value={email}
@@ -355,7 +355,7 @@ export default function ResourcesPage() {
 
                 {/* Order ID (optional) */}
                 <div className="space-y-1.5">
-                  <label className="text-[12px] font-mono uppercase tracking-wider text-stone-400 block font-semibold">Order / Receipt ID (optional)</label>
+                  <label className="text-[10px] font-mono uppercase tracking-wider text-stone-400 block font-semibold">Order / Receipt ID (optional)</label>
                   <input
                     type="text"
                     value={orderId}
@@ -373,7 +373,7 @@ export default function ResourcesPage() {
                 </button>
 
                 {validationMsg && (
-                  <div className="p-3 border rounded-lg flex items-start gap-2 text-[12px] font-mono border-red-500/20 bg-red-500/5 text-red-500">
+                  <div className="p-3 border rounded-lg flex items-start gap-2 text-[10px] font-mono border-red-500/20 bg-red-500/5 text-red-500">
                     <Info className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" />
                     <span>{validationMsg}</span>
                   </div>
@@ -382,7 +382,7 @@ export default function ResourcesPage() {
               </form>
             )}
 
-            <div className="p-4 border border-border-custom rounded-2xl text-[12px] text-muted-text flex items-start gap-2">
+            <div className="p-4 border border-border-custom rounded-2xl text-[10px] text-muted-text flex items-start gap-2">
               <Info className="w-4 h-4 text-[#dfb15b] flex-shrink-0 mt-0.5" />
               <span>{content.sidebar_info}</span>
             </div>
@@ -395,7 +395,7 @@ export default function ResourcesPage() {
       {/* INTERACTIVE WORKSHEETS SECTION */}
       <section className="max-w-7xl mx-auto w-full px-4 pb-24 space-y-12">
         <div className="text-center space-y-4">
-          <span className="text-[12px] tracking-[0.3em] text-[#dfb15b] uppercase font-bold">{content.worksheets_badge}</span>
+          <span className="text-[10px] tracking-[0.3em] text-[#dfb15b] uppercase font-bold">{content.worksheets_badge}</span>
           <h2 className="text-2xl sm:text-3xl font-serif text-foreground">{content.worksheets_heading}</h2>
           <p className="text-xs font-light text-stone-500 dark:text-stone-400 max-w-md mx-auto">
             {content.worksheets_subtitle}
@@ -454,10 +454,10 @@ function AffirmationCardButton({ data }: { data: { num: number; theme: string; l
       className="group flex flex-col items-center justify-center gap-2 p-4 rounded-2xl border border-border-custom bg-white dark:bg-[#101614] hover:border-[#dfb15b]/60 hover:shadow-md transition-all cursor-pointer disabled:opacity-60 disabled:cursor-wait text-center"
     >
       <span className="text-lg font-serif text-[#dfb15b] font-bold">{data.num}</span>
-      <span className="text-[11px] uppercase tracking-widest text-muted-text font-mono leading-tight">
+      <span className="text-[9px] uppercase tracking-widest text-muted-text font-mono leading-tight">
         {data.theme}
       </span>
-      <span className="flex items-center gap-1 text-[11px] uppercase tracking-widest font-bold text-foreground group-hover:text-[#dfb15b] transition-colors">
+      <span className="flex items-center gap-1 text-[9px] uppercase tracking-widest font-bold text-foreground group-hover:text-[#dfb15b] transition-colors">
         <ImageDown className="w-3 h-3" />
         {downloading ? "Preparing…" : "Download"}
       </span>
@@ -583,7 +583,7 @@ function UnlockedWorksheets() {
             
             <form onSubmit={handleAddPause} className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-1">
-                <label className="text-[12px] font-mono uppercase text-stone-400 font-bold block">Occasion / Trigger *</label>
+                <label className="text-[10px] font-mono uppercase text-stone-400 font-bold block">Occasion / Trigger *</label>
                 <input
                   type="text"
                   value={trigger}
@@ -594,7 +594,7 @@ function UnlockedWorksheets() {
                 />
               </div>
               <div className="space-y-1">
-                <label className="text-[12px] font-mono uppercase text-stone-400 font-bold block">Action / Response *</label>
+                <label className="text-[10px] font-mono uppercase text-stone-400 font-bold block">Action / Response *</label>
                 <input
                   type="text"
                   value={outcome}
@@ -620,7 +620,7 @@ function UnlockedWorksheets() {
                 {pausesList.length > 0 && (
                   <button
                     onClick={handleClearPauses}
-                    className="text-[12px] uppercase font-mono text-red-500 hover:underline cursor-pointer"
+                    className="text-[10px] uppercase font-mono text-red-500 hover:underline cursor-pointer"
                   >
                     Clear History
                   </button>
@@ -639,7 +639,7 @@ function UnlockedWorksheets() {
                         <p className="font-semibold text-foreground">Trigger: {log.trigger}</p>
                         <p className="font-light text-stone-500">Response: {log.outcome}</p>
                       </div>
-                      <span className="text-[11px] font-mono text-stone-400 flex-shrink-0">{log.date}</span>
+                      <span className="text-[9px] font-mono text-stone-400 flex-shrink-0">{log.date}</span>
                     </div>
                   ))}
                 </div>
@@ -657,7 +657,7 @@ function UnlockedWorksheets() {
 
             <form onSubmit={handleDecoupleSubmit} className="space-y-4">
               <div className="space-y-1">
-                <label className="text-[12px] font-mono uppercase text-stone-400 font-bold block">1. Describe Your Current Worry</label>
+                <label className="text-[10px] font-mono uppercase text-stone-400 font-bold block">1. Describe Your Current Worry</label>
                 <input
                   type="text"
                   value={worry}
@@ -669,7 +669,7 @@ function UnlockedWorksheets() {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <label className="text-[12px] font-mono uppercase text-stone-400 font-bold block">2. What Is 100% In Your Control? *</label>
+                  <label className="text-[10px] font-mono uppercase text-stone-400 font-bold block">2. What Is 100% In Your Control? *</label>
                   <textarea
                     value={control}
                     onChange={(e) => setControl(e.target.value)}
@@ -680,7 +680,7 @@ function UnlockedWorksheets() {
                   ></textarea>
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[12px] font-mono uppercase text-stone-400 font-bold block">3. What Is Outside Your Control? *</label>
+                  <label className="text-[10px] font-mono uppercase text-stone-400 font-bold block">3. What Is Outside Your Control? *</label>
                   <textarea
                     value={noControl}
                     onChange={(e) => setNoControl(e.target.value)}
@@ -705,17 +705,17 @@ function UnlockedWorksheets() {
               <div className="p-6 border border-[#dfb15b]/20 bg-[#dfb15b]/5 rounded-2xl space-y-4 animate-[fadeIn_0.3s_ease-out]">
                 <div className="flex justify-between items-center border-b border-[#dfb15b]/20 pb-2">
                   <h4 className="font-serif text-sm text-[#dfb15b] font-bold">Zen Decoupled Plan</h4>
-                  <span className="text-[11px] font-mono text-stone-400">{decoupledCard.date}</span>
+                  <span className="text-[9px] font-mono text-stone-400">{decoupledCard.date}</span>
                 </div>
                 <div className="space-y-3 text-xs leading-relaxed">
                   <p className="text-stone-400 italic">"Worry: {decoupledCard.worry}"</p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
                     <div className="space-y-1">
-                      <span className="block font-mono text-[11px] uppercase tracking-widest text-[#dfb15b] font-bold">Pour 100% Energy Into:</span>
+                      <span className="block font-mono text-[9px] uppercase tracking-widest text-[#dfb15b] font-bold">Pour 100% Energy Into:</span>
                       <p className="text-foreground">{decoupledCard.control}</p>
                     </div>
                     <div className="space-y-1 opacity-70">
-                      <span className="block font-mono text-[11px] uppercase tracking-widest text-stone-400 font-bold">Consciously Surrender:</span>
+                      <span className="block font-mono text-[9px] uppercase tracking-widest text-stone-400 font-bold">Consciously Surrender:</span>
                       <p className="text-stone-500 dark:text-stone-450 line-through decoration-red-500/30">{decoupledCard.noControl}</p>
                     </div>
                   </div>
@@ -734,7 +734,7 @@ function UnlockedWorksheets() {
 
             <form onSubmit={handleAddWeather} className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="space-y-1.5 md:col-span-3">
-                <label className="text-[12px] font-mono uppercase text-stone-400 font-bold block">1. Select Current Inner Weather Quality</label>
+                <label className="text-[10px] font-mono uppercase text-stone-400 font-bold block">1. Select Current Inner Weather Quality</label>
                 <div className="flex gap-4 text-xs">
                   {[
                     { val: "sattva", label: "Sattva (Clarity / Peace)", desc: "Requires protection and quiet space" },
@@ -752,14 +752,14 @@ function UnlockedWorksheets() {
                         />
                         <span className="font-semibold text-foreground">{item.val.toUpperCase()}</span>
                       </div>
-                      <span className="text-[12px] text-stone-400 font-light mt-1.5">{item.desc}</span>
+                      <span className="text-[10px] text-stone-400 font-light mt-1.5">{item.desc}</span>
                     </label>
                   ))}
                 </div>
               </div>
 
               <div className="md:col-span-3 space-y-1">
-                <label className="text-[12px] font-mono uppercase text-stone-400 font-bold block">2. What does today's quality need? *</label>
+                <label className="text-[10px] font-mono uppercase text-stone-400 font-bold block">2. What does today's quality need? *</label>
                 <input
                   type="text"
                   value={need}
@@ -786,7 +786,7 @@ function UnlockedWorksheets() {
                 {weatherList.length > 0 && (
                   <button
                     onClick={handleClearWeather}
-                    className="text-[12px] uppercase font-mono text-red-500 hover:underline cursor-pointer"
+                    className="text-[10px] uppercase font-mono text-red-500 hover:underline cursor-pointer"
                   >
                     Clear History
                   </button>
@@ -805,7 +805,7 @@ function UnlockedWorksheets() {
                         <p className="font-semibold text-foreground">Weather Quality: <span className="text-[#dfb15b] uppercase font-mono">{item.mood}</span></p>
                         <p className="font-light text-stone-500">Intervention: {item.need}</p>
                       </div>
-                      <span className="text-[11px] font-mono text-stone-400 flex-shrink-0">{item.date}</span>
+                      <span className="text-[9px] font-mono text-stone-400 flex-shrink-0">{item.date}</span>
                     </div>
                   ))}
                 </div>

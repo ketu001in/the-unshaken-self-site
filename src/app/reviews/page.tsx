@@ -176,7 +176,7 @@ export default function ReviewsPage() {
       <header className="py-20 px-4 text-center border-b border-border-custom bg-white dark:bg-[#050806] relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(223,177,91,0.03)_0%,transparent_70%)] pointer-events-none" />
         <div className="max-w-4xl mx-auto space-y-4 relative z-10">
-          <span className="text-[12px] tracking-[0.3em] text-[#b5924b] dark:text-[#dfb15b] uppercase font-bold">
+          <span className="text-[10px] tracking-[0.3em] text-[#b5924b] dark:text-[#dfb15b] uppercase font-bold">
             {content.header_badge}
           </span>
           <h1 className="text-4xl sm:text-5xl font-serif text-foreground leading-tight">
@@ -208,7 +208,7 @@ export default function ReviewsPage() {
                 <button
                   key={btn.val}
                   onClick={() => setFilter(btn.val as any)}
-                  className={`px-3 py-1.5 rounded-full text-[12px] uppercase tracking-wider font-semibold cursor-pointer transition-colors ${
+                  className={`px-3 py-1.5 rounded-full text-[10px] uppercase tracking-wider font-semibold cursor-pointer transition-colors ${
                     filter === btn.val
                       ? "bg-[#1e3f20] dark:bg-[#dfb15b] text-white dark:text-black"
                       : "border border-border-custom text-muted-text hover:bg-black/5 dark:hover:bg-white/5"
@@ -261,7 +261,7 @@ export default function ReviewsPage() {
                         />
                       ))}
                     </div>
-                    <span className="text-[11px] uppercase tracking-widest font-mono text-[#dfb15b] border border-[#dfb15b]/20 px-2 py-0.5 rounded-full bg-[#dfb15b]/5">
+                    <span className="text-[9px] uppercase tracking-widest font-mono text-[#dfb15b] border border-[#dfb15b]/20 px-2 py-0.5 rounded-full bg-[#dfb15b]/5">
                       {rev.type}
                     </span>
                   </div>
@@ -272,7 +272,7 @@ export default function ReviewsPage() {
                   </p>
 
                   {/* Metadata */}
-                  <div className="flex justify-between items-center pt-2 border-t border-border-custom/50 text-[12px] text-muted-text font-mono">
+                  <div className="flex justify-between items-center pt-2 border-t border-border-custom/50 text-[10px] text-muted-text font-mono">
                     <div>
                       <span className="font-sans font-bold text-foreground block text-xs">{rev.author}</span>
                       <span className="block mt-0.5">{rev.role}</span>
@@ -295,7 +295,7 @@ export default function ReviewsPage() {
                 <PlusCircle className="w-5 h-5 text-[#dfb15b]" />
                 <span>{content.sidebar_heading}</span>
               </h3>
-              <p className="text-[13px] font-light text-stone-500 leading-relaxed">
+              <p className="text-[11px] font-light text-stone-500 leading-relaxed">
                 {content.sidebar_desc}
               </p>
             </div>
@@ -304,7 +304,7 @@ export default function ReviewsPage() {
               
               {/* Name */}
               <div className="space-y-1.5">
-                <label className="text-[12px] font-mono uppercase tracking-wider text-stone-400 block font-semibold">Your Name *</label>
+                <label className="text-[10px] font-mono uppercase tracking-wider text-stone-400 block font-semibold">Your Name *</label>
                 <input
                   type="text"
                   value={name}
@@ -317,7 +317,7 @@ export default function ReviewsPage() {
 
               {/* Role */}
               <div className="space-y-1.5">
-                <label className="text-[12px] font-mono uppercase tracking-wider text-stone-400 block font-semibold">Role / Title</label>
+                <label className="text-[10px] font-mono uppercase tracking-wider text-stone-400 block font-semibold">Role / Title</label>
                 <input
                   type="text"
                   value={role}
@@ -329,7 +329,7 @@ export default function ReviewsPage() {
 
               {/* Rating Star Selection */}
               <div className="space-y-1.5">
-                <label className="text-[12px] font-mono uppercase tracking-wider text-stone-400 block font-semibold">Rating</label>
+                <label className="text-[10px] font-mono uppercase tracking-wider text-stone-400 block font-semibold">Rating</label>
                 <div className="flex space-x-2">
                   {[1, 2, 3, 4, 5].map((star) => (
                     <button
@@ -352,7 +352,7 @@ export default function ReviewsPage() {
 
               {/* Review Type */}
               <div className="space-y-1.5">
-                <label className="text-[12px] font-mono uppercase tracking-wider text-stone-400 block font-semibold">Reviewer Type</label>
+                <label className="text-[10px] font-mono uppercase tracking-wider text-stone-400 block font-semibold">Reviewer Type</label>
                 <div className="flex space-x-4 text-xs font-light text-stone-500">
                   <label className="flex items-center space-x-2 cursor-pointer">
                     <input
@@ -379,7 +379,7 @@ export default function ReviewsPage() {
 
               {/* Quote */}
               <div className="space-y-1.5">
-                <label className="text-[12px] font-mono uppercase tracking-wider text-stone-400 block font-semibold">Your Review *</label>
+                <label className="text-[10px] font-mono uppercase tracking-wider text-stone-400 block font-semibold">Your Review *</label>
                 <textarea
                   value={quote}
                   onChange={(e) => setQuote(e.target.value)}
@@ -398,7 +398,7 @@ export default function ReviewsPage() {
               </button>
 
               {submitted && (
-                <div className="p-3 border border-green-500/20 bg-green-500/5 rounded-lg flex items-center gap-2 text-[12px] text-green-600 dark:text-green-400 font-mono">
+                <div className="p-3 border border-green-500/20 bg-green-500/5 rounded-lg flex items-center gap-2 text-[10px] text-green-600 dark:text-green-400 font-mono">
                   <Check className="w-4 h-4 flex-shrink-0" />
                   <span>Thank you! Your review is pending moderation and will appear here once approved.</span>
                 </div>

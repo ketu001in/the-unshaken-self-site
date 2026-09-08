@@ -119,7 +119,7 @@ export default function BlogPage() {
           <header className="py-20 px-4 text-center border-b border-border-custom bg-white dark:bg-[#050806] relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(223,177,91,0.03)_0%,transparent_70%)] pointer-events-none" />
             <div className="max-w-4xl mx-auto space-y-4 relative z-10">
-              <span className="text-[12px] tracking-[0.3em] text-[#b5924b] dark:text-[#dfb15b] uppercase font-bold">
+              <span className="text-[10px] tracking-[0.3em] text-[#b5924b] dark:text-[#dfb15b] uppercase font-bold">
                 Timeless Reflections
               </span>
               <h1 className="text-4xl sm:text-5xl font-serif text-foreground leading-tight">
@@ -143,7 +143,7 @@ export default function BlogPage() {
                   <button
                     key={tag}
                     onClick={() => setSelectedTag(tag)}
-                    className={`px-3 py-1.5 rounded-full text-[12px] uppercase tracking-wider font-semibold cursor-pointer transition-colors ${
+                    className={`px-3 py-1.5 rounded-full text-[10px] uppercase tracking-wider font-semibold cursor-pointer transition-colors ${
                       selectedTag === tag
                         ? "bg-[#1e3f20] dark:bg-[#dfb15b] text-white dark:text-black"
                         : "border border-border-custom text-muted-text hover:bg-black/5 dark:hover:bg-white/5"
@@ -189,7 +189,7 @@ export default function BlogPage() {
                       
                       {/* Text info */}
                       <div className="p-6 space-y-4">
-                        <div className="flex items-center space-x-4 text-[12px] text-muted-text font-mono">
+                        <div className="flex items-center space-x-4 text-[10px] text-muted-text font-mono">
                           <span className="flex items-center gap-1">
                             <Calendar className="w-3.5 h-3.5" />
                             {post.date}
@@ -203,7 +203,7 @@ export default function BlogPage() {
                         <h3 className="font-serif text-lg text-foreground font-bold tracking-wide group-hover:text-[#dfb15b] transition-colors leading-snug">
                           {post.title}
                         </h3>
-                        <p className="text-xs sm:text-[15px] font-light text-stone-500 dark:text-stone-400 leading-relaxed">
+                        <p className="text-xs sm:text-[13px] font-light text-stone-500 dark:text-stone-400 leading-relaxed">
                           {post.excerpt}
                         </p>
                       </div>
@@ -212,7 +212,7 @@ export default function BlogPage() {
                     <div className="p-6 pt-0 border-t border-border-custom/50 flex justify-between items-center mt-4">
                       <div className="flex space-x-1.5">
                         {post.tags.map((t) => (
-                          <span key={t} className="text-[11px] font-mono text-[#b5924b] dark:text-[#dfb15b] uppercase bg-[#dfb15b]/5 border border-[#dfb15b]/10 px-2 py-0.5 rounded">
+                          <span key={t} className="text-[9px] font-mono text-[#b5924b] dark:text-[#dfb15b] uppercase bg-[#dfb15b]/5 border border-[#dfb15b]/10 px-2 py-0.5 rounded">
                             {t}
                           </span>
                         ))}
@@ -262,7 +262,7 @@ export default function BlogPage() {
             </h1>
             <div className="flex space-x-2 pt-2">
               {activePost.tags.map((t) => (
-                <span key={t} className="text-[12px] font-mono text-[#b5924b] dark:text-[#dfb15b] uppercase bg-[#dfb15b]/10 border border-[#dfb15b]/20 px-3 py-1 rounded-full">
+                <span key={t} className="text-[10px] font-mono text-[#b5924b] dark:text-[#dfb15b] uppercase bg-[#dfb15b]/10 border border-[#dfb15b]/20 px-3 py-1 rounded-full">
                   {t}
                 </span>
               ))}

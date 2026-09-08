@@ -140,7 +140,7 @@ export default function Footer() {
             <h4 className="font-serif text-xs tracking-[0.2em] uppercase text-foreground mb-6 font-semibold">
               Newsletter
             </h4>
-            <p className="text-stone-500 dark:text-stone-400 text-[13px] font-light mb-4 leading-relaxed">
+            <p className="text-stone-500 dark:text-stone-400 text-[11px] font-light mb-4 leading-relaxed">
               Subscribe for early chapters, release reminders, and Gita reflections directly from Ketul Shah.
             </p>
             <form onSubmit={handleSubmit} className="flex flex-col space-y-2">
@@ -162,12 +162,12 @@ export default function Footer() {
                 </button>
               </div>
               {subscribed && (
-                <p className="text-[12px] text-green-600 dark:text-green-400 italic">
+                <p className="text-[10px] text-green-600 dark:text-green-400 italic">
                   Thank you! You are now subscribed.
                 </p>
               )}
               {error && (
-                <p className="text-[12px] text-red-500 italic">{error}</p>
+                <p className="text-[10px] text-red-500 italic">{error}</p>
               )}
             </form>
             
@@ -176,7 +176,7 @@ export default function Footer() {
               <ul className="space-y-3">
                 {footerLinks.legal.map((link) => (
                   <li key={link.name}>
-                    <Link href={link.href} className="text-stone-500 dark:text-stone-400 hover:text-primary transition-colors text-[12px] tracking-wider uppercase font-mono">
+                    <Link href={link.href} className="text-stone-500 dark:text-stone-400 hover:text-primary transition-colors text-[10px] tracking-wider uppercase font-mono">
                       {link.name}
                     </Link>
                   </li>
@@ -188,7 +188,7 @@ export default function Footer() {
         </div>
 
         {/* Lower Footer */}
-        <div className="flex flex-col sm:flex-row justify-between items-center pt-8 text-stone-500 dark:text-stone-400 text-[12px] font-mono tracking-widest gap-4">
+        <div className="flex flex-col sm:flex-row justify-between items-center pt-8 text-stone-500 dark:text-stone-400 text-[10px] font-mono tracking-widest gap-4">
           <p>© 2026 KETUL SHAH. ALL RIGHTS RESERVED. · PUBLISHED BY {settings.publisher_name.toUpperCase()}</p>
           <div className="flex space-x-6">
             <Link href="/privacy" className="hover:text-primary transition-colors">PRIVACY POLICY</Link>

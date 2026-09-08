@@ -149,7 +149,7 @@ export default function ImageLightbox({ src, alt, open, onClose }: ImageLightbox
         >
           <ZoomOut className="w-4 h-4" />
         </button>
-        <span className="text-[12px] text-white/60 font-mono w-10 text-center">{Math.round(scale * 100)}%</span>
+        <span className="text-[10px] text-white/60 font-mono w-10 text-center">{Math.round(scale * 100)}%</span>
         <button
           onClick={() => zoomBy(0.5)}
           className="w-9 h-9 rounded-full flex items-center justify-center text-white/80 hover:text-white bg-white/10 hover:bg-white/20 transition-colors cursor-pointer"

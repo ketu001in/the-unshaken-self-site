@@ -50,23 +50,25 @@ html {
   --font-sans: var(--font-sans);
   --font-serif: var(--font-serif);
 
-  /* Site-wide type scale, bumped +2px on top of Tailwind's defaults.
-     Every size token actually used on the site is covered, not just
-     copy-reading sizes, per a follow-up request to raise font size
-     throughout the whole site (not just body text). Line-heights are
-     unitless ratios in Tailwind's scale, so they recompute in px
-     automatically off the new font-size; no separate override needed. */
-  --text-xs: 1rem;       /* was 0.75rem (12px) -> now 16px */
-  --text-sm: 1.125rem;   /* was 0.875rem (14px) -> now 18px */
-  --text-base: 1.25rem;  /* was 1rem (16px) -> now 20px */
-  --text-lg: 1.25rem;    /* was 1.125rem (18px) -> now 20px */
-  --text-xl: 1.375rem;   /* was 1.25rem (20px) -> now 22px */
-  --text-2xl: 1.625rem;  /* was 1.5rem (24px) -> now 26px */
-  --text-3xl: 2rem;      /* was 1.875rem (30px) -> now 32px */
-  --text-4xl: 2.375rem;  /* was 2.25rem (36px) -> now 38px */
-  --text-5xl: 3.125rem;  /* was 3rem (48px) -> now 50px */
-  --text-6xl: 3.875rem;  /* was 3.75rem (60px) -> now 62px */
-  --text-7xl: 4.625rem;  /* was 4.5rem (72px) -> now 74px */
+  /* Site-wide type scale. Was bumped +2px across the board (see git
+     history), then brought back down -2px on a follow-up "decrease the
+     font size" request — net result: back to Tailwind's stock scale for
+     lg and up, and back to the site's original (pre-bump) xs/sm/base
+     values. Every size token actually used on the site is covered, not
+     just copy-reading sizes. Line-heights are unitless ratios in
+     Tailwind's scale, so they recompute in px automatically off the
+     font-size; no separate override needed. */
+  --text-xs: 0.875rem;   /* 14px */
+  --text-sm: 1rem;       /* 16px */
+  --text-base: 1.125rem; /* 18px */
+  --text-lg: 1.125rem;   /* 18px */
+  --text-xl: 1.25rem;    /* 20px */
+  --text-2xl: 1.5rem;    /* 24px */
+  --text-3xl: 1.875rem;  /* 30px */
+  --text-4xl: 2.25rem;   /* 36px */
+  --text-5xl: 3rem;      /* 48px */
+  --text-6xl: 3.75rem;   /* 60px */
+  --text-7xl: 4.5rem;    /* 72px */
 }
 
 body {

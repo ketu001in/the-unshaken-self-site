@@ -68,7 +68,7 @@ export default function FeedbackPage() {
 
       <main className="max-w-2xl mx-auto w-full px-4 py-16 flex-1 space-y-8">
         <header className="text-center space-y-3">
-          <span className="text-[12px] tracking-[0.3em] text-[#b5924b] dark:text-[#dfb15b] uppercase font-bold">
+          <span className="text-[10px] tracking-[0.3em] text-[#b5924b] dark:text-[#dfb15b] uppercase font-bold">
             We&apos;re Listening
           </span>
           <h1 className="text-3xl sm:text-4xl font-serif text-foreground">Share Your Feedback</h1>
@@ -95,7 +95,7 @@ export default function FeedbackPage() {
             <form onSubmit={handleSubmit} className="space-y-4">
               {/* Category */}
               <div className="space-y-1.5">
-                <label className="text-[12px] font-mono uppercase text-stone-400 font-bold block">
+                <label className="text-[10px] font-mono uppercase text-stone-400 font-bold block">
                   What&apos;s this about?
                 </label>
                 <select
@@ -113,7 +113,7 @@ export default function FeedbackPage() {
 
               {/* Star rating (optional) */}
               <div className="space-y-1.5">
-                <label className="text-[12px] font-mono uppercase text-stone-400 font-bold block">
+                <label className="text-[10px] font-mono uppercase text-stone-400 font-bold block">
                   Rate Your Experience (Optional)
                 </label>
                 <div className="flex items-center gap-1" onMouseLeave={() => setHoverRating(null)}>
@@ -141,7 +141,7 @@ export default function FeedbackPage() {
 
               {/* Message */}
               <div className="space-y-1.5">
-                <label className="text-[12px] font-mono uppercase text-stone-400 font-bold block">
+                <label className="text-[10px] font-mono uppercase text-stone-400 font-bold block">
                   Your Feedback *
                 </label>
                 <textarea
@@ -182,7 +182,7 @@ export default function FeedbackPage() {
               </button>
 
               {error && (
-                <div className="p-3 border border-red-500/20 bg-red-500/5 rounded-lg text-[12px] text-red-500 font-mono">
+                <div className="p-3 border border-red-500/20 bg-red-500/5 rounded-lg text-[10px] text-red-500 font-mono">
                   {error}
                 </div>
               )}

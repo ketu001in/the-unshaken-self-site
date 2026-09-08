@@ -76,7 +76,7 @@ export default function Navbar() {
               <Link
                 key={link.name}
                 href={link.href}
-                className={`text-[14px] whitespace-nowrap uppercase tracking-widest transition-colors hover:text-foreground nav-link-hover ${
+                className={`text-[12px] whitespace-nowrap uppercase tracking-widest transition-colors hover:text-foreground nav-link-hover ${
                   isActive(link.href)
                     ? "text-[#dfb15b] font-semibold"
                     : "text-muted-text"

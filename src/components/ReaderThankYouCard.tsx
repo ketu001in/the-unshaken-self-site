@@ -29,7 +29,7 @@ export default function ReaderThankYouCard() {
       </div>
       <a
         href={`mailto:${email}?subject=${encodeURIComponent("My copy of The Unshaken Self")}`}
-        className="flex-shrink-0 inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#1e3f20] hover:bg-[#142a15] dark:bg-[#dfb15b] dark:hover:bg-[#c49945] text-white dark:text-black text-[12px] uppercase tracking-widest font-bold whitespace-nowrap transition-transform hover:scale-105"
+        className="flex-shrink-0 inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#1e3f20] hover:bg-[#142a15] dark:bg-[#dfb15b] dark:hover:bg-[#c49945] text-white dark:text-black text-[10px] uppercase tracking-widest font-bold whitespace-nowrap transition-transform hover:scale-105"
       >
         <Mail className="w-3.5 h-3.5" />
         <span>Email My Order</span>

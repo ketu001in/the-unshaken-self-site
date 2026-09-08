@@ -244,7 +244,7 @@ export default function AdminDashboard() {
       <header className="py-12 px-4 border-b border-border-custom bg-white dark:bg-[#050806] relative">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-6">
           <div className="space-y-2 text-center sm:text-left">
-            <span className="text-[11px] tracking-widest font-mono text-[#dfb15b] uppercase font-bold">Admin Console</span>
+            <span className="text-[9px] tracking-widest font-mono text-[#dfb15b] uppercase font-bold">Admin Console</span>
             <h1 className="text-3xl font-serif text-foreground">Launch Analytics Dashboard</h1>
             <p className="text-xs text-muted-text font-light">
               {adminEmail ? `Signed in as ${adminEmail}` : "Loading session…"} — real sign-ups, RSVPs, reviews, and feedback from Supabase.
@@ -252,7 +252,7 @@ export default function AdminDashboard() {
           </div>
           <button
             onClick={handleSignOut}
-            className="px-4 py-2 text-[12px] font-mono border border-border-custom text-foreground rounded-lg hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer transition-colors flex items-center gap-2"
+            className="px-4 py-2 text-[10px] font-mono border border-border-custom text-foreground rounded-lg hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer transition-colors flex items-center gap-2"
           >
             <LogOut className="w-3.5 h-3.5" />
             Sign Out
@@ -272,7 +272,7 @@ export default function AdminDashboard() {
               <Users className="w-6 h-6" />
             </div>
             <div>
-              <span className="text-[12px] uppercase font-mono tracking-wider text-stone-400 font-semibold">Subscribers</span>
+              <span className="text-[10px] uppercase font-mono tracking-wider text-stone-400 font-semibold">Subscribers</span>
               <h3 className="text-2xl font-serif text-foreground font-bold mt-1">{subscribers.length}</h3>
             </div>
           </div>
@@ -283,7 +283,7 @@ export default function AdminDashboard() {
               <Calendar className="w-6 h-6" />
             </div>
             <div>
-              <span className="text-[12px] uppercase font-mono tracking-wider text-stone-400 font-semibold">Event RSVPs</span>
+              <span className="text-[10px] uppercase font-mono tracking-wider text-stone-400 font-semibold">Event RSVPs</span>
               <h3 className="text-2xl font-serif text-foreground font-bold mt-1">{rsvps.length}</h3>
             </div>
           </div>
@@ -294,7 +294,7 @@ export default function AdminDashboard() {
               <Bell className="w-6 h-6" />
             </div>
             <div>
-              <span className="text-[12px] uppercase font-mono tracking-wider text-stone-400 font-semibold">Notify-Me Waitlist</span>
+              <span className="text-[10px] uppercase font-mono tracking-wider text-stone-400 font-semibold">Notify-Me Waitlist</span>
               <h3 className="text-2xl font-serif text-foreground font-bold mt-1">{waitlist.length}</h3>
             </div>
           </div>
@@ -305,7 +305,7 @@ export default function AdminDashboard() {
               <MessageSquare className="w-6 h-6" />
             </div>
             <div>
-              <span className="text-[12px] uppercase font-mono tracking-wider text-stone-400 font-semibold">
+              <span className="text-[10px] uppercase font-mono tracking-wider text-stone-400 font-semibold">
                 Reviews ({reviews.filter((r) => r.status === "pending").length} pending)
               </span>
               <h3 className="text-2xl font-serif text-foreground font-bold mt-1">{reviews.length}</h3>
@@ -318,7 +318,7 @@ export default function AdminDashboard() {
               <Inbox className="w-6 h-6" />
             </div>
             <div>
-              <span className="text-[12px] uppercase font-mono tracking-wider text-stone-400 font-semibold">Feedback</span>
+              <span className="text-[10px] uppercase font-mono tracking-wider text-stone-400 font-semibold">Feedback</span>
               <h3 className="text-2xl font-serif text-foreground font-bold mt-1">{feedback.length}</h3>
             </div>
           </div>
@@ -330,16 +330,16 @@ export default function AdminDashboard() {
           <div className="flex justify-between items-center pb-4 border-b border-border-custom/50">
             <div>
               <h3 className="font-serif text-base text-foreground font-semibold">Conversion Tracking</h3>
-              <p className="text-[12px] text-muted-text">Illustrative sample chart — not wired to real daily counts yet.</p>
+              <p className="text-[10px] text-muted-text">Illustrative sample chart — not wired to real daily counts yet.</p>
             </div>
-            <span className="text-[11px] font-mono text-stone-400 bg-stone-500/10 px-2 py-0.5 rounded-full font-bold uppercase tracking-widest flex items-center gap-1">
+            <span className="text-[9px] font-mono text-stone-400 bg-stone-500/10 px-2 py-0.5 rounded-full font-bold uppercase tracking-widest flex items-center gap-1">
               Sample Data
               <ArrowUpRight className="w-3 h-3" />
             </span>
           </div>
 
           {/* CSS-based Bar Chart */}
-          <div className="flex items-end justify-between h-40 pt-4 max-w-lg mx-auto md:mx-0 font-mono text-[11px] text-stone-400">
+          <div className="flex items-end justify-between h-40 pt-4 max-w-lg mx-auto md:mx-0 font-mono text-[9px] text-stone-400">
             {[
               { day: "July 12", val: 12, height: "h-[30%]" },
               { day: "July 13", val: 18, height: "h-[45%]" },
@@ -487,7 +487,7 @@ export default function AdminDashboard() {
                       className="p-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 hover:bg-stone-50/50 dark:hover:bg-white/5 transition-colors"
                     >
                       <div className="space-y-2 max-w-xl">
-                        <div className="flex items-center space-x-2 text-[12px] text-muted-text font-mono">
+                        <div className="flex items-center space-x-2 text-[10px] text-muted-text font-mono">
                           <span className="text-foreground font-bold font-sans text-xs">{rev.author}</span>
                           <span>•</span>
                           <span>{rev.role}</span>
@@ -508,7 +508,7 @@ export default function AdminDashboard() {
                         {rev.status !== "approved" && (
                           <button
                             onClick={() => handleApproveReview(rev.id)}
-                            className="px-3 py-1.5 rounded-lg border border-green-500/20 text-green-600 dark:text-green-400 hover:bg-green-500/10 flex items-center gap-1 text-[12px] font-mono cursor-pointer"
+                            className="px-3 py-1.5 rounded-lg border border-green-500/20 text-green-600 dark:text-green-400 hover:bg-green-500/10 flex items-center gap-1 text-[10px] font-mono cursor-pointer"
                           >
                             <Check className="w-3.5 h-3.5" />
                             <span>Approve</span>
@@ -517,7 +517,7 @@ export default function AdminDashboard() {
                         {rev.status !== "rejected" && (
                           <button
                             onClick={() => handleRejectReview(rev.id)}
-                            className="px-3 py-1.5 rounded-lg border border-border-custom text-muted-text hover:bg-black/5 dark:hover:bg-white/5 flex items-center gap-1 text-[12px] font-mono cursor-pointer"
+                            className="px-3 py-1.5 rounded-lg border border-border-custom text-muted-text hover:bg-black/5 dark:hover:bg-white/5 flex items-center gap-1 text-[10px] font-mono cursor-pointer"
                           >
                             <XIcon className="w-3.5 h-3.5" />
                             <span>Reject</span>
@@ -525,7 +525,7 @@ export default function AdminDashboard() {
                         )}
                         <button
                           onClick={() => handleDeleteReview(rev.id)}
-                          className="px-3 py-1.5 rounded-lg border border-red-500/20 text-red-500 hover:bg-red-500/10 flex items-center gap-1 text-[12px] font-mono cursor-pointer"
+                          className="px-3 py-1.5 rounded-lg border border-red-500/20 text-red-500 hover:bg-red-500/10 flex items-center gap-1 text-[10px] font-mono cursor-pointer"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
                           <span>Delete</span>
@@ -548,7 +548,7 @@ export default function AdminDashboard() {
                       className="p-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 hover:bg-stone-50/50 dark:hover:bg-white/5 transition-colors"
                     >
                       <div className="space-y-2 max-w-xl">
-                        <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[12px] text-muted-text font-mono">
+                        <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] text-muted-text font-mono">
                           <span className="text-foreground font-bold font-sans text-xs">{fb.name}</span>
                           <span>•</span>
                           <span>{fb.email}</span>
@@ -570,7 +570,7 @@ export default function AdminDashboard() {
                       <div className="flex items-center gap-2 flex-shrink-0">
                         <button
                           onClick={() => handleDeleteFeedback(fb.id)}
-                          className="px-3 py-1.5 rounded-lg border border-red-500/20 text-red-500 hover:bg-red-500/10 flex items-center gap-1 text-[12px] font-mono cursor-pointer"
+                          className="px-3 py-1.5 rounded-lg border border-red-500/20 text-red-500 hover:bg-red-500/10 flex items-center gap-1 text-[10px] font-mono cursor-pointer"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
                           <span>Delete</span>
@@ -593,7 +593,7 @@ export default function AdminDashboard() {
                       <h3 className="font-serif text-base text-foreground font-bold border-b border-border-custom/50 pb-2">Publish New Blog Post</h3>
                       <form onSubmit={handleCreateBlogPost} className="space-y-3">
                         <div className="space-y-1">
-                          <label className="text-[12px] font-mono uppercase text-stone-400 font-bold block">Post Title *</label>
+                          <label className="text-[10px] font-mono uppercase text-stone-400 font-bold block">Post Title *</label>
                           <input
                             type="text"
                             value={blogTitle}
@@ -604,7 +604,7 @@ export default function AdminDashboard() {
                           />
                         </div>
                         <div className="space-y-1">
-                          <label className="text-[12px] font-mono uppercase text-stone-400 font-bold block">Excerpt / Summary *</label>
+                          <label className="text-[10px] font-mono uppercase text-stone-400 font-bold block">Excerpt / Summary *</label>
                           <input
                             type="text"
                             value={blogExcerpt}
@@ -615,7 +615,7 @@ export default function AdminDashboard() {
                           />
                         </div>
                         <div className="space-y-1">
-                          <label className="text-[12px] font-mono uppercase text-stone-400 font-bold block">Content (separate paragraphs by new line) *</label>
+                          <label className="text-[10px] font-mono uppercase text-stone-400 font-bold block">Content (separate paragraphs by new line) *</label>
                           <textarea
                             value={blogContent}
                             onChange={(e) => setBlogContent(e.target.value)}
@@ -627,7 +627,7 @@ export default function AdminDashboard() {
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                           <div className="space-y-1">
-                            <label className="text-[12px] font-mono uppercase text-stone-400 font-bold block">Tags (comma-separated)</label>
+                            <label className="text-[10px] font-mono uppercase text-stone-400 font-bold block">Tags (comma-separated)</label>
                             <input
                               type="text"
                               value={blogTags}
@@ -637,7 +637,7 @@ export default function AdminDashboard() {
                             />
                           </div>
                           <div className="space-y-1">
-                            <label className="text-[12px] font-mono uppercase text-stone-400 font-bold block">Read Time</label>
+                            <label className="text-[10px] font-mono uppercase text-stone-400 font-bold block">Read Time</label>
                             <input
                               type="text"
                               value={blogReadTime}
@@ -666,20 +666,20 @@ export default function AdminDashboard() {
                           <button
                             type="button"
                             onClick={resetEventForm}
-                            className="text-[12px] font-mono uppercase text-muted-text hover:text-foreground cursor-pointer"
+                            className="text-[10px] font-mono uppercase text-muted-text hover:text-foreground cursor-pointer"
                           >
                             Cancel Edit
                           </button>
                         )}
                       </div>
                       {editingEventId && (
-                        <p className="text-[12px] text-[#dfb15b] font-mono -mt-2">
+                        <p className="text-[10px] text-[#dfb15b] font-mono -mt-2">
                           Editing "{eventTitle}" — change the date/time below and save. RSVPs for this event stay linked.
                         </p>
                       )}
                       <form onSubmit={handleSubmitEvent} className="space-y-3">
                         <div className="space-y-1">
-                          <label className="text-[12px] font-mono uppercase text-stone-400 font-bold block">Event Title *</label>
+                          <label className="text-[10px] font-mono uppercase text-stone-400 font-bold block">Event Title *</label>
                           <input
                             type="text"
                             value={eventTitle}
@@ -690,7 +690,7 @@ export default function AdminDashboard() {
                           />
                         </div>
                         <div className="space-y-1">
-                          <label className="text-[12px] font-mono uppercase text-stone-400 font-bold block">Description *</label>
+                          <label className="text-[10px] font-mono uppercase text-stone-400 font-bold block">Description *</label>
                           <input
                             type="text"
                             value={eventDesc}
@@ -702,7 +702,7 @@ export default function AdminDashboard() {
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                           <div className="space-y-1">
-                            <label className="text-[12px] font-mono uppercase text-stone-400 font-bold block">Date *</label>
+                            <label className="text-[10px] font-mono uppercase text-stone-400 font-bold block">Date *</label>
                             <input
                               type="text"
                               value={eventDate}
@@ -713,7 +713,7 @@ export default function AdminDashboard() {
                             />
                           </div>
                           <div className="space-y-1">
-                            <label className="text-[12px] font-mono uppercase text-stone-400 font-bold block">Time</label>
+                            <label className="text-[10px] font-mono uppercase text-stone-400 font-bold block">Time</label>
                             <input
                               type="text"
                               value={eventTime}
@@ -725,7 +725,7 @@ export default function AdminDashboard() {
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                           <div className="space-y-1">
-                            <label className="text-[12px] font-mono uppercase text-stone-400 font-bold block">Location / Link *</label>
+                            <label className="text-[10px] font-mono uppercase text-stone-400 font-bold block">Location / Link *</label>
                             <input
                               type="text"
                               value={eventLocation}
@@ -736,7 +736,7 @@ export default function AdminDashboard() {
                             />
                           </div>
                           <div className="space-y-1">
-                            <label className="text-[12px] font-mono uppercase text-stone-400 font-bold block">Event Type</label>
+                            <label className="text-[10px] font-mono uppercase text-stone-400 font-bold block">Event Type</label>
                             <select
                               value={eventType}
                               onChange={(e) => setEventType(e.target.value as any)}
@@ -771,11 +771,11 @@ export default function AdminDashboard() {
                             <div key={post.id} className="p-3 border border-border-custom bg-stone-50/50 dark:bg-black/20 rounded-xl text-xs flex justify-between items-center gap-4">
                               <div className="space-y-1 min-w-0 flex-1">
                                 <p className="font-semibold text-foreground truncate">{post.title}</p>
-                                <p className="text-[12px] text-muted-text font-mono uppercase">{post.date} • {post.readTime}</p>
+                                <p className="text-[10px] text-muted-text font-mono uppercase">{post.date} • {post.readTime}</p>
                               </div>
                               <button
                                 onClick={() => handleDeleteBlogPost(post.id)}
-                                className="px-2.5 py-1 text-[11px] font-mono border border-red-500/20 text-red-500 rounded hover:bg-red-500/10 cursor-pointer flex-shrink-0"
+                                className="px-2.5 py-1 text-[9px] font-mono border border-red-500/20 text-red-500 rounded hover:bg-red-500/10 cursor-pointer flex-shrink-0"
                               >
                                 Delete
                               </button>
@@ -803,18 +803,18 @@ export default function AdminDashboard() {
                             >
                               <div className="space-y-1 min-w-0 flex-1">
                                 <p className="font-semibold text-foreground truncate">{ev.title}</p>
-                                <p className="text-[12px] text-[#dfb15b] font-mono uppercase">{ev.date} • {ev.time || "TBD"} • {ev.type}</p>
+                                <p className="text-[10px] text-[#dfb15b] font-mono uppercase">{ev.date} • {ev.time || "TBD"} • {ev.type}</p>
                               </div>
                               <div className="flex items-center gap-2 flex-shrink-0">
                                 <button
                                   onClick={() => handleEditEventClick(ev)}
-                                  className="px-2.5 py-1 text-[11px] font-mono border border-border-custom text-foreground rounded hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer"
+                                  className="px-2.5 py-1 text-[9px] font-mono border border-border-custom text-foreground rounded hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer"
                                 >
                                   Edit
                                 </button>
                                 <button
                                   onClick={() => handleDeleteEvent(ev.id)}
-                                  className="px-2.5 py-1 text-[11px] font-mono border border-red-500/20 text-red-500 rounded hover:bg-red-500/10 cursor-pointer"
+                                  className="px-2.5 py-1 text-[9px] font-mono border border-red-500/20 text-red-500 rounded hover:bg-red-500/10 cursor-pointer"
                                 >
                                   Delete
                                 </button>
