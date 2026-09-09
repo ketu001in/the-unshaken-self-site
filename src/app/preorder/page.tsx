@@ -14,6 +14,8 @@ import ReaderThankYouCard from "@/components/ReaderThankYouCard";
 
 const REFERRAL_CODE_KEY = "unshaken_referral_code";
 
+type RegionKey = "in" | "us" | "ca" | "au";
+
 type PreorderStore = {
   name: string;
   format: string;
@@ -24,6 +26,10 @@ type PreorderStore = {
   isPopular: boolean;
   features: string[];
   logo: "amazon" | "notionpress" | "flipkart";
+  // Which region tab this card belongs to. Older CMS content saved before
+  // regions existed won't have this field — treated as "in" (India), which
+  // is what all of it was.
+  regionKey?: RegionKey;
 };
 
 type PreorderContent = {
@@ -31,11 +37,18 @@ type PreorderContent = {
   stores: PreorderStore[];
 };
 
+const REGION_TABS: { key: RegionKey; flag: string; label: string }[] = [
+  { key: "in", flag: "🇮🇳", label: "India" },
+  { key: "us", flag: "🇺🇸", label: "United States" },
+  { key: "ca", flag: "🇨🇦", label: "Canada" },
+  { key: "au", flag: "🇦🇺", label: "Australia" },
+];
+
 // Real, live, confirmed-matching prices/links across all three platforms
 // (Amazon.in, Flipkart, and Notion Press) — see the ASINs/pids/URLs the
 // author supplied. Notion Press is the author's own recommended store.
 const DEFAULT_PREORDER_CONTENT: PreorderContent = {
-  header_subtitle: "The Unshaken Self is available now — choose your favorite store and format below. Notion Press is the author's own recommended store; Amazon.in and Flipkart also ship fast across India.",
+  header_subtitle: "The Unshaken Self is available now in India, the United States, Canada, and Australia — pick your region above, then choose your favorite store and format below. Notion Press is the author's own recommended store; Amazon.in and Flipkart also ship fast across India.",
   stores: [
     {
       name: "Notion Press — Paperback",
@@ -46,6 +59,7 @@ const DEFAULT_PREORDER_CONTENT: PreorderContent = {
       link: "https://direct.notionpress.com/in/read/the-unshaken-self/paperback",
       isPopular: true,
       logo: "notionpress",
+      regionKey: "in",
       features: ["Author's own recommended store.", "Direct from the publisher.", "Track your shipping status online."]
     },
     {
@@ -57,6 +71,7 @@ const DEFAULT_PREORDER_CONTENT: PreorderContent = {
       link: "https://direct.notionpress.com/in/read/the-unshaken-self-hardcover/hardcover",
       isPopular: true,
       logo: "notionpress",
+      regionKey: "in",
       features: ["Author's own recommended store.", "Premium hardbound edition.", "Direct from the publisher."]
     },
     {
@@ -68,6 +83,7 @@ const DEFAULT_PREORDER_CONTENT: PreorderContent = {
       link: "https://www.amazon.in/dp/B0HHNKF7FQ",
       isPopular: false,
       logo: "amazon",
+      regionKey: "in",
       features: ["Now available with Amazon Prime.", "Fast Amazon delivery.", "Sold by Notion Press, fulfilled by Amazon."]
     },
     {
@@ -79,6 +95,7 @@ const DEFAULT_PREORDER_CONTENT: PreorderContent = {
       link: "https://www.amazon.in/dp/B0HHNW1DJH",
       isPopular: false,
       logo: "amazon",
+      regionKey: "in",
       features: ["Now available with Amazon Prime.", "Fast Amazon delivery.", "Sold by Notion Press, fulfilled by Amazon."]
     },
     {
@@ -90,6 +107,7 @@ const DEFAULT_PREORDER_CONTENT: PreorderContent = {
       link: "https://www.flipkart.com/the-unshaken-self/p/itm1004d27433425?pid=9798906961297&affid=editornoti",
       isPopular: false,
       logo: "flipkart",
+      regionKey: "in",
       features: ["7 days replacement.", "Sold by NotionPress on Flipkart."]
     },
     {
@@ -101,7 +119,85 @@ const DEFAULT_PREORDER_CONTENT: PreorderContent = {
       link: "https://www.flipkart.com/unshaken-self-wisdom-gita-life-without-doubt-worry-fear/p/itm1004d27433425?pid=9798906961303&affid=editornoti",
       isPopular: false,
       logo: "flipkart",
+      regionKey: "in",
       features: ["7 days replacement.", "Sold by NotionPress on Flipkart."]
+    },
+    // United States — verified live via Amazon.com (delivery location set
+    // to a US zip before reading the price).
+    {
+      name: "Amazon.com — Paperback",
+      format: "Paperback Edition",
+      region: "Amazon.com",
+      status: "Available Now",
+      price: "$16.99",
+      link: "https://www.amazon.com/dp/B0HHNKF7FQ",
+      isPopular: false,
+      logo: "amazon",
+      regionKey: "us",
+      features: ["Ships from Amazon.com.", "Sold by Notion Press, fulfilled by Amazon."]
+    },
+    {
+      name: "Amazon.com — Hardcover",
+      format: "Hardcover Edition",
+      region: "Amazon.com",
+      status: "Available Now",
+      price: "$27.99",
+      link: "https://www.amazon.com/dp/B0HHNW1DJH",
+      isPopular: false,
+      logo: "amazon",
+      regionKey: "us",
+      features: ["Ships from Amazon.com.", "Sold by Notion Press, fulfilled by Amazon."]
+    },
+    // Canada — verified live via Amazon.ca.
+    {
+      name: "Amazon.ca — Paperback",
+      format: "Paperback Edition",
+      region: "Amazon.ca",
+      status: "Available Now",
+      price: "$23.41",
+      link: "https://www.amazon.ca/dp/B0HHNKF7FQ",
+      isPopular: false,
+      logo: "amazon",
+      regionKey: "ca",
+      features: ["Ships from Amazon.ca.", "Sold by Notion Press, fulfilled by Amazon."]
+    },
+    {
+      name: "Amazon.ca — Hardcover",
+      format: "Hardcover Edition",
+      region: "Amazon.ca",
+      status: "Available Now",
+      price: "$38.72",
+      link: "https://www.amazon.ca/dp/B0HHNW1DJH",
+      isPopular: false,
+      logo: "amazon",
+      regionKey: "ca",
+      features: ["Ships from Amazon.ca.", "Sold by Notion Press, fulfilled by Amazon."]
+    },
+    // Australia — verified live via Amazon.com.au (delivery location set
+    // to a Sydney postcode before reading the price).
+    {
+      name: "Amazon.com.au — Paperback",
+      format: "Paperback Edition",
+      region: "Amazon.com.au",
+      status: "Available Now",
+      price: "$26.39",
+      link: "https://www.amazon.com.au/dp/B0HHNKF7FQ",
+      isPopular: false,
+      logo: "amazon",
+      regionKey: "au",
+      features: ["Ships from Amazon.com.au.", "Sold by Notion Press, fulfilled by Amazon."]
+    },
+    {
+      name: "Amazon.com.au — Hardcover",
+      format: "Hardcover Edition",
+      region: "Amazon.com.au",
+      status: "Available Now",
+      price: "$57.73",
+      link: "https://www.amazon.com.au/dp/B0HHNW1DJH",
+      isPopular: false,
+      logo: "amazon",
+      regionKey: "au",
+      features: ["Ships from Amazon.com.au.", "Sold by Notion Press, fulfilled by Amazon."]
     }
   ]
 };
@@ -114,6 +210,7 @@ export default function PreorderPage() {
   const [waitlisted, setWaitlisted] = useState(false);
   const [referralCode, setReferralCode] = useState<string | null>(null);
   const [referredByCode, setReferredByCode] = useState<string | null>(null);
+  const [activeRegion, setActiveRegion] = useState<RegionKey>("in");
 
   useEffect(() => {
     fetchPageContent("preorder", DEFAULT_PREORDER_CONTENT).then(setContent);
@@ -162,7 +259,7 @@ export default function PreorderPage() {
     setWaitlistName("");
   };
 
-  const stores = content.stores;
+  const stores = content.stores.filter((s) => (s.regionKey ?? "in") === activeRegion);
 
   return (
     <div className="flex-1 flex flex-col pt-16 bg-[#faf8f5] dark:bg-[#070b09]">
@@ -199,8 +296,31 @@ export default function PreorderPage() {
           </h3>
         </div>
 
-        {/* Store Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Region Tabs — the book is live on the same two ASINs across
+            India, US, Canada, and Australia; switching tabs filters the
+            grid below to that region's stores instead of showing all
+            regions' cards at once. */}
+        <div className="flex flex-wrap items-center justify-center gap-2">
+          {REGION_TABS.map((tab) => (
+            <button
+              key={tab.key}
+              onClick={() => setActiveRegion(tab.key)}
+              className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[11px] uppercase tracking-widest font-bold border transition-all cursor-pointer ${
+                activeRegion === tab.key
+                  ? "bg-[#1e3f20] dark:bg-[#dfb15b] text-white dark:text-black border-transparent shadow-md"
+                  : "border-border-custom text-muted-text hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5"
+              }`}
+            >
+              <span aria-hidden="true">{tab.flag}</span>
+              <span>{tab.label}</span>
+            </button>
+          ))}
+        </div>
+
+        {/* Store Cards Grid — regions besides India only have two cards
+            (Paperback/Hardcover), so cap the grid at two columns for those
+            rather than leaving three empty slots in a four-column row. */}
+        <div className={`grid grid-cols-1 sm:grid-cols-2 ${stores.length > 2 ? "lg:grid-cols-4" : "lg:grid-cols-2 max-w-2xl mx-auto"} gap-6`}>
           {stores.map((store, idx) => {
             const Logo = store.logo === "notionpress" ? NotionPressLogo : store.logo === "flipkart" ? FlipkartLogo : AmazonLogo;
             return (

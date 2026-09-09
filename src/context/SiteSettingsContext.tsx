@@ -47,6 +47,22 @@ export type SiteSettings = {
   buy_link_notionpress_hardcover: string | null;
   price_paperback: string;
   price_hardcover: string;
+  // Regional Amazon listings — same two ASINs as India, live on each
+  // country's own Amazon domain with that country's native price. Kept as
+  // separate per-region fields (rather than a nested object) to match the
+  // flat key/value shape of the site_settings table.
+  buy_link_amazon_us_paperback: string | null;
+  buy_link_amazon_us_hardcover: string | null;
+  buy_link_amazon_ca_paperback: string | null;
+  buy_link_amazon_ca_hardcover: string | null;
+  buy_link_amazon_au_paperback: string | null;
+  buy_link_amazon_au_hardcover: string | null;
+  price_paperback_us: string;
+  price_hardcover_us: string;
+  price_paperback_ca: string;
+  price_hardcover_ca: string;
+  price_paperback_au: string;
+  price_hardcover_au: string;
   publisher_name: string;
   // "Ask Ketul" live session — blank datetime means "coming soon" in the
   // banner rather than exposing an empty/broken join link.
@@ -92,6 +108,21 @@ export const DEFAULT_SITE_SETTINGS: SiteSettings = {
   buy_link_notionpress_hardcover: "https://direct.notionpress.com/in/read/the-unshaken-self-hardcover/hardcover",
   price_paperback: "₹499",
   price_hardcover: "₹575",
+  // Verified live via Amazon.{com,ca,com.au} on 9 Sept 2026 (correct
+  // delivery-location set per domain before reading the price — Amazon
+  // shows a stale/cross-border price otherwise).
+  buy_link_amazon_us_paperback: "https://www.amazon.com/dp/B0HHNKF7FQ",
+  buy_link_amazon_us_hardcover: "https://www.amazon.com/dp/B0HHNW1DJH",
+  buy_link_amazon_ca_paperback: "https://www.amazon.ca/dp/B0HHNKF7FQ",
+  buy_link_amazon_ca_hardcover: "https://www.amazon.ca/dp/B0HHNW1DJH",
+  buy_link_amazon_au_paperback: "https://www.amazon.com.au/dp/B0HHNKF7FQ",
+  buy_link_amazon_au_hardcover: "https://www.amazon.com.au/dp/B0HHNW1DJH",
+  price_paperback_us: "$16.99",
+  price_hardcover_us: "$27.99",
+  price_paperback_ca: "$23.41",
+  price_hardcover_ca: "$38.72",
+  price_paperback_au: "$26.39",
+  price_hardcover_au: "$57.73",
   publisher_name: "Clever Fox Publishers, India",
   live_session_title: "Ask Ketul — Live Q&A",
   live_session_datetime: "",

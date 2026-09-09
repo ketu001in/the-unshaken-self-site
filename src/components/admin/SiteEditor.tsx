@@ -78,6 +78,8 @@ const DEFAULT_HOMEPAGE_CONTENT: HomepageContent = {
   ]
 };
 
+type PreorderRegionKey = "in" | "us" | "ca" | "au";
+
 type PreorderStore = {
   name: string;
   format: string;
@@ -88,6 +90,8 @@ type PreorderStore = {
   isPopular: boolean;
   features: string[];
   logo: "amazon" | "notionpress" | "flipkart";
+  // Which region tab this card shows under on the public Preorder page.
+  regionKey?: PreorderRegionKey;
 };
 
 type PreorderContent = {
@@ -96,14 +100,20 @@ type PreorderContent = {
 };
 
 const DEFAULT_PREORDER_CONTENT: PreorderContent = {
-  header_subtitle: "The Unshaken Self is available now — choose your favorite store and format below. Notion Press is the author's own recommended store; Amazon.in and Flipkart also ship fast across India.",
+  header_subtitle: "The Unshaken Self is available now in India, the United States, Canada, and Australia — pick your region above, then choose your favorite store and format below. Notion Press is the author's own recommended store; Amazon.in and Flipkart also ship fast across India.",
   stores: [
-    { name: "Notion Press — Paperback", format: "Paperback Edition", region: "India + International Shipping", status: "Available Now", price: "₹499", link: "https://direct.notionpress.com/in/read/the-unshaken-self/paperback", isPopular: true, logo: "notionpress", features: ["Author's own recommended store.", "Direct from the publisher.", "Track your shipping status online."] },
-    { name: "Notion Press — Hardcover", format: "Hardcover Edition", region: "India + International Shipping", status: "Available Now", price: "₹575", link: "https://direct.notionpress.com/in/read/the-unshaken-self-hardcover/hardcover", isPopular: true, logo: "notionpress", features: ["Author's own recommended store.", "Premium hardbound edition.", "Direct from the publisher."] },
-    { name: "Amazon.in — Paperback", format: "Paperback Edition", region: "Amazon.in", status: "Available Now", price: "₹499", link: "https://www.amazon.in/dp/B0HHNKF7FQ", isPopular: false, logo: "amazon", features: ["Now available with Amazon Prime.", "Fast Amazon delivery.", "Sold by Notion Press, fulfilled by Amazon."] },
-    { name: "Amazon.in — Hardcover", format: "Hardcover Edition", region: "Amazon.in", status: "Available Now", price: "₹575", link: "https://www.amazon.in/dp/B0HHNW1DJH", isPopular: false, logo: "amazon", features: ["Now available with Amazon Prime.", "Fast Amazon delivery.", "Sold by Notion Press, fulfilled by Amazon."] },
-    { name: "Flipkart — Paperback", format: "Paperback Edition", region: "Flipkart", status: "Available Now", price: "₹499", link: "https://www.flipkart.com/the-unshaken-self/p/itm1004d27433425?pid=9798906961297&affid=editornoti", isPopular: false, logo: "flipkart", features: ["7 days replacement.", "Sold by NotionPress on Flipkart."] },
-    { name: "Flipkart — Hardcover", format: "Hardcover Edition", region: "Flipkart", status: "Available Now", price: "₹575", link: "https://www.flipkart.com/unshaken-self-wisdom-gita-life-without-doubt-worry-fear/p/itm1004d27433425?pid=9798906961303&affid=editornoti", isPopular: false, logo: "flipkart", features: ["7 days replacement.", "Sold by NotionPress on Flipkart."] }
+    { name: "Notion Press — Paperback", format: "Paperback Edition", region: "India + International Shipping", status: "Available Now", price: "₹499", link: "https://direct.notionpress.com/in/read/the-unshaken-self/paperback", isPopular: true, logo: "notionpress", regionKey: "in", features: ["Author's own recommended store.", "Direct from the publisher.", "Track your shipping status online."] },
+    { name: "Notion Press — Hardcover", format: "Hardcover Edition", region: "India + International Shipping", status: "Available Now", price: "₹575", link: "https://direct.notionpress.com/in/read/the-unshaken-self-hardcover/hardcover", isPopular: true, logo: "notionpress", regionKey: "in", features: ["Author's own recommended store.", "Premium hardbound edition.", "Direct from the publisher."] },
+    { name: "Amazon.in — Paperback", format: "Paperback Edition", region: "Amazon.in", status: "Available Now", price: "₹499", link: "https://www.amazon.in/dp/B0HHNKF7FQ", isPopular: false, logo: "amazon", regionKey: "in", features: ["Now available with Amazon Prime.", "Fast Amazon delivery.", "Sold by Notion Press, fulfilled by Amazon."] },
+    { name: "Amazon.in — Hardcover", format: "Hardcover Edition", region: "Amazon.in", status: "Available Now", price: "₹575", link: "https://www.amazon.in/dp/B0HHNW1DJH", isPopular: false, logo: "amazon", regionKey: "in", features: ["Now available with Amazon Prime.", "Fast Amazon delivery.", "Sold by Notion Press, fulfilled by Amazon."] },
+    { name: "Flipkart — Paperback", format: "Paperback Edition", region: "Flipkart", status: "Available Now", price: "₹499", link: "https://www.flipkart.com/the-unshaken-self/p/itm1004d27433425?pid=9798906961297&affid=editornoti", isPopular: false, logo: "flipkart", regionKey: "in", features: ["7 days replacement.", "Sold by NotionPress on Flipkart."] },
+    { name: "Flipkart — Hardcover", format: "Hardcover Edition", region: "Flipkart", status: "Available Now", price: "₹575", link: "https://www.flipkart.com/unshaken-self-wisdom-gita-life-without-doubt-worry-fear/p/itm1004d27433425?pid=9798906961303&affid=editornoti", isPopular: false, logo: "flipkart", regionKey: "in", features: ["7 days replacement.", "Sold by NotionPress on Flipkart."] },
+    { name: "Amazon.com — Paperback", format: "Paperback Edition", region: "Amazon.com", status: "Available Now", price: "$16.99", link: "https://www.amazon.com/dp/B0HHNKF7FQ", isPopular: false, logo: "amazon", regionKey: "us", features: ["Ships from Amazon.com.", "Sold by Notion Press, fulfilled by Amazon."] },
+    { name: "Amazon.com — Hardcover", format: "Hardcover Edition", region: "Amazon.com", status: "Available Now", price: "$27.99", link: "https://www.amazon.com/dp/B0HHNW1DJH", isPopular: false, logo: "amazon", regionKey: "us", features: ["Ships from Amazon.com.", "Sold by Notion Press, fulfilled by Amazon."] },
+    { name: "Amazon.ca — Paperback", format: "Paperback Edition", region: "Amazon.ca", status: "Available Now", price: "$23.41", link: "https://www.amazon.ca/dp/B0HHNKF7FQ", isPopular: false, logo: "amazon", regionKey: "ca", features: ["Ships from Amazon.ca.", "Sold by Notion Press, fulfilled by Amazon."] },
+    { name: "Amazon.ca — Hardcover", format: "Hardcover Edition", region: "Amazon.ca", status: "Available Now", price: "$38.72", link: "https://www.amazon.ca/dp/B0HHNW1DJH", isPopular: false, logo: "amazon", regionKey: "ca", features: ["Ships from Amazon.ca.", "Sold by Notion Press, fulfilled by Amazon."] },
+    { name: "Amazon.com.au — Paperback", format: "Paperback Edition", region: "Amazon.com.au", status: "Available Now", price: "$26.39", link: "https://www.amazon.com.au/dp/B0HHNKF7FQ", isPopular: false, logo: "amazon", regionKey: "au", features: ["Ships from Amazon.com.au.", "Sold by Notion Press, fulfilled by Amazon."] },
+    { name: "Amazon.com.au — Hardcover", format: "Hardcover Edition", region: "Amazon.com.au", status: "Available Now", price: "$57.73", link: "https://www.amazon.com.au/dp/B0HHNW1DJH", isPopular: false, logo: "amazon", regionKey: "au", features: ["Ships from Amazon.com.au.", "Sold by Notion Press, fulfilled by Amazon."] }
   ]
 };
 
@@ -544,6 +554,18 @@ export default function SiteEditor() {
       saveSiteSetting("buy_link_notionpress_hardcover", settings.buy_link_notionpress_hardcover),
       saveSiteSetting("price_paperback", settings.price_paperback),
       saveSiteSetting("price_hardcover", settings.price_hardcover),
+      saveSiteSetting("buy_link_amazon_us_paperback", settings.buy_link_amazon_us_paperback),
+      saveSiteSetting("buy_link_amazon_us_hardcover", settings.buy_link_amazon_us_hardcover),
+      saveSiteSetting("buy_link_amazon_ca_paperback", settings.buy_link_amazon_ca_paperback),
+      saveSiteSetting("buy_link_amazon_ca_hardcover", settings.buy_link_amazon_ca_hardcover),
+      saveSiteSetting("buy_link_amazon_au_paperback", settings.buy_link_amazon_au_paperback),
+      saveSiteSetting("buy_link_amazon_au_hardcover", settings.buy_link_amazon_au_hardcover),
+      saveSiteSetting("price_paperback_us", settings.price_paperback_us),
+      saveSiteSetting("price_hardcover_us", settings.price_hardcover_us),
+      saveSiteSetting("price_paperback_ca", settings.price_paperback_ca),
+      saveSiteSetting("price_hardcover_ca", settings.price_hardcover_ca),
+      saveSiteSetting("price_paperback_au", settings.price_paperback_au),
+      saveSiteSetting("price_hardcover_au", settings.price_hardcover_au),
     ]);
     await refreshSiteSettings();
     flashSaved("general");
@@ -782,6 +804,109 @@ export default function SiteEditor() {
               value={settings.buy_link_flipkart_hardcover ?? ""}
               onChange={(e) => setSettings((p) => ({ ...p, buy_link_flipkart_hardcover: e.target.value || null }))}
               placeholder="https://www.flipkart.com/..."
+            />
+          </Field>
+
+          <h3 className="font-serif text-base text-foreground font-bold pt-4">Regional Buy Links &amp; Pricing</h3>
+          <p className="text-[11px] text-muted-text -mt-2">
+            Same two ASINs as India, live on each country&apos;s own Amazon domain with that
+            country&apos;s native price. Drives the region picker in the Buy Now modal and the
+            region tabs on the Preorder page.
+          </p>
+
+          <p className="text-[10px] uppercase tracking-widest font-bold text-muted-text pt-1">United States</p>
+          <div className="grid grid-cols-2 gap-3">
+            <Field label="Price — Paperback">
+              <TextInput
+                value={settings.price_paperback_us}
+                onChange={(e) => setSettings((p) => ({ ...p, price_paperback_us: e.target.value }))}
+                placeholder="$16.99"
+              />
+            </Field>
+            <Field label="Price — Hardcover">
+              <TextInput
+                value={settings.price_hardcover_us}
+                onChange={(e) => setSettings((p) => ({ ...p, price_hardcover_us: e.target.value }))}
+                placeholder="$27.99"
+              />
+            </Field>
+          </div>
+          <Field label="Amazon.com — Paperback Link">
+            <TextInput
+              value={settings.buy_link_amazon_us_paperback ?? ""}
+              onChange={(e) => setSettings((p) => ({ ...p, buy_link_amazon_us_paperback: e.target.value || null }))}
+              placeholder="https://www.amazon.com/dp/..."
+            />
+          </Field>
+          <Field label="Amazon.com — Hardcover Link">
+            <TextInput
+              value={settings.buy_link_amazon_us_hardcover ?? ""}
+              onChange={(e) => setSettings((p) => ({ ...p, buy_link_amazon_us_hardcover: e.target.value || null }))}
+              placeholder="https://www.amazon.com/dp/..."
+            />
+          </Field>
+
+          <p className="text-[10px] uppercase tracking-widest font-bold text-muted-text pt-1">Canada</p>
+          <div className="grid grid-cols-2 gap-3">
+            <Field label="Price — Paperback">
+              <TextInput
+                value={settings.price_paperback_ca}
+                onChange={(e) => setSettings((p) => ({ ...p, price_paperback_ca: e.target.value }))}
+                placeholder="$23.41"
+              />
+            </Field>
+            <Field label="Price — Hardcover">
+              <TextInput
+                value={settings.price_hardcover_ca}
+                onChange={(e) => setSettings((p) => ({ ...p, price_hardcover_ca: e.target.value }))}
+                placeholder="$38.72"
+              />
+            </Field>
+          </div>
+          <Field label="Amazon.ca — Paperback Link">
+            <TextInput
+              value={settings.buy_link_amazon_ca_paperback ?? ""}
+              onChange={(e) => setSettings((p) => ({ ...p, buy_link_amazon_ca_paperback: e.target.value || null }))}
+              placeholder="https://www.amazon.ca/dp/..."
+            />
+          </Field>
+          <Field label="Amazon.ca — Hardcover Link">
+            <TextInput
+              value={settings.buy_link_amazon_ca_hardcover ?? ""}
+              onChange={(e) => setSettings((p) => ({ ...p, buy_link_amazon_ca_hardcover: e.target.value || null }))}
+              placeholder="https://www.amazon.ca/dp/..."
+            />
+          </Field>
+
+          <p className="text-[10px] uppercase tracking-widest font-bold text-muted-text pt-1">Australia</p>
+          <div className="grid grid-cols-2 gap-3">
+            <Field label="Price — Paperback">
+              <TextInput
+                value={settings.price_paperback_au}
+                onChange={(e) => setSettings((p) => ({ ...p, price_paperback_au: e.target.value }))}
+                placeholder="$26.39"
+              />
+            </Field>
+            <Field label="Price — Hardcover">
+              <TextInput
+                value={settings.price_hardcover_au}
+                onChange={(e) => setSettings((p) => ({ ...p, price_hardcover_au: e.target.value }))}
+                placeholder="$57.73"
+              />
+            </Field>
+          </div>
+          <Field label="Amazon.com.au — Paperback Link">
+            <TextInput
+              value={settings.buy_link_amazon_au_paperback ?? ""}
+              onChange={(e) => setSettings((p) => ({ ...p, buy_link_amazon_au_paperback: e.target.value || null }))}
+              placeholder="https://www.amazon.com.au/dp/..."
+            />
+          </Field>
+          <Field label="Amazon.com.au — Hardcover Link">
+            <TextInput
+              value={settings.buy_link_amazon_au_hardcover ?? ""}
+              onChange={(e) => setSettings((p) => ({ ...p, buy_link_amazon_au_hardcover: e.target.value || null }))}
+              placeholder="https://www.amazon.com.au/dp/..."
             />
           </Field>
 
@@ -1509,6 +1634,22 @@ export default function SiteEditor() {
                       <option value="flipkart">Flipkart</option>
                     </select>
                   </Field>
+                  <Field label="Region Tab">
+                    <select
+                      value={store.regionKey ?? "in"}
+                      onChange={(e) => setPreorder((p) => {
+                        const next = [...p.stores];
+                        next[idx] = { ...next[idx], regionKey: e.target.value as PreorderRegionKey };
+                        return { ...p, stores: next };
+                      })}
+                      className={inputClass}
+                    >
+                      <option value="in">🇮🇳 India</option>
+                      <option value="us">🇺🇸 United States</option>
+                      <option value="ca">🇨🇦 Canada</option>
+                      <option value="au">🇦🇺 Australia</option>
+                    </select>
+                  </Field>
                 </div>
                 <Field label="Buy Link (opens in a new tab)">
                   <TextInput
@@ -1546,7 +1687,7 @@ export default function SiteEditor() {
               </div>
             ))}
             <button
-              onClick={() => setPreorder((p) => ({ ...p, stores: [...p.stores, { name: "", format: "", region: "", status: "Available Now", price: "", link: "", isPopular: false, logo: "amazon" as const, features: [] }] }))}
+              onClick={() => setPreorder((p) => ({ ...p, stores: [...p.stores, { name: "", format: "", region: "", status: "Available Now", price: "", link: "", isPopular: false, logo: "amazon" as const, regionKey: "in" as const, features: [] }] }))}
               className="px-3 py-2 rounded-lg border border-dashed border-border-custom text-xs flex items-center gap-2 cursor-pointer hover:bg-black/5 dark:hover:bg-white/5"
             >
               <Plus className="w-3.5 h-3.5" /> Add Store / Edition Card

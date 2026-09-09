@@ -2,8 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { ShoppingBag, X, Sparkles, Truck } from "lucide-react";
-import { useSiteSettings } from "@/context/SiteSettingsContext";
+import { ShoppingBag, X, Sparkles, Truck, Globe2 } from "lucide-react";
+import { useSiteSettings, type SiteSettings } from "@/context/SiteSettingsContext";
 import { AmazonLogo, NotionPressLogo, FlipkartLogo } from "./StoreLogos";
 
 type BuyNowButtonProps = {
@@ -19,10 +19,50 @@ type BuyNowButtonProps = {
   hideTrigger?: boolean;
 };
 
+type Region = "in" | "us" | "ca" | "au";
+
+// Amazon is live on the same two ASINs across all four regions — this
+// picker is what keeps four regions' worth of links from stacking the
+// modal past a usable height: only the selected region's Amazon card
+// content is rendered, everything else swaps under it.
+const REGIONS: { key: Region; flag: string; label: string; domain: string }[] = [
+  { key: "in", flag: "🇮🇳", label: "India", domain: "Amazon.in" },
+  { key: "us", flag: "🇺🇸", label: "United States", domain: "Amazon.com" },
+  { key: "ca", flag: "🇨🇦", label: "Canada", domain: "Amazon.ca" },
+  { key: "au", flag: "🇦🇺", label: "Australia", domain: "Amazon.com.au" },
+];
+
+function amazonEditionsFor(region: Region, settings: SiteSettings) {
+  switch (region) {
+    case "us":
+      return [
+        { label: "Paperback", price: settings.price_paperback_us, link: settings.buy_link_amazon_us_paperback },
+        { label: "Hardcover", price: settings.price_hardcover_us, link: settings.buy_link_amazon_us_hardcover },
+      ];
+    case "ca":
+      return [
+        { label: "Paperback", price: settings.price_paperback_ca, link: settings.buy_link_amazon_ca_paperback },
+        { label: "Hardcover", price: settings.price_hardcover_ca, link: settings.buy_link_amazon_ca_hardcover },
+      ];
+    case "au":
+      return [
+        { label: "Paperback", price: settings.price_paperback_au, link: settings.buy_link_amazon_au_paperback },
+        { label: "Hardcover", price: settings.price_hardcover_au, link: settings.buy_link_amazon_au_hardcover },
+      ];
+    case "in":
+    default:
+      return [
+        { label: "Paperback", price: settings.price_paperback, link: settings.buy_link_amazon_paperback },
+        { label: "Hardcover", price: settings.price_hardcover, link: settings.buy_link_amazon_hardcover },
+      ];
+  }
+}
+
 export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = false, hideTrigger = false }: BuyNowButtonProps) {
   const { settings } = useSiteSettings();
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [region, setRegion] = useState<Region>("in");
 
   useEffect(() => {
     setMounted(true);
@@ -51,10 +91,16 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
     };
   }, [open]);
 
-  const editions = [
-    { label: "Paperback", price: settings.price_paperback, npLink: settings.buy_link_notionpress_paperback, amazonLink: settings.buy_link_amazon_paperback, flipkartLink: settings.buy_link_flipkart_paperback },
-    { label: "Hardcover", price: settings.price_hardcover, npLink: settings.buy_link_notionpress_hardcover, amazonLink: settings.buy_link_amazon_hardcover, flipkartLink: settings.buy_link_flipkart_hardcover },
+  const npEditions = [
+    { label: "Paperback", price: settings.price_paperback, link: settings.buy_link_notionpress_paperback },
+    { label: "Hardcover", price: settings.price_hardcover, link: settings.buy_link_notionpress_hardcover },
   ];
+  const flipkartEditions = [
+    { label: "Paperback", price: settings.price_paperback, link: settings.buy_link_flipkart_paperback },
+    { label: "Hardcover", price: settings.price_hardcover, link: settings.buy_link_flipkart_hardcover },
+  ];
+  const amazonEditions = amazonEditionsFor(region, settings);
+  const selectedRegion = REGIONS.find((r) => r.key === region) ?? REGIONS[0];
 
   // Rendered via a portal straight to document.body — this component gets
   // nested inside cards elsewhere on the site (e.g. Countdown) that apply a
@@ -76,12 +122,12 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
       />
 
       {/* Font sizes below are deliberately set as fixed px values rather
-          than the site's bumped text-xs/sm/base tokens — with three store
-          sections now stacked in here, using the same larger site-wide
-          scale pushed this modal past a comfortable height on laptop
-          screens. This keeps the popup compact and fully visible without
-          relying on internal scrolling, independent of the global type
-          scale used everywhere else on the site. */}
+          than the site's bumped text-xs/sm/base tokens. The Amazon region
+          picker (India/US/Canada/Australia) keeps only one region's links
+          on screen at a time, which is what keeps this modal compact even
+          with four regions' worth of options behind it — but the fixed,
+          smaller px scale is still what keeps everything fully visible on
+          laptop screens without relying on internal scrolling. */}
       <div className="relative w-full max-w-md my-auto max-h-[92vh] overflow-y-auto bg-white dark:bg-[#101614] border border-border-custom rounded-3xl shadow-2xl p-5 sm:p-6 space-y-3.5 animate-[fadeIn_0.2s_ease-out]">
         <button
           onClick={() => setOpen(false)}
@@ -103,7 +149,8 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
           <h3 className="font-serif text-[15px] text-foreground">Choose Your Edition</h3>
         </div>
 
-        {/* Notion Press — Author's Pick */}
+        {/* Notion Press — Author's Pick (direct-from-publisher, India +
+            international shipping — the one store that isn't region-split) */}
         <div className="rounded-xl border-2 border-[#dfb15b]/50 bg-[#faf8f5] dark:bg-[#070b09] p-3 space-y-2">
           <div className="flex items-center gap-2.5">
             <NotionPressLogo className="w-7 h-7 flex-shrink-0" />
@@ -116,11 +163,11 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
             </div>
           </div>
           <div className="grid grid-cols-2 gap-2">
-            {editions.map((ed) =>
-              ed.npLink ? (
+            {npEditions.map((ed) =>
+              ed.link ? (
                 <a
                   key={`np-${ed.label}`}
-                  href={ed.npLink}
+                  href={ed.link}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex flex-col items-center justify-center gap-0.5 py-2 rounded-lg bg-[#1e3f20] hover:bg-[#142a15] dark:bg-[#dfb15b] dark:hover:bg-[#c49945] text-white dark:text-black transition-transform hover:scale-105"
@@ -133,24 +180,44 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
           </div>
         </div>
 
-        {/* Amazon */}
-        <div className="rounded-xl border border-border-custom p-3 space-y-2">
+        {/* Amazon — region-aware. Pick a region, its Paperback/Hardcover
+            links + native price swap in below like a submenu. */}
+        <div className="rounded-xl border border-border-custom p-3 space-y-2.5">
           <div className="flex items-center gap-2.5">
             <AmazonLogo className="w-7 h-7 flex-shrink-0" />
             <div>
-              <p className="text-[11px] font-serif text-foreground font-semibold leading-tight">Amazon.in</p>
-              <span className="inline-flex items-center gap-1 text-[7px] uppercase tracking-widest font-bold text-[#00A8E1]">
-                <Truck className="w-2.5 h-2.5" />
-                Now on Amazon Prime
-              </span>
+              <p className="text-[11px] font-serif text-foreground font-semibold leading-tight">{selectedRegion.domain}</p>
+              {region === "in" && (
+                <span className="inline-flex items-center gap-1 text-[7px] uppercase tracking-widest font-bold text-[#00A8E1]">
+                  <Truck className="w-2.5 h-2.5" />
+                  Now on Amazon Prime
+                </span>
+              )}
             </div>
           </div>
+
+          <label className="flex items-center gap-1.5 text-[7px] uppercase tracking-widest font-bold text-muted-text">
+            <Globe2 className="w-2.5 h-2.5" />
+            Ship to
+          </label>
+          <select
+            value={region}
+            onChange={(e) => setRegion(e.target.value as Region)}
+            className="w-full text-[11px] font-semibold bg-stone-50 dark:bg-[#070b09] border border-border-custom rounded-lg px-2.5 py-2 text-foreground focus:outline-none focus:ring-1 focus:ring-[#dfb15b]/40 cursor-pointer"
+          >
+            {REGIONS.map((r) => (
+              <option key={r.key} value={r.key}>
+                {r.flag} {r.label}
+              </option>
+            ))}
+          </select>
+
           <div className="grid grid-cols-2 gap-2">
-            {editions.map((ed) =>
-              ed.amazonLink ? (
+            {amazonEditions.map((ed) =>
+              ed.link ? (
                 <a
-                  key={`amz-${ed.label}`}
-                  href={ed.amazonLink}
+                  key={`amz-${region}-${ed.label}`}
+                  href={ed.link}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex flex-col items-center justify-center gap-0.5 py-2 rounded-lg border border-border-custom hover:bg-black/5 dark:hover:bg-white/5 text-foreground transition-transform hover:scale-105"
@@ -158,34 +225,44 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
                   <span className="text-[8px] uppercase tracking-widest font-bold">{ed.label}</span>
                   <span className="text-[11px] font-serif font-bold">{ed.price}</span>
                 </a>
-              ) : null
+              ) : (
+                <div
+                  key={`amz-${region}-${ed.label}-soon`}
+                  className="flex flex-col items-center justify-center gap-0.5 py-2 rounded-lg border border-dashed border-border-custom text-muted-text"
+                >
+                  <span className="text-[8px] uppercase tracking-widest font-bold">{ed.label}</span>
+                  <span className="text-[9px]">Coming soon</span>
+                </div>
+              )
             )}
           </div>
         </div>
 
-        {/* Flipkart */}
-        <div className="rounded-xl border border-border-custom p-3 space-y-2">
-          <div className="flex items-center gap-2.5">
-            <FlipkartLogo className="w-7 h-7 flex-shrink-0" />
-            <p className="text-[11px] font-serif text-foreground font-semibold leading-tight">Flipkart</p>
+        {/* Flipkart — India only */}
+        {region === "in" && (
+          <div className="rounded-xl border border-border-custom p-3 space-y-2">
+            <div className="flex items-center gap-2.5">
+              <FlipkartLogo className="w-7 h-7 flex-shrink-0" />
+              <p className="text-[11px] font-serif text-foreground font-semibold leading-tight">Flipkart</p>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              {flipkartEditions.map((ed) =>
+                ed.link ? (
+                  <a
+                    key={`fk-${ed.label}`}
+                    href={ed.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex flex-col items-center justify-center gap-0.5 py-2 rounded-lg border border-border-custom hover:bg-black/5 dark:hover:bg-white/5 text-foreground transition-transform hover:scale-105"
+                  >
+                    <span className="text-[8px] uppercase tracking-widest font-bold">{ed.label}</span>
+                    <span className="text-[11px] font-serif font-bold">{ed.price}</span>
+                  </a>
+                ) : null
+              )}
+            </div>
           </div>
-          <div className="grid grid-cols-2 gap-2">
-            {editions.map((ed) =>
-              ed.flipkartLink ? (
-                <a
-                  key={`fk-${ed.label}`}
-                  href={ed.flipkartLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex flex-col items-center justify-center gap-0.5 py-2 rounded-lg border border-border-custom hover:bg-black/5 dark:hover:bg-white/5 text-foreground transition-transform hover:scale-105"
-                >
-                  <span className="text-[8px] uppercase tracking-widest font-bold">{ed.label}</span>
-                  <span className="text-[11px] font-serif font-bold">{ed.price}</span>
-                </a>
-              ) : null
-            )}
-          </div>
-        </div>
+        )}
 
         <p className="text-[8px] text-center text-muted-text">
           Prices inclusive of all taxes. Delivered by each store directly.
