@@ -7,6 +7,12 @@ html {
 }
 
 :root {
+  /* Tells the browser which palette to use for elements it themes itself
+     (native <select>/<option> popups, checkboxes, scrollbars) so they
+     follow light/dark instead of defaulting to the OS's own scheme —
+     without this, a <select>'s dropdown list can render near-invisible
+     text (e.g. light text on a light native background) in dark mode. */
+  color-scheme: light;
   --background: #faf8f5; /* Warm Sand light background */
   --foreground: #0b1a2e; /* Deep twilight blue-black text */
   --card-bg: #ffffff;
@@ -23,6 +29,7 @@ html {
 }
 
 .dark {
+  color-scheme: dark;
   --background: #060c14; /* Luxurious obsidian twilight-blue dark background */
   --foreground: #f4f6fa; /* Soft cloud-white text */
   --card-bg: #0c1524; /* Deep blue-charcoal container background */

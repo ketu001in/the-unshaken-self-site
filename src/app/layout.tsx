@@ -68,11 +68,9 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem("theme");if(!t){t=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";}document.documentElement.classList.toggle("dark",t==="dark");}catch(e){}})();`,
-          }}
-        />
+        {/* No theme-detection script here on purpose — the site always
+            opens Light by default (see ThemeContext), so there is nothing
+            to read from localStorage or the OS before paint. */}
         <script
           dangerouslySetInnerHTML={{
             // Browsers restore the previous scroll position on a plain reload

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 
 type Theme = "light" | "dark";
 
@@ -12,25 +12,18 @@ type ThemeContextType = {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("dark"); // Default to dark premium theme
-
-  useEffect(() => {
-    // Check local storage or system preference
-    const savedTheme = localStorage.getItem("theme") as Theme | null;
-    if (savedTheme) {
-      setTheme(savedTheme);
-      document.documentElement.classList.toggle("dark", savedTheme === "dark");
-    } else {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-      setTheme(systemTheme);
-      document.documentElement.classList.toggle("dark", systemTheme === "dark");
-    }
-  }, []);
+  // Always starts Light — every fresh visit (a new link click, a reload, a
+  // new tab) opens in Light regardless of what a browser previously had
+  // saved or what the OS's system theme is set to. Dark is still available
+  // via the toggle, but that choice is intentionally in-memory only for
+  // the current page view and is never persisted or read back on load —
+  // otherwise a visitor who once switched to dark (or whose OS is dark)
+  // would keep landing on a dark page on every future visit.
+  const [theme, setTheme] = useState<Theme>("light");
 
   const toggleTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";
     setTheme(newTheme);
-    localStorage.setItem("theme", newTheme);
     document.documentElement.classList.toggle("dark", newTheme === "dark");
   };
 
