@@ -24,8 +24,8 @@ html {
   --accent-hover: #c9993b;
   --muted-text: #5a6e85;
   
-  --font-sans: var(--font-outfit);
-  --font-serif: var(--font-playfair);
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-fraunces);
 }
 
 .dark {
