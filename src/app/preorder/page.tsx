@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 import AIChatbot from "@/components/AIChatbot";
 import FoundingReadersWall from "@/components/FoundingReadersWall";
 import ReferralPanel from "@/components/ReferralPanel";
-import { Check, Bell, ExternalLink } from "lucide-react";
+import { Check, Bell, ExternalLink, Globe2 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { fetchPageContent } from "@/lib/content";
 import { AmazonLogo, NotionPressLogo, FlipkartLogo } from "@/components/StoreLogos";
@@ -275,6 +275,16 @@ export default function PreorderPage() {
           <h1 className="text-4xl sm:text-5xl font-serif text-foreground leading-tight">
             Order The Unshaken Self
           </h1>
+
+          {/* Amazon ships worldwide, so this flashes to catch the eye of
+              visitors from outside the four regions listed below. */}
+          <div className="flex justify-center">
+            <span className="now-live-flash inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-[10px] uppercase tracking-widest font-bold">
+              <Globe2 className="w-3 h-3" />
+              Available in 130+ Countries
+            </span>
+          </div>
+
           <p className="text-xs sm:text-sm font-light text-stone-500 dark:text-stone-400 max-w-xl mx-auto leading-relaxed">
             {content.header_subtitle}
           </p>
@@ -316,6 +326,10 @@ export default function PreorderPage() {
             </button>
           ))}
         </div>
+        <p className="text-center text-[10px] text-muted-text -mt-8">
+          Don&apos;t see your country above? Search Google for &quot;The Unshaken Self Amazon&quot; —
+          it&apos;s likely already on your local Amazon site.
+        </p>
 
         {/* Store Cards Grid — regions besides India only have two cards
             (Paperback/Hardcover), so cap the grid at two columns for those

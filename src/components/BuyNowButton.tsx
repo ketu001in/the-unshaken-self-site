@@ -149,6 +149,15 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
           <h3 className="font-serif text-[15px] text-foreground">Choose Your Edition</h3>
         </div>
 
+        {/* Amazon ships worldwide, so this flashes to catch the eye of
+            visitors from outside the four regions listed below. */}
+        <div className="flex justify-center">
+          <span className="now-live-flash inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[8px] uppercase tracking-widest font-bold">
+            <Globe2 className="w-2.5 h-2.5" />
+            Available in 130+ Countries
+          </span>
+        </div>
+
         {/* Notion Press — Author's Pick (direct-from-publisher, India +
             international shipping — the one store that isn't region-split) */}
         <div className="rounded-xl border-2 border-[#dfb15b]/50 bg-[#faf8f5] dark:bg-[#070b09] p-3 space-y-2">
@@ -266,6 +275,10 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
 
         <p className="text-[8px] text-center text-muted-text">
           Prices inclusive of all taxes. Delivered by each store directly.
+        </p>
+        <p className="text-[8px] text-center text-muted-text">
+          Don&apos;t see your country above? Search Google for &quot;The Unshaken Self Amazon&quot; —
+          it&apos;s likely already on your local Amazon site.
         </p>
       </div>
     </div>
