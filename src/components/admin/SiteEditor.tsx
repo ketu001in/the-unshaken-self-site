@@ -100,7 +100,7 @@ type PreorderContent = {
 };
 
 const DEFAULT_PREORDER_CONTENT: PreorderContent = {
-  header_subtitle: "The Unshaken Self is available now in India, the United States, Canada, and Australia — pick your region above, then choose your favorite store and format below. Notion Press is the author's own recommended store; Amazon.in and Flipkart also ship fast across India.",
+  header_subtitle: "The Unshaken Self ships to 130+ countries through Amazon's global marketplace. Dedicated store options are listed below for India, the United States, Canada, and Australia — pick your region above, then choose your favorite store and format. Notion Press is the author's own recommended store; Amazon.in and Flipkart also ship fast across India.",
   stores: [
     { name: "Notion Press — Paperback", format: "Paperback Edition", region: "India + International Shipping", status: "Available Now", price: "₹499", link: "https://direct.notionpress.com/in/read/the-unshaken-self/paperback", isPopular: true, logo: "notionpress", regionKey: "in", features: ["Author's own recommended store.", "Direct from the publisher.", "Track your shipping status online."] },
     { name: "Notion Press — Hardcover", format: "Hardcover Edition", region: "India + International Shipping", status: "Available Now", price: "₹575", link: "https://direct.notionpress.com/in/read/the-unshaken-self-hardcover/hardcover", isPopular: true, logo: "notionpress", regionKey: "in", features: ["Author's own recommended store.", "Premium hardbound edition.", "Direct from the publisher."] },

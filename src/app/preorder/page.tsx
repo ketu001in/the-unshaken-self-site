@@ -48,7 +48,7 @@ const REGION_TABS: { key: RegionKey; flag: string; label: string }[] = [
 // (Amazon.in, Flipkart, and Notion Press) — see the ASINs/pids/URLs the
 // author supplied. Notion Press is the author's own recommended store.
 const DEFAULT_PREORDER_CONTENT: PreorderContent = {
-  header_subtitle: "The Unshaken Self is available now in India, the United States, Canada, and Australia — pick your region above, then choose your favorite store and format below. Notion Press is the author's own recommended store; Amazon.in and Flipkart also ship fast across India.",
+  header_subtitle: "The Unshaken Self ships to 130+ countries through Amazon's global marketplace. Dedicated store options are listed below for India, the United States, Canada, and Australia — pick your region above, then choose your favorite store and format. Notion Press is the author's own recommended store; Amazon.in and Flipkart also ship fast across India.",
   stores: [
     {
       name: "Notion Press — Paperback",
