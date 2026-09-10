@@ -326,9 +326,9 @@ export default function PreorderPage() {
             </button>
           ))}
         </div>
-        <p className="text-center text-[10px] text-muted-text -mt-8">
-          Don&apos;t see your country above? Search Google for &quot;The Unshaken Self Amazon&quot; —
-          it&apos;s likely already on your local Amazon site.
+        <p className="text-center text-[10px] text-muted-text font-bold -mt-8">
+          If your country is not listed here, please search on Amazon of your country / region
+          for this book title.
         </p>
 
         {/* Store Cards Grid — regions besides India only have two cards

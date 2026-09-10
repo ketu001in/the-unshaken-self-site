@@ -276,9 +276,9 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
         <p className="text-[8px] text-center text-muted-text">
           Prices inclusive of all taxes. Delivered by each store directly.
         </p>
-        <p className="text-[8px] text-center text-muted-text">
-          Don&apos;t see your country above? Search Google for &quot;The Unshaken Self Amazon&quot; —
-          it&apos;s likely already on your local Amazon site.
+        <p className="text-[8px] text-center text-muted-text font-bold">
+          If your country is not listed here, please search on Amazon of your country / region
+          for this book title.
         </p>
       </div>
     </div>
