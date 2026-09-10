@@ -326,7 +326,7 @@ export default function PreorderPage() {
             </button>
           ))}
         </div>
-        <p className="text-center text-[10px] text-muted-text font-bold -mt-8">
+        <p className="text-center text-[13px] text-muted-text font-bold -mt-8">
           If your country is not listed here, please search on Amazon of your country / region
           for this book title.
         </p>

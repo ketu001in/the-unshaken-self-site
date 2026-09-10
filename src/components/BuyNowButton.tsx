@@ -276,7 +276,7 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
         <p className="text-[8px] text-center text-muted-text">
           Prices inclusive of all taxes. Delivered by each store directly.
         </p>
-        <p className="text-[8px] text-center text-muted-text font-bold">
+        <p className="text-[11px] text-center text-muted-text font-bold">
           If your country is not listed here, please search on Amazon of your country / region
           for this book title.
         </p>
