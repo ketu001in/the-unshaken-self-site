@@ -13,6 +13,7 @@ import { createPortal } from "react-dom";
 import { X, Sparkles } from "lucide-react";
 import { WISDOM_LINES } from "@/lib/wisdomLines";
 import { GITA_FACTS } from "@/lib/gitaFacts";
+import { playClick, playTick, playChime } from "@/lib/sound";
 
 type SegmentKey = "wisdom" | "fact" | "quiz" | "share" | "breath" | "buy";
 
@@ -147,12 +148,16 @@ export default function SpinWheelModal({ open, onClose }: SpinWheelModalProps) {
   const [result, setResult] = useState<ResultContent | null>(null);
 
   useEffect(() => {
+    // Hydration guard — this portal-rendered modal must not paint before mount.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
   }, []);
 
-  // Reset to a fresh wheel each time the modal is reopened.
+  // Reset to a fresh wheel each time the modal is reopened — syncing local
+  // state to the `open` prop transitioning true is the intended use here.
   useEffect(() => {
     if (open) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setResult(null);
       setSpinning(false);
     }
@@ -174,6 +179,7 @@ export default function SpinWheelModal({ open, onClose }: SpinWheelModalProps) {
 
   const spin = () => {
     if (spinning) return;
+    playClick();
     setResult(null);
     setSpinning(true);
 
@@ -186,13 +192,25 @@ export default function SpinWheelModal({ open, onClose }: SpinWheelModalProps) {
     const newRotation = rotation + EXTRA_FULL_SPINS * 360 + forwardDelta;
 
     setRotation(newRotation);
+
+    // A decelerating series of ticks timed against the wheel's own
+    // cubic-bezier slowdown — bunched early, spreading out toward the
+    // end — so the sound matches how the wheel visually settles.
+    const TICK_COUNT = 20;
+    for (let i = 1; i <= TICK_COUNT; i++) {
+      const t = i / TICK_COUNT;
+      window.setTimeout(() => playTick(), SPIN_DURATION_MS * t * t);
+    }
+
     window.setTimeout(() => {
       setSpinning(false);
       setResult(buildResult(SEGMENTS[targetIndex].key));
+      playChime();
     }, SPIN_DURATION_MS);
   };
 
   const handleCta = (href: string) => {
+    playClick();
     onClose();
     if (href.startsWith("#")) {
       const el = document.getElementById(href.slice(1));

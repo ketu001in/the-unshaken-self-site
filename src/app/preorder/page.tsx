@@ -11,6 +11,7 @@ import { createClient } from "@/lib/supabase/client";
 import { fetchPageContent } from "@/lib/content";
 import { AmazonLogo, NotionPressLogo, FlipkartLogo } from "@/components/StoreLogos";
 import ReaderThankYouCard from "@/components/ReaderThankYouCard";
+import { playConfirm, playClick } from "@/lib/sound";
 
 const REFERRAL_CODE_KEY = "unshaken_referral_code";
 
@@ -224,6 +225,8 @@ export default function PreorderPage() {
   // just for one query param.
   useEffect(() => {
     const savedCode = localStorage.getItem(REFERRAL_CODE_KEY);
+    // One-time sync from localStorage on mount — not a subscription loop.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (savedCode) setReferralCode(savedCode);
 
     const params = new URLSearchParams(window.location.search);
@@ -257,6 +260,7 @@ export default function PreorderPage() {
     setWaitlistMsg("You're on the list! We'll keep you posted on events, freebies, and future releases.");
     setWaitlistEmail("");
     setWaitlistName("");
+    playConfirm();
   };
 
   const stores = content.stores.filter((s) => (s.regionKey ?? "in") === activeRegion);
@@ -314,7 +318,10 @@ export default function PreorderPage() {
           {REGION_TABS.map((tab) => (
             <button
               key={tab.key}
-              onClick={() => setActiveRegion(tab.key)}
+              onClick={() => {
+                playClick();
+                setActiveRegion(tab.key);
+              }}
               className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[11px] uppercase tracking-widest font-bold border transition-all cursor-pointer ${
                 activeRegion === tab.key
                   ? "bg-[#1e3f20] dark:bg-[#dfb15b] text-white dark:text-black border-transparent shadow-md"

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import ThemeToggle from "./ThemeToggle";
+import SoundToggle from "./SoundToggle";
 import BuyNowButton from "./BuyNowButton";
 import { Menu, X, BookOpen } from "lucide-react";
 
@@ -92,6 +93,9 @@ export default function Navbar() {
             {/* Theme Toggle */}
             <ThemeToggle />
 
+            {/* Sound Toggle */}
+            <SoundToggle />
+
             {/* Pre-Buy — the single purchase CTA now that stores are live */}
             <BuyNowButton />
           </div>
@@ -99,6 +103,7 @@ export default function Navbar() {
           {/* Mobile Menu Actions (Toggle + Hamburger) */}
           <div className="flex items-center space-x-3 lg:hidden">
             <ThemeToggle />
+            <SoundToggle />
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="p-2 rounded-md text-foreground hover:bg-black/5 dark:hover:bg-white/5 transition-colors focus:outline-none focus:ring-2 focus:ring-accent/40"

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { CheckCircle, ChevronRight, Mail, RotateCw, Share2 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { generateArchetypeShareCard } from "@/lib/shareCard";
+import { playClick, playChime, playConfirm } from "@/lib/sound";
 
 type ArchetypeKey = "karma" | "bhakti" | "witness" | "seeker";
 
@@ -108,10 +109,21 @@ export default function UnshakenQuiz() {
 
   const handleAnswer = (key: ArchetypeKey) => {
     setScores((prev) => ({ ...prev, [key]: prev[key] + 1 }));
-    setStep((s) => s + 1);
+    setStep((s) => {
+      const next = s + 1;
+      // Last question just answered — a fuller chime for the archetype
+      // reveal instead of the plain per-answer click.
+      if (next >= QUESTIONS.length) {
+        playChime();
+      } else {
+        playClick();
+      }
+      return next;
+    });
   };
 
   const handleRetake = () => {
+    playClick();
     setScores({ karma: 0, bhakti: 0, witness: 0, seeker: 0 });
     setEmail("");
     setEmailSent(false);
@@ -146,6 +158,7 @@ export default function UnshakenQuiz() {
     setSending(false);
     if (!error || error.message.includes("duplicate")) {
       setEmailSent(true);
+      playConfirm();
     }
   };
 
@@ -232,6 +245,7 @@ function ShareResultButton({ result }: { result: Archetype }) {
         document.body.removeChild(link);
         URL.revokeObjectURL(url);
       }
+      playConfirm();
     } catch {
       // Cancelled share sheet or generation failure — low-stakes, no error UI.
     } finally {

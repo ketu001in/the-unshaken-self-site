@@ -3,6 +3,7 @@ import { Inter, Fraunces } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { SiteSettingsProvider } from "@/context/SiteSettingsContext";
+import { SoundProvider } from "@/context/SoundContext";
 
 // "Modern editorial" pairing, chosen from the font options presented —
 // Fraunces for headings/serif moments, Inter for body/UI copy.
@@ -86,9 +87,11 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col transition-colors duration-300">
         <ThemeProvider>
-          <SiteSettingsProvider>
-            {children}
-          </SiteSettingsProvider>
+          <SoundProvider>
+            <SiteSettingsProvider>
+              {children}
+            </SiteSettingsProvider>
+          </SoundProvider>
         </ThemeProvider>
       </body>
     </html>

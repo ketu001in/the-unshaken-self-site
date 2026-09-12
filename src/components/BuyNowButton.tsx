@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import { ShoppingBag, X, Sparkles, Truck, Globe2 } from "lucide-react";
 import { useSiteSettings, type SiteSettings } from "@/context/SiteSettingsContext";
 import { AmazonLogo, NotionPressLogo, FlipkartLogo } from "./StoreLogos";
+import { playClick } from "@/lib/sound";
 
 type BuyNowButtonProps = {
   fullWidth?: boolean;
@@ -65,16 +66,28 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
   const [region, setRegion] = useState<Region>("in");
 
   useEffect(() => {
+    // Hydration guard — real value only settles client-side.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
   }, []);
 
   useEffect(() => {
+    // autoOpen is a prop set once by the parent (the homepage's single
+    // auto-opening instance) — not state this component owns, so syncing
+    // it into local `open` here is the correct pattern, not a loop risk.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (autoOpen) setOpen(true);
   }, [autoOpen]);
 
   const handleTrigger = () => {
+    playClick();
     setOpen(true);
     onOpen?.();
+  };
+
+  const handleClose = () => {
+    playClick();
+    setOpen(false);
   };
 
   useEffect(() => {
@@ -118,7 +131,7 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
       {/* Backdrop */}
       <div
         className="fixed inset-0 bg-black/60 backdrop-blur-sm"
-        onClick={() => setOpen(false)}
+        onClick={handleClose}
       />
 
       {/* Font sizes below are deliberately set as fixed px values rather
@@ -130,7 +143,7 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
           laptop screens without relying on internal scrolling. */}
       <div className="relative w-full max-w-md my-auto max-h-[92vh] overflow-y-auto bg-white dark:bg-[#101614] border border-border-custom rounded-3xl shadow-2xl p-5 sm:p-6 space-y-3.5 animate-[fadeIn_0.2s_ease-out]">
         <button
-          onClick={() => setOpen(false)}
+          onClick={handleClose}
           className="absolute top-3.5 right-3.5 w-7 h-7 rounded-full flex items-center justify-center text-muted-text hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer z-10"
           aria-label="Close"
         >
@@ -179,6 +192,7 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
                   href={ed.link}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={playClick}
                   className="flex flex-col items-center justify-center gap-0.5 py-2 rounded-lg bg-[#1e3f20] hover:bg-[#142a15] dark:bg-[#dfb15b] dark:hover:bg-[#c49945] text-white dark:text-black transition-transform hover:scale-105"
                 >
                   <span className="text-[8px] uppercase tracking-widest font-bold">{ed.label}</span>
@@ -229,6 +243,7 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
                   href={ed.link}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={playClick}
                   className="flex flex-col items-center justify-center gap-0.5 py-2 rounded-lg border border-border-custom hover:bg-black/5 dark:hover:bg-white/5 text-foreground transition-transform hover:scale-105"
                 >
                   <span className="text-[8px] uppercase tracking-widest font-bold">{ed.label}</span>
@@ -262,6 +277,7 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
                     href={ed.link}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={playClick}
                     className="flex flex-col items-center justify-center gap-0.5 py-2 rounded-lg border border-border-custom hover:bg-black/5 dark:hover:bg-white/5 text-foreground transition-transform hover:scale-105"
                   >
                     <span className="text-[8px] uppercase tracking-widest font-bold">{ed.label}</span>

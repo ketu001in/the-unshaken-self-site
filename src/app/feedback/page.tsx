@@ -12,6 +12,7 @@ import Footer from "@/components/Footer";
 import AIChatbot from "@/components/AIChatbot";
 import { createClient } from "@/lib/supabase/client";
 import { MessageSquareHeart, Star, Send, CheckCircle } from "lucide-react";
+import { playClick, playConfirm } from "@/lib/sound";
 
 type Category = "general" | "bug" | "suggestion" | "praise" | "other";
 
@@ -54,6 +55,7 @@ export default function FeedbackPage() {
       setError("Something went wrong — please try again.");
       return;
     }
+    playConfirm();
     setSubmitted(true);
     setName("");
     setEmail("");
@@ -123,7 +125,10 @@ export default function FeedbackPage() {
                       <button
                         key={n}
                         type="button"
-                        onClick={() => setRating(rating === n ? null : n)}
+                        onClick={() => {
+                          playClick();
+                          setRating(rating === n ? null : n);
+                        }}
                         onMouseEnter={() => setHoverRating(n)}
                         className="p-1 cursor-pointer"
                         aria-label={`Rate ${n} out of 5`}

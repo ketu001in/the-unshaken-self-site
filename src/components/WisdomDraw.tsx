@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Flame, RotateCw, Share2, Sparkles } from "lucide-react";
 import { generateWisdomShareCard } from "@/lib/shareCard";
 import { WISDOM_LINES, type WisdomLine } from "@/lib/wisdomLines";
+import { playFlip, playConfirm } from "@/lib/sound";
 
 // Day-of-year, used to deterministically pick "today's teaching" — the
 // same chapter for every visitor on a given calendar date, so the first
@@ -56,6 +57,8 @@ export default function WisdomDraw() {
     } else {
       nextStreak = prevStreak || 1;
     }
+    // One-time sync from localStorage on mount — not a subscription loop.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setStreak(nextStreak);
 
     const idx = getDayOfYear(today) % WISDOM_LINES.length;
@@ -68,11 +71,13 @@ export default function WisdomDraw() {
     // First interaction of the visit — just reveal the already-loaded
     // teaching for today, no shuffle needed since nothing was shown yet.
     if (!revealed) {
+      playFlip();
       setRevealed(true);
       setFlipped(true);
       return;
     }
 
+    playFlip();
     setDrawing(true);
     setFlipped(false);
     setIsTodayTeaching(false);
@@ -92,6 +97,7 @@ export default function WisdomDraw() {
       });
       setFlipped(true);
       setDrawing(false);
+      playFlip();
     }, 220);
   }, [drawing, revealed]);
 
@@ -125,6 +131,7 @@ export default function WisdomDraw() {
           document.body.removeChild(link);
           URL.revokeObjectURL(url);
         }
+        playConfirm();
       } catch {
         // User cancelled the native share sheet, or generation failed —
         // no error UI needed, this is a low-stakes secondary action.

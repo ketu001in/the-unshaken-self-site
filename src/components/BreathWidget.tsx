@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Pause, Play } from "lucide-react";
+import { playClick, playInhale, playExhale } from "@/lib/sound";
 
 type Phase = { name: string; label: string; duration: number; scale: number };
 
@@ -15,6 +16,7 @@ const PHASES: Phase[] = [
 export default function BreathWidget() {
   const [running, setRunning] = useState(false);
   const [state, setState] = useState({ index: 0, seconds: PHASES[0].duration });
+  const prevPhaseIndexRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (!running) return;
@@ -30,7 +32,24 @@ export default function BreathWidget() {
     return () => clearInterval(id);
   }, [running]);
 
+  // A soft tone right as each phase begins — inhale rises, exhale falls,
+  // hold stays quiet (a pause deserves silence, not a sound cue). Fires
+  // once per phase entry, keyed off the phase index actually changing
+  // rather than every second-by-second re-render.
+  useEffect(() => {
+    if (!running) {
+      prevPhaseIndexRef.current = null;
+      return;
+    }
+    if (prevPhaseIndexRef.current === state.index) return;
+    prevPhaseIndexRef.current = state.index;
+    const name = PHASES[state.index].name;
+    if (name === "inhale") playInhale();
+    else if (name === "exhale") playExhale();
+  }, [running, state.index]);
+
   const toggleRunning = () => {
+    playClick();
     if (!running) {
       setState({ index: 0, seconds: PHASES[0].duration });
     }
