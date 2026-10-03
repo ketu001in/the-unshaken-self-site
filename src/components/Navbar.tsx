@@ -75,7 +75,7 @@ export default function Navbar() {
               <img
                 src={theme === "dark" ? "/brand/logo_horizontal_dark.svg" : "/brand/logo_horizontal_light.svg"}
                 alt="The Unshaken Self"
-                className="h-9 sm:h-10 w-auto rounded-md"
+                className="h-12 w-auto rounded-md"
               />
             </Link>
           </div>
