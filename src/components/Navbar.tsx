@@ -6,12 +6,14 @@ import { usePathname } from "next/navigation";
 import ThemeToggle from "./ThemeToggle";
 import SoundToggle from "./SoundToggle";
 import BuyNowButton from "./BuyNowButton";
-import { Menu, X, BookOpen } from "lucide-react";
+import { Menu, X } from "lucide-react";
+import { useTheme } from "@/context/ThemeContext";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+  const { theme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -49,22 +51,32 @@ export default function Navbar() {
     <nav
       className={`fixed top-0 inset-x-0 z-40 transition-all duration-300 ${
         scrolled
-          ? "bg-white/80 dark:bg-[#070b09]/80 backdrop-blur-md border-b border-border-custom py-3"
+          ? "bg-white/80 dark:bg-[#202A33]/80 backdrop-blur-md border-b border-border-custom py-3"
           : "bg-transparent py-5"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between min-h-12">
           
-          {/* Logo Section */}
+          {/* Logo Section — theme-aware: the "light" lockup (transparent,
+              navy+gold ink) reads cleanly on the navbar's white/ivory
+              background; the "dark" lockup (its own navy card) is the
+              brand package's intended variant for dark surfaces. */}
           <div className="flex-shrink-0">
             <Link
               href="/"
               onClick={handleLogoClick}
-              className="flex items-center space-x-2 text-primary font-serif tracking-widest text-base sm:text-lg uppercase hover:opacity-80 transition-opacity"
+              className="flex items-center hover:opacity-80 transition-opacity"
             >
-              <BookOpen className="w-5 h-5 text-[#dfb15b]" />
-              <span className="font-semibold text-foreground">The Unshaken Self</span>
+              {/* Plain <img>, not next/image — Next's image optimizer
+                  blocks SVGs by default (dangerouslyAllowSVG), and a
+                  trusted local brand asset like this needs no
+                  optimization anyway. */}
+              <img
+                src={theme === "dark" ? "/brand/logo_horizontal_dark.svg" : "/brand/logo_horizontal_light.svg"}
+                alt="The Unshaken Self"
+                className="h-9 sm:h-10 w-auto rounded-md"
+              />
             </Link>
           </div>
 
@@ -79,7 +91,7 @@ export default function Navbar() {
                 href={link.href}
                 className={`text-[12px] whitespace-nowrap uppercase tracking-widest transition-colors hover:text-foreground nav-link-hover ${
                   isActive(link.href)
-                    ? "text-[#dfb15b] font-semibold"
+                    ? "text-[#D6A63C] font-semibold"
                     : "text-muted-text"
                 }`}
               >
@@ -118,7 +130,7 @@ export default function Navbar() {
 
       {/* Mobile Drawer Menu */}
       {isOpen && (
-        <div className="lg:hidden absolute top-full left-0 w-full bg-white dark:bg-[#070b09] border-b border-border-custom shadow-2xl transition-all duration-300">
+        <div className="lg:hidden absolute top-full left-0 w-full bg-white dark:bg-[#202A33] border-b border-border-custom shadow-2xl transition-all duration-300">
           <div className="px-4 pt-2 pb-6 space-y-3 flex flex-col">
             {navLinks.map((link) => (
               <Link
@@ -127,7 +139,7 @@ export default function Navbar() {
                 onClick={() => setIsOpen(false)}
                 className={`px-3 py-2.5 rounded-lg text-sm font-medium tracking-wide transition-colors ${
                   isActive(link.href)
-                    ? "bg-[#1e3f20]/10 dark:bg-[#dfb15b]/10 text-primary font-semibold"
+                    ? "bg-[#0B2942]/10 dark:bg-[#D6A63C]/10 text-primary font-semibold"
                     : "text-muted-text hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5"
                 }`}
               >

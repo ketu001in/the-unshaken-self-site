@@ -237,14 +237,14 @@ export default function AdminDashboard() {
 
 
   return (
-    <div className="flex-1 flex flex-col pt-16 bg-[#faf8f5] dark:bg-[#070b09]">
+    <div className="flex-1 flex flex-col pt-16 bg-[#FAF7EF] dark:bg-[#202A33]">
       <Navbar />
 
       {/* Header */}
-      <header className="py-12 px-4 border-b border-border-custom bg-white dark:bg-[#050806] relative">
+      <header className="py-12 px-4 border-b border-border-custom bg-white dark:bg-[#161D24] relative">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-6">
           <div className="space-y-2 text-center sm:text-left">
-            <span className="text-[9px] tracking-widest font-mono text-[#dfb15b] uppercase font-bold">Admin Console</span>
+            <span className="text-[9px] tracking-widest font-mono text-[#D6A63C] uppercase font-bold">Admin Console</span>
             <h1 className="text-3xl font-serif text-foreground">Launch Analytics Dashboard</h1>
             <p className="text-xs text-muted-text font-light">
               {adminEmail ? `Signed in as ${adminEmail}` : "Loading session…"} — real sign-ups, RSVPs, reviews, and feedback from Supabase.
@@ -267,8 +267,8 @@ export default function AdminDashboard() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
           
           {/* Card 1: Subscribers */}
-          <div className="bg-white dark:bg-[#101614] border border-border-custom p-6 rounded-2xl flex items-center space-x-4 shadow-sm">
-            <div className="w-12 h-12 rounded-xl bg-[#1e3f20]/5 dark:bg-[#dfb15b]/10 text-primary dark:text-[#dfb15b] flex items-center justify-center">
+          <div className="bg-white dark:bg-[#2A3642] border border-border-custom p-6 rounded-2xl flex items-center space-x-4 shadow-sm">
+            <div className="w-12 h-12 rounded-xl bg-[#0B2942]/5 dark:bg-[#D6A63C]/10 text-primary dark:text-[#D6A63C] flex items-center justify-center">
               <Users className="w-6 h-6" />
             </div>
             <div>
@@ -278,8 +278,8 @@ export default function AdminDashboard() {
           </div>
 
           {/* Card 2: RSVPs */}
-          <div className="bg-white dark:bg-[#101614] border border-border-custom p-6 rounded-2xl flex items-center space-x-4 shadow-sm">
-            <div className="w-12 h-12 rounded-xl bg-[#1e3f20]/5 dark:bg-[#dfb15b]/10 text-primary dark:text-[#dfb15b] flex items-center justify-center">
+          <div className="bg-white dark:bg-[#2A3642] border border-border-custom p-6 rounded-2xl flex items-center space-x-4 shadow-sm">
+            <div className="w-12 h-12 rounded-xl bg-[#0B2942]/5 dark:bg-[#D6A63C]/10 text-primary dark:text-[#D6A63C] flex items-center justify-center">
               <Calendar className="w-6 h-6" />
             </div>
             <div>
@@ -289,8 +289,8 @@ export default function AdminDashboard() {
           </div>
 
           {/* Card 3: Notify-Me Waitlist */}
-          <div className="bg-white dark:bg-[#101614] border border-border-custom p-6 rounded-2xl flex items-center space-x-4 shadow-sm">
-            <div className="w-12 h-12 rounded-xl bg-[#1e3f20]/5 dark:bg-[#dfb15b]/10 text-primary dark:text-[#dfb15b] flex items-center justify-center">
+          <div className="bg-white dark:bg-[#2A3642] border border-border-custom p-6 rounded-2xl flex items-center space-x-4 shadow-sm">
+            <div className="w-12 h-12 rounded-xl bg-[#0B2942]/5 dark:bg-[#D6A63C]/10 text-primary dark:text-[#D6A63C] flex items-center justify-center">
               <Bell className="w-6 h-6" />
             </div>
             <div>
@@ -300,8 +300,8 @@ export default function AdminDashboard() {
           </div>
 
           {/* Card 4: Moderated Reviews */}
-          <div className="bg-white dark:bg-[#101614] border border-border-custom p-6 rounded-2xl flex items-center space-x-4 shadow-sm">
-            <div className="w-12 h-12 rounded-xl bg-[#1e3f20]/5 dark:bg-[#dfb15b]/10 text-primary dark:text-[#dfb15b] flex items-center justify-center">
+          <div className="bg-white dark:bg-[#2A3642] border border-border-custom p-6 rounded-2xl flex items-center space-x-4 shadow-sm">
+            <div className="w-12 h-12 rounded-xl bg-[#0B2942]/5 dark:bg-[#D6A63C]/10 text-primary dark:text-[#D6A63C] flex items-center justify-center">
               <MessageSquare className="w-6 h-6" />
             </div>
             <div>
@@ -313,8 +313,8 @@ export default function AdminDashboard() {
           </div>
 
           {/* Card 5: Feedback */}
-          <div className="bg-white dark:bg-[#101614] border border-border-custom p-6 rounded-2xl flex items-center space-x-4 shadow-sm">
-            <div className="w-12 h-12 rounded-xl bg-[#1e3f20]/5 dark:bg-[#dfb15b]/10 text-primary dark:text-[#dfb15b] flex items-center justify-center">
+          <div className="bg-white dark:bg-[#2A3642] border border-border-custom p-6 rounded-2xl flex items-center space-x-4 shadow-sm">
+            <div className="w-12 h-12 rounded-xl bg-[#0B2942]/5 dark:bg-[#D6A63C]/10 text-primary dark:text-[#D6A63C] flex items-center justify-center">
               <Inbox className="w-6 h-6" />
             </div>
             <div>
@@ -326,7 +326,7 @@ export default function AdminDashboard() {
         </div>
 
         {/* Charts Mockup Section */}
-        <div className="bg-white dark:bg-[#101614] border border-border-custom rounded-3xl p-6 md:p-8 space-y-6">
+        <div className="bg-white dark:bg-[#2A3642] border border-border-custom rounded-3xl p-6 md:p-8 space-y-6">
           <div className="flex justify-between items-center pb-4 border-b border-border-custom/50">
             <div>
               <h3 className="font-serif text-base text-foreground font-semibold">Conversion Tracking</h3>
@@ -349,7 +349,7 @@ export default function AdminDashboard() {
             ].map((bar, i) => (
               <div key={i} className="flex flex-col items-center space-y-2 flex-1">
                 <span className="text-foreground font-semibold">{bar.val}</span>
-                <div className={`w-8 bg-gradient-to-t from-[#1e3f20] to-[#dfb15b] rounded-t-sm shadow-sm transition-all duration-500 ${bar.height}`} />
+                <div className={`w-8 bg-gradient-to-t from-[#0B2942] to-[#D6A63C] rounded-t-sm shadow-sm transition-all duration-500 ${bar.height}`} />
                 <span className="tracking-tighter">{bar.day}</span>
               </div>
             ))}
@@ -375,7 +375,7 @@ export default function AdminDashboard() {
                 onClick={() => setActiveTab(tab.id as any)}
                 className={`text-xs uppercase tracking-widest pb-1 font-semibold cursor-pointer transition-colors ${
                   activeTab === tab.id
-                    ? "text-[#dfb15b] border-b-2 border-[#dfb15b]"
+                    ? "text-[#D6A63C] border-b-2 border-[#D6A63C]"
                     : "text-muted-text hover:text-foreground"
                 }`}
               >
@@ -385,7 +385,7 @@ export default function AdminDashboard() {
           </div>
 
           {/* Tab Content Tables */}
-          <div className="border border-border-custom rounded-2xl overflow-hidden bg-white dark:bg-[#101614] shadow-sm">
+          <div className="border border-border-custom rounded-2xl overflow-hidden bg-white dark:bg-[#2A3642] shadow-sm">
             
             {activeTab === "subscribers" && (
               <div className="overflow-x-auto">
@@ -437,7 +437,7 @@ export default function AdminDashboard() {
                         <tr key={i} className="hover:bg-stone-50/50 dark:hover:bg-white/5 transition-colors">
                           <td className="p-4 font-sans font-medium text-foreground">{rsvp.name}</td>
                           <td className="p-4 font-sans text-stone-500">{rsvp.email}</td>
-                          <td className="p-4 font-serif text-[#dfb15b] font-semibold">{rsvp.eventTitle}</td>
+                          <td className="p-4 font-serif text-[#D6A63C] font-semibold">{rsvp.eventTitle}</td>
                           <td className="p-4 font-mono text-muted-text">{new Date(rsvp.date).toLocaleString()}</td>
                         </tr>
                       ))
@@ -466,7 +466,7 @@ export default function AdminDashboard() {
                       waitlist.map((w, i) => (
                         <tr key={i} className="hover:bg-stone-50/50 dark:hover:bg-white/5 transition-colors">
                           <td className="p-4 font-sans font-medium text-foreground">{w.email}</td>
-                          <td className="p-4 font-sans text-[#dfb15b]">{w.preferredStore}</td>
+                          <td className="p-4 font-sans text-[#D6A63C]">{w.preferredStore}</td>
                           <td className="p-4 font-mono text-muted-text">{new Date(w.date).toLocaleString()}</td>
                         </tr>
                       ))
@@ -492,7 +492,7 @@ export default function AdminDashboard() {
                           <span>•</span>
                           <span>{rev.role}</span>
                           <span>•</span>
-                          <span className="text-[#dfb15b] font-bold">★ {rev.rating}/5</span>
+                          <span className="text-[#D6A63C] font-bold">★ {rev.rating}/5</span>
                           <span>•</span>
                           <span className={`font-bold uppercase ${
                             rev.status === "approved" ? "text-green-600 dark:text-green-400"
@@ -553,11 +553,11 @@ export default function AdminDashboard() {
                           <span>•</span>
                           <span>{fb.email}</span>
                           <span>•</span>
-                          <span className="text-[#dfb15b] font-bold uppercase">{fb.category}</span>
+                          <span className="text-[#D6A63C] font-bold uppercase">{fb.category}</span>
                           {fb.rating && (
                             <>
                               <span>•</span>
-                              <span className="text-[#dfb15b] font-bold">★ {fb.rating}/5</span>
+                              <span className="text-[#D6A63C] font-bold">★ {fb.rating}/5</span>
                             </>
                           )}
                           <span>•</span>
@@ -599,7 +599,7 @@ export default function AdminDashboard() {
                             value={blogTitle}
                             onChange={(e) => setBlogTitle(e.target.value)}
                             placeholder="e.g., The Secret to Decoupling Action"
-                            className="w-full text-xs bg-stone-50 dark:bg-[#070b09] border border-border-custom p-2.5 rounded-lg text-foreground focus:outline-none focus:ring-1 focus:ring-[#dfb15b]/40"
+                            className="w-full text-xs bg-stone-50 dark:bg-[#202A33] border border-border-custom p-2.5 rounded-lg text-foreground focus:outline-none focus:ring-1 focus:ring-[#D6A63C]/40"
                             required
                           />
                         </div>
@@ -610,7 +610,7 @@ export default function AdminDashboard() {
                             value={blogExcerpt}
                             onChange={(e) => setBlogExcerpt(e.target.value)}
                             placeholder="e.g., Learn to release outcome attachment..."
-                            className="w-full text-xs bg-stone-50 dark:bg-[#070b09] border border-border-custom p-2.5 rounded-lg text-foreground focus:outline-none focus:ring-1 focus:ring-[#dfb15b]/40"
+                            className="w-full text-xs bg-stone-50 dark:bg-[#202A33] border border-border-custom p-2.5 rounded-lg text-foreground focus:outline-none focus:ring-1 focus:ring-[#D6A63C]/40"
                             required
                           />
                         </div>
@@ -621,7 +621,7 @@ export default function AdminDashboard() {
                             onChange={(e) => setBlogContent(e.target.value)}
                             placeholder="Type paragraph one here...&#10;Type paragraph two here..."
                             rows={5}
-                            className="w-full text-xs bg-stone-50 dark:bg-[#070b09] border border-border-custom p-2.5 rounded-lg text-foreground focus:outline-none focus:ring-1 focus:ring-[#dfb15b]/40 resize-none font-sans"
+                            className="w-full text-xs bg-stone-50 dark:bg-[#202A33] border border-border-custom p-2.5 rounded-lg text-foreground focus:outline-none focus:ring-1 focus:ring-[#D6A63C]/40 resize-none font-sans"
                             required
                           ></textarea>
                         </div>
@@ -633,7 +633,7 @@ export default function AdminDashboard() {
                               value={blogTags}
                               onChange={(e) => setBlogTags(e.target.value)}
                               placeholder="e.g., Productivity, Gita"
-                              className="w-full text-xs bg-stone-50 dark:bg-[#070b09] border border-border-custom p-2.5 rounded-lg text-foreground focus:outline-none"
+                              className="w-full text-xs bg-stone-50 dark:bg-[#202A33] border border-border-custom p-2.5 rounded-lg text-foreground focus:outline-none"
                             />
                           </div>
                           <div className="space-y-1">
@@ -643,13 +643,13 @@ export default function AdminDashboard() {
                               value={blogReadTime}
                               onChange={(e) => setBlogReadTime(e.target.value)}
                               placeholder="e.g., 5 min read"
-                              className="w-full text-xs bg-stone-50 dark:bg-[#070b09] border border-border-custom p-2.5 rounded-lg text-foreground focus:outline-none"
+                              className="w-full text-xs bg-stone-50 dark:bg-[#202A33] border border-border-custom p-2.5 rounded-lg text-foreground focus:outline-none"
                             />
                           </div>
                         </div>
                         <button
                           type="submit"
-                          className="w-full py-2.5 rounded-full bg-[#0f2b48] dark:bg-[#dfb15b] text-white dark:text-black text-xs uppercase tracking-widest font-bold shadow-md cursor-pointer hover:opacity-90 transition-opacity"
+                          className="w-full py-2.5 rounded-full bg-[#0B2942] dark:bg-[#D6A63C] text-white dark:text-black text-xs uppercase tracking-widest font-bold shadow-md cursor-pointer hover:opacity-90 transition-opacity"
                         >
                           Publish Blog Post
                         </button>
@@ -673,7 +673,7 @@ export default function AdminDashboard() {
                         )}
                       </div>
                       {editingEventId && (
-                        <p className="text-[10px] text-[#dfb15b] font-mono -mt-2">
+                        <p className="text-[10px] text-[#D6A63C] font-mono -mt-2">
                           Editing "{eventTitle}" — change the date/time below and save. RSVPs for this event stay linked.
                         </p>
                       )}
@@ -685,7 +685,7 @@ export default function AdminDashboard() {
                             value={eventTitle}
                             onChange={(e) => setEventTitle(e.target.value)}
                             placeholder="e.g., Book Reading in Mumbai"
-                            className="w-full text-xs bg-stone-50 dark:bg-[#070b09] border border-border-custom p-2.5 rounded-lg text-foreground focus:outline-none focus:ring-1 focus:ring-[#dfb15b]/40"
+                            className="w-full text-xs bg-stone-50 dark:bg-[#202A33] border border-border-custom p-2.5 rounded-lg text-foreground focus:outline-none focus:ring-1 focus:ring-[#D6A63C]/40"
                             required
                           />
                         </div>
@@ -696,7 +696,7 @@ export default function AdminDashboard() {
                             value={eventDesc}
                             onChange={(e) => setEventDesc(e.target.value)}
                             placeholder="e.g., Join us for a book signing session..."
-                            className="w-full text-xs bg-stone-50 dark:bg-[#070b09] border border-border-custom p-2.5 rounded-lg text-foreground focus:outline-none focus:ring-1 focus:ring-[#dfb15b]/40"
+                            className="w-full text-xs bg-stone-50 dark:bg-[#202A33] border border-border-custom p-2.5 rounded-lg text-foreground focus:outline-none focus:ring-1 focus:ring-[#D6A63C]/40"
                             required
                           />
                         </div>
@@ -708,7 +708,7 @@ export default function AdminDashboard() {
                               value={eventDate}
                               onChange={(e) => setEventDate(e.target.value)}
                               placeholder="e.g., September 12, 2026"
-                              className="w-full text-xs bg-stone-50 dark:bg-[#070b09] border border-border-custom p-2.5 rounded-lg text-foreground focus:outline-none"
+                              className="w-full text-xs bg-stone-50 dark:bg-[#202A33] border border-border-custom p-2.5 rounded-lg text-foreground focus:outline-none"
                               required
                             />
                           </div>
@@ -719,7 +719,7 @@ export default function AdminDashboard() {
                               value={eventTime}
                               onChange={(e) => setEventTime(e.target.value)}
                               placeholder="e.g., 5:00 PM IST"
-                              className="w-full text-xs bg-stone-50 dark:bg-[#070b09] border border-border-custom p-2.5 rounded-lg text-foreground focus:outline-none"
+                              className="w-full text-xs bg-stone-50 dark:bg-[#202A33] border border-border-custom p-2.5 rounded-lg text-foreground focus:outline-none"
                             />
                           </div>
                         </div>
@@ -731,7 +731,7 @@ export default function AdminDashboard() {
                               value={eventLocation}
                               onChange={(e) => setEventLocation(e.target.value)}
                               placeholder="e.g., Indiranagar, Bangalore"
-                              className="w-full text-xs bg-stone-50 dark:bg-[#070b09] border border-border-custom p-2.5 rounded-lg text-foreground focus:outline-none"
+                              className="w-full text-xs bg-stone-50 dark:bg-[#202A33] border border-border-custom p-2.5 rounded-lg text-foreground focus:outline-none"
                               required
                             />
                           </div>
@@ -740,7 +740,7 @@ export default function AdminDashboard() {
                             <select
                               value={eventType}
                               onChange={(e) => setEventType(e.target.value as any)}
-                              className="w-full text-xs bg-stone-50 dark:bg-[#070b09] border border-border-custom p-2.5 rounded-lg text-foreground focus:outline-none"
+                              className="w-full text-xs bg-stone-50 dark:bg-[#202A33] border border-border-custom p-2.5 rounded-lg text-foreground focus:outline-none"
                             >
                               <option value="virtual">Virtual Event</option>
                               <option value="in-person">In-Person Event</option>
@@ -749,7 +749,7 @@ export default function AdminDashboard() {
                         </div>
                         <button
                           type="submit"
-                          className="w-full py-2.5 rounded-full bg-[#0f2b48] dark:bg-[#dfb15b] text-white dark:text-black text-xs uppercase tracking-widest font-bold shadow-md cursor-pointer hover:opacity-90 transition-opacity"
+                          className="w-full py-2.5 rounded-full bg-[#0B2942] dark:bg-[#D6A63C] text-white dark:text-black text-xs uppercase tracking-widest font-bold shadow-md cursor-pointer hover:opacity-90 transition-opacity"
                         >
                           {editingEventId ? "Save Changes" : "Schedule Event"}
                         </button>
@@ -797,13 +797,13 @@ export default function AdminDashboard() {
                               key={ev.id}
                               className={`p-3 border rounded-xl text-xs flex justify-between items-center gap-4 ${
                                 editingEventId === ev.id
-                                  ? "border-[#dfb15b] bg-[#dfb15b]/5"
+                                  ? "border-[#D6A63C] bg-[#D6A63C]/5"
                                   : "border-border-custom bg-stone-50/50 dark:bg-black/20"
                               }`}
                             >
                               <div className="space-y-1 min-w-0 flex-1">
                                 <p className="font-semibold text-foreground truncate">{ev.title}</p>
-                                <p className="text-[10px] text-[#dfb15b] font-mono uppercase">{ev.date} • {ev.time || "TBD"} • {ev.type}</p>
+                                <p className="text-[10px] text-[#D6A63C] font-mono uppercase">{ev.date} • {ev.time || "TBD"} • {ev.type}</p>
                               </div>
                               <div className="flex items-center gap-2 flex-shrink-0">
                                 <button

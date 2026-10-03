@@ -266,14 +266,14 @@ export default function PreorderPage() {
   const stores = content.stores.filter((s) => (s.regionKey ?? "in") === activeRegion);
 
   return (
-    <div className="flex-1 flex flex-col pt-16 bg-[#faf8f5] dark:bg-[#070b09]">
+    <div className="flex-1 flex flex-col pt-16 bg-[#FAF7EF] dark:bg-[#202A33]">
       <Navbar />
 
       {/* Page Header */}
-      <header className="py-20 px-4 text-center border-b border-border-custom bg-white dark:bg-[#050806] relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(223,177,91,0.03)_0%,transparent_70%)] pointer-events-none" />
+      <header className="py-20 px-4 text-center border-b border-border-custom bg-white dark:bg-[#161D24] relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(214,166,60,0.03)_0%,transparent_70%)] pointer-events-none" />
         <div className="max-w-4xl mx-auto space-y-4 relative z-10">
-          <span className="text-[10px] tracking-[0.3em] text-[#b5924b] dark:text-[#dfb15b] uppercase font-bold">
+          <span className="text-[10px] tracking-[0.3em] text-[#AD8631] dark:text-[#D6A63C] uppercase font-bold">
             Secure Your Edition
           </span>
           <h1 className="text-4xl sm:text-5xl font-serif text-foreground leading-tight">
@@ -302,7 +302,7 @@ export default function PreorderPage() {
       <section className="py-20 px-4 max-w-7xl mx-auto w-full flex-1 space-y-16">
 
         <div className="text-center space-y-4">
-          <h2 className="text-xs uppercase tracking-[0.25em] text-[#b5924b] dark:text-[#dfb15b] font-semibold">
+          <h2 className="text-xs uppercase tracking-[0.25em] text-[#AD8631] dark:text-[#D6A63C] font-semibold">
             Available Editions
           </h2>
           <h3 className="text-2xl sm:text-3xl font-serif text-foreground">
@@ -324,7 +324,7 @@ export default function PreorderPage() {
               }}
               className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[11px] uppercase tracking-widest font-bold border transition-all cursor-pointer ${
                 activeRegion === tab.key
-                  ? "bg-[#1e3f20] dark:bg-[#dfb15b] text-white dark:text-black border-transparent shadow-md"
+                  ? "bg-[#0B2942] dark:bg-[#D6A63C] text-white dark:text-black border-transparent shadow-md"
                   : "border-border-custom text-muted-text hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5"
               }`}
             >
@@ -347,15 +347,15 @@ export default function PreorderPage() {
             return (
               <div
                 key={idx}
-                className={`bg-white dark:bg-[#101614] border rounded-3xl p-6 flex flex-col justify-between hover:shadow-xl transition-all duration-350 relative ${
+                className={`bg-white dark:bg-[#2A3642] border rounded-3xl p-6 flex flex-col justify-between hover:shadow-xl transition-all duration-350 relative ${
                   store.isPopular
-                    ? "border-[#dfb15b] md:-translate-y-2 shadow-md"
+                    ? "border-[#D6A63C] md:-translate-y-2 shadow-md"
                     : "border-border-custom"
                 }`}
               >
                 {/* Popularity Badge */}
                 {store.isPopular && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#dfb15b] text-black font-mono text-[9px] uppercase tracking-widest font-bold px-4 py-1 rounded-full whitespace-nowrap">
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#D6A63C] text-black font-mono text-[9px] uppercase tracking-widest font-bold px-4 py-1 rounded-full whitespace-nowrap">
                     Author&apos;s Pick
                   </span>
                 )}
@@ -376,7 +376,7 @@ export default function PreorderPage() {
 
                   {/* Price */}
                   <div className="py-3 border-y border-border-custom/50 flex items-baseline justify-between">
-                    <span className="text-xl font-serif font-bold text-[#b5924b] dark:text-[#dfb15b]">
+                    <span className="text-xl font-serif font-bold text-[#AD8631] dark:text-[#D6A63C]">
                       {store.price}
                     </span>
                     <span className="text-[8px] font-mono text-green-600 dark:text-green-400 uppercase">
@@ -402,7 +402,7 @@ export default function PreorderPage() {
                     rel="noopener noreferrer"
                     className={`w-full py-3 rounded-full flex items-center justify-center space-x-2 text-[11px] uppercase tracking-widest font-bold shadow-md cursor-pointer transition-all hover:scale-103 ${
                       store.isPopular
-                        ? "bg-[#1e3f20] dark:bg-[#dfb15b] text-white dark:text-black"
+                        ? "bg-[#0B2942] dark:bg-[#D6A63C] text-white dark:text-black"
                         : "border border-border-custom hover:bg-black/5 dark:hover:bg-white/5 text-foreground"
                     }`}
                   >
@@ -420,8 +420,8 @@ export default function PreorderPage() {
         {/* Stay-updated newsletter — no longer a "notify when it opens"
             gate now that ordering is live, just an optional way to hear
             about events, freebies, and future releases. */}
-        <div id="waitlist-form" className="max-w-2xl mx-auto bg-white dark:bg-[#101614] border border-[#dfb15b]/30 rounded-3xl p-6 md:p-8 space-y-6 shadow-sm">
-          <div className="flex items-center space-x-3 text-[#dfb15b]">
+        <div id="waitlist-form" className="max-w-2xl mx-auto bg-white dark:bg-[#2A3642] border border-[#D6A63C]/30 rounded-3xl p-6 md:p-8 space-y-6 shadow-sm">
+          <div className="flex items-center space-x-3 text-[#D6A63C]">
             <Bell className="w-5 h-5" />
             <h4 className="font-serif text-base text-foreground font-semibold">Stay in the Loop</h4>
           </div>
@@ -442,12 +442,12 @@ export default function PreorderPage() {
                   value={waitlistEmail}
                   onChange={(e) => setWaitlistEmail(e.target.value)}
                   placeholder="Enter your email address"
-                  className="flex-1 text-xs bg-stone-50 dark:bg-[#070b09] border border-border-custom rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-[#dfb15b]/40 text-foreground"
+                  className="flex-1 text-xs bg-stone-50 dark:bg-[#202A33] border border-border-custom rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-[#D6A63C]/40 text-foreground"
                   required
                 />
                 <button
                   type="submit"
-                  className="px-5 py-2.5 rounded-lg bg-[#1e3f20] dark:bg-[#dfb15b] hover:bg-[#142a15] dark:hover:bg-[#c49945] text-white dark:text-black text-xs uppercase tracking-widest font-bold cursor-pointer whitespace-nowrap"
+                  className="px-5 py-2.5 rounded-lg bg-[#0B2942] dark:bg-[#D6A63C] hover:bg-[#071D30] dark:hover:bg-[#BC9235] text-white dark:text-black text-xs uppercase tracking-widest font-bold cursor-pointer whitespace-nowrap"
                 >
                   Keep Me Posted
                 </button>
@@ -457,7 +457,7 @@ export default function PreorderPage() {
                 value={waitlistName}
                 onChange={(e) => setWaitlistName(e.target.value)}
                 placeholder="First name (optional — appears on the Founding Readers wall)"
-                className="w-full text-xs bg-stone-50 dark:bg-[#070b09] border border-border-custom rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-[#dfb15b]/40 text-foreground"
+                className="w-full text-xs bg-stone-50 dark:bg-[#202A33] border border-border-custom rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-[#D6A63C]/40 text-foreground"
               />
             </form>
           )}

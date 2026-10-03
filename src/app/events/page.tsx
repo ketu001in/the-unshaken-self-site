@@ -145,14 +145,14 @@ export default function EventsPage() {
   };
 
   return (
-    <div className="flex-1 flex flex-col pt-16 bg-[#faf8f5] dark:bg-[#070b09]">
+    <div className="flex-1 flex flex-col pt-16 bg-[#FAF7EF] dark:bg-[#202A33]">
       <Navbar />
 
       {/* Page Header */}
-      <header className="py-20 px-4 text-center border-b border-border-custom bg-white dark:bg-[#050806] relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(223,177,91,0.03)_0%,transparent_70%)] pointer-events-none" />
+      <header className="py-20 px-4 text-center border-b border-border-custom bg-white dark:bg-[#161D24] relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(214,166,60,0.03)_0%,transparent_70%)] pointer-events-none" />
         <div className="max-w-4xl mx-auto space-y-4 relative z-10">
-          <span className="text-[10px] tracking-[0.3em] text-[#b5924b] dark:text-[#dfb15b] uppercase font-bold">
+          <span className="text-[10px] tracking-[0.3em] text-[#AD8631] dark:text-[#D6A63C] uppercase font-bold">
             {content.header_badge}
           </span>
           <h1 className="text-4xl sm:text-5xl font-serif text-foreground leading-tight">
@@ -176,7 +176,7 @@ export default function EventsPage() {
         <div className="lg:col-span-8 space-y-8">
           <div className="space-y-4">
             <h2 className="font-serif text-2xl text-foreground">{content.schedule_heading}</h2>
-            <div className="w-12 h-[2px] bg-[#dfb15b]" />
+            <div className="w-12 h-[2px] bg-[#D6A63C]" />
           </div>
 
           <div className="space-y-6">
@@ -189,7 +189,7 @@ export default function EventsPage() {
             ) : events.map((event) => (
               <div
                 key={event.id}
-                className="bg-white dark:bg-[#101614] border border-border-custom p-6 sm:p-8 rounded-3xl space-y-6 hover:shadow-md transition-shadow relative overflow-hidden group"
+                className="bg-white dark:bg-[#2A3642] border border-border-custom p-6 sm:p-8 rounded-3xl space-y-6 hover:shadow-md transition-shadow relative overflow-hidden group"
               >
                 {/* Event Type Ribbon Accent */}
                 <div className={`absolute top-0 right-0 px-4 py-1 text-[9px] uppercase tracking-widest font-mono font-bold rounded-bl-xl ${
@@ -212,11 +212,11 @@ export default function EventsPage() {
                 {/* Metadata Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-border-custom/50 text-[11px] text-muted-text font-mono">
                   <div className="flex items-center space-x-2">
-                    <Calendar className="w-4 h-4 text-[#dfb15b]" />
+                    <Calendar className="w-4 h-4 text-[#D6A63C]" />
                     <span>{event.date}</span>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <Clock className="w-4 h-4 text-[#dfb15b]" />
+                    <Clock className="w-4 h-4 text-[#D6A63C]" />
                     <span>{event.time}</span>
                   </div>
                 </div>
@@ -231,7 +231,7 @@ export default function EventsPage() {
                       setSelectedEvent(event.id);
                       document.getElementById("rsvp-form")?.scrollIntoView({ behavior: "smooth" });
                     }}
-                    className="text-xs font-semibold text-primary dark:text-[#dfb15b] hover:underline flex items-center space-x-1 cursor-pointer"
+                    className="text-xs font-semibold text-primary dark:text-[#D6A63C] hover:underline flex items-center space-x-1 cursor-pointer"
                   >
                     <span>RSVP for this Event</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -244,11 +244,11 @@ export default function EventsPage() {
 
         {/* Right Column: RSVP Registration Panel */}
         <div className="lg:col-span-4" id="rsvp-form">
-          <div className="bg-white dark:bg-[#101614] border border-border-custom rounded-3xl p-6 space-y-6 shadow-sm sticky top-24">
+          <div className="bg-white dark:bg-[#2A3642] border border-border-custom rounded-3xl p-6 space-y-6 shadow-sm sticky top-24">
             
             <div className="space-y-2">
               <h3 className="font-serif text-base text-foreground font-semibold flex items-center gap-2">
-                <Calendar className="w-5 h-5 text-[#dfb15b]" />
+                <Calendar className="w-5 h-5 text-[#D6A63C]" />
                 <span>{content.sidebar_heading}</span>
               </h3>
               <p className="text-[11px] font-light text-stone-500 leading-relaxed">
@@ -264,7 +264,7 @@ export default function EventsPage() {
                 <select
                   value={selectedEvent}
                   onChange={(e) => setSelectedEvent(e.target.value)}
-                  className="w-full text-xs bg-stone-50 dark:bg-[#070b09] border border-border-custom rounded-lg p-2.5 focus:outline-none text-foreground font-medium"
+                  className="w-full text-xs bg-stone-50 dark:bg-[#202A33] border border-border-custom rounded-lg p-2.5 focus:outline-none text-foreground font-medium"
                 >
                   {events.map((ev) => (
                     <option key={ev.id} value={ev.id}>
@@ -282,7 +282,7 @@ export default function EventsPage() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="e.g., Kedar Shah"
-                  className="w-full text-xs bg-stone-50 dark:bg-[#070b09] border border-border-custom rounded-lg p-2.5 focus:outline-none focus:ring-1 focus:ring-[#dfb15b]/40 text-foreground"
+                  className="w-full text-xs bg-stone-50 dark:bg-[#202A33] border border-border-custom rounded-lg p-2.5 focus:outline-none focus:ring-1 focus:ring-[#D6A63C]/40 text-foreground"
                   required
                 />
               </div>
@@ -295,14 +295,14 @@ export default function EventsPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="e.g., example@domain.com"
-                  className="w-full text-xs bg-stone-50 dark:bg-[#070b09] border border-border-custom rounded-lg p-2.5 focus:outline-none focus:ring-1 focus:ring-[#dfb15b]/40 text-foreground"
+                  className="w-full text-xs bg-stone-50 dark:bg-[#202A33] border border-border-custom rounded-lg p-2.5 focus:outline-none focus:ring-1 focus:ring-[#D6A63C]/40 text-foreground"
                   required
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full py-3 rounded-full bg-[#1e3f20] hover:bg-[#142a15] dark:bg-[#dfb15b] dark:hover:bg-[#c49945] text-white dark:text-black text-xs uppercase tracking-widest font-bold shadow-md transition-all cursor-pointer"
+                className="w-full py-3 rounded-full bg-[#0B2942] hover:bg-[#071D30] dark:bg-[#D6A63C] dark:hover:bg-[#BC9235] text-white dark:text-black text-xs uppercase tracking-widest font-bold shadow-md transition-all cursor-pointer"
               >
                 Confirm Attendance
               </button>

@@ -2,15 +2,17 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { BookOpen, Send } from "lucide-react";
+import { Send } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { useSiteSettings } from "@/context/SiteSettingsContext";
+import { useTheme } from "@/context/ThemeContext";
 
 export default function Footer() {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
   const [error, setError] = useState("");
   const { settings } = useSiteSettings();
+  const { theme } = useTheme();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -53,15 +55,21 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-white dark:bg-[#050806] border-t border-border-custom pt-16 pb-8 transition-colors duration-300">
+    <footer className="bg-white dark:bg-[#161D24] border-t border-border-custom pt-16 pb-8 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8 pb-12 border-b border-border-custom">
           
           {/* Logo & Description */}
           <div className="lg:col-span-2 space-y-6">
-            <Link href="/" className="flex items-center space-x-2 text-primary uppercase font-serif tracking-widest text-lg">
-              <BookOpen className="w-5 h-5 text-[#dfb15b]" />
-              <span className="font-semibold text-foreground">The Unshaken Self</span>
+            <Link href="/" className="flex items-center">
+              {/* Plain <img>, not next/image — Next's image optimizer
+                  blocks SVGs by default, and a trusted local brand asset
+                  like this needs no optimization anyway. */}
+              <img
+                src={theme === "dark" ? "/brand/logo_horizontal_dark.svg" : "/brand/logo_horizontal_light.svg"}
+                alt="The Unshaken Self"
+                className="h-9 w-auto rounded-md"
+              />
             </Link>
             <p className="text-stone-500 dark:text-stone-400 text-xs md:text-sm font-light leading-relaxed max-w-sm">
               {settings.footer_tagline}
@@ -95,7 +103,7 @@ export default function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-8 h-8 rounded-full border border-border-custom flex items-center justify-center text-muted-text hover:text-[#dfb15b] hover:border-[#dfb15b] transition-all cursor-pointer"
+                  className="w-8 h-8 rounded-full border border-border-custom flex items-center justify-center text-muted-text hover:text-[#D6A63C] hover:border-[#D6A63C] transition-all cursor-pointer"
                   aria-label={social.label}
                 >
                   {social.icon}
@@ -150,12 +158,12 @@ export default function Footer() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Your Email"
-                  className="w-full text-xs bg-stone-50 dark:bg-[#070b09] border border-border-custom rounded-full px-4 py-2.5 pr-10 focus:outline-none focus:ring-1 focus:ring-[#dfb15b]/40"
+                  className="w-full text-xs bg-stone-50 dark:bg-[#202A33] border border-border-custom rounded-full px-4 py-2.5 pr-10 focus:outline-none focus:ring-1 focus:ring-[#D6A63C]/40"
                   required
                 />
                 <button
                   type="submit"
-                  className="absolute right-1 top-1 w-8 h-8 rounded-full bg-[#1e3f20] dark:bg-[#dfb15b] text-white dark:text-black flex items-center justify-center cursor-pointer hover:opacity-90 transition-opacity"
+                  className="absolute right-1 top-1 w-8 h-8 rounded-full bg-[#0B2942] dark:bg-[#D6A63C] text-white dark:text-black flex items-center justify-center cursor-pointer hover:opacity-90 transition-opacity"
                   aria-label="Submit Email Subscription"
                 >
                   <Send className="w-3 h-3" />

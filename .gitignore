@@ -40,3 +40,11 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .claude/
+
+# raw brand source material — the assets the site actually uses are
+# copied into public/brand/ and public/favicon*; these are reference
+# files / superseded concept drafts, not site code
+/TheUnshakenSelf_Production_Brand_Package/
+/TheUnshakenSelf_Production_Brand_Package.zip
+/TheUnshakenSelf_Logo_Pack/
+/TheUnshakenSelf_Logo_Pack.zip

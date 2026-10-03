@@ -22,8 +22,8 @@ export type ArchetypeCardData = {
 
 const CARD_SIZE = 1080;
 const SITE_URL = "the-unshaken-self-site-hcp1.vercel.app";
-const GOLD = "#dfb15b";
-const CREAM = "#f5f1e8";
+const GOLD = "#D6A63C";
+const CREAM = "#FAF7EF";
 const SANS = "'Segoe UI', Arial, sans-serif";
 const SERIF = "Georgia, 'Times New Roman', serif";
 // The book is live — kept in sync with the rest of the site so a share
@@ -90,18 +90,18 @@ function createCardShell(): { canvas: HTMLCanvasElement; ctx: CanvasRenderingCon
   if (!ctx) return null;
 
   const bg = ctx.createLinearGradient(0, 0, CARD_SIZE, CARD_SIZE);
-  bg.addColorStop(0, "#16311a");
-  bg.addColorStop(1, "#070b09");
+  bg.addColorStop(0, "#0F3A5C");
+  bg.addColorStop(1, "#202A33");
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, CARD_SIZE, CARD_SIZE);
 
   const glow = ctx.createRadialGradient(CARD_SIZE / 2, CARD_SIZE / 2, 80, CARD_SIZE / 2, CARD_SIZE / 2, 560);
-  glow.addColorStop(0, "rgba(223,177,91,0.10)");
-  glow.addColorStop(1, "rgba(223,177,91,0)");
+  glow.addColorStop(0, "rgba(214,166,60,0.10)");
+  glow.addColorStop(1, "rgba(214,166,60,0)");
   ctx.fillStyle = glow;
   ctx.fillRect(0, 0, CARD_SIZE, CARD_SIZE);
 
-  ctx.strokeStyle = "rgba(223,177,91,0.35)";
+  ctx.strokeStyle = "rgba(214,166,60,0.35)";
   ctx.lineWidth = 2;
   const inset = 44;
   ctx.strokeRect(inset, inset, CARD_SIZE - inset * 2, CARD_SIZE - inset * 2);
@@ -156,7 +156,7 @@ export async function generateWisdomShareCard(data: WisdomCardData): Promise<Blo
     y += lineHeight;
   }
 
-  ctx.fillStyle = "rgba(223,177,91,0.6)";
+  ctx.fillStyle = "rgba(214,166,60,0.6)";
   ctx.font = `400 32px ${SERIF}`;
   ctx.fillText("✦", CARD_SIZE / 2, y + 24);
 
@@ -196,7 +196,7 @@ export async function generateArchetypeShareCard(data: ArchetypeCardData): Promi
     qy += lineHeight;
   }
 
-  ctx.fillStyle = "rgba(223,177,91,0.6)";
+  ctx.fillStyle = "rgba(214,166,60,0.6)";
   ctx.font = `400 32px ${SERIF}`;
   ctx.fillText("✦", CARD_SIZE / 2, qy + 30);
 
@@ -226,7 +226,7 @@ export async function generateLaunchShareCard(): Promise<Blob | null> {
   ctx.font = `italic 400 32px ${SERIF}`;
   ctx.fillText("Paperback & Hardcover, on Amazon and Notion Press", CARD_SIZE / 2, y + 30);
 
-  ctx.fillStyle = "rgba(223,177,91,0.6)";
+  ctx.fillStyle = "rgba(214,166,60,0.6)";
   ctx.font = `400 34px ${SERIF}`;
   ctx.fillText("✦", CARD_SIZE / 2, y + 90);
 

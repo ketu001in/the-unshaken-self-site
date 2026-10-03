@@ -52,8 +52,8 @@ export default function ReferralPanel({ referralCode }: { referralCode: string |
   const remaining = REFERRAL_GOAL - progress;
 
   return (
-    <div className="max-w-2xl mx-auto bg-white dark:bg-[#101614] border border-[#dfb15b]/30 rounded-3xl p-6 md:p-8 space-y-6 shadow-sm">
-      <div className="flex items-center gap-3 text-[#dfb15b]">
+    <div className="max-w-2xl mx-auto bg-white dark:bg-[#2A3642] border border-[#D6A63C]/30 rounded-3xl p-6 md:p-8 space-y-6 shadow-sm">
+      <div className="flex items-center gap-3 text-[#D6A63C]">
         <Gift className="w-5 h-5 flex-shrink-0" />
         <h4 className="font-serif text-base text-foreground font-semibold">
           Invite {REFERRAL_GOAL} Friends, Unlock a Chapter 2 Sneak Peek
@@ -65,13 +65,13 @@ export default function ReferralPanel({ referralCode }: { referralCode: string |
           readOnly
           value={shareLink}
           onFocus={(e) => e.currentTarget.select()}
-          className="flex-1 text-[11px] bg-stone-50 dark:bg-[#070b09] border border-border-custom rounded-lg px-4 py-2.5 text-foreground font-mono"
+          className="flex-1 text-[11px] bg-stone-50 dark:bg-[#202A33] border border-border-custom rounded-lg px-4 py-2.5 text-foreground font-mono"
         />
         <div className="flex gap-2">
           <button
             type="button"
             onClick={handleCopy}
-            className="flex-1 sm:flex-initial px-4 py-2.5 rounded-lg bg-[#1e3f20] dark:bg-[#dfb15b] hover:opacity-90 text-white dark:text-black text-xs uppercase tracking-widest font-bold cursor-pointer whitespace-nowrap flex items-center justify-center gap-1.5"
+            className="flex-1 sm:flex-initial px-4 py-2.5 rounded-lg bg-[#0B2942] dark:bg-[#D6A63C] hover:opacity-90 text-white dark:text-black text-xs uppercase tracking-widest font-bold cursor-pointer whitespace-nowrap flex items-center justify-center gap-1.5"
           >
             <Copy className="w-3.5 h-3.5" />
             {copied ? "Copied" : "Copy"}
@@ -82,7 +82,7 @@ export default function ReferralPanel({ referralCode }: { referralCode: string |
             )}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="p-2.5 rounded-lg border border-border-custom hover:border-[#dfb15b]/60 text-muted-text hover:text-[#dfb15b] transition-colors flex items-center justify-center"
+            className="p-2.5 rounded-lg border border-border-custom hover:border-[#D6A63C]/60 text-muted-text hover:text-[#D6A63C] transition-colors flex items-center justify-center"
             aria-label="Share on WhatsApp"
           >
             <MessageCircle className="w-4 h-4" />
@@ -97,17 +97,17 @@ export default function ReferralPanel({ referralCode }: { referralCode: string |
             {progress}/{REFERRAL_GOAL}
           </span>
         </div>
-        <div className="h-1.5 rounded-full bg-stone-100 dark:bg-[#070b09] overflow-hidden">
+        <div className="h-1.5 rounded-full bg-stone-100 dark:bg-[#202A33] overflow-hidden">
           <div
-            className="h-full bg-[#dfb15b] transition-all duration-500"
+            className="h-full bg-[#D6A63C] transition-all duration-500"
             style={{ width: `${(progress / REFERRAL_GOAL) * 100}%` }}
           />
         </div>
       </div>
 
       {unlocked ? (
-        <div className="p-5 border border-[#dfb15b]/30 bg-[#dfb15b]/5 rounded-2xl space-y-3">
-          <div className="flex items-center gap-2 text-[#dfb15b] text-[10px] uppercase tracking-widest font-bold">
+        <div className="p-5 border border-[#D6A63C]/30 bg-[#D6A63C]/5 rounded-2xl space-y-3">
+          <div className="flex items-center gap-2 text-[#D6A63C] text-[10px] uppercase tracking-widest font-bold">
             <Unlock className="w-3.5 h-3.5" />
             <span>Chapter 2 — Unlocked</span>
           </div>
@@ -117,7 +117,7 @@ export default function ReferralPanel({ referralCode }: { referralCode: string |
         </div>
       ) : (
         <div className="p-5 border border-dashed border-border-custom rounded-2xl flex items-center gap-3 text-xs text-muted-text">
-          <Lock className="w-4 h-4 text-[#dfb15b] flex-shrink-0" />
+          <Lock className="w-4 h-4 text-[#D6A63C] flex-shrink-0" />
           <span>
             Share your link with {remaining} more {remaining === 1 ? "person" : "people"} to unlock
             a short Chapter 2 excerpt.

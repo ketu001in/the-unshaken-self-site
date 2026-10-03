@@ -68,14 +68,14 @@ export default function AboutAuthor() {
   ];
 
   return (
-    <div className="flex-1 flex flex-col pt-16 bg-[#faf8f5] dark:bg-[#070b09]">
+    <div className="flex-1 flex flex-col pt-16 bg-[#FAF7EF] dark:bg-[#202A33]">
       <Navbar />
 
       {/* Page Header */}
-      <header className="py-20 px-4 text-center border-b border-border-custom bg-white dark:bg-[#050806] relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(223,177,91,0.03)_0%,transparent_70%)] pointer-events-none" />
+      <header className="py-20 px-4 text-center border-b border-border-custom bg-white dark:bg-[#161D24] relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(214,166,60,0.03)_0%,transparent_70%)] pointer-events-none" />
         <div className="max-w-4xl mx-auto space-y-4 relative z-10">
-          <span className="text-[10px] tracking-[0.3em] text-[#b5924b] dark:text-[#dfb15b] uppercase font-bold">
+          <span className="text-[10px] tracking-[0.3em] text-[#AD8631] dark:text-[#D6A63C] uppercase font-bold">
             The Author's Path
           </span>
           <h1 className="text-4xl sm:text-5xl font-serif text-foreground leading-tight">
@@ -95,7 +95,7 @@ export default function AboutAuthor() {
           <div className="lg:col-span-7 space-y-8">
             <div className="space-y-4">
               <h2 className="font-serif text-2xl text-foreground">Bridging Scriptural Study & Modern Psychology</h2>
-              <div className="w-16 h-[2px] bg-[#dfb15b]" />
+              <div className="w-16 h-[2px] bg-[#D6A63C]" />
             </div>
 
             <div className="space-y-6 text-stone-600 dark:text-stone-300 font-light text-xs sm:text-sm leading-relaxed text-justify">
@@ -106,14 +106,14 @@ export default function AboutAuthor() {
 
             {/* Mission / Vision Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
-              <div className="p-6 border border-border-custom bg-white dark:bg-[#101614] rounded-2xl space-y-3">
-                <h4 className="font-serif text-sm text-[#dfb15b] font-semibold">The Mission</h4>
+              <div className="p-6 border border-border-custom bg-white dark:bg-[#2A3642] rounded-2xl space-y-3">
+                <h4 className="font-serif text-sm text-[#D6A63C] font-semibold">The Mission</h4>
                 <p className="text-xs font-light text-stone-500 leading-relaxed">
                   {content.mission}
                 </p>
               </div>
-              <div className="p-6 border border-border-custom bg-white dark:bg-[#101614] rounded-2xl space-y-3">
-                <h4 className="font-serif text-sm text-[#dfb15b] font-semibold">The Vision</h4>
+              <div className="p-6 border border-border-custom bg-white dark:bg-[#2A3642] rounded-2xl space-y-3">
+                <h4 className="font-serif text-sm text-[#D6A63C] font-semibold">The Vision</h4>
                 <p className="text-xs font-light text-stone-500 leading-relaxed">
                   {content.vision}
                 </p>
@@ -123,7 +123,7 @@ export default function AboutAuthor() {
 
           {/* Right Column: Mini Portrait & Direct Contacts */}
           <div className="lg:col-span-5 space-y-8">
-            <div className="border border-border-custom rounded-2xl bg-white dark:bg-[#101614] p-6 space-y-6">
+            <div className="border border-border-custom rounded-2xl bg-white dark:bg-[#2A3642] p-6 space-y-6">
               {/* Author Portrait — click to open a zoomable/pannable
                   full-screen view */}
               <div
@@ -137,7 +137,7 @@ export default function AboutAuthor() {
                   }
                 }}
                 aria-label="Open full-screen photo of Ketul Shah"
-                className="group aspect-[3/4] max-w-sm mx-auto rounded-xl border border-border-custom relative overflow-hidden bg-stone-100 dark:bg-[#0b100e] cursor-zoom-in"
+                className="group aspect-[3/4] max-w-sm mx-auto rounded-xl border border-border-custom relative overflow-hidden bg-stone-100 dark:bg-[#2A3642] cursor-zoom-in"
               >
                 <Image
                   src={authorPhotoSrc}
@@ -170,7 +170,7 @@ export default function AboutAuthor() {
                 <div className="space-y-3 pt-2">
                   <a
                     href={`mailto:${settings.contact_email}`}
-                    className="flex items-center space-x-3 text-xs text-[#b5924b] dark:text-[#dfb15b] hover:underline"
+                    className="flex items-center space-x-3 text-xs text-[#AD8631] dark:text-[#D6A63C] hover:underline"
                   >
                     <Mail className="w-4 h-4" />
                     <span>{settings.contact_email}</span>
@@ -179,7 +179,7 @@ export default function AboutAuthor() {
                     href={settings.social_instagram}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center space-x-3 text-xs text-[#b5924b] dark:text-[#dfb15b] hover:underline"
+                    className="flex items-center space-x-3 text-xs text-[#AD8631] dark:text-[#D6A63C] hover:underline"
                   >
                     <svg className="w-4 h-4 fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
                       <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
@@ -201,10 +201,10 @@ export default function AboutAuthor() {
       </section>
 
       {/* Interactive timeline of events */}
-      <section className="py-20 px-4 bg-white dark:bg-[#050806] border-y border-border-custom">
+      <section className="py-20 px-4 bg-white dark:bg-[#161D24] border-y border-border-custom">
         <div className="max-w-4xl mx-auto space-y-16">
           <div className="text-center space-y-4">
-            <h2 className="text-xs uppercase tracking-[0.25em] text-[#b5924b] dark:text-[#dfb15b] font-semibold">
+            <h2 className="text-xs uppercase tracking-[0.25em] text-[#AD8631] dark:text-[#D6A63C] font-semibold">
               Research & Action
             </h2>
             <h3 className="text-3xl font-serif text-foreground">
@@ -216,16 +216,16 @@ export default function AboutAuthor() {
             {timelineEvents.map((event, idx) => (
               <div key={idx} className="relative pl-8 md:pl-12 group">
                 {/* Year tag for desktop */}
-                <div className="hidden md:block absolute -left-36 top-1.5 w-28 text-right font-mono text-xs uppercase tracking-widest text-[#dfb15b] font-bold">
+                <div className="hidden md:block absolute -left-36 top-1.5 w-28 text-right font-mono text-xs uppercase tracking-widest text-[#D6A63C] font-bold">
                   {event.year}
                 </div>
                 
                 {/* Tiny timeline circle indicator */}
-                <div className="absolute -left-[5px] top-2.5 w-2.5 h-2.5 rounded-full bg-border-custom group-hover:bg-[#dfb15b] group-hover:scale-125 transition-all duration-300" />
+                <div className="absolute -left-[5px] top-2.5 w-2.5 h-2.5 rounded-full bg-border-custom group-hover:bg-[#D6A63C] group-hover:scale-125 transition-all duration-300" />
                 
                 <div className="space-y-2">
                   {/* Year tag for mobile */}
-                  <span className="inline-block md:hidden font-mono text-[10px] tracking-widest text-[#dfb15b] font-bold mb-1">
+                  <span className="inline-block md:hidden font-mono text-[10px] tracking-widest text-[#D6A63C] font-bold mb-1">
                     {event.year}
                   </span>
                   <h4 className="font-serif text-base text-foreground font-semibold">
@@ -245,7 +245,7 @@ export default function AboutAuthor() {
       <section className="py-20 px-4 max-w-7xl mx-auto w-full">
         <div className="space-y-12 text-center">
           <div className="space-y-3">
-            <h2 className="text-xs uppercase tracking-[0.25em] text-[#b5924b] dark:text-[#dfb15b] font-semibold">
+            <h2 className="text-xs uppercase tracking-[0.25em] text-[#AD8631] dark:text-[#D6A63C] font-semibold">
               Speaking Engagements
             </h2>
             <h3 className="text-2xl sm:text-3xl font-serif text-foreground">
@@ -257,9 +257,9 @@ export default function AboutAuthor() {
             {speakingTopics.map((topic, idx) => (
               <div
                 key={idx}
-                className="bg-white dark:bg-[#101614] border border-border-custom p-8 rounded-2xl space-y-4 hover:shadow-md transition-shadow text-center md:text-left"
+                className="bg-white dark:bg-[#2A3642] border border-border-custom p-8 rounded-2xl space-y-4 hover:shadow-md transition-shadow text-center md:text-left"
               >
-                <div className="w-10 h-10 rounded-lg bg-[#dfb15b]/10 text-[#dfb15b] flex items-center justify-center mx-auto md:mx-0">
+                <div className="w-10 h-10 rounded-lg bg-[#D6A63C]/10 text-[#D6A63C] flex items-center justify-center mx-auto md:mx-0">
                   <Award className="w-5 h-5" />
                 </div>
                 <h4 className="font-serif text-base text-foreground tracking-wide font-semibold">
@@ -275,10 +275,10 @@ export default function AboutAuthor() {
       </section>
 
       {/* Media Kit Download Panel */}
-      <section id="media-kit" className="py-20 px-4 bg-[#faf8f5] dark:bg-[#050806] border-t border-border-custom scroll-mt-20 flex justify-center">
+      <section id="media-kit" className="py-20 px-4 bg-[#FAF7EF] dark:bg-[#161D24] border-t border-border-custom scroll-mt-20 flex justify-center">
         <div className="max-w-4xl w-full glassmorphism border border-border-custom rounded-3xl p-8 md:p-12 space-y-10 shadow-lg">
           <div className="text-center md:text-left space-y-3">
-            <h2 className="text-xs uppercase tracking-[0.25em] text-[#b5924b] dark:text-[#dfb15b] font-semibold">
+            <h2 className="text-xs uppercase tracking-[0.25em] text-[#AD8631] dark:text-[#D6A63C] font-semibold">
               Press Relations
             </h2>
             <h3 className="text-2xl sm:text-3xl font-serif text-foreground">
@@ -293,11 +293,11 @@ export default function AboutAuthor() {
             {mediaKitAssets.map((asset, idx) => (
               <div
                 key={idx}
-                className="bg-white dark:bg-[#101614] p-5 border border-border-custom rounded-2xl flex items-center justify-between"
+                className="bg-white dark:bg-[#2A3642] p-5 border border-border-custom rounded-2xl flex items-center justify-between"
               >
                 <div className="space-y-1.5 pr-4">
                   <h4 className="font-serif text-sm text-foreground font-semibold flex items-center gap-2">
-                    <FileText className="w-4 h-4 text-[#dfb15b]" />
+                    <FileText className="w-4 h-4 text-[#D6A63C]" />
                     <span>{asset.name}</span>
                   </h4>
                   <p className="text-[10px] text-muted-text font-mono uppercase">
@@ -307,7 +307,7 @@ export default function AboutAuthor() {
                 <a
                   href={asset.file}
                   download
-                  className="p-2.5 rounded-full border border-border-custom hover:border-[#dfb15b] hover:text-[#dfb15b] transition-all cursor-pointer text-muted-text"
+                  className="p-2.5 rounded-full border border-border-custom hover:border-[#D6A63C] hover:text-[#D6A63C] transition-all cursor-pointer text-muted-text"
                   aria-label={`Download ${asset.name}`}
                 >
                   <Download className="w-4 h-4" />
@@ -320,7 +320,7 @@ export default function AboutAuthor() {
             <span>Need customized interview responses or custom sizes?</span>
             <a
               href={`mailto:${settings.contact_email}`}
-              className="inline-flex items-center space-x-1 text-[#dfb15b] font-semibold hover:underline"
+              className="inline-flex items-center space-x-1 text-[#D6A63C] font-semibold hover:underline"
             >
               <span>Contact Press Relations</span>
               <ArrowUpRight className="w-3.5 h-3.5" />

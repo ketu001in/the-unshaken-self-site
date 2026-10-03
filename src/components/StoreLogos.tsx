@@ -61,7 +61,7 @@ export function NotionPressLogo({ className = "w-11 h-11" }: LogoProps) {
       >
         NP
       </text>
-      <circle cx="30" cy="11" r="3.2" fill="#dfb15b" />
+      <circle cx="30" cy="11" r="3.2" fill="#D6A63C" />
     </svg>
   );
 }

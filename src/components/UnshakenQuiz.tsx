@@ -163,7 +163,7 @@ export default function UnshakenQuiz() {
   };
 
   return (
-    <div className="max-w-xl mx-auto bg-white dark:bg-[#101614] border border-border-custom rounded-3xl p-8 sm:p-10 shadow-md">
+    <div className="max-w-xl mx-auto bg-white dark:bg-[#2A3642] border border-border-custom rounded-3xl p-8 sm:p-10 shadow-md">
       {!isResult ? (
         <div className="space-y-8">
           {/* Progress */}
@@ -172,7 +172,7 @@ export default function UnshakenQuiz() {
               <div
                 key={i}
                 className={`h-1 flex-1 rounded-full transition-colors ${
-                  i < step ? "bg-[#dfb15b]" : i === step ? "bg-[#dfb15b]/50" : "bg-border-custom"
+                  i < step ? "bg-[#D6A63C]" : i === step ? "bg-[#D6A63C]/50" : "bg-border-custom"
                 }`}
               />
             ))}
@@ -192,10 +192,10 @@ export default function UnshakenQuiz() {
               <button
                 key={i}
                 onClick={() => handleAnswer(opt.key)}
-                className="w-full text-left px-5 py-3.5 rounded-2xl border border-border-custom hover:border-[#dfb15b]/60 hover:bg-[#dfb15b]/5 transition-colors text-sm text-foreground flex items-center justify-between gap-3 cursor-pointer group"
+                className="w-full text-left px-5 py-3.5 rounded-2xl border border-border-custom hover:border-[#D6A63C]/60 hover:bg-[#D6A63C]/5 transition-colors text-sm text-foreground flex items-center justify-between gap-3 cursor-pointer group"
               >
                 <span>{opt.label}</span>
-                <ChevronRight className="w-4 h-4 text-muted-text group-hover:text-[#dfb15b] group-hover:translate-x-0.5 transition-all flex-shrink-0" />
+                <ChevronRight className="w-4 h-4 text-muted-text group-hover:text-[#D6A63C] group-hover:translate-x-0.5 transition-all flex-shrink-0" />
               </button>
             ))}
           </div>
@@ -258,7 +258,7 @@ function ShareResultButton({ result }: { result: Archetype }) {
       type="button"
       onClick={handleShare}
       disabled={sharing}
-      className="flex items-center gap-1.5 text-[11px] uppercase tracking-widest font-semibold text-muted-text hover:text-[#dfb15b] transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-wait"
+      className="flex items-center gap-1.5 text-[11px] uppercase tracking-widest font-semibold text-muted-text hover:text-[#D6A63C] transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-wait"
     >
       <Share2 className="w-3.5 h-3.5" />
       {sharing ? "Preparing…" : "Share Result"}
@@ -285,7 +285,7 @@ function ResultView({
 }) {
   return (
     <div className="space-y-6 text-center">
-      <span className="text-[10px] tracking-[0.3em] text-[#b5924b] dark:text-[#dfb15b] uppercase font-bold">
+      <span className="text-[10px] tracking-[0.3em] text-[#AD8631] dark:text-[#D6A63C] uppercase font-bold">
         Your Unshaken Archetype
       </span>
       <h3 className="font-serif text-2xl sm:text-3xl text-foreground">{result.name}</h3>
@@ -306,13 +306,13 @@ function ResultView({
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email this result to yourself"
-            className="flex-1 text-xs bg-stone-50 dark:bg-[#070b09] border border-border-custom rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-[#dfb15b]/40 text-foreground"
+            className="flex-1 text-xs bg-stone-50 dark:bg-[#202A33] border border-border-custom rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-[#D6A63C]/40 text-foreground"
             required
           />
           <button
             type="submit"
             disabled={sending}
-            className="px-5 py-2.5 rounded-lg bg-[#1e3f20] dark:bg-[#dfb15b] hover:opacity-90 text-white dark:text-black text-xs uppercase tracking-widest font-bold cursor-pointer whitespace-nowrap disabled:opacity-60"
+            className="px-5 py-2.5 rounded-lg bg-[#0B2942] dark:bg-[#D6A63C] hover:opacity-90 text-white dark:text-black text-xs uppercase tracking-widest font-bold cursor-pointer whitespace-nowrap disabled:opacity-60"
           >
             <span className="flex items-center gap-1.5">
               <Mail className="w-3.5 h-3.5" />
@@ -333,7 +333,7 @@ function ResultView({
         <ShareResultButton result={result} />
         <Link
           href="/preorder"
-          className="text-[11px] uppercase tracking-widest font-semibold text-[#b5924b] dark:text-[#dfb15b] hover:text-[#9c7b3b] dark:hover:text-[#c49945] transition-colors"
+          className="text-[11px] uppercase tracking-widest font-semibold text-[#AD8631] dark:text-[#D6A63C] hover:text-[#8F7025] dark:hover:text-[#BC9235] transition-colors"
         >
           Pre-order the Book →
         </Link>

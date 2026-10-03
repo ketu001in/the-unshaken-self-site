@@ -7,17 +7,17 @@ import AIChatbot from "@/components/AIChatbot";
 
 export default function TermsPage() {
   return (
-    <div className="flex-1 flex flex-col pt-16 bg-[#faf8f5] dark:bg-[#070b09]">
+    <div className="flex-1 flex flex-col pt-16 bg-[#FAF7EF] dark:bg-[#202A33]">
       <Navbar />
 
       <main className="max-w-4xl mx-auto w-full px-4 py-16 flex-1 space-y-8">
         <header className="space-y-2">
-          <span className="text-[10px] tracking-[0.25em] font-mono text-[#dfb15b] uppercase font-semibold">Legal Notice</span>
+          <span className="text-[10px] tracking-[0.25em] font-mono text-[#D6A63C] uppercase font-semibold">Legal Notice</span>
           <h1 className="text-3xl sm:text-4xl font-serif text-foreground">Terms of Service</h1>
           <p className="text-xs text-muted-text">Last Updated: July 16, 2026</p>
         </header>
 
-        <div className="bg-white dark:bg-[#101614] border border-border-custom p-8 rounded-3xl space-y-6 text-xs sm:text-sm font-light text-stone-600 dark:text-stone-300 leading-relaxed text-justify">
+        <div className="bg-white dark:bg-[#2A3642] border border-border-custom p-8 rounded-3xl space-y-6 text-xs sm:text-sm font-light text-stone-600 dark:text-stone-300 leading-relaxed text-justify">
           <p>
             Welcome to the official website of <strong>The Unshaken Self</strong>, authored by <strong>KETUL SHAH</strong>. By browsing this website, subscribing to newsletters, or accessing preview contents, you agree to comply with and be bound by the following terms.
           </p>

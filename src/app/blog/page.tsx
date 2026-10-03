@@ -36,7 +36,7 @@ export default function BlogPage() {
       date: "2026-07-12",
       readTime: "5 min read",
       tags: ["Gita Reflections", "Mindfulness"],
-      imageColor: "from-[#1e3f20]/30 to-[#070b09]/20"
+      imageColor: "from-[#0B2942]/30 to-[#202A33]/20"
     },
     {
       id: "post-2",
@@ -50,7 +50,7 @@ export default function BlogPage() {
       date: "2026-07-05",
       readTime: "6 min read",
       tags: ["Productivity", "Mindfulness"],
-      imageColor: "from-[#b5924b]/30 to-[#070b09]/20"
+      imageColor: "from-[#AD8631]/30 to-[#202A33]/20"
     },
     {
       id: "post-3",
@@ -64,7 +64,7 @@ export default function BlogPage() {
       date: "2026-06-28",
       readTime: "3 min read",
       tags: ["Launch News"],
-      imageColor: "from-[#122815]/30 to-[#dfb15b]/20"
+      imageColor: "from-[#071D30]/30 to-[#D6A63C]/20"
     },
     {
       id: "post-4",
@@ -80,7 +80,7 @@ export default function BlogPage() {
       date: "2026-06-18",
       readTime: "4 min read",
       tags: ["Mindfulness", "Productivity"],
-      imageColor: "from-stone-400/30 to-[#070b09]/20"
+      imageColor: "from-stone-400/30 to-[#202A33]/20"
     }
   ];
 
@@ -109,17 +109,17 @@ export default function BlogPage() {
   });
 
   return (
-    <div className="flex-1 flex flex-col pt-16 bg-[#faf8f5] dark:bg-[#070b09]">
+    <div className="flex-1 flex flex-col pt-16 bg-[#FAF7EF] dark:bg-[#202A33]">
       <Navbar />
 
       {activePost === null ? (
         /* BLOG HOME VIEW */
         <>
           {/* Page Header */}
-          <header className="py-20 px-4 text-center border-b border-border-custom bg-white dark:bg-[#050806] relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(223,177,91,0.03)_0%,transparent_70%)] pointer-events-none" />
+          <header className="py-20 px-4 text-center border-b border-border-custom bg-white dark:bg-[#161D24] relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(214,166,60,0.03)_0%,transparent_70%)] pointer-events-none" />
             <div className="max-w-4xl mx-auto space-y-4 relative z-10">
-              <span className="text-[10px] tracking-[0.3em] text-[#b5924b] dark:text-[#dfb15b] uppercase font-bold">
+              <span className="text-[10px] tracking-[0.3em] text-[#AD8631] dark:text-[#D6A63C] uppercase font-bold">
                 Timeless Reflections
               </span>
               <h1 className="text-4xl sm:text-5xl font-serif text-foreground leading-tight">
@@ -135,7 +135,7 @@ export default function BlogPage() {
           <section className="py-16 px-4 max-w-7xl mx-auto w-full flex-1 space-y-12">
             
             {/* Search and Tags Filtering Header */}
-            <div className="flex flex-col md:flex-row justify-between items-center gap-6 bg-white dark:bg-[#101614] border border-border-custom p-5 rounded-3xl">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-6 bg-white dark:bg-[#2A3642] border border-border-custom p-5 rounded-3xl">
               
               {/* Category Chips */}
               <div className="flex flex-wrap gap-2 justify-center md:justify-start">
@@ -145,7 +145,7 @@ export default function BlogPage() {
                     onClick={() => setSelectedTag(tag)}
                     className={`px-3 py-1.5 rounded-full text-[10px] uppercase tracking-wider font-semibold cursor-pointer transition-colors ${
                       selectedTag === tag
-                        ? "bg-[#1e3f20] dark:bg-[#dfb15b] text-white dark:text-black"
+                        ? "bg-[#0B2942] dark:bg-[#D6A63C] text-white dark:text-black"
                         : "border border-border-custom text-muted-text hover:bg-black/5 dark:hover:bg-white/5"
                     }`}
                   >
@@ -162,7 +162,7 @@ export default function BlogPage() {
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   placeholder="Search articles..."
-                  className="w-full text-xs bg-stone-50 dark:bg-[#070b09] border border-border-custom rounded-full pl-9 pr-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-[#dfb15b]/40 text-foreground"
+                  className="w-full text-xs bg-stone-50 dark:bg-[#202A33] border border-border-custom rounded-full pl-9 pr-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-[#D6A63C]/40 text-foreground"
                 />
               </div>
 
@@ -179,12 +179,12 @@ export default function BlogPage() {
                 filteredPosts.map((post) => (
                   <article
                     key={post.id}
-                    className="bg-white dark:bg-[#101614] border border-border-custom rounded-3xl overflow-hidden flex flex-col justify-between hover:shadow-lg transition-all duration-300 group hover:-translate-y-1"
+                    className="bg-white dark:bg-[#2A3642] border border-border-custom rounded-3xl overflow-hidden flex flex-col justify-between hover:shadow-lg transition-all duration-300 group hover:-translate-y-1"
                   >
                     <div>
                       {/* Image color block placeholder */}
                       <div className={`h-40 bg-gradient-to-br ${post.imageColor} border-b border-border-custom relative flex items-center justify-center`}>
-                        <Tag className="w-8 h-8 text-[#dfb15b]/40" />
+                        <Tag className="w-8 h-8 text-[#D6A63C]/40" />
                       </div>
                       
                       {/* Text info */}
@@ -200,7 +200,7 @@ export default function BlogPage() {
                           </span>
                         </div>
 
-                        <h3 className="font-serif text-lg text-foreground font-bold tracking-wide group-hover:text-[#dfb15b] transition-colors leading-snug">
+                        <h3 className="font-serif text-lg text-foreground font-bold tracking-wide group-hover:text-[#D6A63C] transition-colors leading-snug">
                           {post.title}
                         </h3>
                         <p className="text-xs sm:text-[13px] font-light text-stone-500 dark:text-stone-400 leading-relaxed">
@@ -212,14 +212,14 @@ export default function BlogPage() {
                     <div className="p-6 pt-0 border-t border-border-custom/50 flex justify-between items-center mt-4">
                       <div className="flex space-x-1.5">
                         {post.tags.map((t) => (
-                          <span key={t} className="text-[9px] font-mono text-[#b5924b] dark:text-[#dfb15b] uppercase bg-[#dfb15b]/5 border border-[#dfb15b]/10 px-2 py-0.5 rounded">
+                          <span key={t} className="text-[9px] font-mono text-[#AD8631] dark:text-[#D6A63C] uppercase bg-[#D6A63C]/5 border border-[#D6A63C]/10 px-2 py-0.5 rounded">
                             {t}
                           </span>
                         ))}
                       </div>
                       <button
                         onClick={() => setActivePost(post)}
-                        className="text-xs font-semibold text-primary dark:text-[#dfb15b] hover:underline flex items-center space-x-1 cursor-pointer"
+                        className="text-xs font-semibold text-primary dark:text-[#D6A63C] hover:underline flex items-center space-x-1 cursor-pointer"
                       >
                         <span>Read Essay</span>
                         <ArrowRight className="w-3 h-3" />
@@ -262,7 +262,7 @@ export default function BlogPage() {
             </h1>
             <div className="flex space-x-2 pt-2">
               {activePost.tags.map((t) => (
-                <span key={t} className="text-[10px] font-mono text-[#b5924b] dark:text-[#dfb15b] uppercase bg-[#dfb15b]/10 border border-[#dfb15b]/20 px-3 py-1 rounded-full">
+                <span key={t} className="text-[10px] font-mono text-[#AD8631] dark:text-[#D6A63C] uppercase bg-[#D6A63C]/10 border border-[#D6A63C]/20 px-3 py-1 rounded-full">
                   {t}
                 </span>
               ))}
@@ -279,7 +279,7 @@ export default function BlogPage() {
             {activePost.content.map((p, idx) => {
               if (p.startsWith("•")) {
                 return (
-                  <div key={idx} className="pl-6 border-l-2 border-[#dfb15b] italic my-4 text-stone-500">
+                  <div key={idx} className="pl-6 border-l-2 border-[#D6A63C] italic my-4 text-stone-500">
                     {p}
                   </div>
                 );
@@ -296,7 +296,7 @@ export default function BlogPage() {
                 navigator.clipboard.writeText(window.location.href);
                 alert("Article link copied to clipboard!");
               }}
-              className="text-[#dfb15b] hover:underline font-semibold cursor-pointer"
+              className="text-[#D6A63C] hover:underline font-semibold cursor-pointer"
             >
               Share Article Link
             </button>

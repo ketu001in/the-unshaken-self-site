@@ -91,10 +91,10 @@ export const DEFAULT_SITE_SETTINGS: SiteSettings = {
   media_kit_bio_url: null,
   sample_pdf_url: null,
   theme_colors: {
-    primary: "#0f2b48",
-    accent: "#e5b453",
-    primary_dark: "#e5b453",
-    accent_dark: "#3182ce",
+    primary: "#0B2942",
+    accent: "#D6A63C",
+    primary_dark: "#D6A63C",
+    accent_dark: "#145A7A",
   },
   section_visibility: {
     show_launch_banner: true,

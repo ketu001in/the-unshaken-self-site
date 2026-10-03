@@ -43,10 +43,10 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#faf8f5] dark:bg-[#070b09] px-4">
-      <div className="w-full max-w-sm bg-white dark:bg-[#101614] border border-border-custom rounded-3xl p-8 space-y-6 shadow-sm">
+    <div className="min-h-screen flex items-center justify-center bg-[#FAF7EF] dark:bg-[#202A33] px-4">
+      <div className="w-full max-w-sm bg-white dark:bg-[#2A3642] border border-border-custom rounded-3xl p-8 space-y-6 shadow-sm">
         <div className="flex flex-col items-center space-y-2 text-center">
-          <div className="w-12 h-12 rounded-xl bg-[#1e3f20]/5 dark:bg-[#dfb15b]/10 flex items-center justify-center text-[#dfb15b]">
+          <div className="w-12 h-12 rounded-xl bg-[#0B2942]/5 dark:bg-[#D6A63C]/10 flex items-center justify-center text-[#D6A63C]">
             <Lock className="w-5 h-5" />
           </div>
           <h1 className="font-serif text-xl text-foreground font-semibold">Admin Sign In</h1>
@@ -64,7 +64,7 @@ export default function AdminLoginPage() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full text-xs bg-stone-50 dark:bg-[#070b09] border border-border-custom rounded-lg p-2.5 focus:outline-none focus:ring-1 focus:ring-[#dfb15b]/40 text-foreground"
+              className="w-full text-xs bg-stone-50 dark:bg-[#202A33] border border-border-custom rounded-lg p-2.5 focus:outline-none focus:ring-1 focus:ring-[#D6A63C]/40 text-foreground"
               required
             />
           </div>
@@ -76,7 +76,7 @@ export default function AdminLoginPage() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full text-xs bg-stone-50 dark:bg-[#070b09] border border-border-custom rounded-lg p-2.5 focus:outline-none focus:ring-1 focus:ring-[#dfb15b]/40 text-foreground"
+              className="w-full text-xs bg-stone-50 dark:bg-[#202A33] border border-border-custom rounded-lg p-2.5 focus:outline-none focus:ring-1 focus:ring-[#D6A63C]/40 text-foreground"
               required
             />
           </div>
@@ -90,7 +90,7 @@ export default function AdminLoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 rounded-full bg-[#1e3f20] hover:bg-[#142a15] dark:bg-[#dfb15b] dark:hover:bg-[#c49945] text-white dark:text-black text-xs uppercase tracking-widest font-bold shadow-md transition-all cursor-pointer disabled:opacity-50"
+            className="w-full py-3 rounded-full bg-[#0B2942] hover:bg-[#071D30] dark:bg-[#D6A63C] dark:hover:bg-[#BC9235] text-white dark:text-black text-xs uppercase tracking-widest font-bold shadow-md transition-all cursor-pointer disabled:opacity-50"
           >
             {loading ? "Signing In..." : "Sign In"}
           </button>

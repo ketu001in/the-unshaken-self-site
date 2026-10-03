@@ -370,7 +370,7 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 }
 
 const inputClass =
-  "w-full text-xs bg-stone-50 dark:bg-[#070b09] border border-border-custom p-2.5 rounded-lg text-foreground focus:outline-none focus:ring-1 focus:ring-[#dfb15b]/40";
+  "w-full text-xs bg-stone-50 dark:bg-[#202A33] border border-border-custom p-2.5 rounded-lg text-foreground focus:outline-none focus:ring-1 focus:ring-[#D6A63C]/40";
 
 function TextInput(props: React.InputHTMLAttributes<HTMLInputElement>) {
   return <input {...props} className={inputClass} />;
@@ -404,7 +404,7 @@ function SaveButton({ onClick, saved }: { onClick: () => void; saved: boolean })
   return (
     <button
       onClick={onClick}
-      className="px-5 py-2.5 rounded-full bg-[#0f2b48] dark:bg-[#dfb15b] text-white dark:text-black text-xs uppercase tracking-widest font-bold shadow-md cursor-pointer hover:opacity-90 transition-opacity flex items-center gap-2"
+      className="px-5 py-2.5 rounded-full bg-[#0B2942] dark:bg-[#D6A63C] text-white dark:text-black text-xs uppercase tracking-widest font-bold shadow-md cursor-pointer hover:opacity-90 transition-opacity flex items-center gap-2"
     >
       {saved ? <Check className="w-3.5 h-3.5" /> : <Save className="w-3.5 h-3.5" />}
       {saved ? "Saved" : "Save Changes"}
@@ -464,7 +464,7 @@ function UploadField({
             href={currentUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="block text-[10px] text-[#dfb15b] underline truncate max-w-xs"
+            className="block text-[10px] text-[#D6A63C] underline truncate max-w-xs"
           >
             {currentUrl.split("/").pop()}
           </a>
@@ -696,7 +696,7 @@ export default function SiteEditor() {
             onClick={() => setSubTab(t.id)}
             className={`px-4 py-2 rounded-full text-[10px] uppercase tracking-widest font-bold cursor-pointer transition-colors ${
               subTab === t.id
-                ? "bg-[#0f2b48] dark:bg-[#dfb15b] text-white dark:text-black"
+                ? "bg-[#0B2942] dark:bg-[#D6A63C] text-white dark:text-black"
                 : "border border-border-custom text-muted-text hover:text-foreground"
             }`}
           >
@@ -1730,7 +1730,7 @@ export default function SiteEditor() {
                 >
                   <Trash2 className="w-3.5 h-3.5" />
                 </button>
-                <p className="text-[10px] font-mono uppercase text-[#dfb15b] font-bold">Spread {idx + 1}</p>
+                <p className="text-[10px] font-mono uppercase text-[#D6A63C] font-bold">Spread {idx + 1}</p>
 
                 <div className="space-y-2 pb-3 border-b border-border-custom/50">
                   <p className="text-[9px] font-mono uppercase text-stone-400 font-bold">Left Page</p>

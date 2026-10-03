@@ -62,11 +62,11 @@ export default function BreathWidget() {
     <div className="flex flex-col items-center gap-8 py-4">
       <div className="relative w-56 h-56 sm:w-64 sm:h-64 flex items-center justify-center">
         {/* Static outer ring */}
-        <div className="absolute inset-0 rounded-full border border-[#dfb15b]/20" />
+        <div className="absolute inset-0 rounded-full border border-[#D6A63C]/20" />
 
         {/* Breathing circle — scales over the exact duration of the active phase */}
         <div
-          className="absolute rounded-full bg-gradient-to-br from-[#dfb15b]/25 to-[#1e3f20]/10 dark:from-[#dfb15b]/20 dark:to-[#dfb15b]/5 border border-[#dfb15b]/40"
+          className="absolute rounded-full bg-gradient-to-br from-[#D6A63C]/25 to-[#0B2942]/10 dark:from-[#D6A63C]/20 dark:to-[#D6A63C]/5 border border-[#D6A63C]/40"
           style={{
             width: "60%",
             height: "60%",
@@ -77,7 +77,7 @@ export default function BreathWidget() {
 
         {/* Center label */}
         <div className="relative z-10 flex flex-col items-center gap-1">
-          <span className="text-xs sm:text-sm uppercase tracking-[0.2em] font-semibold text-[#b5924b] dark:text-[#dfb15b]">
+          <span className="text-xs sm:text-sm uppercase tracking-[0.2em] font-semibold text-[#AD8631] dark:text-[#D6A63C]">
             {running ? phase.label : "Ready"}
           </span>
           {running && (
@@ -90,7 +90,7 @@ export default function BreathWidget() {
 
       <button
         onClick={toggleRunning}
-        className="flex items-center gap-2 px-6 py-3 rounded-full bg-[#1e3f20] dark:bg-[#dfb15b] hover:opacity-90 text-white dark:text-black text-xs uppercase tracking-widest font-bold shadow-md transition-all cursor-pointer"
+        className="flex items-center gap-2 px-6 py-3 rounded-full bg-[#0B2942] dark:bg-[#D6A63C] hover:opacity-90 text-white dark:text-black text-xs uppercase tracking-widest font-bold shadow-md transition-all cursor-pointer"
       >
         {running ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
         <span>{running ? "Pause" : "Begin Breathing"}</span>

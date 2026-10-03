@@ -22,16 +22,16 @@ type Segment = { key: SegmentKey; emoji: string; label: string; color: string };
 // Six brand-tone colors, alternating dark/light so adjacent slices stay
 // distinguishable at a glance.
 const SEGMENTS: Segment[] = [
-  { key: "wisdom", emoji: "📜", label: "Wisdom Line", color: "#1e3f20" },
-  { key: "fact", emoji: "💡", label: "Gita Fact", color: "#dfb15b" },
-  { key: "quiz", emoji: "🧭", label: "Your Archetype", color: "#142a15" },
-  { key: "share", emoji: "🔗", label: "Share & Unlock", color: "#c49945" },
-  { key: "breath", emoji: "🌬️", label: "3-Breath Reset", color: "#2c5a2f" },
+  { key: "wisdom", emoji: "📜", label: "Wisdom Line", color: "#0B2942" },
+  { key: "fact", emoji: "💡", label: "Gita Fact", color: "#D6A63C" },
+  { key: "quiz", emoji: "🧭", label: "Your Archetype", color: "#071D30" },
+  { key: "share", emoji: "🔗", label: "Share & Unlock", color: "#BC9235" },
+  { key: "breath", emoji: "🌬️", label: "3-Breath Reset", color: "#145A7A" },
   // Was "Notify Me First" (pointing at the 5 September 2026 launch date),
   // which is stale now that the book has actually shipped and is live on
   // Amazon, Flipkart, and Notion Press — replaced with a real, immediately
   // actionable prize instead of a notify-me gate that no longer applies.
-  { key: "buy", emoji: "🛍️", label: "Buy Now", color: "#b5924b" },
+  { key: "buy", emoji: "🛍️", label: "Buy Now", color: "#AD8631" },
 ];
 
 const SEGMENT_ANGLE = 360 / SEGMENTS.length;
@@ -233,7 +233,7 @@ export default function SpinWheelModal({ open, onClose }: SpinWheelModalProps) {
     >
       <div className="fixed inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
 
-      <div className="relative w-full max-w-md my-auto max-h-[92vh] overflow-y-auto bg-white dark:bg-[#101614] border border-border-custom rounded-3xl shadow-2xl p-6 sm:p-8 space-y-6 animate-[fadeIn_0.2s_ease-out] text-center">
+      <div className="relative w-full max-w-md my-auto max-h-[92vh] overflow-y-auto bg-white dark:bg-[#2A3642] border border-border-custom rounded-3xl shadow-2xl p-6 sm:p-8 space-y-6 animate-[fadeIn_0.2s_ease-out] text-center">
         <button
           onClick={onClose}
           className="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center text-muted-text hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer z-10"
@@ -243,7 +243,7 @@ export default function SpinWheelModal({ open, onClose }: SpinWheelModalProps) {
         </button>
 
         <div className="space-y-1.5">
-          <span className="text-[10px] tracking-[0.3em] text-[#b5924b] dark:text-[#dfb15b] uppercase font-bold">
+          <span className="text-[10px] tracking-[0.3em] text-[#AD8631] dark:text-[#D6A63C] uppercase font-bold">
             A Small Surprise
           </span>
           <h3 className="font-serif text-xl text-foreground">Spin the Wheel</h3>
@@ -263,7 +263,7 @@ export default function SpinWheelModal({ open, onClose }: SpinWheelModalProps) {
           />
 
           <div
-            className="w-full h-full rounded-full border-4 border-white dark:border-[#101614] shadow-xl"
+            className="w-full h-full rounded-full border-4 border-white dark:border-[#2A3642] shadow-xl"
             style={{
               transform: `rotate(${rotation}deg)`,
               transition: spinning ? `transform ${SPIN_DURATION_MS}ms cubic-bezier(0.12, 0.67, 0.15, 1)` : "none",
@@ -283,7 +283,7 @@ export default function SpinWheelModal({ open, onClose }: SpinWheelModalProps) {
                 const lines = wrapLabel(seg.label);
                 return (
                   <g key={seg.key}>
-                    <path d={describeSector(start, end)} fill={seg.color} stroke="#faf8f5" strokeWidth="2" />
+                    <path d={describeSector(start, end)} fill={seg.color} stroke="#FAF7EF" strokeWidth="2" />
                     <text
                       x={CENTER}
                       y={emojiY}
@@ -300,7 +300,7 @@ export default function SpinWheelModal({ open, onClose }: SpinWheelModalProps) {
                       textAnchor="middle"
                       fontSize="9"
                       fontWeight="700"
-                      fill="#faf8f5"
+                      fill="#FAF7EF"
                       style={{ textTransform: "uppercase", letterSpacing: "0.02em" }}
                     >
                       {lines.map((line, li) => (
@@ -319,10 +319,10 @@ export default function SpinWheelModal({ open, onClose }: SpinWheelModalProps) {
           <button
             onClick={spin}
             disabled={spinning}
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-white dark:bg-[#101614] border-4 border-[#dfb15b] shadow-lg flex flex-col items-center justify-center text-[9px] font-bold uppercase tracking-wider text-foreground cursor-pointer disabled:cursor-not-allowed hover:scale-105 active:scale-95 transition-transform"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-white dark:bg-[#2A3642] border-4 border-[#D6A63C] shadow-lg flex flex-col items-center justify-center text-[9px] font-bold uppercase tracking-wider text-foreground cursor-pointer disabled:cursor-not-allowed hover:scale-105 active:scale-95 transition-transform"
             aria-label="Spin the wheel"
           >
-            <Sparkles className="w-4 h-4 text-[#dfb15b] mb-0.5" />
+            <Sparkles className="w-4 h-4 text-[#D6A63C] mb-0.5" />
             {spinning ? "..." : "Spin"}
           </button>
         </div>
@@ -330,7 +330,7 @@ export default function SpinWheelModal({ open, onClose }: SpinWheelModalProps) {
         {/* Result */}
         {result ? (
           <div className="space-y-4 pt-2 animate-[fadeIn_0.3s_ease-out]">
-            <div className="p-5 rounded-2xl bg-[#faf8f5] dark:bg-[#070b09] border border-[#dfb15b]/30 space-y-2">
+            <div className="p-5 rounded-2xl bg-[#FAF7EF] dark:bg-[#202A33] border border-[#D6A63C]/30 space-y-2">
               <div className="text-2xl">{result.emoji}</div>
               <h4 className="font-serif text-base text-foreground">{result.title}</h4>
               <p className="text-xs sm:text-sm font-light text-stone-600 dark:text-stone-300 leading-relaxed">
@@ -340,7 +340,7 @@ export default function SpinWheelModal({ open, onClose }: SpinWheelModalProps) {
             <div className="flex flex-col sm:flex-row gap-3">
               <button
                 onClick={() => handleCta(result.href)}
-                className="flex-1 px-5 py-3 rounded-full bg-[#1e3f20] hover:bg-[#142a15] dark:bg-[#dfb15b] dark:hover:bg-[#c49945] text-white dark:text-black text-xs uppercase tracking-widest font-bold shadow-md transition-transform hover:scale-105 cursor-pointer"
+                className="flex-1 px-5 py-3 rounded-full bg-[#0B2942] hover:bg-[#071D30] dark:bg-[#D6A63C] dark:hover:bg-[#BC9235] text-white dark:text-black text-xs uppercase tracking-widest font-bold shadow-md transition-transform hover:scale-105 cursor-pointer"
               >
                 {result.ctaLabel}
               </button>

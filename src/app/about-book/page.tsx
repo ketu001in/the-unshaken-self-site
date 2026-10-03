@@ -65,14 +65,14 @@ export default function AboutBook() {
   const specifications = content.specifications;
 
   return (
-    <div className="flex-1 flex flex-col pt-16 bg-[#faf8f5] dark:bg-[#070b09]">
+    <div className="flex-1 flex flex-col pt-16 bg-[#FAF7EF] dark:bg-[#202A33]">
       <Navbar />
 
       {/* Page Header */}
-      <header className="py-20 px-4 text-center border-b border-border-custom bg-white dark:bg-[#050806] relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(223,177,91,0.03)_0%,transparent_70%)] pointer-events-none" />
+      <header className="py-20 px-4 text-center border-b border-border-custom bg-white dark:bg-[#161D24] relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(214,166,60,0.03)_0%,transparent_70%)] pointer-events-none" />
         <div className="max-w-4xl mx-auto space-y-4 relative z-10">
-          <span className="text-[10px] tracking-[0.3em] text-[#b5924b] dark:text-[#dfb15b] uppercase font-bold">
+          <span className="text-[10px] tracking-[0.3em] text-[#AD8631] dark:text-[#D6A63C] uppercase font-bold">
             The Literary Blueprint
           </span>
           <h1 className="text-4xl sm:text-5xl font-serif text-foreground leading-tight">
@@ -91,7 +91,7 @@ export default function AboutBook() {
             onClick={() => setActiveTab("overview")}
             className={`text-xs uppercase tracking-widest pb-2 font-semibold transition-all cursor-pointer ${
               activeTab === "overview"
-                ? "text-[#dfb15b] border-b-2 border-[#dfb15b]"
+                ? "text-[#D6A63C] border-b-2 border-[#D6A63C]"
                 : "text-muted-text hover:text-foreground"
             }`}
           >
@@ -101,7 +101,7 @@ export default function AboutBook() {
             onClick={() => setActiveTab("specs")}
             className={`text-xs uppercase tracking-widest pb-2 font-semibold transition-all cursor-pointer ${
               activeTab === "specs"
-                ? "text-[#dfb15b] border-b-2 border-[#dfb15b]"
+                ? "text-[#D6A63C] border-b-2 border-[#D6A63C]"
                 : "text-muted-text hover:text-foreground"
             }`}
           >
@@ -125,7 +125,7 @@ export default function AboutBook() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
               <Link
                 href="/#newsletter"
-                className="inline-flex items-center space-x-2 px-6 py-3 rounded-full bg-[#1e3f20] hover:bg-[#142a15] dark:bg-[#dfb15b] dark:hover:bg-[#c49945] text-white dark:text-black text-xs uppercase tracking-widest font-bold shadow-md transition-all hover:scale-105"
+                className="inline-flex items-center space-x-2 px-6 py-3 rounded-full bg-[#0B2942] hover:bg-[#071D30] dark:bg-[#D6A63C] dark:hover:bg-[#BC9235] text-white dark:text-black text-xs uppercase tracking-widest font-bold shadow-md transition-all hover:scale-105"
               >
                 <Mail className="w-4 h-4" />
                 <span>Subscribe for Updates</span>
@@ -146,10 +146,10 @@ export default function AboutBook() {
             {/* Book specs table */}
             <div className="space-y-6">
               <h2 className="font-serif text-xl text-foreground flex items-center gap-2">
-                <FileText className="w-5 h-5 text-[#dfb15b]" />
+                <FileText className="w-5 h-5 text-[#D6A63C]" />
                 <span>Technical Specifications</span>
               </h2>
-              <div className="border border-border-custom rounded-2xl overflow-hidden bg-white dark:bg-[#101614]">
+              <div className="border border-border-custom rounded-2xl overflow-hidden bg-white dark:bg-[#2A3642]">
                 {specifications.map((spec, idx) => (
                   <div
                     key={spec.label}
@@ -168,19 +168,19 @@ export default function AboutBook() {
             <div className="space-y-8">
               <div className="space-y-4">
                 <h2 className="font-serif text-xl text-foreground flex items-center gap-2">
-                  <Award className="w-5 h-5 text-[#dfb15b]" />
+                  <Award className="w-5 h-5 text-[#D6A63C]" />
                   <span>Available Editions</span>
                 </h2>
                 <div className="space-y-4">
-                  <div className="p-5 border border-border-custom rounded-2xl bg-white dark:bg-[#101614]">
+                  <div className="p-5 border border-border-custom rounded-2xl bg-white dark:bg-[#2A3642]">
                     <h4 className="font-serif text-sm font-semibold">Deluxe Collector's Hardcover</h4>
                     <p className="text-[10px] text-muted-text mt-1">Smyth-sewn, gold-foil stamping, premium paper.</p>
                   </div>
-                  <div className="p-5 border border-border-custom rounded-2xl bg-white dark:bg-[#101614]">
+                  <div className="p-5 border border-border-custom rounded-2xl bg-white dark:bg-[#2A3642]">
                     <h4 className="font-serif text-sm font-semibold">Standard Paperback</h4>
                     <p className="text-[10px] text-muted-text mt-1">Lightweight, recycled acid-free cream paper.</p>
                   </div>
-                  <div className="p-5 border border-border-custom rounded-2xl bg-white dark:bg-[#101614]">
+                  <div className="p-5 border border-border-custom rounded-2xl bg-white dark:bg-[#2A3642]">
                     <h4 className="font-serif text-sm font-semibold">Digital Edition (Kindle / ePub)</h4>
                     <p className="text-[10px] text-muted-text mt-1">Full bookmarks, adjustable typography, interactive index.</p>
                   </div>
@@ -188,9 +188,9 @@ export default function AboutBook() {
                 </div>
               </div>
 
-              <div className="p-6 rounded-2xl bg-[#1e3f20]/5 dark:bg-[#dfb15b]/5 border border-primary/10 dark:border-accent/10">
+              <div className="p-6 rounded-2xl bg-[#0B2942]/5 dark:bg-[#D6A63C]/5 border border-primary/10 dark:border-accent/10">
                 <h3 className="font-serif text-sm text-foreground flex items-center gap-2 mb-2">
-                  <Globe className="w-4 h-4 text-[#dfb15b]" />
+                  <Globe className="w-4 h-4 text-[#D6A63C]" />
                   <span>Global Availability</span>
                 </h3>
                 <p className="text-xs font-light text-stone-500 dark:text-stone-400 leading-relaxed">
@@ -204,10 +204,10 @@ export default function AboutBook() {
       </section>
 
       {/* Target Audience Comparative Section */}
-      <section className="py-20 px-4 bg-white dark:bg-[#050806] border-t border-border-custom">
+      <section className="py-20 px-4 bg-white dark:bg-[#161D24] border-t border-border-custom">
         <div className="max-w-5xl mx-auto space-y-12">
           <div className="text-center space-y-3">
-            <h2 className="text-xs uppercase tracking-[0.25em] text-[#b5924b] dark:text-[#dfb15b] font-semibold">
+            <h2 className="text-xs uppercase tracking-[0.25em] text-[#AD8631] dark:text-[#D6A63C] font-semibold">
               Readership Alignment
             </h2>
             <h3 className="text-2xl sm:text-3xl font-serif text-foreground">
@@ -254,7 +254,7 @@ export default function AboutBook() {
       </section>
 
       {/* CTA section */}
-      <section className="py-16 px-4 text-center border-t border-border-custom bg-[#faf8f5] dark:bg-[#070b09]">
+      <section className="py-16 px-4 text-center border-t border-border-custom bg-[#FAF7EF] dark:bg-[#202A33]">
         <div className="max-w-xl mx-auto space-y-6">
           <h3 className="font-serif text-xl sm:text-2xl text-foreground">
             Experience the First Chapter Today
@@ -264,7 +264,7 @@ export default function AboutBook() {
           </p>
           <Link
             href="/preview"
-            className="inline-block px-8 py-3 rounded-full bg-[#1e3f20] hover:bg-[#142a15] dark:bg-[#dfb15b] dark:hover:bg-[#c49945] text-white dark:text-black text-xs uppercase tracking-widest font-bold shadow-md transition-all hover:scale-105"
+            className="inline-block px-8 py-3 rounded-full bg-[#0B2942] hover:bg-[#071D30] dark:bg-[#D6A63C] dark:hover:bg-[#BC9235] text-white dark:text-black text-xs uppercase tracking-widest font-bold shadow-md transition-all hover:scale-105"
           >
             Access Book Preview
           </Link>

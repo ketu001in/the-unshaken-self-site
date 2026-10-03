@@ -65,12 +65,12 @@ export default function FeedbackPage() {
   };
 
   return (
-    <div className="flex-1 flex flex-col pt-16 bg-[#faf8f5] dark:bg-[#070b09]">
+    <div className="flex-1 flex flex-col pt-16 bg-[#FAF7EF] dark:bg-[#202A33]">
       <Navbar />
 
       <main className="max-w-2xl mx-auto w-full px-4 py-16 flex-1 space-y-8">
         <header className="text-center space-y-3">
-          <span className="text-[10px] tracking-[0.3em] text-[#b5924b] dark:text-[#dfb15b] uppercase font-bold">
+          <span className="text-[10px] tracking-[0.3em] text-[#AD8631] dark:text-[#D6A63C] uppercase font-bold">
             We&apos;re Listening
           </span>
           <h1 className="text-3xl sm:text-4xl font-serif text-foreground">Share Your Feedback</h1>
@@ -80,9 +80,9 @@ export default function FeedbackPage() {
           </p>
         </header>
 
-        <div className="bg-white dark:bg-[#101614] border border-border-custom rounded-3xl p-6 sm:p-8 shadow-md">
+        <div className="bg-white dark:bg-[#2A3642] border border-border-custom rounded-3xl p-6 sm:p-8 shadow-md">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl bg-[#1e3f20]/5 dark:bg-[#dfb15b]/10 text-[#dfb15b] flex items-center justify-center flex-shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-[#0B2942]/5 dark:bg-[#D6A63C]/10 text-[#D6A63C] flex items-center justify-center flex-shrink-0">
               <MessageSquareHeart className="w-5 h-5" />
             </div>
             <h2 className="font-serif text-lg text-foreground">Tell Us What You Think</h2>
@@ -103,7 +103,7 @@ export default function FeedbackPage() {
                 <select
                   value={category}
                   onChange={(e) => setCategory(e.target.value as Category)}
-                  className="w-full text-xs bg-stone-50 dark:bg-[#070b09] border border-border-custom rounded-lg px-4 py-2.5 text-foreground focus:outline-none focus:ring-1 focus:ring-[#dfb15b]/40"
+                  className="w-full text-xs bg-stone-50 dark:bg-[#202A33] border border-border-custom rounded-lg px-4 py-2.5 text-foreground focus:outline-none focus:ring-1 focus:ring-[#D6A63C]/40"
                 >
                   {CATEGORIES.map((c) => (
                     <option key={c.value} value={c.value}>
@@ -135,7 +135,7 @@ export default function FeedbackPage() {
                       >
                         <Star
                           className={`w-6 h-6 transition-colors ${
-                            filled ? "fill-[#dfb15b] text-[#dfb15b]" : "text-stone-300 dark:text-stone-600"
+                            filled ? "fill-[#D6A63C] text-[#D6A63C]" : "text-stone-300 dark:text-stone-600"
                           }`}
                         />
                       </button>
@@ -154,7 +154,7 @@ export default function FeedbackPage() {
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder="What's on your mind?"
                   rows={5}
-                  className="w-full text-xs bg-stone-50 dark:bg-[#070b09] border border-border-custom rounded-lg p-3 text-foreground focus:outline-none focus:ring-1 focus:ring-[#dfb15b]/40 resize-none"
+                  className="w-full text-xs bg-stone-50 dark:bg-[#202A33] border border-border-custom rounded-lg p-3 text-foreground focus:outline-none focus:ring-1 focus:ring-[#D6A63C]/40 resize-none"
                   required
                 />
               </div>
@@ -166,21 +166,21 @@ export default function FeedbackPage() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Name (optional)"
-                  className="flex-1 text-xs bg-stone-50 dark:bg-[#070b09] border border-border-custom rounded-lg px-4 py-2.5 text-foreground focus:outline-none focus:ring-1 focus:ring-[#dfb15b]/40"
+                  className="flex-1 text-xs bg-stone-50 dark:bg-[#202A33] border border-border-custom rounded-lg px-4 py-2.5 text-foreground focus:outline-none focus:ring-1 focus:ring-[#D6A63C]/40"
                 />
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Email (optional — if you'd like a reply)"
-                  className="flex-1 text-xs bg-stone-50 dark:bg-[#070b09] border border-border-custom rounded-lg px-4 py-2.5 text-foreground focus:outline-none focus:ring-1 focus:ring-[#dfb15b]/40"
+                  className="flex-1 text-xs bg-stone-50 dark:bg-[#202A33] border border-border-custom rounded-lg px-4 py-2.5 text-foreground focus:outline-none focus:ring-1 focus:ring-[#D6A63C]/40"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full px-5 py-3 rounded-lg bg-[#1e3f20] dark:bg-[#dfb15b] hover:opacity-90 text-white dark:text-black text-xs uppercase tracking-widest font-bold cursor-pointer disabled:opacity-60 flex items-center justify-center gap-2"
+                className="w-full px-5 py-3 rounded-lg bg-[#0B2942] dark:bg-[#D6A63C] hover:opacity-90 text-white dark:text-black text-xs uppercase tracking-widest font-bold cursor-pointer disabled:opacity-60 flex items-center justify-center gap-2"
               >
                 <Send className="w-3.5 h-3.5" />
                 {submitting ? "Sending…" : "Submit Feedback"}

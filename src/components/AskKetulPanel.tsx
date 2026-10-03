@@ -44,10 +44,10 @@ export default function AskKetulPanel() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto bg-white dark:bg-[#101614] border border-border-custom rounded-3xl overflow-hidden shadow-md">
+    <div className="max-w-3xl mx-auto bg-white dark:bg-[#2A3642] border border-border-custom rounded-3xl overflow-hidden shadow-md">
       {/* Session banner */}
-      <div className="p-6 md:p-8 border-b border-border-custom bg-gradient-to-br from-[#1e3f20]/5 to-[#dfb15b]/5 flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
-        <div className="w-11 h-11 rounded-xl bg-[#dfb15b]/10 text-[#dfb15b] flex items-center justify-center flex-shrink-0">
+      <div className="p-6 md:p-8 border-b border-border-custom bg-gradient-to-br from-[#0B2942]/5 to-[#D6A63C]/5 flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
+        <div className="w-11 h-11 rounded-xl bg-[#D6A63C]/10 text-[#D6A63C] flex items-center justify-center flex-shrink-0">
           <Mic className="w-5 h-5" />
         </div>
         <div className="flex-1 space-y-1">
@@ -56,7 +56,7 @@ export default function AskKetulPanel() {
           </h3>
           {hasSession ? (
             <p className="text-xs text-muted-text flex items-center justify-center sm:justify-start gap-1.5">
-              <CalendarClock className="w-3.5 h-3.5 text-[#dfb15b]" />
+              <CalendarClock className="w-3.5 h-3.5 text-[#D6A63C]" />
               <span>{settings.live_session_datetime}</span>
             </p>
           ) : (
@@ -71,7 +71,7 @@ export default function AskKetulPanel() {
             href={settings.live_session_link}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-shrink-0 px-5 py-2.5 rounded-full bg-[#1e3f20] dark:bg-[#dfb15b] hover:opacity-90 text-white dark:text-black text-xs uppercase tracking-widest font-bold whitespace-nowrap"
+            className="flex-shrink-0 px-5 py-2.5 rounded-full bg-[#0B2942] dark:bg-[#D6A63C] hover:opacity-90 text-white dark:text-black text-xs uppercase tracking-widest font-bold whitespace-nowrap"
           >
             Join Session
           </a>
@@ -97,7 +97,7 @@ export default function AskKetulPanel() {
               onChange={(e) => setQuestion(e.target.value)}
               placeholder="Your question…"
               rows={3}
-              className="w-full text-xs bg-stone-50 dark:bg-[#070b09] border border-border-custom rounded-lg p-3 text-foreground focus:outline-none focus:ring-1 focus:ring-[#dfb15b]/40 resize-none"
+              className="w-full text-xs bg-stone-50 dark:bg-[#202A33] border border-border-custom rounded-lg p-3 text-foreground focus:outline-none focus:ring-1 focus:ring-[#D6A63C]/40 resize-none"
               required
             />
             <div className="flex flex-col sm:flex-row gap-3">
@@ -106,12 +106,12 @@ export default function AskKetulPanel() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Name (optional)"
-                className="flex-1 text-xs bg-stone-50 dark:bg-[#070b09] border border-border-custom rounded-lg px-4 py-2.5 text-foreground focus:outline-none focus:ring-1 focus:ring-[#dfb15b]/40"
+                className="flex-1 text-xs bg-stone-50 dark:bg-[#202A33] border border-border-custom rounded-lg px-4 py-2.5 text-foreground focus:outline-none focus:ring-1 focus:ring-[#D6A63C]/40"
               />
               <button
                 type="submit"
                 disabled={submitting}
-                className="px-5 py-2.5 rounded-lg bg-[#1e3f20] dark:bg-[#dfb15b] hover:opacity-90 text-white dark:text-black text-xs uppercase tracking-widest font-bold cursor-pointer whitespace-nowrap disabled:opacity-60 flex items-center justify-center gap-1.5"
+                className="px-5 py-2.5 rounded-lg bg-[#0B2942] dark:bg-[#D6A63C] hover:opacity-90 text-white dark:text-black text-xs uppercase tracking-widest font-bold cursor-pointer whitespace-nowrap disabled:opacity-60 flex items-center justify-center gap-1.5"
               >
                 <Send className="w-3.5 h-3.5" />
                 {submitting ? "Sending…" : "Submit Question"}

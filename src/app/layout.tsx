@@ -35,6 +35,16 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "KETUL SHAH" }],
   metadataBase: new URL("https://the-unshaken-self-site-hcp1.vercel.app"),
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon_16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon_32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon_192x192.png", sizes: "192x192", type: "image/png" },
+      { url: "/favicon_512x512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+  },
   openGraph: {
     title: "The Unshaken Self — A Book By Ketul Shah",
     description: "Key Lessons from the Gita for a Life Without Doubt, Worry, and Fear.",

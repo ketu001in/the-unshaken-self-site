@@ -41,9 +41,9 @@ export default function FoundingReadersWall() {
   return (
     <div className="flex flex-col items-center gap-4 w-full">
       <div className="flex items-center gap-2 text-sm text-foreground">
-        <Users className="w-4 h-4 text-[#dfb15b]" />
+        <Users className="w-4 h-4 text-[#D6A63C]" />
         <span>
-          <span className="text-[#dfb15b] font-serif font-bold">{count}+</span> readers already on
+          <span className="text-[#D6A63C] font-serif font-bold">{count}+</span> readers already on
           the path
         </span>
       </div>
@@ -57,7 +57,7 @@ export default function FoundingReadersWall() {
             {marqueeNames.map((n, i) => (
               <span
                 key={i}
-                className="flex-shrink-0 px-3 py-1.5 rounded-full border border-border-custom bg-white dark:bg-[#101614] text-[10px] uppercase tracking-widest font-semibold text-muted-text"
+                className="flex-shrink-0 px-3 py-1.5 rounded-full border border-border-custom bg-white dark:bg-[#2A3642] text-[10px] uppercase tracking-widest font-semibold text-muted-text"
               >
                 {n}
               </span>

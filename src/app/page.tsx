@@ -116,16 +116,16 @@ export default function Home() {
 
       {/* Visitor counter — a genuine, live-growing count that doubles as
           the entry point into the Spin Wheel engagement loop. */}
-      <div className="flex justify-center py-3 px-4 bg-white dark:bg-[#070b09] border-b border-border-custom">
+      <div className="flex justify-center py-3 px-4 bg-white dark:bg-[#202A33] border-b border-border-custom">
         <VisitorCounterBadge />
       </div>
 
       {/* 1. HERO SECTION */}
-      <section className="relative min-h-[90vh] flex items-center justify-center py-16 px-4 overflow-hidden bg-gradient-to-b from-[#faf8f5] via-[#faf8f5] to-[#f2ede4] dark:from-[#070b09] dark:via-[#070b09] dark:to-[#0d1612]">
+      <section className="relative min-h-[90vh] flex items-center justify-center py-16 px-4 overflow-hidden bg-gradient-to-b from-[#FAF7EF] via-[#FAF7EF] to-[#FAF7EF] dark:from-[#202A33] dark:via-[#202A33] dark:to-[#2A3642]">
         
         {/* Soft Background Mandala Circles */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-[#dfb15b]/10 rounded-full pointer-events-none dark:opacity-20" />
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] border border-dashed border-[#dfb15b]/15 rounded-full pointer-events-none dark:opacity-20 animate-[spin_100s_linear_infinite]" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-[#D6A63C]/10 rounded-full pointer-events-none dark:opacity-20" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] border border-dashed border-[#D6A63C]/15 rounded-full pointer-events-none dark:opacity-20 animate-[spin_100s_linear_infinite]" />
 
         <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center relative z-10">
           
@@ -135,9 +135,9 @@ export default function Home() {
             {/* Tagline Badge — hidden entirely when empty, so this stays
                 removable/re-addable from the CMS without a code change */}
             {content.hero_badge && (
-              <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-[#1e3f20]/5 dark:bg-[#dfb15b]/10 border border-[#1e3f20]/10 dark:border-[#dfb15b]/20">
-                <Sparkles className="w-4.5 h-4.5 text-[#dfb15b]" />
-                <span className="text-[11px] tracking-[0.2em] uppercase font-semibold text-primary dark:text-[#dfb15b]">
+              <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-[#0B2942]/5 dark:bg-[#D6A63C]/10 border border-[#0B2942]/10 dark:border-[#D6A63C]/20">
+                <Sparkles className="w-4.5 h-4.5 text-[#D6A63C]" />
+                <span className="text-[11px] tracking-[0.2em] uppercase font-semibold text-primary dark:text-[#D6A63C]">
                   {content.hero_badge}
                 </span>
               </div>
@@ -148,7 +148,7 @@ export default function Home() {
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif tracking-wide leading-tight text-foreground">
                 {content.hero_headline_line1}
                 <br className="hidden sm:inline" />
-                <span className="text-[#b5924b] dark:text-[#dfb15b] font-medium">{content.hero_headline_accent}</span> {content.hero_headline_line2}
+                <span className="text-[#AD8631] dark:text-[#D6A63C] font-medium">{content.hero_headline_accent}</span> {content.hero_headline_line2}
               </h1>
               <p className="text-sm sm:text-base md:text-lg font-sans font-light text-stone-600 dark:text-stone-300 max-w-xl leading-relaxed tracking-wide">
                 {content.hero_subtext}
@@ -165,7 +165,7 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
               <Link
                 href="/preorder"
-                className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-[#1e3f20] hover:bg-[#142a15] dark:bg-[#dfb15b] dark:hover:bg-[#c49945] text-white dark:text-black text-xs uppercase tracking-widest font-bold shadow-lg transition-transform hover:scale-105"
+                className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-[#0B2942] hover:bg-[#071D30] dark:bg-[#D6A63C] dark:hover:bg-[#BC9235] text-white dark:text-black text-xs uppercase tracking-widest font-bold shadow-lg transition-transform hover:scale-105"
               >
                 Buy the Book Now
               </Link>
@@ -198,10 +198,10 @@ export default function Home() {
       <LaunchTimeline />
 
       {/* 1.5. WISDOM DRAW — a small interactive "oracle card" moment near the hero */}
-      <section id="wisdom-draw" className="py-20 px-4 bg-[#faf8f5] dark:bg-[#050806] border-t border-border-custom scroll-mt-20">
+      <section id="wisdom-draw" className="py-20 px-4 bg-[#FAF7EF] dark:bg-[#161D24] border-t border-border-custom scroll-mt-20">
         <div className="max-w-4xl mx-auto text-center space-y-10">
           <div className="space-y-3">
-            <h2 className="text-xs uppercase tracking-[0.25em] text-[#b5924b] dark:text-[#dfb15b] font-semibold">
+            <h2 className="text-xs uppercase tracking-[0.25em] text-[#AD8631] dark:text-[#D6A63C] font-semibold">
               A Small Ritual
             </h2>
             <h3 className="text-2xl sm:text-3xl font-serif text-foreground">
@@ -217,11 +217,11 @@ export default function Home() {
       </section>
 
       {/* 2. WHY THIS BOOK */}
-      <section className="py-24 px-4 bg-white dark:bg-[#070b09] border-t border-border-custom">
+      <section className="py-24 px-4 bg-white dark:bg-[#202A33] border-t border-border-custom">
         <div className="max-w-4xl mx-auto text-center space-y-12">
           
           <div className="space-y-4">
-            <h2 className="text-xs uppercase tracking-[0.25em] text-[#b5924b] dark:text-[#dfb15b] font-semibold">
+            <h2 className="text-xs uppercase tracking-[0.25em] text-[#AD8631] dark:text-[#D6A63C] font-semibold">
               {content.why_kicker}
             </h2>
             <h3 className="text-3xl sm:text-4xl font-serif text-foreground leading-snug">
@@ -233,7 +233,7 @@ export default function Home() {
           <div className="space-y-6 text-stone-600 dark:text-stone-300 font-light leading-relaxed text-sm sm:text-base max-w-3xl mx-auto text-justify sm:text-center">
             {content.why_paragraphs[0] && <p>{content.why_paragraphs[0]}</p>}
             {content.why_paragraphs[1] && <p>{content.why_paragraphs[1]}</p>}
-            <p className="font-medium text-foreground dark:text-[#dfb15b] italic font-serif text-lg sm:text-xl py-4">
+            <p className="font-medium text-foreground dark:text-[#D6A63C] italic font-serif text-lg sm:text-xl py-4">
               &ldquo;{content.why_quote}&rdquo;
             </p>
             {content.why_paragraphs[2] && <p>{content.why_paragraphs[2]}</p>}
@@ -243,13 +243,13 @@ export default function Home() {
       </section>
 
       {/* 3. THE 18 CHAPTERS (PREVIEW GRID) */}
-      <section className="py-24 px-4 bg-[#faf8f5] dark:bg-[#050806] border-t border-border-custom">
+      <section className="py-24 px-4 bg-[#FAF7EF] dark:bg-[#161D24] border-t border-border-custom">
         <div className="max-w-7xl mx-auto space-y-16">
           
           {/* Section Header */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
             <div className="space-y-4 max-w-2xl">
-              <h2 className="text-xs uppercase tracking-[0.25em] text-[#b5924b] dark:text-[#dfb15b] font-semibold">
+              <h2 className="text-xs uppercase tracking-[0.25em] text-[#AD8631] dark:text-[#D6A63C] font-semibold">
                 Inside the Pages
               </h2>
               <h3 className="text-3xl sm:text-4xl font-serif text-foreground">
@@ -261,7 +261,7 @@ export default function Home() {
             </div>
             <Link
               href="/about-book"
-              className="group inline-flex items-center space-x-2 text-xs uppercase tracking-widest font-semibold text-[#b5924b] dark:text-[#dfb15b] hover:text-[#9c7b3b] dark:hover:text-[#c49945] transition-colors"
+              className="group inline-flex items-center space-x-2 text-xs uppercase tracking-widest font-semibold text-[#AD8631] dark:text-[#D6A63C] hover:text-[#8F7025] dark:hover:text-[#BC9235] transition-colors"
             >
               <span>View All 18 Chapters</span>
               <ChevronRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
@@ -275,12 +275,12 @@ export default function Home() {
               return (
               <div
                 key={ch.num}
-                className="bg-white dark:bg-[#101614] rounded-3xl p-8 border border-border-custom flex flex-col justify-between premium-card-hover shadow-sm"
+                className="bg-white dark:bg-[#2A3642] rounded-3xl p-8 border border-border-custom flex flex-col justify-between premium-card-hover shadow-sm"
               >
                 <div className="space-y-6">
                   {/* Icon & Chapter Number */}
                   <div className="flex justify-between items-center">
-                    <div className="w-12 h-12 rounded-xl bg-[#1e3f20]/5 dark:bg-[#dfb15b]/10 flex items-center justify-center text-primary dark:text-[#dfb15b]">
+                    <div className="w-12 h-12 rounded-xl bg-[#0B2942]/5 dark:bg-[#D6A63C]/10 flex items-center justify-center text-primary dark:text-[#D6A63C]">
                       <ChapterIcon className="w-5 h-5" />
                     </div>
                     <span className="font-mono text-xs text-muted-text font-bold uppercase tracking-widest">
@@ -293,7 +293,7 @@ export default function Home() {
                     <h4 className="text-lg font-serif text-foreground tracking-wide font-semibold">
                       {ch.title}
                     </h4>
-                    <p className="text-[10px] tracking-widest font-mono text-[#b5924b] dark:text-[#dfb15b] uppercase font-light">
+                    <p className="text-[10px] tracking-widest font-mono text-[#AD8631] dark:text-[#D6A63C] uppercase font-light">
                       {ch.theme}
                     </p>
                   </div>
@@ -321,10 +321,10 @@ export default function Home() {
       </section>
 
       {/* 3.5. UNSHAKEN ARCHETYPE QUIZ */}
-      <section id="archetype-quiz" className="py-24 px-4 bg-white dark:bg-[#070b09] border-t border-border-custom scroll-mt-20">
+      <section id="archetype-quiz" className="py-24 px-4 bg-white dark:bg-[#202A33] border-t border-border-custom scroll-mt-20">
         <div className="max-w-4xl mx-auto space-y-12">
           <div className="text-center space-y-4">
-            <h2 className="text-xs uppercase tracking-[0.25em] text-[#b5924b] dark:text-[#dfb15b] font-semibold">
+            <h2 className="text-xs uppercase tracking-[0.25em] text-[#AD8631] dark:text-[#D6A63C] font-semibold">
               Know Yourself
             </h2>
             <h3 className="text-2xl sm:text-3xl font-serif text-foreground">
@@ -339,10 +339,10 @@ export default function Home() {
       </section>
 
       {/* 4. CINEMATIC TRAILER PLACEHOLDER */}
-      <section className="py-24 px-4 bg-white dark:bg-[#070b09] border-t border-border-custom flex justify-center">
+      <section className="py-24 px-4 bg-white dark:bg-[#202A33] border-t border-border-custom flex justify-center">
         <div className="max-w-5xl w-full">
           <div className="space-y-8 text-center mb-12">
-            <h2 className="text-xs uppercase tracking-[0.25em] text-[#b5924b] dark:text-[#dfb15b] font-semibold">
+            <h2 className="text-xs uppercase tracking-[0.25em] text-[#AD8631] dark:text-[#D6A63C] font-semibold">
               The Experience
             </h2>
             <h3 className="text-3xl font-serif text-foreground">
@@ -378,11 +378,11 @@ export default function Home() {
                 <div className="absolute inset-0 bg-stone-900/60 mix-blend-overlay group-hover:scale-105 transition-transform duration-700 pointer-events-none" />
 
                 {/* Serene Nature Background Concept (Simulated) */}
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(30,63,32,0.4)_0%,transparent_70%)] pointer-events-none" />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(11,41,66,0.4)_0%,transparent_70%)] pointer-events-none" />
 
                 {/* Big wise quotes */}
                 <div className="relative max-w-xl text-center space-y-3 mb-8 animate-pulse">
-                  <Quote className="w-8 h-8 text-[#dfb15b] mx-auto opacity-75" />
+                  <Quote className="w-8 h-8 text-[#D6A63C] mx-auto opacity-75" />
                   <p className="font-serif italic text-base sm:text-xl text-stone-200">
                     "Perform your duty with absolute focus. The results will take care of themselves."
                   </p>
@@ -391,7 +391,7 @@ export default function Home() {
                 {/* Play Button Trigger */}
                 <button
                   onClick={() => setVideoPlaying(true)}
-                  className="relative w-16 h-16 rounded-full bg-white dark:bg-[#dfb15b] text-black dark:text-black flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer"
+                  className="relative w-16 h-16 rounded-full bg-white dark:bg-[#D6A63C] text-black dark:text-black flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer"
                   aria-label="Play Cinematic Book Trailer"
                 >
                   <svg className="w-6 h-6 ml-1 fill-current" viewBox="0 0 24 24">
@@ -424,7 +424,7 @@ export default function Home() {
               <div className="absolute inset-0 z-10 bg-black flex flex-col items-center justify-center gap-4 text-center px-6">
                 {/* No trailer has been uploaded yet — show an honest "coming soon" state.
                     The admin can upload a trailer from Site Editor -> General & Contact. */}
-                <Quote className="w-8 h-8 text-[#dfb15b] opacity-75" />
+                <Quote className="w-8 h-8 text-[#D6A63C] opacity-75" />
                 <p className="font-serif italic text-base sm:text-xl text-stone-200 max-w-md">
                   The cinematic trailer is still in production.
                 </p>
@@ -443,7 +443,7 @@ export default function Home() {
 
                 {/* Simulated text transitions overlay */}
                 <div className="absolute bottom-6 inset-x-6 z-20 text-center pointer-events-none">
-                  <span className="bg-black/60 px-4 py-1.5 rounded-full text-[11px] tracking-widest text-[#dfb15b] uppercase font-mono">
+                  <span className="bg-black/60 px-4 py-1.5 rounded-full text-[11px] tracking-widest text-[#D6A63C] uppercase font-mono">
                     The Unshaken Self — Available Now
                   </span>
                 </div>
@@ -455,10 +455,10 @@ export default function Home() {
 
       {/* 5. TESTIMONIALS */}
       {settings.section_visibility.show_testimonials && (
-      <section className="py-24 px-4 bg-[#faf8f5] dark:bg-[#050806] border-t border-border-custom">
+      <section className="py-24 px-4 bg-[#FAF7EF] dark:bg-[#161D24] border-t border-border-custom">
         <div className="max-w-7xl mx-auto space-y-16">
           <div className="text-center space-y-4">
-            <h2 className="text-xs uppercase tracking-[0.25em] text-[#b5924b] dark:text-[#dfb15b] font-semibold">
+            <h2 className="text-xs uppercase tracking-[0.25em] text-[#AD8631] dark:text-[#D6A63C] font-semibold">
               Endorsements
             </h2>
             <h3 className="text-3xl font-serif text-foreground">
@@ -470,13 +470,13 @@ export default function Home() {
             {content.testimonials.map((t, idx) => (
               <div 
                 key={idx} 
-                className="bg-white dark:bg-[#101614] rounded-3xl p-8 border border-border-custom flex flex-col justify-between premium-card-hover shadow-sm"
+                className="bg-white dark:bg-[#2A3642] rounded-3xl p-8 border border-border-custom flex flex-col justify-between premium-card-hover shadow-sm"
               >
                 <div className="space-y-6">
                   {/* Star Ratings */}
                   <div className="flex space-x-1">
                     {[...Array(t.rating)].map((_, i) => (
-                      <span key={i} className="text-[#dfb15b] text-base">★</span>
+                      <span key={i} className="text-[#D6A63C] text-base">★</span>
                     ))}
                   </div>
                   
@@ -503,13 +503,13 @@ export default function Home() {
       )}
 
       {/* 6. ABOUT THE AUTHOR BRIEF */}
-      <section className="py-24 px-4 bg-white dark:bg-[#070b09] border-t border-border-custom">
+      <section className="py-24 px-4 bg-white dark:bg-[#202A33] border-t border-border-custom">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
           {/* Author Portrait Column */}
           <div className="lg:col-span-5 flex justify-center">
-            <div className="relative w-[280px] h-[360px] md:w-[320px] md:h-[400px] border border-border-custom p-3 rounded-2xl bg-[#faf8f5] dark:bg-[#101614]">
-              <div className="w-full h-full rounded-xl overflow-hidden relative bg-stone-100 dark:bg-[#0b100e]">
+            <div className="relative w-[280px] h-[360px] md:w-[320px] md:h-[400px] border border-border-custom p-3 rounded-2xl bg-[#FAF7EF] dark:bg-[#2A3642]">
+              <div className="w-full h-full rounded-xl overflow-hidden relative bg-stone-100 dark:bg-[#2A3642]">
                 <Image
                   src={settings.author_photo_url || "/images/ketul-shah-author.jpg"}
                   alt="Ketul Shah, author of The Unshaken Self"
@@ -534,7 +534,7 @@ export default function Home() {
 
           {/* Info Details Column */}
           <div className="lg:col-span-7 space-y-6 text-center lg:text-left flex flex-col items-center lg:items-start">
-            <h2 className="text-xs uppercase tracking-[0.25em] text-[#b5924b] dark:text-[#dfb15b] font-semibold">
+            <h2 className="text-xs uppercase tracking-[0.25em] text-[#AD8631] dark:text-[#D6A63C] font-semibold">
               Meet the Author
             </h2>
             <h3 className="text-3xl sm:text-4xl font-serif text-foreground">
@@ -548,7 +548,7 @@ export default function Home() {
             <div className="flex gap-4">
               <Link
                 href="/about-author"
-                className="px-6 py-2.5 rounded-full bg-[#1e3f20] hover:bg-[#142a15] dark:bg-[#dfb15b] dark:hover:bg-[#c49945] text-white dark:text-black text-xs uppercase tracking-widest font-semibold transition-transform hover:scale-105"
+                className="px-6 py-2.5 rounded-full bg-[#0B2942] hover:bg-[#071D30] dark:bg-[#D6A63C] dark:hover:bg-[#BC9235] text-white dark:text-black text-xs uppercase tracking-widest font-semibold transition-transform hover:scale-105"
               >
                 Read Full Journey
               </Link>
@@ -565,10 +565,10 @@ export default function Home() {
       </section>
 
       {/* 7. INTERACTIVE FAQ SECTION */}
-      <section className="py-24 px-4 bg-[#faf8f5] dark:bg-[#050806] border-t border-border-custom">
+      <section className="py-24 px-4 bg-[#FAF7EF] dark:bg-[#161D24] border-t border-border-custom">
         <div className="max-w-4xl mx-auto space-y-16">
           <div className="text-center space-y-4">
-            <h2 className="text-xs uppercase tracking-[0.25em] text-[#b5924b] dark:text-[#dfb15b] font-semibold">
+            <h2 className="text-xs uppercase tracking-[0.25em] text-[#AD8631] dark:text-[#D6A63C] font-semibold">
               Got Questions?
             </h2>
             <h3 className="text-3xl font-serif text-foreground">
@@ -582,7 +582,7 @@ export default function Home() {
               return (
                 <div 
                   key={idx} 
-                  className="bg-white dark:bg-[#101614] border border-border-custom rounded-2xl overflow-hidden transition-all duration-300"
+                  className="bg-white dark:bg-[#2A3642] border border-border-custom rounded-2xl overflow-hidden transition-all duration-300"
                 >
                   <button
                     onClick={() => toggleFaq(idx)}
@@ -600,7 +600,7 @@ export default function Home() {
                       isOpen ? 'max-h-60 opacity-100 border-t border-border-custom' : 'max-h-0 opacity-0 pointer-events-none'
                     }`}
                   >
-                    <div className="p-6 text-xs sm:text-sm font-light text-stone-500 dark:text-stone-400 leading-relaxed bg-[#faf8f5]/45 dark:bg-[#090f0c]/30">
+                    <div className="p-6 text-xs sm:text-sm font-light text-stone-500 dark:text-stone-400 leading-relaxed bg-[#FAF7EF]/45 dark:bg-[#2A3642]/30">
                       {faq.a}
                     </div>
                   </div>
@@ -612,13 +612,13 @@ export default function Home() {
       </section>
 
       {/* 8. MAIN NEWSLETTER SIGNUP BANNER */}
-      <section id="newsletter" className="py-24 px-4 bg-white dark:bg-[#070b09] border-t border-border-custom flex justify-center">
+      <section id="newsletter" className="py-24 px-4 bg-white dark:bg-[#202A33] border-t border-border-custom flex justify-center">
         <div className="max-w-4xl w-full glassmorphism border border-border-custom rounded-3xl p-12 text-center space-y-8 shadow-xl relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-[#dfb15b]/5 dark:bg-[#dfb15b]/3 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-32 h-32 bg-[#1e3f20]/5 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute top-0 right-0 w-32 h-32 bg-[#D6A63C]/5 dark:bg-[#D6A63C]/3 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-32 h-32 bg-[#0B2942]/5 rounded-full blur-3xl pointer-events-none" />
 
           <div className="space-y-3">
-            <h2 className="text-xs uppercase tracking-[0.25em] text-[#b5924b] dark:text-[#dfb15b] font-semibold">
+            <h2 className="text-xs uppercase tracking-[0.25em] text-[#AD8631] dark:text-[#D6A63C] font-semibold">
               Gita reflections newsletter
             </h2>
             <h3 className="text-2xl sm:text-3xl font-serif text-foreground">
@@ -654,12 +654,12 @@ export default function Home() {
               type="email"
               name="main-email"
               placeholder="Enter your email address"
-              className="flex-1 text-xs bg-stone-50 dark:bg-[#0b100e] border border-border-custom rounded-full px-6 py-3.5 focus:outline-none focus:ring-1 focus:ring-[#dfb15b]/40 text-foreground"
+              className="flex-1 text-xs bg-stone-50 dark:bg-[#2A3642] border border-border-custom rounded-full px-6 py-3.5 focus:outline-none focus:ring-1 focus:ring-[#D6A63C]/40 text-foreground"
               required
             />
             <button
               type="submit"
-              className="px-6 py-3.5 rounded-full bg-[#1e3f20] hover:bg-[#142a15] dark:bg-[#dfb15b] dark:hover:bg-[#c49945] text-white dark:text-black text-xs uppercase tracking-widest font-bold shadow-md transition-all cursor-pointer"
+              className="px-6 py-3.5 rounded-full bg-[#0B2942] hover:bg-[#071D30] dark:bg-[#D6A63C] dark:hover:bg-[#BC9235] text-white dark:text-black text-xs uppercase tracking-widest font-bold shadow-md transition-all cursor-pointer"
             >
               Subscribe
             </button>

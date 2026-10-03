@@ -175,14 +175,14 @@ export default function ResourcesPage() {
   };
 
   return (
-    <div className="flex-1 flex flex-col pt-16 bg-[#faf8f5] dark:bg-[#070b09]">
+    <div className="flex-1 flex flex-col pt-16 bg-[#FAF7EF] dark:bg-[#202A33]">
       <Navbar />
 
       {/* Page Header */}
-      <header className="py-20 px-4 text-center border-b border-border-custom bg-white dark:bg-[#050806] relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(223,177,91,0.03)_0%,transparent_70%)] pointer-events-none" />
+      <header className="py-20 px-4 text-center border-b border-border-custom bg-white dark:bg-[#161D24] relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(214,166,60,0.03)_0%,transparent_70%)] pointer-events-none" />
         <div className="max-w-4xl mx-auto space-y-4 relative z-10">
-          <span className="text-[10px] tracking-[0.3em] text-[#b5924b] dark:text-[#dfb15b] uppercase font-bold">
+          <span className="text-[10px] tracking-[0.3em] text-[#AD8631] dark:text-[#D6A63C] uppercase font-bold">
             {content.header_badge}
           </span>
           <h1 className="text-4xl sm:text-5xl font-serif text-foreground leading-tight">
@@ -195,10 +195,10 @@ export default function ResourcesPage() {
       </header>
 
       {/* GUIDED BREATH — free interactive moment, no unlock required */}
-      <section className="py-16 px-4 border-b border-border-custom bg-white dark:bg-[#050806]">
+      <section className="py-16 px-4 border-b border-border-custom bg-white dark:bg-[#161D24]">
         <div className="max-w-3xl mx-auto text-center space-y-10">
           <div className="space-y-3">
-            <span className="text-[10px] tracking-[0.3em] text-[#dfb15b] uppercase font-bold">
+            <span className="text-[10px] tracking-[0.3em] text-[#D6A63C] uppercase font-bold">
               Try It Now
             </span>
             <h2 className="text-2xl sm:text-3xl font-serif text-foreground">
@@ -215,10 +215,10 @@ export default function ResourcesPage() {
       {/* AFFIRMATION CARDS — one printable/shareable branded image per
           chapter, free for anyone, reusing the same canvas generator as
           the homepage's Wisdom Draw share cards. */}
-      <section className="py-16 px-4 border-b border-border-custom bg-[#faf8f5] dark:bg-[#070b09]">
+      <section className="py-16 px-4 border-b border-border-custom bg-[#FAF7EF] dark:bg-[#202A33]">
         <div className="max-w-6xl mx-auto space-y-10">
           <div className="text-center space-y-3">
-            <span className="text-[10px] tracking-[0.3em] text-[#dfb15b] uppercase font-bold">
+            <span className="text-[10px] tracking-[0.3em] text-[#D6A63C] uppercase font-bold">
               Free For Anyone
             </span>
             <h2 className="text-2xl sm:text-3xl font-serif text-foreground">
@@ -244,7 +244,7 @@ export default function ResourcesPage() {
         <div className="lg:col-span-8 space-y-8">
           <div className="space-y-4">
             <h2 className="font-serif text-2xl text-foreground">{content.section_heading}</h2>
-            <div className="w-12 h-[2px] bg-[#dfb15b]" />
+            <div className="w-12 h-[2px] bg-[#D6A63C]" />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -253,18 +253,18 @@ export default function ResourcesPage() {
               return (
                 <div
                   key={res.id}
-                  className="bg-white dark:bg-[#101614] border border-border-custom p-6 rounded-3xl flex flex-col justify-between hover:shadow-md transition-shadow relative overflow-hidden"
+                  className="bg-white dark:bg-[#2A3642] border border-border-custom p-6 rounded-3xl flex flex-col justify-between hover:shadow-md transition-shadow relative overflow-hidden"
                 >
                   {/* Premium Lock Banner */}
                   {res.isPremium && (
-                    <div className="absolute top-0 right-0 flex items-center space-x-1 px-3 py-1 text-[9px] font-mono uppercase tracking-widest font-semibold bg-[#dfb15b]/10 text-[#dfb15b] border-l border-b border-[#dfb15b]/20 rounded-bl-xl">
+                    <div className="absolute top-0 right-0 flex items-center space-x-1 px-3 py-1 text-[9px] font-mono uppercase tracking-widest font-semibold bg-[#D6A63C]/10 text-[#D6A63C] border-l border-b border-[#D6A63C]/20 rounded-bl-xl">
                       {locked ? <Lock className="w-2.5 h-2.5" /> : <Unlock className="w-2.5 h-2.5" />}
                       <span>Premium</span>
                     </div>
                   )}
 
                   <div className="space-y-4">
-                    <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#1e3f20]/5 to-[#b5924b]/5 text-[#dfb15b] flex items-center justify-center">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#0B2942]/5 to-[#AD8631]/5 text-[#D6A63C] flex items-center justify-center">
                       <FileText className="w-5 h-5" />
                     </div>
                     <div className="space-y-2">
@@ -289,7 +289,7 @@ export default function ResourcesPage() {
                       className={`px-4 py-2 rounded-full text-[10px] uppercase tracking-widest font-bold flex items-center space-x-1.5 cursor-pointer transition-colors ${
                         locked
                           ? "bg-stone-100 text-stone-400 dark:bg-stone-850 dark:text-stone-600 hover:bg-stone-200"
-                          : "bg-[#1e3f20] dark:bg-[#dfb15b] text-white dark:text-black hover:opacity-90"
+                          : "bg-[#0B2942] dark:bg-[#D6A63C] text-white dark:text-black hover:opacity-90"
                       }`}
                     >
                       <Download className="w-3.5 h-3.5" />
@@ -304,11 +304,11 @@ export default function ResourcesPage() {
 
         {/* Right Column: Preorder Bonus Unlocker */}
         <div className="lg:col-span-4">
-          <div className="bg-white dark:bg-[#101614] border border-border-custom rounded-3xl p-6 space-y-6 shadow-sm sticky top-24">
+          <div className="bg-white dark:bg-[#2A3642] border border-border-custom rounded-3xl p-6 space-y-6 shadow-sm sticky top-24">
             
             <div className="space-y-2">
               <h3 className="font-serif text-base text-foreground font-semibold flex items-center gap-2">
-                {isUnlocked ? <Unlock className="w-5 h-5 text-green-500" /> : <Lock className="w-5 h-5 text-[#dfb15b]" />}
+                {isUnlocked ? <Unlock className="w-5 h-5 text-green-500" /> : <Lock className="w-5 h-5 text-[#D6A63C]" />}
                 <span>{content.sidebar_heading}</span>
               </h3>
               <p className="text-[11px] font-light text-stone-500 leading-relaxed">
@@ -348,7 +348,7 @@ export default function ResourcesPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="e.g., rohan@domain.com"
-                    className="w-full text-xs bg-stone-50 dark:bg-[#070b09] border border-border-custom rounded-lg p-2.5 focus:outline-none focus:ring-1 focus:ring-[#dfb15b]/40 text-foreground"
+                    className="w-full text-xs bg-stone-50 dark:bg-[#202A33] border border-border-custom rounded-lg p-2.5 focus:outline-none focus:ring-1 focus:ring-[#D6A63C]/40 text-foreground"
                     required
                   />
                 </div>
@@ -361,13 +361,13 @@ export default function ResourcesPage() {
                     value={orderId}
                     onChange={(e) => setOrderId(e.target.value)}
                     placeholder="e.g., OD938210382"
-                    className="w-full text-xs bg-stone-50 dark:bg-[#070b09] border border-border-custom rounded-lg p-2.5 focus:outline-none focus:ring-1 focus:ring-[#dfb15b]/40 text-foreground font-mono"
+                    className="w-full text-xs bg-stone-50 dark:bg-[#202A33] border border-border-custom rounded-lg p-2.5 focus:outline-none focus:ring-1 focus:ring-[#D6A63C]/40 text-foreground font-mono"
                   />
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full py-3 rounded-full bg-[#1e3f20] hover:bg-[#142a15] dark:bg-[#dfb15b] dark:hover:bg-[#c49945] text-white dark:text-black text-xs uppercase tracking-widest font-bold shadow-md transition-all cursor-pointer"
+                  className="w-full py-3 rounded-full bg-[#0B2942] hover:bg-[#071D30] dark:bg-[#D6A63C] dark:hover:bg-[#BC9235] text-white dark:text-black text-xs uppercase tracking-widest font-bold shadow-md transition-all cursor-pointer"
                 >
                   Unlock Premium Guides
                 </button>
@@ -383,7 +383,7 @@ export default function ResourcesPage() {
             )}
 
             <div className="p-4 border border-border-custom rounded-2xl text-[10px] text-muted-text flex items-start gap-2">
-              <Info className="w-4 h-4 text-[#dfb15b] flex-shrink-0 mt-0.5" />
+              <Info className="w-4 h-4 text-[#D6A63C] flex-shrink-0 mt-0.5" />
               <span>{content.sidebar_info}</span>
             </div>
 
@@ -395,7 +395,7 @@ export default function ResourcesPage() {
       {/* INTERACTIVE WORKSHEETS SECTION */}
       <section className="max-w-7xl mx-auto w-full px-4 pb-24 space-y-12">
         <div className="text-center space-y-4">
-          <span className="text-[10px] tracking-[0.3em] text-[#dfb15b] uppercase font-bold">{content.worksheets_badge}</span>
+          <span className="text-[10px] tracking-[0.3em] text-[#D6A63C] uppercase font-bold">{content.worksheets_badge}</span>
           <h2 className="text-2xl sm:text-3xl font-serif text-foreground">{content.worksheets_heading}</h2>
           <p className="text-xs font-light text-stone-500 dark:text-stone-400 max-w-md mx-auto">
             {content.worksheets_subtitle}
@@ -404,9 +404,9 @@ export default function ResourcesPage() {
 
         {!isUnlocked ? (
           /* Locked State Teaser */
-          <div className="max-w-3xl mx-auto border border-border-custom bg-white dark:bg-[#101614] rounded-3xl p-12 text-center space-y-6 shadow-md relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-[#dfb15b]/5 rounded-full blur-3xl pointer-events-none" />
-            <Lock className="w-10 h-10 text-[#dfb15b] mx-auto animate-pulse" />
+          <div className="max-w-3xl mx-auto border border-border-custom bg-white dark:bg-[#2A3642] rounded-3xl p-12 text-center space-y-6 shadow-md relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-[#D6A63C]/5 rounded-full blur-3xl pointer-events-none" />
+            <Lock className="w-10 h-10 text-[#D6A63C] mx-auto animate-pulse" />
             <h3 className="font-serif text-lg text-foreground font-semibold">{content.worksheets_locked_title}</h3>
             <p className="text-xs font-light text-stone-500 dark:text-stone-400 max-w-sm mx-auto leading-relaxed">
               {content.worksheets_locked_desc}
@@ -451,13 +451,13 @@ function AffirmationCardButton({ data }: { data: { num: number; theme: string; l
       type="button"
       onClick={handleDownload}
       disabled={downloading}
-      className="group flex flex-col items-center justify-center gap-2 p-4 rounded-2xl border border-border-custom bg-white dark:bg-[#101614] hover:border-[#dfb15b]/60 hover:shadow-md transition-all cursor-pointer disabled:opacity-60 disabled:cursor-wait text-center"
+      className="group flex flex-col items-center justify-center gap-2 p-4 rounded-2xl border border-border-custom bg-white dark:bg-[#2A3642] hover:border-[#D6A63C]/60 hover:shadow-md transition-all cursor-pointer disabled:opacity-60 disabled:cursor-wait text-center"
     >
-      <span className="text-lg font-serif text-[#dfb15b] font-bold">{data.num}</span>
+      <span className="text-lg font-serif text-[#D6A63C] font-bold">{data.num}</span>
       <span className="text-[9px] uppercase tracking-widest text-muted-text font-mono leading-tight">
         {data.theme}
       </span>
-      <span className="flex items-center gap-1 text-[9px] uppercase tracking-widest font-bold text-foreground group-hover:text-[#dfb15b] transition-colors">
+      <span className="flex items-center gap-1 text-[9px] uppercase tracking-widest font-bold text-foreground group-hover:text-[#D6A63C] transition-colors">
         <ImageDown className="w-3 h-3" />
         {downloading ? "Preparing…" : "Download"}
       </span>
@@ -549,7 +549,7 @@ function UnlockedWorksheets() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto bg-white dark:bg-[#101614] border border-border-custom rounded-3xl overflow-hidden shadow-xl flex flex-col min-h-[500px]">
+    <div className="max-w-4xl mx-auto bg-white dark:bg-[#2A3642] border border-border-custom rounded-3xl overflow-hidden shadow-xl flex flex-col min-h-[500px]">
       {/* Sub tabs */}
       <div className="flex border-b border-border-custom bg-stone-50 dark:bg-black/10 text-xs sm:text-sm font-semibold text-stone-500 overflow-x-auto whitespace-nowrap">
         {[
@@ -562,7 +562,7 @@ function UnlockedWorksheets() {
             onClick={() => setActiveTab(tab.id as any)}
             className={`px-6 py-4 cursor-pointer transition-colors ${
               activeTab === tab.id
-                ? "bg-white dark:bg-[#101614] text-[#dfb15b] border-t-2 border-[#dfb15b]"
+                ? "bg-white dark:bg-[#2A3642] text-[#D6A63C] border-t-2 border-[#D6A63C]"
                 : "hover:bg-stone-100 dark:hover:bg-white/5"
             }`}
           >
@@ -589,7 +589,7 @@ function UnlockedWorksheets() {
                   value={trigger}
                   onChange={(e) => setTrigger(e.target.value)}
                   placeholder="e.g., Received harsh Slack feedback"
-                  className="w-full text-xs bg-stone-50 dark:bg-[#070b09] border border-border-custom p-2.5 rounded-lg text-foreground focus:outline-none focus:ring-1 focus:ring-[#dfb15b]/40"
+                  className="w-full text-xs bg-stone-50 dark:bg-[#202A33] border border-border-custom p-2.5 rounded-lg text-foreground focus:outline-none focus:ring-1 focus:ring-[#D6A63C]/40"
                   required
                 />
               </div>
@@ -600,14 +600,14 @@ function UnlockedWorksheets() {
                   value={outcome}
                   onChange={(e) => setOutcome(e.target.value)}
                   placeholder="e.g., Paused 30s. Relaxed jaw. Answered constructively."
-                  className="w-full text-xs bg-stone-50 dark:bg-[#070b09] border border-border-custom p-2.5 rounded-lg text-foreground focus:outline-none focus:ring-1 focus:ring-[#dfb15b]/40"
+                  className="w-full text-xs bg-stone-50 dark:bg-[#202A33] border border-border-custom p-2.5 rounded-lg text-foreground focus:outline-none focus:ring-1 focus:ring-[#D6A63C]/40"
                   required
                 />
               </div>
               <div className="md:col-span-2 flex justify-end">
                 <button
                   type="submit"
-                  className="px-6 py-2.5 rounded-full bg-[#0f2b48] dark:bg-[#dfb15b] text-white dark:text-black text-xs uppercase tracking-widest font-bold shadow-md cursor-pointer hover:opacity-90 transition-opacity"
+                  className="px-6 py-2.5 rounded-full bg-[#0B2942] dark:bg-[#D6A63C] text-white dark:text-black text-xs uppercase tracking-widest font-bold shadow-md cursor-pointer hover:opacity-90 transition-opacity"
                 >
                   Log Pause Instance
                 </button>
@@ -663,7 +663,7 @@ function UnlockedWorksheets() {
                   value={worry}
                   onChange={(e) => setWorry(e.target.value)}
                   placeholder="e.g., What if the app release fails on production?"
-                  className="w-full text-xs bg-stone-50 dark:bg-[#070b09] border border-border-custom p-2.5 rounded-lg text-foreground focus:outline-none focus:ring-1 focus:ring-[#dfb15b]/40"
+                  className="w-full text-xs bg-stone-50 dark:bg-[#202A33] border border-border-custom p-2.5 rounded-lg text-foreground focus:outline-none focus:ring-1 focus:ring-[#D6A63C]/40"
                   required
                 />
               </div>
@@ -675,7 +675,7 @@ function UnlockedWorksheets() {
                     onChange={(e) => setControl(e.target.value)}
                     placeholder="e.g., Code tests, lint setups, build checking, backups."
                     rows={3}
-                    className="w-full text-xs bg-stone-50 dark:bg-[#070b09] border border-border-custom p-2.5 rounded-lg text-foreground focus:outline-none focus:ring-1 focus:ring-[#dfb15b]/40 resize-none"
+                    className="w-full text-xs bg-stone-50 dark:bg-[#202A33] border border-border-custom p-2.5 rounded-lg text-foreground focus:outline-none focus:ring-1 focus:ring-[#D6A63C]/40 resize-none"
                     required
                   ></textarea>
                 </div>
@@ -686,7 +686,7 @@ function UnlockedWorksheets() {
                     onChange={(e) => setNoControl(e.target.value)}
                     placeholder="e.g., Network outages, client response delays."
                     rows={3}
-                    className="w-full text-xs bg-stone-50 dark:bg-[#070b09] border border-border-custom p-2.5 rounded-lg text-foreground focus:outline-none focus:ring-1 focus:ring-[#dfb15b]/40 resize-none"
+                    className="w-full text-xs bg-stone-50 dark:bg-[#202A33] border border-border-custom p-2.5 rounded-lg text-foreground focus:outline-none focus:ring-1 focus:ring-[#D6A63C]/40 resize-none"
                     required
                   ></textarea>
                 </div>
@@ -694,7 +694,7 @@ function UnlockedWorksheets() {
               <div className="flex justify-end">
                 <button
                   type="submit"
-                  className="px-6 py-2.5 rounded-full bg-[#0f2b48] dark:bg-[#dfb15b] text-white dark:text-black text-xs uppercase tracking-widest font-bold shadow-md cursor-pointer hover:opacity-90 transition-opacity"
+                  className="px-6 py-2.5 rounded-full bg-[#0B2942] dark:bg-[#D6A63C] text-white dark:text-black text-xs uppercase tracking-widest font-bold shadow-md cursor-pointer hover:opacity-90 transition-opacity"
                 >
                   Decouple Worry
                 </button>
@@ -702,16 +702,16 @@ function UnlockedWorksheets() {
             </form>
 
             {decoupledCard && (
-              <div className="p-6 border border-[#dfb15b]/20 bg-[#dfb15b]/5 rounded-2xl space-y-4 animate-[fadeIn_0.3s_ease-out]">
-                <div className="flex justify-between items-center border-b border-[#dfb15b]/20 pb-2">
-                  <h4 className="font-serif text-sm text-[#dfb15b] font-bold">Zen Decoupled Plan</h4>
+              <div className="p-6 border border-[#D6A63C]/20 bg-[#D6A63C]/5 rounded-2xl space-y-4 animate-[fadeIn_0.3s_ease-out]">
+                <div className="flex justify-between items-center border-b border-[#D6A63C]/20 pb-2">
+                  <h4 className="font-serif text-sm text-[#D6A63C] font-bold">Zen Decoupled Plan</h4>
                   <span className="text-[9px] font-mono text-stone-400">{decoupledCard.date}</span>
                 </div>
                 <div className="space-y-3 text-xs leading-relaxed">
                   <p className="text-stone-400 italic">"Worry: {decoupledCard.worry}"</p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
                     <div className="space-y-1">
-                      <span className="block font-mono text-[9px] uppercase tracking-widest text-[#dfb15b] font-bold">Pour 100% Energy Into:</span>
+                      <span className="block font-mono text-[9px] uppercase tracking-widest text-[#D6A63C] font-bold">Pour 100% Energy Into:</span>
                       <p className="text-foreground">{decoupledCard.control}</p>
                     </div>
                     <div className="space-y-1 opacity-70">
@@ -748,7 +748,7 @@ function UnlockedWorksheets() {
                           name="mood-quality"
                           checked={mood === item.val}
                           onChange={() => setMood(item.val as any)}
-                          className="accent-[#dfb15b]"
+                          className="accent-[#D6A63C]"
                         />
                         <span className="font-semibold text-foreground">{item.val.toUpperCase()}</span>
                       </div>
@@ -765,7 +765,7 @@ function UnlockedWorksheets() {
                   value={need}
                   onChange={(e) => setNeed(e.target.value)}
                   placeholder="e.g., A slow breakfast, no morning emails for the first hour"
-                  className="w-full text-xs bg-stone-50 dark:bg-[#070b09] border border-border-custom p-2.5 rounded-lg text-foreground focus:outline-none focus:ring-1 focus:ring-[#dfb15b]/40"
+                  className="w-full text-xs bg-stone-50 dark:bg-[#202A33] border border-border-custom p-2.5 rounded-lg text-foreground focus:outline-none focus:ring-1 focus:ring-[#D6A63C]/40"
                   required
                 />
               </div>
@@ -773,7 +773,7 @@ function UnlockedWorksheets() {
               <div className="md:col-span-3 flex justify-end">
                 <button
                   type="submit"
-                  className="px-6 py-2.5 rounded-full bg-[#0f2b48] dark:bg-[#dfb15b] text-white dark:text-black text-xs uppercase tracking-widest font-bold shadow-md cursor-pointer hover:opacity-90 transition-opacity"
+                  className="px-6 py-2.5 rounded-full bg-[#0B2942] dark:bg-[#D6A63C] text-white dark:text-black text-xs uppercase tracking-widest font-bold shadow-md cursor-pointer hover:opacity-90 transition-opacity"
                 >
                   Save Weather Log
                 </button>
@@ -802,7 +802,7 @@ function UnlockedWorksheets() {
                   {weatherList.map((item, i) => (
                     <div key={i} className="p-4 border border-border-custom rounded-xl bg-stone-50/50 dark:bg-black/20 text-xs flex justify-between gap-4 items-center">
                       <div className="space-y-1">
-                        <p className="font-semibold text-foreground">Weather Quality: <span className="text-[#dfb15b] uppercase font-mono">{item.mood}</span></p>
+                        <p className="font-semibold text-foreground">Weather Quality: <span className="text-[#D6A63C] uppercase font-mono">{item.mood}</span></p>
                         <p className="font-light text-stone-500">Intervention: {item.need}</p>
                       </div>
                       <span className="text-[9px] font-mono text-stone-400 flex-shrink-0">{item.date}</span>

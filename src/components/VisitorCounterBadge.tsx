@@ -34,11 +34,11 @@ export default function VisitorCounterBadge() {
     <>
       <button
         onClick={() => setWheelOpen(true)}
-        className="visitor-badge-pulse inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white dark:bg-[#101614] border border-[#dfb15b]/40 shadow-sm hover:shadow-md hover:scale-105 active:scale-95 transition-all cursor-pointer"
+        className="visitor-badge-pulse inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white dark:bg-[#2A3642] border border-[#D6A63C]/40 shadow-sm hover:shadow-md hover:scale-105 active:scale-95 transition-all cursor-pointer"
         aria-label="Spin the wheel for a surprise"
       >
-        <Dice5 className="w-3.5 h-3.5 text-[#dfb15b] flex-shrink-0" />
-        <span className="text-xs uppercase tracking-widest font-bold text-[#1e3f20] dark:text-[#dfb15b]">
+        <Dice5 className="w-3.5 h-3.5 text-[#D6A63C] flex-shrink-0" />
+        <span className="text-xs uppercase tracking-widest font-bold text-[#0B2942] dark:text-[#D6A63C]">
           Curious? Spin the Wheel →
         </span>
       </button>

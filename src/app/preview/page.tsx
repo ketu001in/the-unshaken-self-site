@@ -106,14 +106,14 @@ export default function Preview() {
   const bookPages = content.pages;
 
   return (
-    <div className="flex-1 flex flex-col pt-16 bg-[#faf8f5] dark:bg-[#070b09]">
+    <div className="flex-1 flex flex-col pt-16 bg-[#FAF7EF] dark:bg-[#202A33]">
       <Navbar />
 
       {/* Page Header */}
-      <header className="py-20 px-4 text-center border-b border-border-custom bg-white dark:bg-[#050806] relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(223,177,91,0.03)_0%,transparent_70%)] pointer-events-none" />
+      <header className="py-20 px-4 text-center border-b border-border-custom bg-white dark:bg-[#161D24] relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(214,166,60,0.03)_0%,transparent_70%)] pointer-events-none" />
         <div className="max-w-4xl mx-auto space-y-4 relative z-10">
-          <span className="text-[10px] tracking-[0.3em] text-[#b5924b] dark:text-[#dfb15b] uppercase font-bold">
+          <span className="text-[10px] tracking-[0.3em] text-[#AD8631] dark:text-[#D6A63C] uppercase font-bold">
             {content.header_badge}
           </span>
           <h1 className="text-4xl sm:text-5xl font-serif text-foreground leading-tight">
@@ -131,9 +131,9 @@ export default function Preview() {
         {/* Row 2: Double Page Flipbook Reader */}
         <div className="space-y-8 pt-8">
           <div className="text-center space-y-3">
-            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-[#dfb15b]/10 border border-[#dfb15b]/20">
-              <BookOpen className="w-3.5 h-3.5 text-[#dfb15b]" />
-              <span className="text-[9px] tracking-widest uppercase font-bold text-[#b5924b] dark:text-[#dfb15b]">{content.section_badge}</span>
+            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-[#D6A63C]/10 border border-[#D6A63C]/20">
+              <BookOpen className="w-3.5 h-3.5 text-[#D6A63C]" />
+              <span className="text-[9px] tracking-widest uppercase font-bold text-[#AD8631] dark:text-[#D6A63C]">{content.section_badge}</span>
             </div>
             <h2 className="font-serif text-2xl md:text-3xl text-foreground">
               {content.section_title}
@@ -144,8 +144,8 @@ export default function Preview() {
           </div>
 
           {/* Interactive Flipbook Container */}
-          <div className="max-w-5xl mx-auto border border-border-custom bg-white dark:bg-[#101614] rounded-3xl p-6 md:p-8 shadow-2xl relative overflow-hidden min-h-[480px] flex flex-col justify-between">
-            <div className="absolute inset-0 bg-[#faf8f5]/40 dark:bg-black/10 pointer-events-none" />
+          <div className="max-w-5xl mx-auto border border-border-custom bg-white dark:bg-[#2A3642] rounded-3xl p-6 md:p-8 shadow-2xl relative overflow-hidden min-h-[480px] flex flex-col justify-between">
+            <div className="absolute inset-0 bg-[#FAF7EF]/40 dark:bg-black/10 pointer-events-none" />
 
             {/* Split Page Layout */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 flex-1 pb-8">
@@ -153,7 +153,7 @@ export default function Preview() {
               {/* Left Page */}
               <div className="space-y-6 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-border-custom pb-8 lg:pb-0 lg:pr-12">
                 <div className="space-y-4">
-                  <span className="block font-mono text-[9px] text-[#b5924b] dark:text-[#dfb15b] uppercase tracking-widest font-semibold">
+                  <span className="block font-mono text-[9px] text-[#AD8631] dark:text-[#D6A63C] uppercase tracking-widest font-semibold">
                     {bookPages[page].left.header}
                   </span>
 
@@ -179,7 +179,7 @@ export default function Preview() {
               {/* Right Page */}
               <div className="space-y-6 flex flex-col justify-between lg:pl-6">
                 <div className="space-y-4">
-                  <span className="block font-mono text-[9px] text-[#b5924b] dark:text-[#dfb15b] uppercase tracking-widest font-semibold">
+                  <span className="block font-mono text-[9px] text-[#AD8631] dark:text-[#D6A63C] uppercase tracking-widest font-semibold">
                     {bookPages[page].right.header}
                   </span>
 
@@ -187,12 +187,12 @@ export default function Preview() {
                     {bookPages[page].right.content.map((pText, i) => {
                       if (pText.startsWith("•")) {
                         return (
-                          <div key={i} className="pl-4 border-l border-[#dfb15b]/45 italic text-muted-text">
+                          <div key={i} className="pl-4 border-l border-[#D6A63C]/45 italic text-muted-text">
                             {pText}
                           </div>
                         );
                       }
-                      return <p key={i} className={pText.startsWith("**The Exercise") || pText.includes("**The Three-Breath Pause**") ? "font-serif text-[#dfb15b] text-[14px]" : ""}>{pText}</p>;
+                      return <p key={i} className={pText.startsWith("**The Exercise") || pText.includes("**The Three-Breath Pause**") ? "font-serif text-[#D6A63C] text-[14px]" : ""}>{pText}</p>;
                     })}
                   </div>
                 </div>
@@ -216,7 +216,7 @@ export default function Preview() {
                 <span>Previous Pages</span>
               </button>
 
-              <div className="text-xs font-mono text-[#dfb15b]">
+              <div className="text-xs font-mono text-[#D6A63C]">
                 Page {page * 2 + 1} - {page * 2 + 2} of {bookPages.length * 2}
               </div>
 
@@ -235,7 +235,7 @@ export default function Preview() {
 
         {/* Row 3: Callout to Download PDF */}
         <div className="glassmorphism border border-border-custom rounded-3xl p-8 md:p-12 text-center space-y-6 shadow-md max-w-4xl mx-auto">
-          <div className="w-12 h-12 rounded-full bg-[#dfb15b]/10 flex items-center justify-center text-[#dfb15b] mx-auto">
+          <div className="w-12 h-12 rounded-full bg-[#D6A63C]/10 flex items-center justify-center text-[#D6A63C] mx-auto">
             <FileText className="w-6 h-6" />
           </div>
           <div className="space-y-2">
@@ -249,7 +249,7 @@ export default function Preview() {
           <a
             href={settings.sample_pdf_url || "/downloads/Chapter1_Sample_The_Unshaken_Self.pdf"}
             download
-            className="inline-flex items-center space-x-2 px-6 py-3 rounded-full bg-[#0f2b48] hover:opacity-90 dark:bg-[#dfb15b] dark:hover:bg-[#c49945] text-white dark:text-black text-xs uppercase tracking-widest font-bold shadow-md transition-all hover:scale-105 cursor-pointer"
+            className="inline-flex items-center space-x-2 px-6 py-3 rounded-full bg-[#0B2942] hover:opacity-90 dark:bg-[#D6A63C] dark:hover:bg-[#BC9235] text-white dark:text-black text-xs uppercase tracking-widest font-bold shadow-md transition-all hover:scale-105 cursor-pointer"
           >
             <Download className="w-4 h-4" />
             <span>Download Sample PDF</span>

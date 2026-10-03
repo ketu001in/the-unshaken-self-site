@@ -164,12 +164,12 @@ export default function WisdomDraw() {
         >
           {/* Back face — face-down card, shown before/between draws */}
           <div
-            className="absolute inset-0 rounded-3xl border border-[#dfb15b]/30 bg-gradient-to-br from-[#1e3f20] to-[#0f2b1a] dark:from-[#101614] dark:to-[#070b09] flex flex-col items-center justify-center gap-4 shadow-xl px-8"
+            className="absolute inset-0 rounded-3xl border border-[#D6A63C]/30 bg-gradient-to-br from-[#0B2942] to-[#081A2B] dark:from-[#2A3642] dark:to-[#202A33] flex flex-col items-center justify-center gap-4 shadow-xl px-8"
             style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
           >
-            <div className="absolute inset-4 rounded-2xl border border-dashed border-[#dfb15b]/25 pointer-events-none" />
-            <Sparkles className="w-8 h-8 text-[#dfb15b]" />
-            <span className="text-[11px] uppercase tracking-[0.25em] text-[#dfb15b] font-semibold">
+            <div className="absolute inset-4 rounded-2xl border border-dashed border-[#D6A63C]/25 pointer-events-none" />
+            <Sparkles className="w-8 h-8 text-[#D6A63C]" />
+            <span className="text-[11px] uppercase tracking-[0.25em] text-[#D6A63C] font-semibold">
               {revealed ? "Draw Another" : "Reveal Today's Teaching"}
             </span>
             <span className="text-[10px] text-white/50 max-w-[200px] text-center leading-relaxed">
@@ -181,7 +181,7 @@ export default function WisdomDraw() {
 
           {/* Front face — revealed teaching */}
           <div
-            className="absolute inset-0 rounded-3xl border border-[#dfb15b]/40 bg-white dark:bg-[#101614] flex flex-col items-center justify-center gap-4 shadow-xl px-8 text-center"
+            className="absolute inset-0 rounded-3xl border border-[#D6A63C]/40 bg-white dark:bg-[#2A3642] flex flex-col items-center justify-center gap-4 shadow-xl px-8 text-center"
             style={{
               backfaceVisibility: "hidden",
               WebkitBackfaceVisibility: "hidden",
@@ -191,7 +191,7 @@ export default function WisdomDraw() {
             {current && (
               <>
                 {isTodayTeaching && (
-                  <span className="text-[9px] uppercase tracking-widest font-bold text-white bg-[#dfb15b] px-2 py-0.5 rounded-full">
+                  <span className="text-[9px] uppercase tracking-widest font-bold text-white bg-[#D6A63C] px-2 py-0.5 rounded-full">
                     Today&apos;s Teaching
                   </span>
                 )}
@@ -202,7 +202,7 @@ export default function WisdomDraw() {
                   &ldquo;{current.line}&rdquo;
                 </p>
                 <div className="flex items-center gap-4 mt-2">
-                  <span className="flex items-center gap-1.5 text-[10px] uppercase tracking-widest text-[#dfb15b] font-semibold">
+                  <span className="flex items-center gap-1.5 text-[10px] uppercase tracking-widest text-[#D6A63C] font-semibold">
                     <RotateCw className="w-3 h-3" />
                     Draw Another
                   </span>
@@ -210,7 +210,7 @@ export default function WisdomDraw() {
                     type="button"
                     onClick={handleShare}
                     disabled={sharing}
-                    className="flex items-center gap-1.5 text-[10px] uppercase tracking-widest text-muted-text hover:text-[#dfb15b] font-semibold transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-wait"
+                    className="flex items-center gap-1.5 text-[10px] uppercase tracking-widest text-muted-text hover:text-[#D6A63C] font-semibold transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-wait"
                     aria-label="Share this teaching as an image"
                   >
                     <Share2 className="w-3 h-3" />
@@ -224,7 +224,7 @@ export default function WisdomDraw() {
       </div>
 
       {streak > 1 && (
-        <div className="flex items-center gap-1.5 text-[11px] text-[#dfb15b] font-semibold">
+        <div className="flex items-center gap-1.5 text-[11px] text-[#D6A63C] font-semibold">
           <Flame className="w-3.5 h-3.5" />
           <span>{streak}-day streak — keep it going through launch</span>
         </div>

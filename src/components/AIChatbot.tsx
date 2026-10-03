@@ -215,7 +215,7 @@ export default function AIChatbot() {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="w-14 h-14 rounded-full bg-gradient-to-tr from-[#1e3f20] to-[#b5924b] text-white flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer"
+          className="w-14 h-14 rounded-full bg-gradient-to-tr from-[#0B2942] to-[#AD8631] text-white flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer"
           aria-label="Open Gita Companion Bot"
         >
           <Compass className="w-6 h-6 animate-[spin_60s_linear_infinite]" />
@@ -228,9 +228,9 @@ export default function AIChatbot() {
         <div className="w-[320px] sm:w-[380px] h-[500px] rounded-2xl glassmorphism border border-border-custom shadow-2xl flex flex-col overflow-hidden animate-[slideUp_0.3s_ease-out]">
           
           {/* Header */}
-          <div className="p-4 bg-gradient-to-r from-[#1e3f20]/95 to-[#122815]/95 text-stone-100 flex items-center justify-between border-b border-border-custom">
+          <div className="p-4 bg-gradient-to-r from-[#0B2942]/95 to-[#071D30]/95 text-stone-100 flex items-center justify-between border-b border-border-custom">
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 rounded-full bg-[#dfb15b]/20 flex items-center justify-center text-[#dfb15b]">
+              <div className="w-8 h-8 rounded-full bg-[#D6A63C]/20 flex items-center justify-center text-[#D6A63C]">
                 <Sparkles className="w-4 h-4" />
               </div>
               <div>
@@ -247,12 +247,12 @@ export default function AIChatbot() {
           </div>
 
           {/* Tab Switcher: Chat / FAQs */}
-          <div className="flex border-b border-border-custom bg-stone-50 dark:bg-[#080d0b]">
+          <div className="flex border-b border-border-custom bg-stone-50 dark:bg-[#2A3642]">
             <button
               onClick={() => setViewMode("chat")}
               className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 text-[10px] uppercase tracking-widest font-bold cursor-pointer transition-colors ${
                 viewMode === "chat"
-                  ? "text-[#dfb15b] border-b-2 border-[#dfb15b]"
+                  ? "text-[#D6A63C] border-b-2 border-[#D6A63C]"
                   : "text-muted-text hover:text-foreground"
               }`}
             >
@@ -263,7 +263,7 @@ export default function AIChatbot() {
               onClick={() => setViewMode("faq")}
               className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 text-[10px] uppercase tracking-widest font-bold cursor-pointer transition-colors ${
                 viewMode === "faq"
-                  ? "text-[#dfb15b] border-b-2 border-[#dfb15b]"
+                  ? "text-[#D6A63C] border-b-2 border-[#D6A63C]"
                   : "text-muted-text hover:text-foreground"
               }`}
             >
@@ -274,7 +274,7 @@ export default function AIChatbot() {
 
           {/* Messages area */}
           {viewMode === "chat" ? (
-            <div className="flex-1 p-4 overflow-y-auto space-y-3 bg-[#faf8f5]/65 dark:bg-[#070b09]/80 no-scrollbar">
+            <div className="flex-1 p-4 overflow-y-auto space-y-3 bg-[#FAF7EF]/65 dark:bg-[#202A33]/80 no-scrollbar">
               {messages.map((msg) => (
                 <div
                   key={msg.id}
@@ -283,8 +283,8 @@ export default function AIChatbot() {
                   <div
                     className={`max-w-[85%] rounded-2xl p-3 text-xs md:text-[13px] leading-relaxed shadow-sm ${
                       msg.sender === "user"
-                        ? "bg-[#1e3f20] text-stone-100 rounded-tr-none"
-                        : "bg-white dark:bg-[#121c19] text-foreground border border-border-custom rounded-tl-none"
+                        ? "bg-[#0B2942] text-stone-100 rounded-tr-none"
+                        : "bg-white dark:bg-[#2A3642] text-foreground border border-border-custom rounded-tl-none"
                     }`}
                   >
                     <p dangerouslySetInnerHTML={{ __html: msg.text.replace(/\*(.*?)\*/g, "<strong>$1</strong>") }} />
@@ -297,7 +297,7 @@ export default function AIChatbot() {
 
               {isTyping && (
                 <div className="flex justify-start">
-                  <div className="bg-white dark:bg-[#121c19] text-foreground border border-border-custom rounded-2xl rounded-tl-none p-3 text-xs flex items-center space-x-1">
+                  <div className="bg-white dark:bg-[#2A3642] text-foreground border border-border-custom rounded-2xl rounded-tl-none p-3 text-xs flex items-center space-x-1">
                     <span className="w-1.5 h-1.5 bg-muted-text rounded-full animate-bounce" />
                     <span className="w-1.5 h-1.5 bg-muted-text rounded-full animate-bounce [animation-delay:0.2s]" />
                     <span className="w-1.5 h-1.5 bg-muted-text rounded-full animate-bounce [animation-delay:0.4s]" />
@@ -308,20 +308,20 @@ export default function AIChatbot() {
               <div ref={chatEndRef} />
             </div>
           ) : (
-            <div className="flex-1 p-4 overflow-y-auto space-y-2.5 bg-[#faf8f5]/65 dark:bg-[#070b09]/80 no-scrollbar">
+            <div className="flex-1 p-4 overflow-y-auto space-y-2.5 bg-[#FAF7EF]/65 dark:bg-[#202A33]/80 no-scrollbar">
               {faqs.map((item, idx) => {
                 const isOpenItem = openFaqIdx === idx;
                 return (
                   <div
                     key={idx}
-                    className="bg-white dark:bg-[#121c19] border border-border-custom rounded-xl overflow-hidden"
+                    className="bg-white dark:bg-[#2A3642] border border-border-custom rounded-xl overflow-hidden"
                   >
                     <button
                       onClick={() => setOpenFaqIdx(isOpenItem ? null : idx)}
                       className="w-full flex items-center justify-between gap-2 p-3 text-left text-xs font-semibold text-foreground cursor-pointer"
                     >
                       <span>{item.q}</span>
-                      <ChevronDown className={`w-3.5 h-3.5 flex-shrink-0 text-[#dfb15b] transition-transform duration-300 ${isOpenItem ? "rotate-180" : ""}`} />
+                      <ChevronDown className={`w-3.5 h-3.5 flex-shrink-0 text-[#D6A63C] transition-transform duration-300 ${isOpenItem ? "rotate-180" : ""}`} />
                     </button>
                     {isOpenItem && (
                       <div className="px-3 pb-3 space-y-2.5">
@@ -330,7 +330,7 @@ export default function AIChatbot() {
                         </p>
                         <a
                           href={`mailto:${contactEmail}`}
-                          className="inline-flex items-center gap-1.5 text-[10px] font-semibold text-[#dfb15b] hover:underline"
+                          className="inline-flex items-center gap-1.5 text-[10px] font-semibold text-[#D6A63C] hover:underline"
                         >
                           <Mail className="w-3 h-3" />
                           <span>Still have questions? Email {contactEmail}</span>
@@ -345,12 +345,12 @@ export default function AIChatbot() {
 
           {/* Quick Suggestions (rendered when input is empty, chat mode only) */}
           {viewMode === "chat" && inputValue.length === 0 && (
-            <div className="px-4 py-2 bg-stone-50 dark:bg-[#080d0b] border-t border-border-custom overflow-x-auto whitespace-nowrap flex space-x-2 no-scrollbar">
+            <div className="px-4 py-2 bg-stone-50 dark:bg-[#2A3642] border-t border-border-custom overflow-x-auto whitespace-nowrap flex space-x-2 no-scrollbar">
               {suggestions.map((s, idx) => (
                 <button
                   key={idx}
                   onClick={() => handleSend(s)}
-                  className="px-2.5 py-1 rounded-full bg-white dark:bg-[#121c19] text-foreground hover:bg-[#1e3f20]/5 dark:hover:bg-[#dfb15b]/5 border border-border-custom text-[10px] cursor-pointer transition-colors"
+                  className="px-2.5 py-1 rounded-full bg-white dark:bg-[#2A3642] text-foreground hover:bg-[#0B2942]/5 dark:hover:bg-[#D6A63C]/5 border border-border-custom text-[10px] cursor-pointer transition-colors"
                 >
                   {s}
                 </button>
@@ -364,19 +364,19 @@ export default function AIChatbot() {
               e.preventDefault();
               handleSend(inputValue);
             }}
-            className="p-3 bg-white dark:bg-[#101614] border-t border-border-custom flex items-center space-x-2"
+            className="p-3 bg-white dark:bg-[#2A3642] border-t border-border-custom flex items-center space-x-2"
           >
             <input
               type="text"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               placeholder="Ask about stress, chapters, or pre-orders..."
-              className="flex-1 bg-stone-50 dark:bg-[#080d0b] text-foreground border border-border-custom rounded-full px-4 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-[#dfb15b]/40"
+              className="flex-1 bg-stone-50 dark:bg-[#2A3642] text-foreground border border-border-custom rounded-full px-4 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-[#D6A63C]/40"
             />
             <button
               type="submit"
               disabled={!inputValue.trim()}
-              className="w-8 h-8 rounded-full bg-[#1e3f20] hover:bg-[#142a15] dark:bg-[#dfb15b] dark:hover:bg-[#c49945] text-white dark:text-black flex items-center justify-center transition-colors disabled:opacity-40 cursor-pointer"
+              className="w-8 h-8 rounded-full bg-[#0B2942] hover:bg-[#071D30] dark:bg-[#D6A63C] dark:hover:bg-[#BC9235] text-white dark:text-black flex items-center justify-center transition-colors disabled:opacity-40 cursor-pointer"
             >
               <Send className="w-3.5 h-3.5" />
             </button>

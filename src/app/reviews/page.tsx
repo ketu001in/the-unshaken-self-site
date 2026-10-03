@@ -169,14 +169,14 @@ export default function ReviewsPage() {
     });
 
   return (
-    <div className="flex-1 flex flex-col pt-16 bg-[#faf8f5] dark:bg-[#070b09]">
+    <div className="flex-1 flex flex-col pt-16 bg-[#FAF7EF] dark:bg-[#202A33]">
       <Navbar />
 
       {/* Page Header */}
-      <header className="py-20 px-4 text-center border-b border-border-custom bg-white dark:bg-[#050806] relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(223,177,91,0.03)_0%,transparent_70%)] pointer-events-none" />
+      <header className="py-20 px-4 text-center border-b border-border-custom bg-white dark:bg-[#161D24] relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(214,166,60,0.03)_0%,transparent_70%)] pointer-events-none" />
         <div className="max-w-4xl mx-auto space-y-4 relative z-10">
-          <span className="text-[10px] tracking-[0.3em] text-[#b5924b] dark:text-[#dfb15b] uppercase font-bold">
+          <span className="text-[10px] tracking-[0.3em] text-[#AD8631] dark:text-[#D6A63C] uppercase font-bold">
             {content.header_badge}
           </span>
           <h1 className="text-4xl sm:text-5xl font-serif text-foreground leading-tight">
@@ -195,7 +195,7 @@ export default function ReviewsPage() {
         <div className="lg:col-span-8 space-y-8">
           
           {/* Controls Panel */}
-          <div className="flex flex-col sm:flex-row justify-between items-center bg-white dark:bg-[#101614] border border-border-custom p-4 rounded-2xl gap-4">
+          <div className="flex flex-col sm:flex-row justify-between items-center bg-white dark:bg-[#2A3642] border border-border-custom p-4 rounded-2xl gap-4">
             
             {/* Filter Buttons */}
             <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
@@ -210,7 +210,7 @@ export default function ReviewsPage() {
                   onClick={() => setFilter(btn.val as any)}
                   className={`px-3 py-1.5 rounded-full text-[10px] uppercase tracking-wider font-semibold cursor-pointer transition-colors ${
                     filter === btn.val
-                      ? "bg-[#1e3f20] dark:bg-[#dfb15b] text-white dark:text-black"
+                      ? "bg-[#0B2942] dark:bg-[#D6A63C] text-white dark:text-black"
                       : "border border-border-custom text-muted-text hover:bg-black/5 dark:hover:bg-white/5"
                   }`}
                 >
@@ -245,7 +245,7 @@ export default function ReviewsPage() {
               filteredReviews.map((rev) => (
                 <div
                   key={rev.id}
-                  className="bg-white dark:bg-[#101614] border border-border-custom rounded-2xl p-6 space-y-4 hover:shadow-sm transition-shadow animate-[fadeIn_0.3s_ease-out]"
+                  className="bg-white dark:bg-[#2A3642] border border-border-custom rounded-2xl p-6 space-y-4 hover:shadow-sm transition-shadow animate-[fadeIn_0.3s_ease-out]"
                 >
                   {/* Rating Stars & Type Badge */}
                   <div className="flex justify-between items-center">
@@ -255,13 +255,13 @@ export default function ReviewsPage() {
                           key={i}
                           className={`w-3.5 h-3.5 ${
                             i < rev.rating 
-                              ? "fill-[#dfb15b] text-[#dfb15b]" 
+                              ? "fill-[#D6A63C] text-[#D6A63C]" 
                               : "text-stone-300 dark:text-stone-700"
                           }`}
                         />
                       ))}
                     </div>
-                    <span className="text-[9px] uppercase tracking-widest font-mono text-[#dfb15b] border border-[#dfb15b]/20 px-2 py-0.5 rounded-full bg-[#dfb15b]/5">
+                    <span className="text-[9px] uppercase tracking-widest font-mono text-[#D6A63C] border border-[#D6A63C]/20 px-2 py-0.5 rounded-full bg-[#D6A63C]/5">
                       {rev.type}
                     </span>
                   </div>
@@ -288,11 +288,11 @@ export default function ReviewsPage() {
 
         {/* Right Column: Write a Review Form Panel */}
         <div className="lg:col-span-4">
-          <div className="bg-white dark:bg-[#101614] border border-border-custom rounded-3xl p-6 space-y-6 shadow-sm sticky top-24">
+          <div className="bg-white dark:bg-[#2A3642] border border-border-custom rounded-3xl p-6 space-y-6 shadow-sm sticky top-24">
             
             <div className="space-y-2">
               <h3 className="font-serif text-base text-foreground font-semibold flex items-center gap-2">
-                <PlusCircle className="w-5 h-5 text-[#dfb15b]" />
+                <PlusCircle className="w-5 h-5 text-[#D6A63C]" />
                 <span>{content.sidebar_heading}</span>
               </h3>
               <p className="text-[11px] font-light text-stone-500 leading-relaxed">
@@ -310,7 +310,7 @@ export default function ReviewsPage() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="e.g., Rohan Gupta"
-                  className="w-full text-xs bg-stone-50 dark:bg-[#070b09] border border-border-custom rounded-lg p-2.5 focus:outline-none focus:ring-1 focus:ring-[#dfb15b]/40 text-foreground"
+                  className="w-full text-xs bg-stone-50 dark:bg-[#202A33] border border-border-custom rounded-lg p-2.5 focus:outline-none focus:ring-1 focus:ring-[#D6A63C]/40 text-foreground"
                   required
                 />
               </div>
@@ -323,7 +323,7 @@ export default function ReviewsPage() {
                   value={role}
                   onChange={(e) => setRole(e.target.value)}
                   placeholder="e.g., Software Architect"
-                  className="w-full text-xs bg-stone-50 dark:bg-[#070b09] border border-border-custom rounded-lg p-2.5 focus:outline-none focus:ring-1 focus:ring-[#dfb15b]/40 text-foreground"
+                  className="w-full text-xs bg-stone-50 dark:bg-[#202A33] border border-border-custom rounded-lg p-2.5 focus:outline-none focus:ring-1 focus:ring-[#D6A63C]/40 text-foreground"
                 />
               </div>
 
@@ -341,7 +341,7 @@ export default function ReviewsPage() {
                       <Star
                         className={`w-5 h-5 ${
                           star <= rating 
-                            ? "fill-[#dfb15b] text-[#dfb15b]" 
+                            ? "fill-[#D6A63C] text-[#D6A63C]" 
                             : "text-stone-300 dark:text-stone-700"
                         }`}
                       />
@@ -360,7 +360,7 @@ export default function ReviewsPage() {
                       name="reviewer-type"
                       checked={reviewType === "reader"}
                       onChange={() => setReviewType("reader")}
-                      className="accent-[#dfb15b]"
+                      className="accent-[#D6A63C]"
                     />
                     <span>Reader</span>
                   </label>
@@ -370,7 +370,7 @@ export default function ReviewsPage() {
                       name="reviewer-type"
                       checked={reviewType === "professional"}
                       onChange={() => setReviewType("professional")}
-                      className="accent-[#dfb15b]"
+                      className="accent-[#D6A63C]"
                     />
                     <span>Professional</span>
                   </label>
@@ -385,14 +385,14 @@ export default function ReviewsPage() {
                   onChange={(e) => setQuote(e.target.value)}
                   placeholder="Share what resonated with you..."
                   rows={4}
-                  className="w-full text-xs bg-stone-50 dark:bg-[#070b09] border border-border-custom rounded-lg p-2.5 focus:outline-none focus:ring-1 focus:ring-[#dfb15b]/40 text-foreground resize-none"
+                  className="w-full text-xs bg-stone-50 dark:bg-[#202A33] border border-border-custom rounded-lg p-2.5 focus:outline-none focus:ring-1 focus:ring-[#D6A63C]/40 text-foreground resize-none"
                   required
                 ></textarea>
               </div>
 
               <button
                 type="submit"
-                className="w-full py-3 rounded-full bg-[#1e3f20] hover:bg-[#142a15] dark:bg-[#dfb15b] dark:hover:bg-[#c49945] text-white dark:text-black text-xs uppercase tracking-widest font-bold shadow-md transition-all cursor-pointer"
+                className="w-full py-3 rounded-full bg-[#0B2942] hover:bg-[#071D30] dark:bg-[#D6A63C] dark:hover:bg-[#BC9235] text-white dark:text-black text-xs uppercase tracking-widest font-bold shadow-md transition-all cursor-pointer"
               >
                 Submit Review
               </button>

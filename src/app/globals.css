@@ -13,15 +13,15 @@ html {
      without this, a <select>'s dropdown list can render near-invisible
      text (e.g. light text on a light native background) in dark mode. */
   color-scheme: light;
-  --background: #faf8f5; /* Warm Sand light background */
-  --foreground: #0b1a2e; /* Deep twilight blue-black text */
+  --background: #FAF7EF; /* Warm Sand light background */
+  --foreground: #161D24; /* Deep twilight blue-black text */
   --card-bg: #ffffff;
   --border-color: rgba(11, 26, 46, 0.08);
   
-  --primary: #0f2b48; /* Deep twilight blue from cover */
-  --primary-hover: #0a1f35;
-  --accent: #e5b453; /* Vibrant golden sunset from cover */
-  --accent-hover: #c9993b;
+  --primary: #0B2942; /* Deep twilight blue from cover */
+  --primary-hover: #071D30;
+  --accent: #D6A63C; /* Vibrant golden sunset from cover */
+  --accent-hover: #BC9235;
   --muted-text: #5a6e85;
   
   --font-sans: var(--font-inter);
@@ -30,15 +30,15 @@ html {
 
 .dark {
   color-scheme: dark;
-  --background: #060c14; /* Luxurious obsidian twilight-blue dark background */
-  --foreground: #f4f6fa; /* Soft cloud-white text */
-  --card-bg: #0c1524; /* Deep blue-charcoal container background */
+  --background: #202A33; /* Luxurious obsidian twilight-blue dark background */
+  --foreground: #FAF7EF; /* Soft cloud-white text */
+  --card-bg: #2A3642; /* Deep blue-charcoal container background */
   --border-color: rgba(244, 246, 250, 0.08);
   
-  --primary: #e5b453; /* Gold accent becomes primary in dark mode */
-  --primary-hover: #c9993b;
-  --accent: #3182ce; /* Vibrant sky/twilight blue accent */
-  --accent-hover: #2b6cb0;
+  --primary: #D6A63C; /* Gold accent becomes primary in dark mode */
+  --primary-hover: #BC9235;
+  --accent: #145A7A; /* Vibrant sky/twilight blue accent */
+  --accent-hover: #0F4560;
   --muted-text: #8fa3b8;
 }
 
@@ -199,29 +199,29 @@ h1, h2, h3, h4, h5, h6, .font-serif {
    subtle enough to not compete with the date-flash badge on the closed
    Buy Now button, just enough motion to invite a click. */
 @keyframes visitorPulseRing {
-  0% { box-shadow: 0 0 0 0 rgba(223, 177, 91, 0.45); }
-  70% { box-shadow: 0 0 0 10px rgba(223, 177, 91, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(223, 177, 91, 0); }
+  0% { box-shadow: 0 0 0 0 rgba(214, 166, 60, 0.45); }
+  70% { box-shadow: 0 0 0 10px rgba(214, 166, 60, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(214, 166, 60, 0); }
 }
 .visitor-badge-pulse {
   animation: visitorPulseRing 2.6s ease-out infinite;
 }
 
 /* Attention-grabbing flash for the "Now Live" badge — cycles between
-   the two brand accent treatments (deep green <-> gold) with a
+   the two brand accent treatments (deep navy <-> gold) with a
    matching glow, mirroring the .date-flash pattern used elsewhere.
    Text/icon color flips with the background each half-cycle so
    contrast stays readable throughout — nothing ever dims. */
 @keyframes nowLiveFlash {
   0%, 100% {
-    background-color: #1e3f20;
+    background-color: #0B2942;
     color: #ffffff;
-    box-shadow: 0 0 0 0 rgba(30, 63, 32, 0.5);
+    box-shadow: 0 0 0 0 rgba(11, 41, 66, 0.5);
   }
   50% {
-    background-color: #dfb15b;
+    background-color: #D6A63C;
     color: #1a1200;
-    box-shadow: 0 0 16px 4px rgba(223, 177, 91, 0.55);
+    box-shadow: 0 0 16px 4px rgba(214, 166, 60, 0.55);
   }
 }
 .now-live-flash {
@@ -230,7 +230,7 @@ h1, h2, h3, h4, h5, h6, .font-serif {
 @media (prefers-reduced-motion: reduce) {
   .now-live-flash {
     animation: none;
-    background-color: #1e3f20;
+    background-color: #0B2942;
     color: #ffffff;
   }
 }

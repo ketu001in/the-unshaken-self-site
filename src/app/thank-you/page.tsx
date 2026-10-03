@@ -9,12 +9,12 @@ import { CheckCircle2, ArrowRight, Quote } from "lucide-react";
 
 export default function ThankYouPage() {
   return (
-    <div className="flex-1 flex flex-col pt-16 bg-[#faf8f5] dark:bg-[#070b09]">
+    <div className="flex-1 flex flex-col pt-16 bg-[#FAF7EF] dark:bg-[#202A33]">
       <Navbar />
 
       <main className="flex-1 flex items-center justify-center py-20 px-4">
         <div className="max-w-xl w-full text-center space-y-8 glassmorphism border border-border-custom p-8 md:p-12 rounded-3xl shadow-xl relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-24 h-24 bg-[#dfb15b]/5 rounded-full blur-2xl pointer-events-none" />
+          <div className="absolute top-0 right-0 w-24 h-24 bg-[#D6A63C]/5 rounded-full blur-2xl pointer-events-none" />
 
           {/* Success Check Icon */}
           <div className="w-16 h-16 rounded-full bg-green-500/10 text-green-500 flex items-center justify-center mx-auto border border-green-500/20">
@@ -22,7 +22,7 @@ export default function ThankYouPage() {
           </div>
 
           <div className="space-y-3">
-            <span className="text-[10px] tracking-[0.3em] font-mono text-[#dfb15b] uppercase font-bold">Action Completed</span>
+            <span className="text-[10px] tracking-[0.3em] font-mono text-[#D6A63C] uppercase font-bold">Action Completed</span>
             <h1 className="text-3xl font-serif text-foreground leading-tight">Pranam, Thank You!</h1>
             <p className="text-xs sm:text-sm font-light text-stone-500 dark:text-stone-400 leading-relaxed max-w-sm mx-auto">
               Your details have been successfully recorded in our database. We have sent a confirmation packet directly to your inbox.
@@ -30,8 +30,8 @@ export default function ThankYouPage() {
           </div>
 
           {/* Golden Quote Block */}
-          <div className="p-6 border border-[#dfb15b]/20 bg-[#dfb15b]/5 rounded-2xl space-y-3 max-w-sm mx-auto text-left relative">
-            <Quote className="absolute top-3 right-3 w-4 h-4 text-[#dfb15b]/45" />
+          <div className="p-6 border border-[#D6A63C]/20 bg-[#D6A63C]/5 rounded-2xl space-y-3 max-w-sm mx-auto text-left relative">
+            <Quote className="absolute top-3 right-3 w-4 h-4 text-[#D6A63C]/45" />
             <p className="text-xs font-serif italic text-foreground tracking-wide">
               "Establish yourself in yoga, perform your duties, and discard all attachment to success or failure."
             </p>
@@ -42,7 +42,7 @@ export default function ThankYouPage() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
             <Link
               href="/"
-              className="w-full sm:w-auto px-6 py-2.5 rounded-full bg-[#1e3f20] dark:bg-[#dfb15b] hover:opacity-90 text-white dark:text-black text-xs uppercase tracking-widest font-bold shadow-md transition-all cursor-pointer"
+              className="w-full sm:w-auto px-6 py-2.5 rounded-full bg-[#0B2942] dark:bg-[#D6A63C] hover:opacity-90 text-white dark:text-black text-xs uppercase tracking-widest font-bold shadow-md transition-all cursor-pointer"
             >
               Return Home
             </Link>

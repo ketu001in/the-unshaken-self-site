@@ -37,10 +37,10 @@ const STEPS: TimelineStep[] = [
 
 export default function LaunchTimeline() {
   return (
-    <section className="py-20 px-4 bg-white dark:bg-[#070b09] border-t border-border-custom">
+    <section className="py-20 px-4 bg-white dark:bg-[#202A33] border-t border-border-custom">
       <div className="max-w-6xl mx-auto space-y-12">
         <div className="text-center space-y-3">
-          <h2 className="text-xs uppercase tracking-[0.25em] text-[#b5924b] dark:text-[#dfb15b] font-semibold">
+          <h2 className="text-xs uppercase tracking-[0.25em] text-[#AD8631] dark:text-[#D6A63C] font-semibold">
             The Wait Is Over
           </h2>
           <h3 className="text-2xl sm:text-3xl font-serif text-foreground">
@@ -58,8 +58,8 @@ export default function LaunchTimeline() {
                   <div
                     className={`w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 ${
                       isLast
-                        ? "bg-[#1e3f20] dark:bg-[#dfb15b] text-white dark:text-black"
-                        : "bg-[#1e3f20]/5 dark:bg-[#dfb15b]/10 text-primary dark:text-[#dfb15b]"
+                        ? "bg-[#0B2942] dark:bg-[#D6A63C] text-white dark:text-black"
+                        : "bg-[#0B2942]/5 dark:bg-[#D6A63C]/10 text-primary dark:text-[#D6A63C]"
                     }`}
                   >
                     <Icon className="w-6 h-6" />
@@ -74,7 +74,7 @@ export default function LaunchTimeline() {
 
                 {!isLast && (
                   <div className="hidden lg:flex items-center justify-center pt-5">
-                    <ChevronRight className="w-5 h-5 text-[#dfb15b]/50" />
+                    <ChevronRight className="w-5 h-5 text-[#D6A63C]/50" />
                   </div>
                 )}
               </React.Fragment>

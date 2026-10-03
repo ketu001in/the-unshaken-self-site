@@ -23,7 +23,7 @@ type ConfettiPiece = {
   color: string;
 };
 
-const CONFETTI_COLORS = ["#dfb15b", "#1e3f20", "#f5f1e8", "#b5924b"];
+const CONFETTI_COLORS = ["#D6A63C", "#0B2942", "#FAF7EF", "#AD8631"];
 
 function buildConfetti(): ConfettiPiece[] {
   return Array.from({ length: 14 }, (_, i) => ({
@@ -109,13 +109,13 @@ export default function LaunchBanner() {
 
       <div className="flex flex-wrap items-center justify-center lg:justify-start gap-x-4 gap-y-2 text-[11px] text-muted-text">
         <span className="inline-flex items-center gap-1.5">
-          <CalendarCheck className="w-3.5 h-3.5 text-[#dfb15b]" />
+          <CalendarCheck className="w-3.5 h-3.5 text-[#D6A63C]" />
           Live since {LIVE_SINCE}
         </span>
         <button
           onClick={handleShare}
           disabled={sharing}
-          className="inline-flex items-center gap-1.5 font-semibold uppercase tracking-widest text-[#1e3f20] dark:text-[#dfb15b] hover:underline cursor-pointer disabled:opacity-50 disabled:cursor-wait"
+          className="inline-flex items-center gap-1.5 font-semibold uppercase tracking-widest text-[#0B2942] dark:text-[#D6A63C] hover:underline cursor-pointer disabled:opacity-50 disabled:cursor-wait"
         >
           <Share2 className="w-3.5 h-3.5" />
           <span>{sharing ? "Preparing…" : "Share the News"}</span>
