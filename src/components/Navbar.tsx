@@ -51,26 +51,27 @@ export default function Navbar() {
     <nav
       className={`fixed top-0 inset-x-0 z-40 transition-all duration-300 ${
         scrolled
-          ? "bg-white/80 dark:bg-[#202A33]/80 backdrop-blur-md border-b border-border-custom py-3"
-          : "bg-transparent py-5"
+          ? "bg-white/80 dark:bg-[#202A33]/80 backdrop-blur-md border-b border-border-custom h-16"
+          : "bg-transparent h-20"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between min-h-12">
-          
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
+        <div className="flex items-center justify-between h-full">
+
           {/* Logo Section — theme-aware: in light mode, the transparent
               horizontal lockup (navy+gold ink) reads cleanly on the
               navbar's white/ivory background; in dark mode, the
               self-contained navy "badge" (its own card background, white
               ink) is used instead, since the raster brand sheet only
               ships a dark-ready variant of the square lockup, not the
-              horizontal one. Sized up (h-14) so the artwork and wordmark
-              stay legible, not just decorative. */}
-          <div className="flex-shrink-0">
+              horizontal one. Sized to h-full (with a touch of vertical
+              padding) so it matches the height of the navbar banner
+              itself, not an arbitrary fixed size. */}
+          <div className="flex-shrink-0 h-full py-1.5">
             <Link
               href="/"
               onClick={handleLogoClick}
-              className="flex items-center hover:opacity-80 transition-opacity"
+              className="flex items-center h-full hover:opacity-80 transition-opacity"
             >
               {/* Plain <img>, not next/image — Next's image optimizer
                   adds overhead we don't need for a small, trusted local
@@ -78,7 +79,7 @@ export default function Navbar() {
               <img
                 src={theme === "dark" ? "/brand/logo_v2_dark_badge.png" : "/brand/logo_v2_horizontal.png"}
                 alt="The Unshaken Self"
-                className={theme === "dark" ? "h-14 w-auto rounded-xl" : "h-14 w-auto"}
+                className={theme === "dark" ? "h-full w-auto rounded-xl" : "h-full w-auto"}
               />
             </Link>
           </div>
