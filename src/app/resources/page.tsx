@@ -229,7 +229,7 @@ export default function ResourcesPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {WISDOM_LINES.map((wl) => (
               <AffirmationCardButton key={wl.num} data={wl} />
             ))}
@@ -451,13 +451,20 @@ function AffirmationCardButton({ data }: { data: { num: number; theme: string; l
       type="button"
       onClick={handleDownload}
       disabled={downloading}
-      className="group flex flex-col items-center justify-center gap-2 p-4 rounded-2xl border border-border-custom bg-white dark:bg-[#2A3642] hover:border-[#D6A63C]/60 hover:shadow-md transition-all cursor-pointer disabled:opacity-60 disabled:cursor-wait text-center"
+      className="group flex flex-col items-center justify-center gap-2 p-5 rounded-2xl border border-border-custom bg-white dark:bg-[#2A3642] hover:border-[#D6A63C]/60 hover:shadow-md transition-all cursor-pointer disabled:opacity-60 disabled:cursor-wait text-center"
     >
       <span className="text-lg font-serif text-[#D6A63C] font-bold">{data.num}</span>
       <span className="text-[9px] uppercase tracking-widest text-muted-text font-mono leading-tight">
         {data.theme}
       </span>
-      <span className="flex items-center gap-1 text-[9px] uppercase tracking-widest font-bold text-foreground group-hover:text-[#D6A63C] transition-colors">
+      {/* One-liner teaching for this chapter — reuses the same WISDOM_LINES
+          copy already baked into the downloaded card image (shared with
+          the homepage Wisdom Draw), so the thumbnail now previews the
+          actual affirmation instead of just the chapter name. */}
+      <span className="text-xs text-foreground/80 font-light italic leading-snug px-1">
+        &ldquo;{data.line}&rdquo;
+      </span>
+      <span className="flex items-center gap-1 text-[9px] uppercase tracking-widest font-bold text-foreground group-hover:text-[#D6A63C] transition-colors mt-1">
         <ImageDown className="w-3 h-3" />
         {downloading ? "Preparing…" : "Download"}
       </span>
