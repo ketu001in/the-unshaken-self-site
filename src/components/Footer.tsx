@@ -62,13 +62,16 @@ export default function Footer() {
           {/* Logo & Description */}
           <div className="lg:col-span-2 space-y-6">
             <Link href="/" className="flex items-center">
-              {/* Plain <img>, not next/image — Next's image optimizer
-                  blocks SVGs by default, and a trusted local brand asset
-                  like this needs no optimization anyway. */}
+              {/* Plain <img>, not next/image — a trusted local brand
+                  asset needs no optimization. Same theme-aware pairing as
+                  the Navbar (transparent horizontal lockup in light mode,
+                  self-contained navy badge in dark mode), sized up from
+                  the old h-9 so the tree artwork and wordmark are
+                  actually legible here, not just a decorative mark. */}
               <img
-                src={theme === "dark" ? "/brand/logo_horizontal_dark.svg" : "/brand/logo_horizontal_light.svg"}
+                src={theme === "dark" ? "/brand/logo_v2_dark_badge.png" : "/brand/logo_v2_horizontal.png"}
                 alt="The Unshaken Self"
-                className="h-9 w-auto rounded-md"
+                className={theme === "dark" ? "h-16 w-auto rounded-xl" : "h-14 w-auto"}
               />
             </Link>
             <p className="text-stone-500 dark:text-stone-400 text-xs md:text-sm font-light leading-relaxed max-w-sm">

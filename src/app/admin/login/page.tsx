@@ -46,8 +46,17 @@ export default function AdminLoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-[#FAF7EF] dark:bg-[#202A33] px-4">
       <div className="w-full max-w-sm bg-white dark:bg-[#2A3642] border border-border-custom rounded-3xl p-8 space-y-6 shadow-sm">
         <div className="flex flex-col items-center space-y-2 text-center">
-          <div className="w-12 h-12 rounded-xl bg-[#0B2942]/5 dark:bg-[#D6A63C]/10 flex items-center justify-center text-[#D6A63C]">
-            <Lock className="w-5 h-5" />
+          {/* Real brand mark instead of a generic lock icon — makes this
+              screen instantly recognizable as the site's own admin
+              gate, with the Lock icon kept as a small supporting accent. */}
+          <img
+            src="/brand/logo_v2_icon.png"
+            alt="The Unshaken Self"
+            className="w-16 h-16 mb-1"
+          />
+          <div className="flex items-center gap-1.5 text-[#D6A63C]">
+            <Lock className="w-3.5 h-3.5" />
+            <span className="text-[10px] uppercase tracking-widest font-mono">Admin Only</span>
           </div>
           <h1 className="font-serif text-xl text-foreground font-semibold">Admin Sign In</h1>
           <p className="text-xs text-muted-text font-light">

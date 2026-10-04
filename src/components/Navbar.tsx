@@ -58,10 +58,14 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between min-h-12">
           
-          {/* Logo Section — theme-aware: the "light" lockup (transparent,
-              navy+gold ink) reads cleanly on the navbar's white/ivory
-              background; the "dark" lockup (its own navy card) is the
-              brand package's intended variant for dark surfaces. */}
+          {/* Logo Section — theme-aware: in light mode, the transparent
+              horizontal lockup (navy+gold ink) reads cleanly on the
+              navbar's white/ivory background; in dark mode, the
+              self-contained navy "badge" (its own card background, white
+              ink) is used instead, since the raster brand sheet only
+              ships a dark-ready variant of the square lockup, not the
+              horizontal one. Sized up (h-14) so the artwork and wordmark
+              stay legible, not just decorative. */}
           <div className="flex-shrink-0">
             <Link
               href="/"
@@ -69,13 +73,12 @@ export default function Navbar() {
               className="flex items-center hover:opacity-80 transition-opacity"
             >
               {/* Plain <img>, not next/image — Next's image optimizer
-                  blocks SVGs by default (dangerouslyAllowSVG), and a
-                  trusted local brand asset like this needs no
-                  optimization anyway. */}
+                  adds overhead we don't need for a small, trusted local
+                  brand asset. */}
               <img
-                src={theme === "dark" ? "/brand/logo_horizontal_dark.svg" : "/brand/logo_horizontal_light.svg"}
+                src={theme === "dark" ? "/brand/logo_v2_dark_badge.png" : "/brand/logo_v2_horizontal.png"}
                 alt="The Unshaken Self"
-                className="h-12 w-auto rounded-md"
+                className={theme === "dark" ? "h-14 w-auto rounded-xl" : "h-14 w-auto"}
               />
             </Link>
           </div>
