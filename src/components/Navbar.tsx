@@ -64,14 +64,18 @@ export default function Navbar() {
               self-contained navy "badge" (its own card background, white
               ink) is used instead, since the raster brand sheet only
               ships a dark-ready variant of the square lockup, not the
-              horizontal one. Sized to h-full (with a touch of vertical
-              padding) so it matches the height of the navbar banner
-              itself, not an arbitrary fixed size. */}
-          <div className="flex-shrink-0 h-full py-1.5">
+              horizontal one. Height is a fixed value (not h-full) that
+              tracks the nav's own h-20/h-16 scroll states with a small
+              even margin — percentage heights threaded through nested
+              flex items here resolved unreliably and let the image
+              render at its full intrinsic size, overflowing the bar
+              (roots spilling below it). A fixed px value keyed to the
+              same scroll state is guaranteed to stay inside the bar. */}
+          <div className="flex-shrink-0">
             <Link
               href="/"
               onClick={handleLogoClick}
-              className="flex items-center h-full hover:opacity-80 transition-opacity"
+              className="flex items-center hover:opacity-80 transition-opacity"
             >
               {/* Plain <img>, not next/image — Next's image optimizer
                   adds overhead we don't need for a small, trusted local
@@ -79,7 +83,7 @@ export default function Navbar() {
               <img
                 src={theme === "dark" ? "/brand/logo_v2_dark_badge.png" : "/brand/logo_v2_horizontal.png"}
                 alt="The Unshaken Self"
-                className={theme === "dark" ? "h-full w-auto rounded-xl" : "h-full w-auto"}
+                className={`w-auto ${scrolled ? "h-12" : "h-16"} ${theme === "dark" ? "rounded-xl" : ""}`}
               />
             </Link>
           </div>
