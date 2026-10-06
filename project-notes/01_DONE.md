@@ -134,3 +134,12 @@ files in `public/media-kit/` (same filenames; no DB change needed for this featu
 
 Also updated the hardcoded file-size labels in `about-author/page.tsx`'s `mediaKitAssets` array to match
 the new (larger) file sizes (commit `80a45fb`).
+
+## Contact email — switched to info@theunshakenself.com
+User created a dedicated contact address; replaced the personal `ketu001in@gmail.com` with
+`info@theunshakenself.com` everywhere it's used for Contact Us / press contact. Updated the code default
+in `SiteSettingsContext.tsx` and the live Supabase `site_settings.contact_email` row — this single setting
+feeds the About Author page's mailto links, the chatbot's contact fallback, the reader thank-you card, and
+the admin SiteEditor field, so no other code changes were needed. Also regenerated the Official Launch
+Press Release and Author Biographies PDFs (Media Contact / contact footer sections) with the new email
+(commit `8ed9284`).
