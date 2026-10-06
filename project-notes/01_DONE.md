@@ -115,17 +115,6 @@ and a living, modular state tracker (done / in-progress / planned / migration, p
 in `00_START_HERE.md`) so the project can be picked up confidently on any machine, including by a Claude
 session with no memory of prior conversations.
 
-## About Book specs — ISBNs + Publisher (real values)
-Added the real ISBNs and publisher the user supplied: split the single "ISBN-13" spec row into "ISBN-13
-(Hardcover)" (979-8906961303) and "ISBN-13 (Paperback)" (979-8906961297); set Publisher to "Notion Press
-Publication, India" (was a placeholder). Updated `about-book/page.tsx`, `SiteEditor.tsx`, and the live
-Supabase `about-book` row (commit `512b3f2`).
-
-## About Book specs — Release Date correction
-User corrected the release date: fixed from "Tentatively on September 4, 2026" to the real "September 3,
-2026 (Krishna Janmashtami)", matching `LaunchBanner.tsx`'s `LIVE_SINCE` constant (sourced from the live
-Amazon.in listing). Updated code defaults and the live Supabase row (commit `7d10f91`).
-
 ## Media Kit refresh — all 4 downloads rebuilt from current assets
 The 4 files behind the About Author "Official Media Kit" download cards were all dated Jul 16 2026 —
 stale, predating the Sep 5 final book-cover upload and the author-identity bio correction. Confirmed via
