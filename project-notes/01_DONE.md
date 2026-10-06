@@ -104,6 +104,11 @@ the site): Publisher -> "Notion Press Publication, India"; split the single "ISB
 different real ISBNs. Updated both code defaults (about-book/page.tsx, SiteEditor.tsx) and the live Supabase
 `page_content` row for slug `about-book` (commit `512b3f2`).
 
+## About Book specs — Release Date correction
+Fixed the Release Date spec from "Tentatively on September 4, 2026" to the actual "September 3, 2026
+(Krishna Janmashtami)" — wrong date and stale "tentative" framing (book's already launched). Matches
+LaunchBanner's LIVE_SINCE constant. Updated code defaults and the live Supabase row (commit `7d10f91`).
+
 ## Project handoff docs
 Added `PROJECT_HANDOFF.md` (commit `b8d2a50`) and this `project-notes/` folder — a machine-migration guide
 and a living, modular state tracker (done / in-progress / planned / migration, plus the checkpoint protocol
