@@ -46,7 +46,7 @@ const DEFAULT_ABOUT_BOOK_CONTENT: AboutBookContent = {
     { label: "ISBN-13 (Hardcover)", value: "979-8906961303" },
     { label: "ISBN-13 (Paperback)", value: "979-8906961297" },
     { label: "Dimensions", value: "6.0 x 9.0 inches" },
-    { label: "Release Date", value: "September 4, 2026 (Krishna Janmashtami)" }
+    { label: "Release Date", value: "September 3, 2026 (Krishna Janmashtami)" }
   ]
 };
 
