@@ -114,3 +114,34 @@ Added `PROJECT_HANDOFF.md` (commit `b8d2a50`) and this `project-notes/` folder �
 and a living, modular state tracker (done / in-progress / planned / migration, plus the checkpoint protocol
 in `00_START_HERE.md`) so the project can be picked up confidently on any machine, including by a Claude
 session with no memory of prior conversations.
+
+## About Book specs — ISBNs + Publisher (real values)
+Added the real ISBNs and publisher the user supplied: split the single "ISBN-13" spec row into "ISBN-13
+(Hardcover)" (979-8906961303) and "ISBN-13 (Paperback)" (979-8906961297); set Publisher to "Notion Press
+Publication, India" (was a placeholder). Updated `about-book/page.tsx`, `SiteEditor.tsx`, and the live
+Supabase `about-book` row (commit `512b3f2`).
+
+## About Book specs — Release Date correction
+User corrected the release date: fixed from "Tentatively on September 4, 2026" to the real "September 3,
+2026 (Krishna Janmashtami)", matching `LaunchBanner.tsx`'s `LIVE_SINCE` constant (sourced from the live
+Amazon.in listing). Updated code defaults and the live Supabase row (commit `7d10f91`).
+
+## Media Kit refresh — all 4 downloads rebuilt from current assets
+The 4 files behind the About Author "Official Media Kit" download cards were all dated Jul 16 2026 —
+stale, predating the Sep 5 final book-cover upload and the author-identity bio correction. Confirmed via
+Supabase that all four `media_kit_*_url` settings are unset, so the fix only needed to replace the static
+files in `public/media-kit/` (same filenames; no DB change needed for this feature).
+- **High-Res Author Portrait** (ZIP): rebuilt from the real, current author photo (the same file backing
+  the live `author_photo_url` setting), resized to 2400px max dimension.
+- **Book Cover Graphic Kit** (ZIP, 4 files): rebuilt Full Wrap / Front / Back / Spine crops from the
+  current (Sep 5) book-cover wrap image, using the exact production crop math from `coverSlices.ts`
+  (`spinePct=8`, `backPct=46`, `back-spine-front` layout) so the kit matches what `Book3D` renders live.
+- **Official Launch Press Release** (PDF): rewritten from scratch with real current facts — September 3,
+  2026 (Krishna Janmashtami) release; Notion Press Publishers India; real split ISBNs; 320pp, 6x9in;
+  Hardcover/Paperback/Kindle/Audiobook formats; real Amazon/Flipkart/Notion Press buy links and ₹499/₹575
+  prices; no fabricated city/dateline.
+- **Author Full & Short Biographies** (PDF): rewritten using the live, corrected `bio_paragraphs` verbatim
+  for the Full Biography, plus a newly-written ~100-word Short Biography summarizing the same real facts.
+
+Also updated the hardcoded file-size labels in `about-author/page.tsx`'s `mediaKitAssets` array to match
+the new (larger) file sizes (commit `80a45fb`).
