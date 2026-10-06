@@ -163,3 +163,7 @@ the real bio. Rewrote it to pull from real, already-live site data instead:
 - FAQ tab expanded from 6 to 10 real-data-backed entries.
 Verified keyword-matching edge cases (substring collisions like "rut" inside "truth") with a standalone
 Node script before committing (commit `16bdc22`).
+
+Follow-up: the quick-suggestion chip strip overflowed off the right edge with no visible way to reach the
+hidden chips. Added left/right chevron arrows (shown only when there's actually more to scroll that
+direction) and Left/Right arrow-key scrolling when the strip is focused (commit `c940718`).
