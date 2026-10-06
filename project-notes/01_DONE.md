@@ -143,3 +143,23 @@ feeds the About Author page's mailto links, the chatbot's contact fallback, the 
 the admin SiteEditor field, so no other code changes were needed. Also regenerated the Official Launch
 Press Release and Author Biographies PDFs (Media Contact / contact footer sections) with the new email
 (commit `8ed9284`).
+
+## Gita Companion chatbot — grounded, interactive rewrite
+The chatbot's rule-based answers were largely fabricated — invented techniques ("5-Minute Anchor",
+"Detached Goal Setting") that appear nowhere else on the site, and a generic author description instead of
+the real bio. Rewrote it to pull from real, already-live site data instead:
+- New interactive Chapter Explorer: ask to "explore a chapter," type a number 1-18 (digits or words), or say
+  "surprise me" — pulls the real 18 chapter names + one-liners from `src/lib/wisdomLines.ts` (same source as
+  the homepage Daily Teaching ritual and Resources page affirmation cards).
+- New mood map: 12 real feeling keywords (stress, doubt, anxiety, anger, devotion, meditation, identity,
+  faith, freedom, knowledge, guilt, grief) each resolving to a specific real chapter + its actual line.
+- Author bio response now reflects the real, corrected bio instead of a generic placeholder.
+- New grounded responses for free resources (real Resources page downloads), live events/Ask Ketul sessions
+  (settings-driven, matches `AskKetulPanel`'s own logic), feedback/reviews, the free Chapter 1 preview
+  ("When Life Freezes You" + Three-Breath Pause), real Gita trivia (`src/lib/gitaFacts.ts`), and "what's the
+  book about" (live-fetched from the same about-book CMS content the About Book page uses).
+- Conversational polish: randomized greeting/thanks replies, contextual follow-up suggestion chips that
+  change based on the last answer, multi-line formatting in chat bubbles and the FAQ tab.
+- FAQ tab expanded from 6 to 10 real-data-backed entries.
+Verified keyword-matching edge cases (substring collisions like "rut" inside "truth") with a standalone
+Node script before committing (commit `16bdc22`).
