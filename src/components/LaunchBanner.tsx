@@ -7,7 +7,8 @@
 // so the announcement can travel further than this one page.
 
 import React, { useEffect, useState } from "react";
-import { PartyPopper, CalendarCheck, Share2 } from "lucide-react";
+import Link from "next/link";
+import { PartyPopper, CalendarCheck, Share2, MessageSquareHeart } from "lucide-react";
 import { generateLaunchShareCard } from "@/lib/shareCard";
 
 // Confirmed from the live Amazon.in listing for both editions.
@@ -102,10 +103,29 @@ export default function LaunchBanner() {
         </div>
       )}
 
-      <div className="now-live-flash inline-flex items-center gap-2 px-4 py-1.5 rounded-full shadow-md">
-        <PartyPopper className="w-4 h-4" />
-        <span className="text-[11px] uppercase tracking-[0.2em] font-bold">Now Live</span>
+      <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3">
+        <div className="now-live-flash inline-flex items-center gap-2 px-4 py-1.5 rounded-full shadow-md">
+          <PartyPopper className="w-4 h-4" />
+          <span className="text-[11px] uppercase tracking-[0.2em] font-bold">Now Live</span>
+        </div>
+
+        {/* For readers who already have the book — points at the real
+            /feedback page rather than a dead-end "thank you" message. */}
+        <Link
+          href="/feedback"
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#D6A63C]/60 text-[#0B2942] dark:text-[#D6A63C] hover:bg-[#D6A63C]/10 transition-colors"
+        >
+          <MessageSquareHeart className="w-4 h-4" />
+          <span className="text-[11px] uppercase tracking-[0.2em] font-bold">Already Bought? Share Feedback</span>
+        </Link>
       </div>
+
+      {/* Bold, readable call-to-action — the two rows around it are
+          deliberately small/muted chrome, so this needs its own size and
+          weight to actually read as the instruction it is. */}
+      <p className="text-base sm:text-lg font-bold text-foreground">
+        Click Buy Now to Grab your Copy
+      </p>
 
       <div className="flex flex-wrap items-center justify-center lg:justify-start gap-x-4 gap-y-2 text-[11px] text-muted-text">
         <span className="inline-flex items-center gap-1.5">
