@@ -91,6 +91,12 @@ Changed the 18-card grid from 6 columns × 3 rows to 3 columns × 6 rows, and ad
 one-liner teaching (from `src/lib/wisdomLines.ts`, already used for the downloadable cards) onto the
 thumbnail itself, so it previews the actual affirmation rather than just the chapter name (commit `4b0143f`).
 
+## LaunchBanner — Buy Now CTA + Feedback link for existing owners
+Added a bold, readable line below the "Now Live" pill ("Click Buy Now to Grab your Copy" — sized up
+deliberately from the small uppercase chrome around it) and a second pill beside "Now Live" linking to
+`/feedback`, for readers who've already bought the book ("Already Bought? Share Feedback") (commit
+`e2feef7`).
+
 ## Project handoff docs
 Added `PROJECT_HANDOFF.md` (commit `b8d2a50`) and this `project-notes/` folder — a machine-migration guide
 and a living, modular state tracker (done / in-progress / planned / migration, plus the checkpoint protocol
