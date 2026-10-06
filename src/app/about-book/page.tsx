@@ -42,8 +42,9 @@ const DEFAULT_ABOUT_BOOK_CONTENT: AboutBookContent = {
     { label: "Author Name", value: "KETUL SHAH" },
     { label: "Format", value: "Hardcover, Paperback, Kindle, Audiobook" },
     { label: "Page Count", value: "320 pages" },
-    { label: "Publisher", value: "Vedic Wisdom Press (International)" },
-    { label: "ISBN-13", value: "978-93-6068-721-2" },
+    { label: "Publisher", value: "Notion Press Publication, India" },
+    { label: "ISBN-13 (Hardcover)", value: "979-8906961303" },
+    { label: "ISBN-13 (Paperback)", value: "979-8906961297" },
     { label: "Dimensions", value: "6.0 x 9.0 inches" },
     { label: "Release Date", value: "September 4, 2026 (Krishna Janmashtami)" }
   ]
