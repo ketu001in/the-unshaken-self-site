@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { X, Send, Sparkles, Compass, HelpCircle, MessageCircle, ChevronDown, Mail } from "lucide-react";
+import { X, Send, Sparkles, Compass, HelpCircle, MessageCircle, ChevronDown, ChevronLeft, ChevronRight, Mail } from "lucide-react";
 import { useSiteSettings, type SiteSettings } from "@/context/SiteSettingsContext";
 import { fetchPageContent } from "@/lib/content";
 import { WISDOM_LINES } from "@/lib/wisdomLines";
@@ -302,8 +302,32 @@ export default function AIChatbot() {
   const [suggestions, setSuggestions] = useState<string[]>(DEFAULT_SUGGESTIONS);
   const [awaitingChapterPick, setAwaitingChapterPick] = useState(false);
   const [bookContent, setBookContent] = useState<ChatBookContent>(DEFAULT_CHAT_BOOK_CONTENT);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
+  const suggestionsRef = useRef<HTMLDivElement>(null);
   const faqs = buildFaqs(settings, bookContent);
+
+  // Keeps the left/right scroll arrows in sync with how far the
+  // suggestion strip can actually scroll in each direction.
+  const updateScrollArrows = () => {
+    const el = suggestionsRef.current;
+    if (!el) return;
+    setCanScrollLeft(el.scrollLeft > 4);
+    setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
+  };
+
+  const scrollSuggestions = (direction: -1 | 1) => {
+    suggestionsRef.current?.scrollBy({ left: direction * 140, behavior: "smooth" });
+  };
+
+  // Lets the strip scroll with the keyboard (Left/Right arrow keys) once
+  // it's focused, not just by dragging — re-checked whenever the chip
+  // set changes, since a new/shorter suggestion list can change whether
+  // there's anything left to scroll to.
+  useEffect(() => {
+    updateScrollArrows();
+  }, [suggestions]);
 
   // Same live CMS fetch the About Book page uses, so "what's this book
   // about" answers stay in sync with admin edits instead of going stale.
@@ -636,18 +660,59 @@ export default function AIChatbot() {
             </div>
           )}
 
-          {/* Quick Suggestions (rendered when input is empty, chat mode only) */}
+          {/* Quick Suggestions (rendered when input is empty, chat mode only) —
+              horizontally scrollable, with visible arrow buttons and
+              Left/Right-arrow keyboard support so every chip is reachable
+              even when they overflow the chat window's width. */}
           {viewMode === "chat" && inputValue.length === 0 && (
-            <div className="px-4 py-2 bg-stone-50 dark:bg-[#2A3642] border-t border-border-custom overflow-x-auto whitespace-nowrap flex space-x-2 no-scrollbar">
-              {suggestions.map((s, idx) => (
+            <div className="relative bg-stone-50 dark:bg-[#2A3642] border-t border-border-custom">
+              {canScrollLeft && (
                 <button
-                  key={idx}
-                  onClick={() => handleSend(s)}
-                  className="px-2.5 py-1 rounded-full bg-white dark:bg-[#2A3642] text-foreground hover:bg-[#0B2942]/5 dark:hover:bg-[#D6A63C]/5 border border-border-custom text-[10px] cursor-pointer transition-colors"
+                  type="button"
+                  onClick={() => scrollSuggestions(-1)}
+                  aria-label="Scroll suggestions left"
+                  className="absolute left-0.5 top-1/2 -translate-y-1/2 z-10 w-5 h-5 rounded-full bg-white dark:bg-[#2A3642] border border-border-custom shadow-sm flex items-center justify-center text-[#0B2942] dark:text-[#D6A63C] cursor-pointer"
                 >
-                  {s}
+                  <ChevronLeft className="w-3 h-3" />
                 </button>
-              ))}
+              )}
+              <div
+                ref={suggestionsRef}
+                onScroll={updateScrollArrows}
+                tabIndex={0}
+                role="list"
+                aria-label="Quick suggestions, use arrow keys to scroll"
+                onKeyDown={(e) => {
+                  if (e.key === "ArrowRight") {
+                    e.preventDefault();
+                    scrollSuggestions(1);
+                  } else if (e.key === "ArrowLeft") {
+                    e.preventDefault();
+                    scrollSuggestions(-1);
+                  }
+                }}
+                className="px-6 py-2 overflow-x-auto whitespace-nowrap flex space-x-2 no-scrollbar scroll-smooth focus:outline-none focus-visible:ring-1 focus-visible:ring-[#D6A63C]/40 rounded"
+              >
+                {suggestions.map((s, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => handleSend(s)}
+                    className="px-2.5 py-1 rounded-full bg-white dark:bg-[#2A3642] text-foreground hover:bg-[#0B2942]/5 dark:hover:bg-[#D6A63C]/5 border border-border-custom text-[10px] cursor-pointer transition-colors flex-shrink-0"
+                  >
+                    {s}
+                  </button>
+                ))}
+              </div>
+              {canScrollRight && (
+                <button
+                  type="button"
+                  onClick={() => scrollSuggestions(1)}
+                  aria-label="Scroll suggestions right"
+                  className="absolute right-0.5 top-1/2 -translate-y-1/2 z-10 w-5 h-5 rounded-full bg-white dark:bg-[#2A3642] border border-border-custom shadow-sm flex items-center justify-center text-[#0B2942] dark:text-[#D6A63C] cursor-pointer"
+                >
+                  <ChevronRight className="w-3 h-3" />
+                </button>
+              )}
             </div>
           )}
 
