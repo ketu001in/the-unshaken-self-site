@@ -97,6 +97,13 @@ deliberately from the small uppercase chrome around it) and a second pill beside
 `/feedback`, for readers who've already bought the book ("Already Bought? Share Feedback") (commit
 `e2feef7`).
 
+## About Book specifications — real publisher + split ISBNs
+Updated the specifications table (publisher was showing a placeholder/stale "Will be Declared soon" live on
+the site): Publisher -> "Notion Press Publication, India"; split the single "ISBN-13" row into "ISBN-13
+(Hardcover)" (979-8906961303) and "ISBN-13 (Paperback)" (979-8906961297), since the two editions have
+different real ISBNs. Updated both code defaults (about-book/page.tsx, SiteEditor.tsx) and the live Supabase
+`page_content` row for slug `about-book` (commit `512b3f2`).
+
 ## Project handoff docs
 Added `PROJECT_HANDOFF.md` (commit `b8d2a50`) and this `project-notes/` folder — a machine-migration guide
 and a living, modular state tracker (done / in-progress / planned / migration, plus the checkpoint protocol
