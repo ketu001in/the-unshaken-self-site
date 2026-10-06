@@ -72,7 +72,7 @@ export type SiteSettings = {
 };
 
 export const DEFAULT_SITE_SETTINGS: SiteSettings = {
-  contact_email: "ketu001in@gmail.com",
+  contact_email: "info@theunshakenself.com",
   social_linkedin: "https://www.linkedin.com/in/ketu001in",
   social_instagram: "https://instagram.com/TheUnshakenselfbyketulshah",
   footer_tagline:
