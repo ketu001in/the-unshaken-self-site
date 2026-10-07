@@ -175,3 +175,6 @@ between `page.tsx` and its `SiteEditor.tsx` admin mirror). Also expanded the cha
 (real US/CA/AU Amazon links + prices from `site_settings`), the religious/dogma question, chapter count, the
 Daily Teaching streak ritual, the Unshaken Quiz, and the Book Club Kit — plus matching free-text chat
 triggers for all seven new topics (commit `88d048c`).
+
+Follow-up: the closed chat bubble was a bare icon circle with no label. Turned it into a pill (small icon
+chip + "Ask Ket" text) so the bot's name is visible before it's even opened (commit `c860ba7`).
