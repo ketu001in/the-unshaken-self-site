@@ -616,14 +616,19 @@ export default function AIChatbot() {
 
   return (
     <div className="fixed bottom-6 right-6 z-50 select-none">
-      {/* Floating Trigger Button */}
+      {/* Floating Trigger Button — a labeled pill (icon + "Ask Ket") rather
+          than a bare icon, so the bot's name is visible before anyone
+          even opens it. */}
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="w-14 h-14 rounded-full bg-gradient-to-tr from-[#0B2942] to-[#AD8631] text-white flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer"
+          className="relative flex items-center gap-2 h-14 pl-2 pr-4 rounded-full bg-gradient-to-tr from-[#0B2942] to-[#AD8631] text-white shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
           aria-label="Open Ask Ket — Your AI Companion"
         >
-          <Compass className="w-6 h-6 animate-[spin_60s_linear_infinite]" />
+          <span className="w-10 h-10 rounded-full bg-white/15 flex items-center justify-center flex-shrink-0">
+            <Compass className="w-5 h-5 animate-[spin_60s_linear_infinite]" />
+          </span>
+          <span className="font-serif text-sm tracking-wide whitespace-nowrap">Ask Ket</span>
           <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full border-2 border-white dark:border-black animate-ping" />
         </button>
       )}
