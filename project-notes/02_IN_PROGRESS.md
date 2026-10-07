@@ -1,10 +1,23 @@
 # In Progress
 
-Nothing is mid-flight in the code right now — the last unit of work (Resources page grid + affirmation
-one-liners, commit `4b0143f`, plus the handoff docs in `b8d2a50`) is finished and verified (`tsc` clean,
-working tree clean as of this writing).
+The code itself isn't mid-flight — the last unit of work (the "Ask Ket" AI chatbot rebuild, commit `34ed83e`)
+is finished and verified (`tsc` clean). But see the Groq setup item below: that work only reaches its full
+effect once a real API key is added outside this repo.
 
-## The one open loop
+## Open loops
+
+### Groq API key needed for the AI chatbot to actually use AI
+As of commit `34ed83e`, `src/app/api/chat/route.ts` calls Groq for real AI-backed chat replies — but it needs
+a `GROQ_API_KEY`, which hasn't been set anywhere yet. Without it, the chatbot still works (it silently falls
+back to the old rule-based engine), it just isn't actually "thinking." To activate real AI:
+1. Get a free key at console.groq.com/keys.
+2. Local dev: paste it into `.env.local`'s `GROQ_API_KEY=` line (already scaffolded, gitignored).
+3. Production: add `GROQ_API_KEY` (same value) to the Vercel project's Settings → Environment Variables, then
+   redeploy.
+This is a manual step outside what a sandboxed session can do (no access to your Groq account or Vercel
+dashboard) — see `00_START_HERE.md`'s checkpoint protocol for why.
+
+### Pushing to GitHub
 
 **Local commits are ahead of GitHub.** Every commit through this project has been made from a sandboxed dev
 session that can't authenticate to GitHub — so `git push origin main` has to be run from a real machine's

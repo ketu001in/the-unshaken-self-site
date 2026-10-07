@@ -178,3 +178,29 @@ triggers for all seven new topics (commit `88d048c`).
 
 Follow-up: the closed chat bubble was a bare icon circle with no label. Turned it into a pill (small icon
 chip + "Ask Ket" text) so the bot's name is visible before it's even opened (commit `c860ba7`).
+
+## Chatbot — real AI backend (Groq), replacing keyword matching
+User feedback: the chat felt canned/predefined, gave no links, and couldn't handle open-ended questions.
+Added a genuine LLM backend:
+- New `src/app/api/chat/route.ts` (first API route in this project) — server-side only, calls Groq's
+  OpenAI-compatible endpoint (model `llama-3.3-70b-versatile`, overridable via `GROQ_MODEL`). System prompt
+  is rebuilt on every request from live CMS/settings data (book specs, author bio, resources, buy
+  links/prices incl. US/CA/AU, upcoming events) plus the static real chapter teachings and Gita trivia, so it
+  can't drift from or contradict the real site. Instructed to never invent a URL, admit when something isn't
+  covered, and answer off-topic/general-knowledge questions normally rather than deflecting.
+- `AIChatbot.tsx`: `handleSend` now calls `/api/chat` first; the entire previous rule-based engine is kept as
+  `getLocalFallbackResponse`, used only if the AI call fails (no key configured, network issue, rate limit) —
+  the widget never breaks outright.
+- New safe Markdown rendering (escape-first, so a crafted prompt can't inject live HTML): AI replies get real
+  **bold**, bullet lists, and `[text](url)` links (URL-validated — http(s) or in-site paths only, blocking
+  `javascript:` URIs). Added a deterministic "Search the web" quick-action (Google search on the visitor's
+  last question) — never an AI-generated URL, so zero hallucination risk.
+- Now also fetches real author bio, resources list, and up to 5 upcoming events as AI context (previously
+  only book specs were fetched).
+
+**Setup required**: this needs a Groq API key to actually use the AI (the site works fine without one — it
+just falls back to the old rule-based answers). Added a `GROQ_API_KEY=` placeholder to `.env.local`
+(gitignored, not committed) with instructions in a comment — get a free key at console.groq.com/keys, paste
+it into `.env.local` for local dev, and add the same `GROQ_API_KEY` to the Vercel project's Environment
+Variables (Settings → Environment Variables) for production, then redeploy. No key = fallback mode only.
+(commit `34ed83e`)
