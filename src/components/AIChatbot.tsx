@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { X, Send, Sparkles, Compass, HelpCircle, MessageCircle, ChevronDown, ChevronLeft, ChevronRight, Mail } from "lucide-react";
 import { useSiteSettings, type SiteSettings } from "@/context/SiteSettingsContext";
 import { fetchPageContent } from "@/lib/content";
+import { createClient } from "@/lib/supabase/client";
 import { WISDOM_LINES } from "@/lib/wisdomLines";
 import { GITA_FACTS } from "@/lib/gitaFacts";
 
@@ -12,6 +13,12 @@ type Message = {
   sender: "user" | "bot";
   text: string;
   timestamp: Date;
+  // Which renderer a bot message needs: "ai" replies use real Markdown
+  // (links, **bold**, bullet lists) straight from the live model; "local"
+  // is the site's own hand-written copy (offline fallback + welcome
+  // message), which only ever uses the legacy single-asterisk-bold
+  // convention. User messages are always rendered as plain escaped text.
+  kind?: "ai" | "local";
 };
 
 // A bot turn can also steer the conversation forward: which quick-reply
@@ -55,6 +62,115 @@ const DEFAULT_CHAT_BOOK_CONTENT: ChatBookContent = {
 
 function specValue(specs: BookSpec[], label: string): string {
   return specs.find((s) => s.label === label)?.value ?? "";
+}
+
+// Real author bio and resources list, mirrored the same way as the book
+// content above — live-fetched from the same CMS slugs the About Author
+// and Resources pages use, with these as the fallback defaults. This is
+// what gets handed to the real AI backend (src/app/api/chat/route.ts) so
+// it can answer open-ended questions about the author or the free
+// downloads with real facts instead of guessing.
+type ChatAuthorContent = { bio_paragraphs: string[] };
+
+const DEFAULT_CHAT_AUTHOR_CONTENT: ChatAuthorContent = {
+  bio_paragraphs: [
+    "KETUL SHAH bridges the high-stakes reality of the modern corporate world with the profound, quiet depths of ancient spiritual wisdom. For the past twenty years, he has built a highly successful career in the fast-paced, demanding Information Technology (IT) industry. Those who cross his path quickly recognise that his most defining achievement is not his extensive professional resume, but the unshakeable inner peace he maintains amidst the constant pressures of corporate life. He is the living embodiment of the principles shared in The Unshaken Self—a modern professional navigating the complexities of the world with a calm, worry-free mind.",
+    "Beyond the boardroom, Ketul was born and raised in a Pushtimargiya Vaishnav family, and remains a devoted follower of Krishna (Thakorji) to this day. He has spent years diving deeply into the timeless teachings of the Bhagavad Gita, seeking to decode its ancient verses into practical, everyday keys for human happiness. For Ketul, the Gita is not merely a philosophical or historical text; it is a vital, living manual for understanding the immense power of the human mind. By actively applying these foundational principles to his own life, he has mastered the art of fine-tuning his consciousness to live free of tension—a state of being he passionately believes is accessible to everyone.",
+    "This pursuit of harmony extends far beyond his spiritual studies into a rich, vibrant creative life. Ketul is an accomplished polymath with a profound love for the arts. He is a dedicated musician who explores a multitude of genres and plays more than twelve different instruments, finding deep joy and presence in creating and regenerating music.",
+    "This same creative devotion is mirrored in his culinary arts. In the kitchen, Ketul is an award-winning innovator, celebrated for his unique fusion cuisines and his ability to balance complex flavours. His culinary artistry has earned him prestigious accolades, including the \"Hyper Budding Chef\" and \"Creative Chef\" awards. Whether he is tuning an instrument or crafting a new dish, he approaches his passions with the same total presence and devotion that he applies to his spiritual life.",
+    "At the very core of Ketul's existence is a philosophy of total surrender and trust. He navigates his journey by simply moving with the flow of life, accepting whatever the universe presents without doubt, question, or anxiety. He holds a quiet, unbreakable belief that the universe is inherently benevolent—always working in his favour and constantly guiding him closer to the manifestation of his deepest desires and dreams.",
+  ],
+};
+
+type ChatResource = { name: string; desc: string; isPremium: boolean };
+type ChatResourcesContent = { resources: ChatResource[] };
+
+const DEFAULT_CHAT_RESOURCES_CONTENT: ChatResourcesContent = {
+  resources: [
+    { name: "The 18 Chapters Study Companion", desc: "A workbook summarizing all 18 chapters of the Bhagavad Gita, containing reflections, Sanskrit vocab highlights, and modern mindfulness equivalents.", isPremium: false },
+    { name: "Karma Yoga Worksheet: Decoupling Actions", desc: "A printable 3-column reflection sheet to map your weekly professional tasks, isolate your inputs, and consciously release attachment to outcomes.", isPremium: false },
+    { name: "Sthitaprajna Daily Meditation Tracker", desc: "A 30-day habits ledger helping you monitor physical stillness, breath ratios, and daily reaction responses in real-time.", isPremium: true },
+    { name: "Book Club Kit & Discussion Questions", desc: "A comprehensive guide with 20 discussion prompts, study notes, and scheduling structures tailored for book clubs and reading groups.", isPremium: true },
+  ],
+};
+
+type ChatEvent = { title: string; date: string; time: string; type: string };
+
+// ---------------------------------------------------------------------
+// Safe, dependency-free rendering helpers. Output is always built from
+// escaped text first, so even AI-generated content (or a crafted prompt
+// trying to inject markup) can never become live HTML/script — at worst
+// it renders as inert text.
+// ---------------------------------------------------------------------
+function escapeHtml(s: string): string {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+// Only a plain http(s) URL or a relative in-site path is ever allowed as
+// a link target — blocks javascript: URIs and similar, whether from the
+// AI or anything else.
+function isSafeUrl(url: string): boolean {
+  return /^https?:\/\//i.test(url) || url.startsWith("/");
+}
+
+// Plain user-typed text: escaped, with line breaks preserved, no
+// markdown interpretation at all (so a user typing literal asterisks
+// doesn't get unexpectedly bolded).
+function renderUserText(raw: string): string {
+  return escapeHtml(raw).replace(/\n/g, "<br/>");
+}
+
+// The site's own hand-written bot copy (offline fallback replies, the
+// welcome message, FAQ answers) — legacy single-asterisk bold, the
+// convention already used throughout this file's authored strings.
+function renderLocalBotText(raw: string): string {
+  return escapeHtml(raw)
+    .replace(/\*(.+?)\*/g, "<strong>$1</strong>")
+    .replace(/\n/g, "<br/>");
+}
+
+// Real AI replies: standard Markdown — [label](url) links (URL-checked),
+// **bold**, and "- " bullet lists. Deliberately does NOT also support
+// single-asterisk bold like renderLocalBotText, since the AI can
+// legitimately emit a bare "*" in math or other general-knowledge
+// answers and a loose single-asterisk pairing would mis-render those.
+function renderAiText(raw: string): string {
+  let text = escapeHtml(raw);
+
+  text = text.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (_m, label: string, url: string) => {
+    const decodedUrl = url.replace(/&amp;/g, "&");
+    if (!isSafeUrl(decodedUrl)) return label;
+    const external = /^https?:\/\//i.test(decodedUrl);
+    return `<a href="${decodedUrl}" class="underline text-[#D6A63C] hover:opacity-80"${external ? ' target="_blank" rel="noopener noreferrer"' : ""}>${label}</a>`;
+  });
+
+  text = text.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+
+  const lines = text.split("\n");
+  const parts: string[] = [];
+  let listBuffer: string[] = [];
+  const flushList = () => {
+    if (listBuffer.length) {
+      parts.push(`<ul class="list-disc pl-4 space-y-0.5 my-1">${listBuffer.map((i) => `<li>${i}</li>`).join("")}</ul>`);
+      listBuffer = [];
+    }
+  };
+  for (const line of lines) {
+    const bulletMatch = line.match(/^\s*[-*]\s+(.*)/);
+    if (bulletMatch) {
+      listBuffer.push(bulletMatch[1]);
+    } else {
+      flushList();
+      parts.push(line);
+    }
+  }
+  flushList();
+  return parts.join("<br/>");
 }
 
 // A short, faithful paraphrase of the real About Author bio — same facts
@@ -331,11 +447,17 @@ function buildBuyResponse(settings: SiteSettings): string {
   return `Great news — *The Unshaken Self* is available right now! Paperback is ${settings.price_paperback} and Hardcover is ${settings.price_hardcover}, ${describeStores(settings)}. Tap the "Buy Now" button at the top of the page, or visit the Pre-order page for direct links. ${LAUNCH_EVENT_LINE}`;
 }
 
+// A safe, deterministic external link — never AI-generated, so there's
+// no risk of a hallucinated URL. Opens a Google search for whatever the
+// visitor last asked, for anything Ask Ket can't answer from the site.
+const SEARCH_WEB_LABEL = "🔍 Search the web";
+
 const DEFAULT_SUGGESTIONS = [
   "Explore a chapter",
   "I'm feeling stressed about work",
   "Give me a wisdom quote",
   "How do I buy the book?",
+  SEARCH_WEB_LABEL,
 ];
 
 const GREETINGS = [
@@ -366,6 +488,9 @@ export default function AIChatbot() {
   const [suggestions, setSuggestions] = useState<string[]>(DEFAULT_SUGGESTIONS);
   const [awaitingChapterPick, setAwaitingChapterPick] = useState(false);
   const [bookContent, setBookContent] = useState<ChatBookContent>(DEFAULT_CHAT_BOOK_CONTENT);
+  const [authorContent, setAuthorContent] = useState<ChatAuthorContent>(DEFAULT_CHAT_AUTHOR_CONTENT);
+  const [resourcesContent, setResourcesContent] = useState<ChatResourcesContent>(DEFAULT_CHAT_RESOURCES_CONTENT);
+  const [upcomingEvents, setUpcomingEvents] = useState<ChatEvent[]>([]);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
@@ -393,10 +518,31 @@ export default function AIChatbot() {
     updateScrollArrows();
   }, [suggestions]);
 
-  // Same live CMS fetch the About Book page uses, so "what's this book
-  // about" answers stay in sync with admin edits instead of going stale.
+  // Same live CMS fetches the real pages use, so the AI's answers about
+  // the book, author, resources, and events stay in sync with admin
+  // edits instead of going stale or being hardcoded into a prompt.
   useEffect(() => {
     fetchPageContent("about-book", DEFAULT_CHAT_BOOK_CONTENT).then(setBookContent);
+    fetchPageContent("about-author", DEFAULT_CHAT_AUTHOR_CONTENT).then(setAuthorContent);
+    fetchPageContent("resources", DEFAULT_CHAT_RESOURCES_CONTENT).then(setResourcesContent);
+
+    const supabase = createClient();
+    supabase
+      .from("events")
+      .select("title, event_date, event_time, event_type")
+      .order("created_at", { ascending: true })
+      .then(({ data, error }) => {
+        if (!error && data) {
+          setUpcomingEvents(
+            data.slice(0, 5).map((ev) => ({
+              title: ev.title,
+              date: ev.event_date,
+              time: ev.event_time || "TBD",
+              type: ev.event_type,
+            }))
+          );
+        }
+      });
   }, []);
 
   // Initialize with a welcome message
@@ -406,8 +552,9 @@ export default function AIChatbot() {
         {
           id: "welcome",
           sender: "bot",
-          text: 'Pranam! 🙏 I am Ask Ket, your AI companion — here to guide you through KETUL SHAH\'s *The Unshaken Self*. Tell me how you\'re feeling (stressed, anxious, stuck), ask me to "explore a chapter," or just say hi — how can I help you find focus, clarity, or peace today?',
+          text: 'Pranam! 🙏 I am Ask Ket, your AI companion — here to guide you through KETUL SHAH\'s *The Unshaken Self*. Tell me how you\'re feeling (stressed, anxious, stuck), ask me to "explore a chapter," or ask me anything at all — how can I help you find focus, clarity, or peace today?',
           timestamp: new Date(),
+          kind: "local",
         },
       ]);
     }
@@ -418,7 +565,7 @@ export default function AIChatbot() {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isTyping]);
 
-  const handleSend = (text: string) => {
+  const handleSend = async (text: string) => {
     if (!text.trim()) return;
 
     setViewMode("chat");
@@ -430,29 +577,69 @@ export default function AIChatbot() {
       text,
       timestamp: new Date(),
     };
-    setMessages((prev) => [...prev, userMsg]);
+    const historyWithNewMsg = [...messages, userMsg];
+    setMessages(historyWithNewMsg);
     setInputValue("");
     setIsTyping(true);
 
     const wasAwaitingPick = awaitingChapterPick;
+    setAwaitingChapterPick(false);
 
-    // Simulate bot response
-    setTimeout(() => {
-      const reply = getBotResponse(text, wasAwaitingPick);
-      const botMsg: Message = {
-        id: Math.random().toString(),
-        sender: "bot",
-        text: reply.text,
-        timestamp: new Date(),
-      };
-      setMessages((prev) => [...prev, botMsg]);
-      setIsTyping(false);
+    // Primary path: the real AI backend, grounded with the same live
+    // CMS/settings data the rest of the site already fetches. Falls
+    // back to the local rule-based engine below if the AI call fails
+    // for any reason (no API key configured yet, network issue, rate
+    // limit) so the widget always gives a real answer either way.
+    try {
+      const payloadMessages = historyWithNewMsg.slice(-12).map((m) => ({
+        role: m.sender === "user" ? "user" : "assistant",
+        content: m.text,
+      }));
+
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          messages: payloadMessages,
+          context: {
+            settings,
+            bookSpecs: bookContent.specifications,
+            bookTeaser: bookContent.paragraphs[0],
+            authorBio: authorContent.bio_paragraphs,
+            resources: resourcesContent.resources,
+            events: upcomingEvents,
+          },
+        }),
+      });
+
+      if (!res.ok) throw new Error("ai-unavailable");
+      const data = await res.json();
+      if (!data?.reply) throw new Error("ai-empty");
+
+      setMessages((prev) => [
+        ...prev,
+        { id: Math.random().toString(), sender: "bot", text: data.reply, timestamp: new Date(), kind: "ai" },
+      ]);
+      setSuggestions(DEFAULT_SUGGESTIONS);
+    } catch {
+      const reply = getLocalFallbackResponse(text, wasAwaitingPick);
+      setMessages((prev) => [
+        ...prev,
+        { id: Math.random().toString(), sender: "bot", text: reply.text, timestamp: new Date(), kind: "local" },
+      ]);
       setAwaitingChapterPick(Boolean(reply.awaitChapterPick));
       setSuggestions(reply.suggestions ?? DEFAULT_SUGGESTIONS);
-    }, 1200);
+    } finally {
+      setIsTyping(false);
+    }
   };
 
-  const getBotResponse = (query: string, awaitingPick: boolean): BotReply => {
+  // Offline/no-AI fallback engine — the original rule-based matcher.
+  // Used only when the real AI backend (POST /api/chat) is unavailable
+  // (no GROQ_API_KEY configured yet, a network hiccup, rate limiting),
+  // so the widget still gives a real, grounded answer instead of
+  // breaking outright.
+  const getLocalFallbackResponse = (query: string, awaitingPick: boolean): BotReply => {
     const q = query.toLowerCase().trim();
 
     // If the last bot turn asked "which chapter?", read this message as
@@ -697,7 +884,16 @@ export default function AIChatbot() {
                         : "bg-white dark:bg-[#2A3642] text-foreground border border-border-custom rounded-tl-none"
                     }`}
                   >
-                    <p dangerouslySetInnerHTML={{ __html: msg.text.replace(/\*(.*?)\*/g, "<strong>$1</strong>").replace(/\n/g, "<br/>") }} />
+                    <p
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          msg.sender === "user"
+                            ? renderUserText(msg.text)
+                            : msg.kind === "ai"
+                            ? renderAiText(msg.text)
+                            : renderLocalBotText(msg.text),
+                      }}
+                    />
                     <span className="block text-[8px] text-right mt-1 opacity-60">
                       {msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </span>
@@ -738,10 +934,7 @@ export default function AIChatbot() {
                         <p
                           className="text-[11px] md:text-xs text-stone-600 dark:text-stone-300 leading-relaxed"
                           dangerouslySetInnerHTML={{
-                            __html: item.a
-                              .replace(CONTACT_EMAIL_PLACEHOLDER, contactEmail)
-                              .replace(/\*(.*?)\*/g, "<strong>$1</strong>")
-                              .replace(/\n/g, "<br/>"),
+                            __html: renderLocalBotText(item.a.replace(CONTACT_EMAIL_PLACEHOLDER, contactEmail)),
                           }}
                         />
                         <a
@@ -795,7 +988,15 @@ export default function AIChatbot() {
                 {suggestions.map((s, idx) => (
                   <button
                     key={idx}
-                    onClick={() => handleSend(s)}
+                    onClick={() => {
+                      if (s === SEARCH_WEB_LABEL) {
+                        const lastUserMsg = [...messages].reverse().find((m) => m.sender === "user");
+                        const query = lastUserMsg?.text || "The Unshaken Self Ketul Shah";
+                        window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, "_blank", "noopener,noreferrer");
+                        return;
+                      }
+                      handleSend(s);
+                    }}
                     className="px-2.5 py-1 rounded-full bg-white dark:bg-[#2A3642] text-foreground hover:bg-[#0B2942]/5 dark:hover:bg-[#D6A63C]/5 border border-border-custom text-[10px] cursor-pointer transition-colors flex-shrink-0"
                   >
                     {s}
@@ -827,7 +1028,7 @@ export default function AIChatbot() {
               type="text"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              placeholder="Ask about a chapter, how you feel, or buying..."
+              placeholder="Ask me anything — the book, a chapter, or beyond..."
               className="flex-1 bg-stone-50 dark:bg-[#2A3642] text-foreground border border-border-custom rounded-full px-4 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-[#D6A63C]/40"
             />
             <button
