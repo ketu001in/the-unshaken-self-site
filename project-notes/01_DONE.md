@@ -167,3 +167,11 @@ Node script before committing (commit `16bdc22`).
 Follow-up: the quick-suggestion chip strip overflowed off the right edge with no visible way to reach the
 hidden chips. Added left/right chevron arrows (shown only when there's actually more to scroll that
 direction) and Left/Right arrow-key scrolling when the strip is focused (commit `c940718`).
+
+Follow-up: renamed the bot to "Ask Ket — Your AI Companion" everywhere it appears (chat header, welcome
+message, trigger button aria-label, and the homepage's own FAQ entry describing the widget, kept in sync
+between `page.tsx` and its `SiteEditor.tsx` admin mirror). Also expanded the chatbot's own FAQ tab from 10 to
+17 entries — all grounded in real, live site data: ISBNs/specs (live-synced), international availability
+(real US/CA/AU Amazon links + prices from `site_settings`), the religious/dogma question, chapter count, the
+Daily Teaching streak ritual, the Unshaken Quiz, and the Book Club Kit — plus matching free-text chat
+triggers for all seven new topics (commit `88d048c`).
