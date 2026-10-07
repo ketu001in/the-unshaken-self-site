@@ -72,6 +72,42 @@ const FEEDBACK_REPLY =
 const PREVIEW_REPLY =
   "You can read Chapter 1 free right now on the Preview page — *When Life Freezes You* — plus a printable PDF sample with the Three-Breath Pause practice and a reflection worksheet. It's the same daily practice the book keeps coming back to.";
 
+const RELIGIOUS_REPLY =
+  "Not in a dogmatic sense. *The Unshaken Self* isn't a theological treatise or religious doctrine — it's a practical, non-dogmatic guide for anyone facing stress, burnout, or uncertainty, whether or not you know the Gita at all. The one real prerequisite is a willingness to actually reflect and practice, not just read. See the About the Book page for exactly who it's for — and who it isn't.";
+
+const DAILY_PRACTICE_REPLY =
+  "Yes — the homepage has a Daily Teaching ritual: draw a real chapter teaching each day and build a streak, the same way you can right here in chat by saying \"explore a chapter.\" There's also the Three-Breath Pause practice (Preview page) and a breathing widget on the Resources page.";
+
+const QUIZ_REPLY =
+  "Yes — the Unshaken Quiz on the homepage takes about two minutes and matches you to one of four archetypes (like the Karma Yogi or the Steady Witness), each tied to a real chapter, so you know exactly where to start reading.";
+
+const BOOKCLUB_REPLY =
+  "Definitely — the Resources page has a Book Club Kit & Discussion Questions download (20 discussion prompts plus study notes and scheduling structures) built specifically for reading groups.";
+
+function buildSpecsReply(content: ChatBookContent): string {
+  const pages = specValue(content.specifications, "Page Count") || "320 pages";
+  const dims = specValue(content.specifications, "Dimensions") || "6.0 x 9.0 inches";
+  const publisher = specValue(content.specifications, "Publisher") || "Notion Press Publication, India";
+  const isbnHardcover = specValue(content.specifications, "ISBN-13 (Hardcover)") || "979-8906961303";
+  const isbnPaperback = specValue(content.specifications, "ISBN-13 (Paperback)") || "979-8906961297";
+  return `Quick specs: ${pages}, ${dims}, published by ${publisher}.\n\nISBN-13 (Hardcover): ${isbnHardcover}\nISBN-13 (Paperback): ${isbnPaperback}`;
+}
+
+function buildInternationalReply(settings: SiteSettings): string {
+  const hasUS = Boolean(settings.buy_link_amazon_us_paperback || settings.buy_link_amazon_us_hardcover);
+  const hasCA = Boolean(settings.buy_link_amazon_ca_paperback || settings.buy_link_amazon_ca_hardcover);
+  const hasAU = Boolean(settings.buy_link_amazon_au_paperback || settings.buy_link_amazon_au_hardcover);
+
+  if (!hasUS && !hasCA && !hasAU) {
+    return "Right now it's confirmed in India — check the Pre-order page for the latest on other regions.";
+  }
+  const regions: string[] = [];
+  if (hasUS) regions.push(`the US (Paperback ${settings.price_paperback_us}, Hardcover ${settings.price_hardcover_us})`);
+  if (hasCA) regions.push(`Canada (Paperback ${settings.price_paperback_ca}, Hardcover ${settings.price_hardcover_ca})`);
+  if (hasAU) regions.push(`Australia (Paperback ${settings.price_paperback_au}, Hardcover ${settings.price_hardcover_au})`);
+  return `Yes — beyond India, it's also on Amazon in ${regions.join(", ")}. Visit the Pre-order page and switch the region tab for direct links.`;
+}
+
 function buildAboutBookReply(content: ChatBookContent): string {
   const pages = specValue(content.specifications, "Page Count") || "320 pages";
   const publisher = specValue(content.specifications, "Publisher") || "Notion Press Publication, India";
@@ -244,6 +280,34 @@ function buildFaqs(settings: SiteSettings, bookContent: ChatBookContent): { q: s
       a: FEEDBACK_REPLY
     },
     {
+      q: "What are the ISBN numbers and other specs?",
+      a: buildSpecsReply(bookContent)
+    },
+    {
+      q: "Is the book available outside India?",
+      a: buildInternationalReply(settings)
+    },
+    {
+      q: "Is this a religious book, or do I need to know the Gita already?",
+      a: RELIGIOUS_REPLY
+    },
+    {
+      q: "How many chapters does the book have?",
+      a: `${CHAPTER_OVERVIEW} Ask me to "explore a chapter" right here in chat and I'll share any one's real teaching.`
+    },
+    {
+      q: "Is there a daily practice I can follow?",
+      a: DAILY_PRACTICE_REPLY
+    },
+    {
+      q: "Is there a quiz to find where I should start?",
+      a: QUIZ_REPLY
+    },
+    {
+      q: "Is this book good for book clubs?",
+      a: BOOKCLUB_REPLY
+    },
+    {
       q: "How do I contact KETUL SHAH directly?",
       a: `You can reach out anytime at ${CONTACT_EMAIL_PLACEHOLDER} — Ketul personally reads every message.`
     },
@@ -342,7 +406,7 @@ export default function AIChatbot() {
         {
           id: "welcome",
           sender: "bot",
-          text: 'Pranam! 🙏 I am your Gita Companion, here to guide you through KETUL SHAH\'s *The Unshaken Self*. Tell me how you\'re feeling (stressed, anxious, stuck), ask me to "explore a chapter," or just say hi — how can I help you find focus, clarity, or peace today?',
+          text: 'Pranam! 🙏 I am Ask Ket, your AI companion — here to guide you through KETUL SHAH\'s *The Unshaken Self*. Tell me how you\'re feeling (stressed, anxious, stuck), ask me to "explore a chapter," or just say hi — how can I help you find focus, clarity, or peace today?',
           timestamp: new Date(),
         },
       ]);
@@ -511,6 +575,36 @@ export default function AIChatbot() {
       return { text: PREVIEW_REPLY, suggestions: ["Explore a chapter", "How do I buy the book?", "Any free resources?"] };
     }
 
+    // Specs / ISBN
+    if (q.includes("isbn") || q.includes("page count") || q.includes("how many pages") || q.includes("dimensions") || q.includes("specs")) {
+      return { text: buildSpecsReply(bookContent), suggestions: ["What's the book about?", "How do I buy the book?", "Is it available outside India?"] };
+    }
+
+    // International availability
+    if (q.includes("outside india") || q.includes("international") || q.includes("worldwide") || q.includes("canada") || q.includes("australia") || q.includes("united states")) {
+      return { text: buildInternationalReply(settings), suggestions: ["How do I buy the book?", "What are the ISBN numbers?", "Explore a chapter"] };
+    }
+
+    // Religious / prerequisite knowledge
+    if (q.includes("religious") || q.includes("dogma") || q.includes("do i need to know the gita") || q.includes("prerequisite")) {
+      return { text: RELIGIOUS_REPLY, suggestions: ["Who is this book for?", "What's the book about?", "Explore a chapter"] };
+    }
+
+    // Daily practice / ritual / streak
+    if (q.includes("daily practice") || q.includes("daily ritual") || q.includes("daily teaching") || q.includes("build a streak") || q.includes("streak")) {
+      return { text: DAILY_PRACTICE_REPLY, suggestions: ["Explore a chapter", "Surprise me with a teaching", "Any free resources?"] };
+    }
+
+    // Quiz / where to start
+    if (q.includes("quiz") || q.includes("archetype") || q.includes("where should i start") || q.includes("where do i start")) {
+      return { text: QUIZ_REPLY, suggestions: ["Explore a chapter", "What's the book about?", "How do I buy the book?"] };
+    }
+
+    // Book clubs / discussion groups
+    if (q.includes("book club") || q.includes("discussion questions") || q.includes("reading group")) {
+      return { text: BOOKCLUB_REPLY, suggestions: ["Any free resources?", "Explore a chapter", "How do I buy the book?"] };
+    }
+
     // Catch-all — still grounded in real, current facts (not just
     // philosophical filler) so an unmatched question doesn't leave the
     // reader without anything concrete and accurate to act on.
@@ -527,7 +621,7 @@ export default function AIChatbot() {
         <button
           onClick={() => setIsOpen(true)}
           className="w-14 h-14 rounded-full bg-gradient-to-tr from-[#0B2942] to-[#AD8631] text-white flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer"
-          aria-label="Open Gita Companion Bot"
+          aria-label="Open Ask Ket — Your AI Companion"
         >
           <Compass className="w-6 h-6 animate-[spin_60s_linear_infinite]" />
           <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full border-2 border-white dark:border-black animate-ping" />
@@ -545,8 +639,8 @@ export default function AIChatbot() {
                 <Sparkles className="w-4 h-4" />
               </div>
               <div>
-                <h3 className="font-serif text-sm tracking-wide text-stone-200">Gita Companion</h3>
-                <span className="text-[10px] text-stone-400 font-light">The Unshaken Self Assistant</span>
+                <h3 className="font-serif text-sm tracking-wide text-stone-200">Ask Ket</h3>
+                <span className="text-[10px] text-stone-400 font-light">Your AI Companion</span>
               </div>
             </div>
             <button
