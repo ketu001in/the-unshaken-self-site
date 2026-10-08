@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import { ShoppingBag, X, Sparkles, Truck, Globe2 } from "lucide-react";
 import { useSiteSettings, type SiteSettings } from "@/context/SiteSettingsContext";
 import { AmazonLogo, NotionPressLogo, FlipkartLogo } from "./StoreLogos";
+import NotionPressCoupon from "./NotionPressCoupon";
 import { playClick } from "@/lib/sound";
 
 type BuyNowButtonProps = {
@@ -201,6 +202,7 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
               ) : null
             )}
           </div>
+          <NotionPressCoupon compact />
         </div>
 
         {/* Amazon — region-aware. Pick a region, its Paperback/Hardcover

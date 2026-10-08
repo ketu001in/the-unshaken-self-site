@@ -11,6 +11,7 @@ import { createClient } from "@/lib/supabase/client";
 import { fetchPageContent } from "@/lib/content";
 import { AmazonLogo, NotionPressLogo, FlipkartLogo } from "@/components/StoreLogos";
 import ReaderThankYouCard from "@/components/ReaderThankYouCard";
+import NotionPressCoupon from "@/components/NotionPressCoupon";
 import { playConfirm, playClick } from "@/lib/sound";
 
 const REFERRAL_CODE_KEY = "unshaken_referral_code";
@@ -395,7 +396,8 @@ export default function PreorderPage() {
                   </ul>
                 </div>
 
-                <div className="mt-6 pt-4">
+                <div className="mt-6 pt-4 space-y-3">
+                  {store.logo === "notionpress" && <NotionPressCoupon />}
                   <a
                     href={store.link}
                     target="_blank"
