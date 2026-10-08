@@ -242,3 +242,6 @@ Follow-up: made the "Festive Offer — 20% Off" label on the Notion Press coupon
 `.festive-text-flash` CSS animation that cycles its text color between brand gold and vivid red (mirrors the
 existing `.date-flash`/`.now-live-flash` convention — opacity never drops, so it stays readable; respects
 prefers-reduced-motion). Shows on both the Pre-order page and Buy Now popup (commit `67b1a15`).
+
+Follow-up: applied the same `.festive-text-flash` blink to the Flipkart and Amazon sale badges' titles, and
+bumped both badges' title and fine-print text up a size (7/8px → 9/10px) for readability (commit `457300f`).
