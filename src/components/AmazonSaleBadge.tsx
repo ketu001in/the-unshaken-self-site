@@ -23,16 +23,16 @@ export default function AmazonSaleBadge({ compact = false }: AmazonSaleBadgeProp
       }`}
     >
       <div
-        className={`flex items-center gap-1.5 font-bold uppercase tracking-widest text-[#B36B00] dark:text-[#FFB84D] ${
-          compact ? "text-[7px]" : "text-[8px]"
+        className={`festive-text-flash flex items-center gap-1.5 font-bold uppercase tracking-widest text-[#B36B00] dark:text-[#FFB84D] ${
+          compact ? "text-[9px]" : "text-[10px]"
         }`}
       >
-        <Flame className={compact ? "w-2.5 h-2.5" : "w-3 h-3"} />
+        <Flame className={compact ? "w-3 h-3" : "w-3.5 h-3.5"} />
         <span>The Great Indian Sale — Live Now</span>
       </div>
       <p
         className={`text-[#8A5200] dark:text-[#FFCB80] font-medium leading-snug ${
-          compact ? "text-[7px]" : "text-[8px]"
+          compact ? "text-[9px]" : "text-[10px]"
         }`}
       >
         Extra sale savings active on Amazon.in right now — check the live price at checkout.

@@ -23,16 +23,16 @@ export default function FlipkartSaleBadge({ compact = false }: FlipkartSaleBadge
       }`}
     >
       <div
-        className={`flex items-center gap-1.5 font-bold uppercase tracking-widest text-[#2874F0] dark:text-[#7FAEFF] ${
-          compact ? "text-[7px]" : "text-[8px]"
+        className={`festive-text-flash flex items-center gap-1.5 font-bold uppercase tracking-widest text-[#2874F0] dark:text-[#7FAEFF] ${
+          compact ? "text-[9px]" : "text-[10px]"
         }`}
       >
-        <Flame className={compact ? "w-2.5 h-2.5" : "w-3 h-3"} />
+        <Flame className={compact ? "w-3 h-3" : "w-3.5 h-3.5"} />
         <span>Big Billion Sale — Live Now</span>
       </div>
       <p
         className={`text-[#1B4FAE] dark:text-[#9FC2FF] font-medium leading-snug ${
-          compact ? "text-[7px]" : "text-[8px]"
+          compact ? "text-[9px]" : "text-[10px]"
         }`}
       >
         Extra sale savings active on Flipkart right now — check the live price at checkout.
