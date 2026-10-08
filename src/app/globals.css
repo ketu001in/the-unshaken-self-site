@@ -235,6 +235,25 @@ h1, h2, h3, h4, h5, h6, .font-serif {
   }
 }
 
+/* Attention-grabbing color-cycle for the "Festive Offer" label on the
+   Notion Press coupon callout — text only (no pill/background), cycling
+   between brand gold and a vivid red so it draws the eye against either
+   the light or dark card background. Opacity never drops, matching the
+   .date-flash / .now-live-flash convention of keeping text fully
+   readable throughout the flash. */
+@keyframes festiveTextFlash {
+  0%, 100% { color: #D6A63C; }
+  50% { color: #FF3B30; }
+}
+.festive-text-flash {
+  animation: festiveTextFlash 1s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .festive-text-flash {
+    animation: none;
+  }
+}
+
 /* One-time confetti burst for the "Now Live" launch banner — plays once
    on mount (JS only ever mounts the pieces once), each piece falls,
    drifts sideways, spins, and fades via its own randomized inline

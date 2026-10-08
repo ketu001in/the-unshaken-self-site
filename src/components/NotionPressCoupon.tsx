@@ -53,7 +53,7 @@ export default function NotionPressCoupon({ compact = false }: NotionPressCoupon
       }`}
     >
       <div
-        className={`flex items-center gap-1.5 font-bold uppercase tracking-widest text-[#AD8631] dark:text-[#D6A63C] ${
+        className={`festive-text-flash flex items-center gap-1.5 font-bold uppercase tracking-widest text-[#AD8631] dark:text-[#D6A63C] ${
           compact ? "text-[7px]" : "text-[8px]"
         }`}
       >
