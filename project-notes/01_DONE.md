@@ -224,3 +224,12 @@ Author opted in to a 20%-off coupon for Notion Press purchases only. Drafted 3 s
   Notion Press section of the Buy Now popup (`src/components/BuyNowButton.tsx`, compact variant) — placed
   against the Notion Press option specifically, since the coupon isn't valid on Amazon or Flipkart
   (commit `458d8d8`).
+
+Follow-up: fine-print disclaimer text was using the site's muted-text gray, which washed out against the
+cream card background — switched it (and the Copy label) to a warm gold on-brand color for readability
+(commit `264f805`).
+
+Follow-up: added `FlipkartSaleBadge.tsx` to flag Flipkart's "Big Billion Sale" as live next to the Flipkart
+option on the Pre-order page and Buy Now popup. No hardcoded discount % or end date — Flipkart runs the sale
+on its own platform, so this stays a simple "it's live, check the price there" flag rather than a number
+that could go stale (commit `7528b6d`).
