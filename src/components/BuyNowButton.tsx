@@ -7,6 +7,7 @@ import { useSiteSettings, type SiteSettings } from "@/context/SiteSettingsContex
 import { AmazonLogo, NotionPressLogo, FlipkartLogo } from "./StoreLogos";
 import NotionPressCoupon from "./NotionPressCoupon";
 import FlipkartSaleBadge from "./FlipkartSaleBadge";
+import AmazonSaleBadge from "./AmazonSaleBadge";
 import { playClick } from "@/lib/sound";
 
 type BuyNowButtonProps = {
@@ -263,6 +264,7 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
               )
             )}
           </div>
+          {region === "in" && <AmazonSaleBadge compact />}
         </div>
 
         {/* Flipkart — India only */}
