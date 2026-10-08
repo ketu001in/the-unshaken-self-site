@@ -81,7 +81,7 @@ export default function NotionPressCoupon({ compact = false }: NotionPressCoupon
           </code>
           <button
             onClick={handleCopy}
-            className="inline-flex items-center gap-1 text-[9px] text-muted-text hover:text-foreground cursor-pointer"
+            className="inline-flex items-center gap-1 text-[9px] text-[#8B6D1F] dark:text-[#E8C874] hover:text-[#0B2942] dark:hover:text-white cursor-pointer font-semibold"
             aria-label="Copy coupon code"
           >
             {copied ? <Check className="w-3 h-3 text-green-500" /> : <Copy className="w-3 h-3" />}
@@ -90,7 +90,11 @@ export default function NotionPressCoupon({ compact = false }: NotionPressCoupon
         </div>
       )}
 
-      <p className={`text-muted-text font-light leading-snug ${compact ? "text-[7px]" : "text-[8px]"}`}>
+      <p
+        className={`text-[#8B6D1F] dark:text-[#E8C874] font-medium leading-snug ${
+          compact ? "text-[7px]" : "text-[8px]"
+        }`}
+      >
         Apply at checkout on Notion Press. First 50 buyers only · Valid till 20 Oct 2026.
       </p>
     </div>
