@@ -612,7 +612,17 @@ export default function AIChatbot() {
         }),
       });
 
-      if (!res.ok) throw new Error("ai-unavailable");
+      if (!res.ok) {
+        // Surface exactly why in the browser console (never to the
+        // visitor) — "AI is not configured." at 503 means GROQ_API_KEY
+        // isn't being picked up (likely needs a dev-server restart after
+        // editing .env.local, or isn't set in Vercel for production);
+        // 502 means the Groq call itself failed (see server logs/terminal
+        // for the real Groq error detail).
+        const errBody = await res.json().catch(() => null);
+        console.warn(`[Ask Ket] AI unavailable (HTTP ${res.status}): ${errBody?.error ?? "unknown error"} — using local fallback.`);
+        throw new Error("ai-unavailable");
+      }
       const data = await res.json();
       if (!data?.reply) throw new Error("ai-empty");
 
@@ -621,7 +631,10 @@ export default function AIChatbot() {
         { id: Math.random().toString(), sender: "bot", text: data.reply, timestamp: new Date(), kind: "ai" },
       ]);
       setSuggestions(DEFAULT_SUGGESTIONS);
-    } catch {
+    } catch (err) {
+      if (!(err instanceof Error && err.message === "ai-unavailable")) {
+        console.warn("[Ask Ket] AI request failed, using local fallback:", err);
+      }
       const reply = getLocalFallbackResponse(text, wasAwaitingPick);
       setMessages((prev) => [
         ...prev,
