@@ -237,3 +237,8 @@ that could go stale (commit `7528b6d`).
 Follow-up: added `AmazonSaleBadge.tsx` (same no-hardcoded-numbers pattern) to flag Amazon's "The Great Indian
 Sale" as live next to Amazon.in on the Pre-order page and Buy Now popup — India only, since the sale doesn't
 apply to the US/CA/AU Amazon storefronts (commit `03d4641`).
+
+Follow-up: made the "Festive Offer — 20% Off" label on the Notion Press coupon blink, via a new
+`.festive-text-flash` CSS animation that cycles its text color between brand gold and vivid red (mirrors the
+existing `.date-flash`/`.now-live-flash` convention — opacity never drops, so it stays readable; respects
+prefers-reduced-motion). Shows on both the Pre-order page and Buy Now popup (commit `67b1a15`).
