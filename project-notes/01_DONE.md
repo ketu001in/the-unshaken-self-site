@@ -233,3 +233,7 @@ Follow-up: added `FlipkartSaleBadge.tsx` to flag Flipkart's "Big Billion Sale" a
 option on the Pre-order page and Buy Now popup. No hardcoded discount % or end date — Flipkart runs the sale
 on its own platform, so this stays a simple "it's live, check the price there" flag rather than a number
 that could go stale (commit `7528b6d`).
+
+Follow-up: added `AmazonSaleBadge.tsx` (same no-hardcoded-numbers pattern) to flag Amazon's "The Great Indian
+Sale" as live next to Amazon.in on the Pre-order page and Buy Now popup — India only, since the sale doesn't
+apply to the US/CA/AU Amazon storefronts (commit `03d4641`).
