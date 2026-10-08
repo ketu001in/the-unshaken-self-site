@@ -204,3 +204,10 @@ just falls back to the old rule-based answers). Added a `GROQ_API_KEY=` placehol
 it into `.env.local` for local dev, and add the same `GROQ_API_KEY` to the Vercel project's Environment
 Variables (Settings → Environment Variables) for production, then redeploy. No key = fallback mode only.
 (commit `34ed83e`)
+
+Follow-up: user added the key to `.env.local` but the bot still looked unchanged — the AI→fallback switch was
+silent by design, which also hid *why* it was still falling back. Added a `console.warn` (browser DevTools
+console only, never visible to visitors) that logs the real HTTP status/reason on every fallback — 503 means
+the key isn't being picked up server-side (needs a dev-server restart after editing `.env.local`, or isn't
+set in Vercel yet), 502 means the Groq call itself failed (check the terminal running the dev server for the
+detailed error already logged server-side in `route.ts`) (commit `753af79`).
