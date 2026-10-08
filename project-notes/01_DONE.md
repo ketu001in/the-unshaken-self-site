@@ -211,3 +211,16 @@ console only, never visible to visitors) that logs the real HTTP status/reason o
 the key isn't being picked up server-side (needs a dev-server restart after editing `.env.local`, or isn't
 set in Vercel yet), 502 means the Groq call itself failed (check the terminal running the dev server for the
 detailed error already logged server-side in `route.ts`) (commit `753af79`).
+
+## Festive discount campaign — UNSHAKEN20 (Notion Press, first 50 buyers, till 20 Oct 2026)
+Author opted in to a 20%-off coupon for Notion Press purchases only. Drafted 3 social-media promo posts
+(Instagram/Facebook, LinkedIn, Twitter/X-WhatsApp), later refined to include the real campaign end date
+(20 Oct 2026) — delivered in chat, not a file. Implemented the same offer on the live site:
+- New `src/components/NotionPressCoupon.tsx` — a "Festive Offer — 20% Off" callout with the code hidden
+  behind a "click to reveal" button (then a copy-to-clipboard action once revealed), rather than shown in
+  plaintext by default. Self-expires (renders nothing) once the client clock passes 20 Oct 2026 end-of-day
+  IST, so the promo can't go on showing after the campaign ends without anyone having to remember to pull it.
+- Wired into the two Notion Press cards on the Pre-order page (`src/app/preorder/page.tsx`) and into the
+  Notion Press section of the Buy Now popup (`src/components/BuyNowButton.tsx`, compact variant) — placed
+  against the Notion Press option specifically, since the coupon isn't valid on Amazon or Flipkart
+  (commit `458d8d8`).
