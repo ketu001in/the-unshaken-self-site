@@ -251,3 +251,8 @@ Pre-order page and Buy Now popup (those festive sale windows have passed). Delet
 `FlipkartSaleBadge.tsx` and `AmazonSaleBadge.tsx` components — nothing else referenced them. The
 `NotionPressCoupon` callout itself needed no change; it already self-expires past 20 Oct 2026 and has been
 hiding itself since (commit `48aded6`).
+
+Follow-up: re-enabled the Notion Press UNSHAKEN20 coupon callout with no end date — removed the hardcoded
+20 Oct 2026 expiry check so it stays live indefinitely with the same code. Dropped the now-stale "Valid till
+20 Oct 2026" line from the fine print; kept "First 50 buyers only" since that cap wasn't changed
+(commit `d074ab9`).
