@@ -4,18 +4,15 @@
 // own store, the only place the UNSHAKEN20 coupon is valid. Shown on the
 // Pre-order page's Notion Press cards and inside the Buy Now popup's
 // Notion Press section. The code stays hidden behind a "reveal" click
-// rather than sitting in plain text, and the whole thing self-expires
-// (renders nothing) after the campaign's real end date, so nobody has to
-// remember to come back and manually remove it later.
+// rather than sitting in plain text. Re-enabled with no end date (the
+// original 20 Oct 2026 campaign window has passed and was removed) — the
+// first-50-buyers cap still applies.
 
 import React, { useState } from "react";
 import { Tag, Copy, Check } from "lucide-react";
 import { playClick } from "@/lib/sound";
 
 const COUPON_CODE = "UNSHAKEN20";
-// 20% off, Notion Press only, first 50 buyers — campaign end date as given
-// by the author. End-of-day IST so the offer holds through the full 20th.
-const COUPON_EXPIRY = new Date("2026-10-20T23:59:59+05:30");
 
 type NotionPressCouponProps = {
   // Tighter spacing/type scale for the Buy Now modal, which is already
@@ -26,8 +23,6 @@ type NotionPressCouponProps = {
 export default function NotionPressCoupon({ compact = false }: NotionPressCouponProps) {
   const [revealed, setRevealed] = useState(false);
   const [copied, setCopied] = useState(false);
-
-  if (Date.now() > COUPON_EXPIRY.getTime()) return null;
 
   const handleReveal = () => {
     playClick();
@@ -95,7 +90,7 @@ export default function NotionPressCoupon({ compact = false }: NotionPressCoupon
           compact ? "text-[7px]" : "text-[8px]"
         }`}
       >
-        Apply at checkout on Notion Press. First 50 buyers only · Valid till 20 Oct 2026.
+        Apply at checkout on Notion Press. First 50 buyers only.
       </p>
     </div>
   );
