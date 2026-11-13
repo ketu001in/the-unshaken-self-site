@@ -12,8 +12,6 @@ import { fetchPageContent } from "@/lib/content";
 import { AmazonLogo, NotionPressLogo, FlipkartLogo } from "@/components/StoreLogos";
 import ReaderThankYouCard from "@/components/ReaderThankYouCard";
 import NotionPressCoupon from "@/components/NotionPressCoupon";
-import FlipkartSaleBadge from "@/components/FlipkartSaleBadge";
-import AmazonSaleBadge from "@/components/AmazonSaleBadge";
 import { playConfirm, playClick } from "@/lib/sound";
 
 const REFERRAL_CODE_KEY = "unshaken_referral_code";
@@ -400,8 +398,6 @@ export default function PreorderPage() {
 
                 <div className="mt-6 pt-4 space-y-3">
                   {store.logo === "notionpress" && <NotionPressCoupon />}
-                  {store.logo === "flipkart" && <FlipkartSaleBadge />}
-                  {store.logo === "amazon" && activeRegion === "in" && <AmazonSaleBadge />}
                   <a
                     href={store.link}
                     target="_blank"

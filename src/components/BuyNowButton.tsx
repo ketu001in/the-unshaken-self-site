@@ -6,8 +6,6 @@ import { ShoppingBag, X, Sparkles, Truck, Globe2 } from "lucide-react";
 import { useSiteSettings, type SiteSettings } from "@/context/SiteSettingsContext";
 import { AmazonLogo, NotionPressLogo, FlipkartLogo } from "./StoreLogos";
 import NotionPressCoupon from "./NotionPressCoupon";
-import FlipkartSaleBadge from "./FlipkartSaleBadge";
-import AmazonSaleBadge from "./AmazonSaleBadge";
 import { playClick } from "@/lib/sound";
 
 type BuyNowButtonProps = {
@@ -264,7 +262,6 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
               )
             )}
           </div>
-          {region === "in" && <AmazonSaleBadge compact />}
         </div>
 
         {/* Flipkart — India only */}
@@ -291,7 +288,6 @@ export default function BuyNowButton({ fullWidth = false, onOpen, autoOpen = fal
                 ) : null
               )}
             </div>
-            <FlipkartSaleBadge compact />
           </div>
         )}
 
