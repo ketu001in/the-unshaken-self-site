@@ -245,3 +245,9 @@ prefers-reduced-motion). Shows on both the Pre-order page and Buy Now popup (com
 
 Follow-up: applied the same `.festive-text-flash` blink to the Flipkart and Amazon sale badges' titles, and
 bumped both badges' title and fine-print text up a size (7/8px → 9/10px) for readability (commit `457300f`).
+
+Follow-up: removed the Flipkart "Big Billion Sale" and Amazon "The Great Indian Sale" banners from the
+Pre-order page and Buy Now popup (those festive sale windows have passed). Deleted the now-unused
+`FlipkartSaleBadge.tsx` and `AmazonSaleBadge.tsx` components — nothing else referenced them. The
+`NotionPressCoupon` callout itself needed no change; it already self-expires past 20 Oct 2026 and has been
+hiding itself since (commit `48aded6`).
